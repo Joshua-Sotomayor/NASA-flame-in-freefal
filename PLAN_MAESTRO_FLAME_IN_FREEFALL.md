@@ -190,14 +190,15 @@ Antes de escribir una sola línea de código del proyecto futuro, seleccionamos 
 | **`spec-driven-development`** (`/spec`) | `categories/organizers/agent-skills` | Redactar `SPEC.md` con contratos de interfaz entre el motor físico/SI y el frontend **antes** de programar, evitando retrabajo entre ambos perfiles. | Hora 1 del Hackathon (Viernes noche). |
 | **`planning-and-task-breakdown`** (`/plan`) | `categories/organizers/agent-skills` | Descomponer en *vertical slices* atómicos (1 funcionalidad completa end-to-end por bloque) con criterios de aceptación verificables. | Al cerrar `SPEC.md` y cada bloque de 4 horas. |
 | **`api-and-interface-design`** | `categories/organizers/agent-skills` | Contratos JSON estrictos (esquemas Pydantic `extra="forbid"`) entre `psi_combustion_24.json`, la API OSDR v2, los 3 modelos ML/DL propios y la UI. | Diseño de Backend / Endpoints. |
-| **`incremental-implementation`** (`/build`) + **`test-driven-development`** (`/test`) | `categories/organizers/agent-skills` | Construir en incrementos pequeños con pruebas automáticas de las ecuaciones físicas ($\text{Da}$, $\text{Pe}$), modelos ML y transiciones de la FSM. | Durante todo el Sábado (implementación core). |
-| **`git-workflow-and-versioning`** | `categories/organizers/agent-skills` | Mantiene el historial limpio bajo el estándar `<version> - <verbo> - <descripción>` y ramas `feat/...`, `design/...` $\rightarrow$ `dev` $\rightarrow$ `main`. | En cada commit atómico. |
+| **`incremental-implementation`** (`/build`) + **`test-driven-development`** (`/test`) | `categories/organizers/agent-skills` | Pirámide TDD obligatoria (`~80%` unitarias, `~15%` integración FastAPI/POO, `~5%` E2E), bucle **RED → GREEN → REFACTOR** y patrón *Prove-It* sobre física ($\text{Da}$, $\text{Pe}$), modelos ML y FSM. | En toda lógica nueva (Sábado AM/PM). |
+| **`writing-craft`** (`plain` / `academic` / `style-edit`) | `categories/general/writing-craft` | Gobierna la redacción técnica, el pitch y las 3 plantillas deterministas por audiencia (`Investigador`, `Estudiante`, `Gestor`), eliminando *AI slop* (`ai-tells-es-en.md`) y preservando cifras y DOIs `10.60555`. | Docs, `ExtractiveNlpEngine` y storytelling. |
+| **`git-workflow-and-versioning`** | `categories/organizers/agent-skills` | Mantiene el historial limpio bajo el estándar `<version> - <verbo> - <descripción>` y ramas `feat/...`, `design/...` $\rightarrow$ `dev` $\rightarrow$ `main` $\rightarrow$ `origin` GitHub (`MIT`). | En cada commit atómico. |
 | **`security-and-hardening`** | `categories/organizers/agent-skills` | Blindaje OWASP/STRIDE: cero API keys, anti-DDoS (`RateLimiter` + tope 16 KB), anti-inyección (SQLi/XSS/Command/SSRF) y verificación criptográfica `SHA-256` de `.joblib`/`.onnx`. | En todas las fronteras de API y carga de modelos. |
 | **`frontend-design` + `impeccable` (`Operate`)** | `categories/frontend/` | Estética de *Sala de Control Orbital y Laboratorio de Combustión* (cero estética genérica de IA, contraste WCAG AA, modo `Operate` enfocado en legibilidad y escaneabilidad rápida para ingenieros). | Diseño de la UI del dashboard principal. |
 | **`animation-design`** | `categories/frontend/animation-design` | Curvas calibradas de Emil Kowalski (`--ease-out`, `--ease-drawer`), animaciones GPU únicamente sobre `transform`/`opacity` (<300ms), cambios de pestaña instantáneos y soporte obligatorio `@media (prefers-reduced-motion: reduce)`. | Micro-interacciones y transiciones de estado en la FSM y simulador. |
 | **`anatomy`** | `categories/frontend/anatomy` | Generación de ilustración técnica isométrica SVG de alta precisión para el **Gemelo Digital del Ducto `Saffire / CIR`** (ventilador, compuerta cortafuego, cámara óptica, probeta de combustible y boquilla PFE de niebla fina). | Módulo 3 (Gemelo Digital). |
 | **`shadcn-ui` + `frontend-ui-engineering` + `FREE_COMPONENT_LIBRARIES`** | `categories/frontend/` | Tabs accesibles WAI-ARIA, tarjetas compuestas, tablas filtrables y **Política estricta de Costo $0** (solo código libre MIT/Apache). | Estructura de componentes del dashboard. |
-| **`graphify` & `engram`** | `categories/organizers/` & `general/` | `engram` guarda decisiones técnicas entre sesiones para no perder contexto; `graphify` mapea dependencias del repo en `GRAPH_REPORT.md` (útil como diagrama técnico para los jueces). | Continuo + Documentación final. |
+| **`graphify` + `Graphviz (dot.exe)` & `engram`** | `categories/organizers/` & `general/` | `engram` persiste decisiones; `graphify` y **Graphviz** generan la base de conocimiento interconectada en `Obsidian Vault\Proyectos\NASA_Flame_In_Freefall\` (24 fichas PSI, `.canvas` y `.dot/.svg`) y `GRAPH_REPORT.md`. | Continuo + Base de Conocimiento + Cierre. |
 | **`faceless-channel` / `narrator` / `subtitles`** | `categories/media/` | Si deciden generar locución clara en inglés con subtítulos quemados sincronizados para el video obligatorio de 30 segundos del Space Apps. | Domingo tarde (Entrega y Pitch). |
 
 ---
@@ -229,7 +230,7 @@ Antes de escribir una sola línea de código del proyecto futuro, seleccionamos 
 | :--- | :--- | :---: | :---: | :--- |
 | **R-01** | Operación **100% propia sin API keys externas**: modelos `.joblib`/`.onnx` locales con verificación `SHA-256` + fallback ante fallo de red OSDR. | **MUST HAVE** | Mecatrónico | Desconectando el Wi-Fi, todos los modelos ML, simulaciones, rankings y FSM operan sin errores; hash corrupto aborta carga. |
 | **R-02** | Blindaje anti-DDoS, anti-inyección y cero alucinaciones: `RateLimiter`, payloads $\le 16\text{ KB}$, validación Pydantic estricta y citas verificadas contra los 24 IDs PSI. | **MUST HAVE** | Mecatrónico + Gestión | Pruebas de abuso (XSS, SQLi, SSRF, `>16KB`, ráfaga `429`) pasan al 100%; cero IDs inventados. |
-| **R-03** | Pruebas automatizadas (`assert` / `pytest`) sobre las transiciones de la FSM y cálculo de límites de inflamabilidad. | **SHOULD HAVE** | Mecatrónico | Suite de pruebas pasa al 100% antes de cada merge a `dev`/`main`. |
+| **R-03** | Suite TDD obligatoria (**RED $\rightarrow$ GREEN $\rightarrow$ REFACTOR**): Pruebas Unitarias (`~80%`) + Pruebas de Integración (`~15%`) + E2E (`~5%`) sobre física, ML, FSM y API. | **MUST HAVE** | Mecatrónico | `pytest tests/unit tests/integration -v` al 100% antes de cada merge a `dev`/`main`. |
 
 ### P — Performance (Rendimiento)
 | ID | Requerimiento | Prioridad MoSCoW | Responsable | Criterio de Verificación |
@@ -288,14 +289,18 @@ flowchart TD
 ### Estructura de Directorios Limpia (POO + Seguridad + Ponytail)
 ```text
 NASA/
+├── .agents/skills.json                 # Vinculo al Hub Local Obsidian Vault/agents
 ├── .gitignore                          # Bloquea .env*, *.key, *.pem, *.pkl sin verificar
 ├── .env.example                        # Variables seguras sin secretos
-├── SPEC.md                             # Contrato SDD v1.0 (POO, ML/DL propio, OWASP)
+├── LICENSE                             # Licencia MIT (sincronizada con GitHub)
+├── SPEC.md                             # Contrato SDD v1.1 (POO, ML/DL, TDD, writing-craft, OWASP)
 ├── PLAN_MAESTRO_FLAME_IN_FREEFALL.md   # Este plan maestro y análisis estratégico
+├── docs/graphs/                        # Grafos Graphviz (.dot, .svg, .png) de PSI/ML/TDD
+├── notebooks/                          # AERO_IGNIS_Colab_Training.ipynb (Colab T4 GPU + SHA-256)
 ├── planning/
 │   └── index.html                      # War Room interactivo (Roles, FURPS+, MoSCoW, 24 PSI)
 ├── tasks/
-│   └── todo.md                         # Backlog auditable en vertical slices
+│   └── todo.md                         # Backlog auditable TDD (Unit + Integración) en slices
 ├── data/
 │   ├── psi_combustion_24.json          # Censo estructurado + esquemas BASS-II/Saffire
 │   ├── bass_saffire_runs.csv           # Corridas de entrenamiento ML
@@ -305,13 +310,15 @@ NASA/
 │   ├── security.py                     # SecurityBoundaryGuard (Anti-DDoS, Anti-Inyección, SHA-256)
 │   ├── domain.py                       # Value Objects (@dataclass frozen) & PsiRepository
 │   ├── physics_ml.py                   # DimensionlessPhysicsCalculator + FlammabilityPredictor
-│   ├── ranking_nlp.py                  # TopsisMultiCriteriaRanker + ExtractiveNlpEngine
+│   ├── ranking_nlp.py                  # TopsisMultiCriteriaRanker + ExtractiveNlpEngine (writing-craft)
 │   ├── duct_twin.py                    # OnnxFlameVisionModel + DeterministicFsmController
 │   ├── governance.py                   # GovernanceAndSpinoffService (FMEA + Dual-Use)
-│   ├── train_models.py                 # Pipeline Build-Time reproducible + hashes SHA-256
+│   ├── train_models.py                 # Pipeline Build-Time CPU local + hashes SHA-256
 │   └── main.py                         # Ensamblaje FastAPI con cabeceras de seguridad
 ├── frontend/                           # Dashboard Web (HTML/CSS/JS + SVG Isométrico Anatomy)
-└── tests/                              # Pruebas unitarias POO, FSM, ML y pruebas de abuso OWASP
+└── tests/
+    ├── unit/                           # (~80%) Pruebas unitarias aisladas (ms)
+    └── integration/                    # (~15%) Pruebas de integración FastAPI / ONNX / OWASP
 ```
 
 ---

@@ -1,9 +1,9 @@
 # SPEC: AERO-IGNIS SI — Plataforma Web ML/DL Propia de Seguridad contra Incendios en Microgravedad
 
-> **Versión de Especificación:** `1.0.0` (SDD Phase 1 — Pendiente de Aprobación Humana antes de Codificar)  
+> **Versión de Especificación:** `1.1.0` (SDD Phase 1 — Pendiente de Aprobación Humana antes de Codificar)  
 > **Reto:** NASA Space Apps Challenge 2026 — *Flame in Freefall: SI-Powered Fire Safety Insights from Microgravity Combustion Data*  
-> **Paradigma:** Programación Orientada a Objetos (POO) + Pipeline 100% ML/DL Propio + Blindaje de Seguridad OWASP  
-> **Disciplina Git:** `<version> - <verbo> - <descripción>` (`topic branch` $\rightarrow$ `dev` $\rightarrow$ `main`)
+> **Paradigma:** Programación Orientada a Objetos (POO) + Pipeline 100% ML/DL Propio (`Colab T4` / `CPU Local`) + Blindaje OWASP + **TDD Piramidal (Unit + Integración)** + **`writing-craft`**  
+> **Disciplina Git:** `<version> - <verbo> - <descripción>` (`topic branch` $\rightarrow$ `dev` $\rightarrow$ `main` $\rightarrow$ `origin` GitHub MIT)
 
 ---
 
@@ -187,24 +187,56 @@ Todos los endpoints validan estrictamente en frontera mediante esquemas Pydantic
 
 ---
 
-### 5. Límites de Escalabilidad y Comandos Estándar
+### 5. Estrategia TDD (Pirámide Unitaria + Integración), Redacción `writing-craft` y Entrenamiento Dual Colab
+
+#### 5.1 Disciplina `test-driven-development` (RED $\rightarrow$ GREEN $\rightarrow$ REFACTOR)
+Cada clase POO y endpoint se construye escribiendo primero una prueba que falle (**RED**), implementando el código mínimo (**GREEN**) y limpiando sin alterar conducta (**REFACTOR**). Ante fallos reales se aplica el patrón **Prove-It** (test de reproducción primero).
+
+| Nivel de Pirámide | Proporción y Velocidad | Directorio / Herramienta | Qué Verifica Exactamente |
+| :--- | :---: | :--- | :--- |
+| **Pruebas Unitarias** | `~80%` (`<10 ms` c/u, sin red/E-S externas) | `tests/unit/` (`pytest`) | Física ($\text{Da}, \text{Pe}, V_f$), monotonía de riesgo, transiciones + histéresis de `DeterministicFsmController`, `TOPSIS`, `TextRank`, `RateLimiter`, sanitizador anti-XSS/SQLi y filtro anti-*AI slop* (`writing-craft`). |
+| **Pruebas de Integración** | `~15%` (segundos, procesos locales) | `tests/integration/` (`FastAPI TestClient`) | Contratos reales REST (`extra="forbid"`), carga real de `.joblib`/`.onnx` con verificación `SHA-256` (`IntegrityError` si cambia 1 byte), bloqueos `413` (`>16 KB`) y `429` (`DDoS`), `PsiRepository` y allowlist anti-SSRF en `OsdrApiClient`. |
+| **Pruebas E2E Navegador** | `~5%` (minutos) | Headless Browser / Chrome DevTools | Recorrido completo de los 4 módulos en `< 3 min`, `LCP < 2.5 s`, `CLS < 0.1`, `0` errores de consola y modo 100% offline. |
+
+#### 5.2 Contrato Editorial `writing-craft` (Cero *AI Slop*)
+`ExtractiveNlpEngine` aplica la jerarquía `writing-craft` (1. Integridad exacta de cifras/DOIs/IDs PSI $\rightarrow$ 2. Voz técnica $\rightarrow$ 3. Precisión directa):
+- **Perfil `Investigador` (`academic`):** Verbos calibrados a la evidencia (*"indica"*, *"es consistente con BASS-II"*), conservación de incertidumbre científica ($\text{Da}/\text{Pe}$) y cero hipérbole (*"revolucionario"*, *"demuestra universalmente"*).
+- **Perfil `Estudiante` (`plain`):** Oraciones `< 25` palabras, verbos activos en lugar de nominalizaciones burocráticas y explicación física clara sin tecnicismo vacío.
+- **Perfil `Gestor Industrial` (`plain + proposal`):** Conecta cada meta de seguridad con datos medibles (`NPR`, `-40%` peso SCBA, `PFE`) sin muletillas genéricas.
+
+#### 5.3 Entrenamiento Dual (`Google Colab T4 GPU` + `CPU Local`) y Base de Conocimiento Obsidian/Graphviz
+- **Google Colab (`notebooks/AERO_IGNIS_Colab_Training.ipynb`):** Descarga por streaming vía OSDR API v2 únicamente tablas `.csv` e imágenes clave (sin bajar `255 GB`), aplica *data augmentation* rotacional válido en $0g$, entrena/valida la CNN PyTorch + `RF/GBR` + `TF-IDF/K-Means` y exporta pesos `< 15 MB` con `manifest.sha256.json`.
+- **CPU Local (`backend/train_models.py`):** Replica la misma arquitectura de forma autónoma en `< 5 s` sobre `data/bass_saffire_runs.csv` para garantizar pruebas TDD y operación 100% offline.
+- **Grafos Graphviz (`docs/graphs/*.dot/*.svg`) y Obsidian:** Cartografía completa de las 24 PSI, los 10 recursos, los 3 modelos ML/DL y los roles del equipo en `Obsidian Vault\Proyectos\NASA_Flame_In_Freefall\`.
+
+---
+
+### 6. Límites de Escalabilidad y Comandos Estándar
 
 - **Presupuestos de Latencia:** Carga inicial `LCP < 2.5s`; inferencia ML tabular/TOPSIS `< 50ms`; inferencia ONNX `< 25ms`; cero bloqueos de red en arranque.
 - **Comandos de Verificación:**
-  - `pytest -v` (pruebas unitarias POO, límites físicos, transiciones FSM y pruebas de abuso/seguridad: payload >16KB, rate limit 429, XSS/SQLi rechazados con 422, hash SHA-256 corrupto abortado).
+  - `pytest tests/unit -v` (bucle rápido TDD)
+  - `pytest -v` (suite unitaria + integración completa: física, ML, FSM, `writing-craft` y abusos OWASP `413/422/429/IntegrityError`)
   - `python -m uvicorn backend.main:app --host 127.0.0.1 --port 8000`
   - `git diff --staged -i -G'password|secret|api_key|token' --name-only`
 
 ---
 
-### 6. Estructura de Directorios Objetivo
+### 7. Estructura de Directorios Objetivo
 
 ```text
 NASA/
+├── .agents/
+│   └── skills.json                     # Vinculo al Hub Local Obsidian Vault/agents
 ├── .gitignore
 ├── .env.example
+├── LICENSE                             # Licencia MIT (integrada desde GitHub)
 ├── SPEC.md
 ├── PLAN_MAESTRO_FLAME_IN_FREEFALL.md
+├── docs/
+│   └── graphs/                         # Grafos Graphviz (.dot, .svg, .png)
+├── notebooks/
+│   └── AERO_IGNIS_Colab_Training.ipynb # Entrenamiento Colab GPU T4 + SHA-256
 ├── planning/
 │   └── index.html
 ├── tasks/
@@ -226,29 +258,31 @@ NASA/
 │   ├── security.py          # SecurityBoundaryGuard, RateLimiter, HeadersMiddleware
 │   ├── domain.py            # Dataclasses inmutables & PsiRepository
 │   ├── physics_ml.py        # DimensionlessPhysicsCalculator + FlammabilityPredictor
-│   ├── ranking_nlp.py       # TopsisMultiCriteriaRanker + ExtractiveNlpEngine
+│   ├── ranking_nlp.py       # TopsisMultiCriteriaRanker + ExtractiveNlpEngine (writing-craft)
 │   ├── duct_twin.py         # OnnxFlameVisionModel + DeterministicFsmController
 │   ├── governance.py        # GovernanceAndSpinoffService (FMEA + Dual-Use)
-│   ├── train_models.py      # Script reproducible Build-Time + generador SHA-256
+│   ├── train_models.py      # Script reproducible CPU local + generador SHA-256
 │   └── main.py              # FastAPI app ensamblando capas POO
 ├── frontend/
 │   ├── index.html
 │   ├── styles.css
 │   └── app.js
 └── tests/
-    ├── test_security_hardening.py
-    ├── test_physics_and_ml.py
-    ├── test_ranking_nlp.py
-    ├── test_duct_fsm.py
-    └── test_api_contracts.py
+    ├── unit/                # (~80%) Fisica, FSM, TOPSIS, writing-craft, Sanitizer
+    └── integration/         # (~15%) API FastAPI, pesos .joblib/.onnx, 413/422/429
 ```
 
 ---
 
-### 7. Plan de Versionado Git (`<version> - <verbo> - <descripción>`)
+### 8. Plan de Versionado Git (`<version> - <verbo> - <descripción>`)
 
 - `0.1.0 - docs - inicializar plan maestro y tablero war room para flame in freefall` (`main`)
+- `0.1.1 - add - integrar licencia mit desde repositorio remoto github` (`main` $\leftarrow$ `origin/main`)
 - `0.2.0 - docs - redactar spec sdd con arquitectura poo pipeline ml propio y seguridad owasp`
+- `0.2.1 - refactor - actualizar plan maestro y war room al pipeline ml propio y marcar avance gate 1`
+- `0.2.2 - docs - integrar spec v1 y actualizacion de war room en rama dev` (`dev`)
+- `0.2.3 - add - sincronizar licencia mit de main en rama dev` (`dev`)
+- `0.2.4`–`0.2.6`: Base de conocimiento Obsidian, grafos Graphviz (`dot`), Colab `.ipynb`, `writing-craft` y estrategia piramidal TDD
 - `0.3.0 - add - estructurar dataset psi de 24 investigaciones y casos forenses con pruebas` (`Task 1`)
 - `0.4.0 - feat - implementar capa security guard anti ddos anti inyeccion y sha256` (`Task 2`)
 - `0.5.0 - feat - entrenar pipeline ml propio random forest cnn onnx y clustering tfidf` (`Task 3`)
