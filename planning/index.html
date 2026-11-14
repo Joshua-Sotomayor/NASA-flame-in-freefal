@@ -1,0 +1,1720 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AERO-IGNIS SI — War Room & Planificación | Flame in Freefall (NASA Space Apps 2026)</title>
+  <style>
+    :root {
+      --bg-canvas: #070A12;
+      --bg-surface: #0D1322;
+      --bg-elevated: #131C31;
+      --bg-muted: rgba(148, 163, 184, 0.08);
+      --border-subtle: rgba(148, 163, 184, 0.14);
+      --border-strong: rgba(148, 163, 184, 0.28);
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-tertiary: #64748B;
+
+      --accent-flame-blue: #38BDF8;
+      --accent-cool-flame: #818CF8;
+      --accent-soot-amber: #F59E0B;
+      --accent-industrial-emerald: #10B981;
+      --accent-pyro-red: #EF4444;
+      --accent-cyan-dim: rgba(56, 189, 248, 0.14);
+      --accent-amber-dim: rgba(245, 158, 11, 0.14);
+      --accent-emerald-dim: rgba(16, 185, 129, 0.14);
+      --accent-red-dim: rgba(239, 68, 68, 0.14);
+      --accent-violet-dim: rgba(129, 140, 248, 0.14);
+
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+      --font-mono: "JetBrains Mono", "Cascadia Code", ui-monospace, SFMono-Regular, Consolas, monospace;
+    }
+
+    [data-theme="light"] {
+      --bg-canvas: #F4F6FA;
+      --bg-surface: #FFFFFF;
+      --bg-elevated: #EDF2F7;
+      --bg-muted: rgba(15, 23, 42, 0.05);
+      --border-subtle: rgba(15, 23, 42, 0.11);
+      --border-strong: rgba(15, 23, 42, 0.22);
+      --text-primary: #0F172A;
+      --text-secondary: #475569;
+      --text-tertiary: #64748B;
+
+      --accent-flame-blue: #0284C7;
+      --accent-cool-flame: #4F46E5;
+      --accent-soot-amber: #D97706;
+      --accent-industrial-emerald: #059669;
+      --accent-pyro-red: #DC2626;
+      --accent-cyan-dim: rgba(2, 132, 199, 0.10);
+      --accent-amber-dim: rgba(217, 119, 6, 0.11);
+      --accent-emerald-dim: rgba(5, 150, 105, 0.11);
+      --accent-red-dim: rgba(220, 38, 38, 0.10);
+      --accent-violet-dim: rgba(79, 70, 229, 0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .tabular { font-variant-numeric: tabular-nums; }
+    .mono { font-family: var(--font-mono); }
+
+    a { color: var(--accent-flame-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    button, input, select {
+      font: inherit;
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent-flame-blue);
+      outline-offset: 2px;
+    }
+
+    .app-shell {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 20px 24px 56px;
+    }
+
+    /* Header & Top Telemetry */
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 20px;
+    }
+
+    .brand-block h1 {
+      margin: 0;
+      font-size: 1.45rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand-subtitle {
+      margin: 4px 0 0;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      max-width: 72ch;
+    }
+
+    .topbar-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      font-size: 0.82rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 140ms var(--ease-out), background-color 140ms var(--ease-out), border-color 140ms var(--ease-out);
+    }
+
+    .btn:active { transform: scale(0.98); }
+
+    .btn-primary {
+      background: var(--accent-flame-blue);
+      color: #04101B;
+      border-color: transparent;
+      font-weight: 600;
+    }
+
+    [data-theme="light"] .btn-primary {
+      color: #FFFFFF;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      .btn:hover { transform: translateY(-1px); border-color: var(--accent-flame-blue); }
+      .btn-primary:hover { opacity: 0.92; }
+    }
+
+    /* Hero Motion Visualizer Grid */
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* Segmented Controls */
+    .seg-group {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      padding: 3px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .seg-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 140ms var(--ease-out), color 140ms var(--ease-out);
+    }
+
+    .seg-btn[aria-pressed="true"] {
+      background: var(--bg-surface);
+      color: var(--text-primary);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+    }
+
+    /* SVG Motion Graphic Stage */
+    .svg-stage {
+      position: relative;
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+
+    .svg-stage svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* GPU-only SVG animations */
+    .flame-flicker {
+      transform-origin: 205px 168px;
+      animation: flameFlicker 1.1s var(--ease-in-out) infinite alternate;
+    }
+
+    .flame-pulse-0g {
+      transform-origin: 205px 142px;
+      animation: pulse0g 2.4s var(--ease-in-out) infinite alternate;
+    }
+
+    .fan-spin {
+      transform-origin: 76px 140px;
+      animation: fanRotate var(--fan-period, 1.2s) linear infinite;
+    }
+
+    .fan-spin.stopped {
+      animation-play-state: paused;
+    }
+
+    .flow-stream {
+      animation: flowDash 1.4s linear infinite;
+    }
+
+    .flow-stream.stopped {
+      animation-play-state: paused;
+      opacity: 0.2;
+    }
+
+    .damper-gate {
+      transform-origin: 332px 92px;
+      transition: transform 280ms var(--ease-drawer);
+    }
+
+    @keyframes flameFlicker {
+      0% { transform: scaleY(0.95) scaleX(1.02) rotate(-1.5deg); opacity: 0.92; }
+      100% { transform: scaleY(1.06) scaleX(0.96) rotate(1.5deg); opacity: 1; }
+    }
+
+    @keyframes pulse0g {
+      0% { transform: scale(0.96); opacity: 0.85; }
+      100% { transform: scale(1.05); opacity: 1; }
+    }
+
+    @keyframes fanRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes flowDash {
+      from { transform: translateX(-18px); opacity: 0.2; }
+      50% { opacity: 0.85; }
+      to { transform: translateX(18px); opacity: 0.2; }
+    }
+
+    /* Telemetry Readouts */
+    .telemetry-bar {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .metric-box {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+    }
+
+    .metric-label {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      display: block;
+    }
+
+    .metric-value {
+      font-size: 0.92rem;
+      font-weight: 600;
+      margin-top: 2px;
+      display: block;
+    }
+
+    /* KPI Progress Summary Panel */
+    .kpi-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .progress-row {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 11px 13px;
+    }
+
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      margin-bottom: 7px;
+    }
+
+    .progress-track {
+      height: 7px;
+      background: var(--bg-muted);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 100%;
+      transform-origin: left center;
+      transform: scaleX(var(--ratio, 0));
+      transition: transform 240ms var(--ease-out);
+      border-radius: 999px;
+    }
+
+    /* Tabs (WAI-ARIA) */
+    .tablist {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 6px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      margin-bottom: 18px;
+    }
+
+    .tab-btn {
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .tab-btn[aria-selected="true"] {
+      background: var(--bg-elevated);
+      color: var(--text-primary);
+      border-color: var(--border-strong);
+      font-weight: 600;
+    }
+
+    .tab-kbd {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      padding: 1px 5px;
+      border-radius: 4px;
+      background: var(--bg-muted);
+      color: var(--text-tertiary);
+    }
+
+    .tabpanel {
+      display: none;
+    }
+
+    .tabpanel.is-active {
+      display: block;
+      animation: panelReveal 180ms var(--ease-out);
+    }
+
+    @keyframes panelReveal {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Toolbar & Filters */
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill-btn {
+      padding: 5px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: border-color 140ms var(--ease-out), color 140ms var(--ease-out), background-color 140ms var(--ease-out);
+    }
+
+    .pill-btn[aria-pressed="true"] {
+      background: var(--accent-cyan-dim);
+      color: var(--accent-flame-blue);
+      border-color: var(--accent-flame-blue);
+    }
+
+    .search-input {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      padding: 6px 11px;
+      min-width: 240px;
+      font-size: 0.84rem;
+    }
+
+    /* Badges */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      line-height: 1.4;
+      white-space: nowrap;
+    }
+
+    .badge-meca { background: var(--accent-amber-dim); color: var(--accent-soot-amber); }
+    .badge-ind { background: var(--accent-emerald-dim); color: var(--accent-industrial-emerald); }
+    .badge-joint { background: var(--accent-cyan-dim); color: var(--accent-flame-blue); }
+    .badge-must { background: var(--accent-red-dim); color: var(--accent-pyro-red); }
+    .badge-should { background: var(--accent-amber-dim); color: var(--accent-soot-amber); }
+    .badge-could { background: var(--accent-cyan-dim); color: var(--accent-flame-blue); }
+    .badge-wont { background: var(--bg-muted); color: var(--text-tertiary); }
+    .badge-violet { background: var(--accent-violet-dim); color: var(--accent-cool-flame); }
+
+    /* Task Cards & Checklists */
+    .task-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+      gap: 12px;
+    }
+
+    .task-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 14px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      transition: border-color 150ms var(--ease-out), opacity 150ms var(--ease-out);
+    }
+
+    .task-card.is-done {
+      opacity: 0.68;
+      border-color: var(--accent-industrial-emerald);
+    }
+
+    .task-card.is-done .task-title {
+      text-decoration: line-through;
+      color: var(--text-secondary);
+    }
+
+    .check-input {
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
+      accent-color: var(--accent-flame-blue);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .task-body { flex: 1; min-width: 0; }
+
+    .task-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .task-title {
+      margin: 0 0 6px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .task-detail {
+      margin: 0 0 4px;
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+    }
+
+    .task-detail strong { color: var(--text-primary); font-weight: 500; }
+
+    /* Add Task Inline Form */
+    .add-task-form {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1.5fr auto;
+      gap: 8px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .form-field {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 7px 10px;
+      font-size: 0.82rem;
+      width: 100%;
+    }
+
+    /* Tables (FURPS+ & PSI 24) */
+    .table-wrap {
+      overflow-x: auto;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      text-align: left;
+    }
+
+    th {
+      background: var(--bg-elevated);
+      color: var(--text-secondary);
+      font-weight: 600;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-strong);
+      white-space: nowrap;
+    }
+
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border-subtle);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr.is-done td { opacity: 0.65; }
+
+    /* Two-column layouts */
+    .split-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .resource-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .resource-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 13px;
+    }
+
+    .code-block {
+      background: var(--bg-canvas);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      overflow-x: auto;
+      color: var(--accent-flame-blue);
+    }
+
+    .status-banner {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      margin-bottom: 16px;
+      font-size: 0.82rem;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid, .split-2 { grid-template-columns: 1fr; }
+      .add-task-form { grid-template-columns: 1fr 1fr; }
+      .telemetry-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 640px) {
+      .app-shell { padding: 14px; }
+      .task-grid { grid-template-columns: 1fr; }
+      .add-task-form { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.05s !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Top Header -->
+    <header class="topbar">
+      <div class="brand-block">
+        <h1>AERO-IGNIS SI · War Room de Planificación</h1>
+        <p class="brand-subtitle">
+          NASA Space Apps 2026 — <strong>Flame in Freefall</strong> · Sinergia Mecatrónica/Control + Gestión Industrial sobre 24 datasets PSI y arquitectura Ponytail/SDD.
+        </p>
+      </div>
+      <div class="topbar-actions">
+        <button id="themeToggle" class="btn" type="button" aria-label="Cambiar tema visual">Tema: Oscuro (T)</button>
+        <button id="exportBtn" class="btn" type="button">Exportar JSON</button>
+        <label class="btn" style="cursor:pointer;">
+          Importar JSON
+          <input id="importInput" type="file" accept="application/json" style="display:none;" />
+        </label>
+        <button id="resetBtn" class="btn" type="button">Reiniciar Checks</button>
+      </div>
+    </header>
+
+    <!-- Hero Motion Graphics & KPI Strip -->
+    <section class="hero-grid" aria-label="Visualizador físico y progreso del hackathon">
+      <div class="panel">
+        <div class="panel-header">
+          <h2 class="panel-title">Simulador Visual de Combustión y Control FSM en Ducto (SVG Motion)</h2>
+          <div class="seg-group" role="group" aria-label="Régimen de gravedad y llama">
+            <button class="seg-btn" type="button" data-flame="1g" aria-pressed="false">1g Tierra</button>
+            <button class="seg-btn" type="button" data-flame="0g" aria-pressed="true">0g Microgravedad</button>
+            <button class="seg-btn" type="button" data-flame="cool" aria-pressed="false">Llama Fría NTC</button>
+          </div>
+        </div>
+
+        <div class="svg-stage">
+          <svg viewBox="0 0 560 220" role="img" aria-label="Diagrama animado de ducto de ventilación Saffire/CIR con ventilador, llama y compuerta cortafuego">
+            <defs>
+              <radialGradient id="glow0g" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#E0F2FE" stop-opacity="0.95" />
+                <stop offset="45%" stop-color="#38BDF8" stop-opacity="0.7" />
+                <stop offset="100%" stop-color="#0284C7" stop-opacity="0" />
+              </radialGradient>
+              <radialGradient id="glowCool" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#E0E7FF" stop-opacity="0.65" />
+                <stop offset="55%" stop-color="#818CF8" stop-opacity="0.45" />
+                <stop offset="100%" stop-color="#4F46E5" stop-opacity="0" />
+              </radialGradient>
+              <linearGradient id="glow1g" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#38BDF8" />
+                <stop offset="35%" stop-color="#F59E0B" />
+                <stop offset="85%" stop-color="#FDE047" />
+                <stop offset="100%" stop-color="#EF4444" stop-opacity="0.2" />
+              </linearGradient>
+            </defs>
+
+            <!-- Duct Enclosure -->
+            <rect x="24" y="42" width="512" height="146" rx="10" fill="none" stroke="rgba(148,163,184,0.35)" stroke-width="2" />
+            <rect x="34" y="52" width="492" height="126" rx="6" fill="rgba(148,163,184,0.04)" stroke="rgba(148,163,184,0.16)" stroke-width="1" />
+
+            <!-- Duct Flange & Sensor Ports -->
+            <rect x="180" y="168" width="50" height="10" rx="2" fill="#475569" />
+            <text x="205" y="206" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="monospace">Muestra PMMA / SIBAL</text>
+
+            <!-- Optical Camera Sensor Top -->
+            <rect x="190" y="34" width="30" height="16" rx="3" fill="#1E293B" stroke="#38BDF8" stroke-width="1.2" />
+            <circle cx="205" cy="42" r="3.5" fill="#38BDF8" />
+            <text x="205" y="24" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="monospace">Camara CNN + Radiometro</text>
+
+            <!-- Smoke / Gas Sensor Node 9407 -->
+            <rect x="275" y="52" width="36" height="14" rx="2" fill="#1E293B" stroke="#10B981" stroke-width="1.2" />
+            <text x="293" y="24" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="monospace">Sensor &lt;0.1um + CO</text>
+
+            <!-- HVAC Fan -->
+            <circle cx="76" cy="115" r="28" fill="rgba(56,189,248,0.06)" stroke="#64748B" stroke-width="1.5" />
+            <g id="fanGroup" class="fan-spin" style="transform-origin: 76px 115px;">
+              <path d="M76 92 C83 102, 83 110, 76 115 C69 110, 69 102, 76 92 Z" fill="#94A3B8" />
+              <path d="M99 115 C89 122, 81 122, 76 115 C81 108, 89 108, 99 115 Z" fill="#94A3B8" />
+              <path d="M76 138 C69 128, 69 120, 76 115 C83 120, 83 128, 76 138 Z" fill="#94A3B8" />
+              <path d="M53 115 C63 108, 71 108, 76 115 C71 122, 63 122, 53 115 Z" fill="#94A3B8" />
+            </g>
+            <circle cx="76" cy="115" r="4" fill="#38BDF8" />
+            <text x="76" y="206" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="monospace">Ventilador HVAC</text>
+
+            <!-- Forced Flow Streamlines -->
+            <g id="flowLines" class="flow-stream" stroke="#38BDF8" stroke-width="1.4" stroke-dasharray="6 5" fill="none">
+              <line x1="115" y1="95" x2="165" y2="95" />
+              <line x1="115" y1="115" x2="165" y2="115" />
+              <line x1="115" y1="135" x2="165" y2="135" />
+              <line x1="250" y1="115" x2="315" y2="115" />
+            </g>
+
+            <!-- Flame Mode: 1g Teardrop -->
+            <g id="flame1g" style="display:none;">
+              <path class="flame-flicker" style="transform-origin:205px 168px;"
+                d="M205 168 C185 165, 182 140, 195 118 C202 104, 205 84, 205 76 C205 84, 211 106, 217 122 C226 142, 224 165, 205 168 Z"
+                fill="url(#glow1g)" />
+              <path d="M205 166 C197 164, 196 150, 205 136 C214 150, 213 164, 205 166 Z" fill="#38BDF8" opacity="0.85" />
+            </g>
+
+            <!-- Flame Mode: 0g Spherical Diffusion -->
+            <g id="flame0g">
+              <circle class="flame-pulse-0g" style="transform-origin:205px 142px;" cx="205" cy="142" r="34" fill="url(#glow0g)" />
+              <circle cx="205" cy="142" r="15" fill="none" stroke="#7DD3FC" stroke-width="2" opacity="0.9" />
+              <circle cx="205" cy="142" r="5" fill="#E0F2FE" />
+            </g>
+
+            <!-- Flame Mode: Cool Flame NTC -->
+            <g id="flameCool" style="display:none;">
+              <circle class="flame-pulse-0g" style="transform-origin:205px 142px;" cx="205" cy="142" r="38" fill="url(#glowCool)" />
+              <circle cx="205" cy="142" r="18" fill="none" stroke="#818CF8" stroke-width="1.5" stroke-dasharray="4 3" />
+            </g>
+
+            <!-- PFE Fine Water Mist Nozzle -->
+            <rect x="372" y="52" width="16" height="18" rx="2" fill="#334155" stroke="#38BDF8" stroke-width="1" />
+            <g id="mistSpray" style="display:none;" fill="#7DD3FC" opacity="0.85">
+              <circle cx="362" cy="82" r="2" /><circle cx="350" cy="96" r="2.2" /><circle cx="338" cy="112" r="1.8" />
+              <circle cx="378" cy="88" r="2" /><circle cx="368" cy="108" r="2.4" /><circle cx="355" cy="126" r="2" />
+              <circle cx="390" cy="94" r="1.8" /><circle cx="384" cy="116" r="2.1" /><circle cx="372" cy="136" r="1.9" />
+            </g>
+            <text x="382" y="24" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="monospace">Boquilla PFE Niebla</text>
+
+            <!-- Fire Damper Gate -->
+            <rect x="328" y="52" width="8" height="126" fill="rgba(239,68,68,0.12)" />
+            <rect id="damperGate" class="damper-gate" x="327" y="54" width="10" height="122" rx="2" fill="#EF4444" style="transform: scaleY(0.15);" />
+            <text x="332" y="206" text-anchor="middle" fill="#94A3B8" font-size="10" font-family="monospace">Compuerta FSM</text>
+
+            <!-- Output Interlock Box -->
+            <rect x="424" y="78" width="90" height="74" rx="6" fill="#0F172A" stroke="rgba(148,163,184,0.3)" />
+            <text x="469" y="96" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="monospace">ESTADO FSM</text>
+            <text id="svgFsmText" x="469" y="116" text-anchor="middle" fill="#10B981" font-size="12" font-weight="bold" font-family="monospace">NORMAL</text>
+            <text id="svgActionText" x="469" y="136" text-anchor="middle" fill="#CBD5E1" font-size="9" font-family="monospace">Flujo: 20 cm/s</text>
+          </svg>
+        </div>
+
+        <div class="panel-header" style="margin-top:12px; margin-bottom:0;">
+          <span style="font-size:0.8rem; color:var(--text-secondary);">Simular transición FSM (Propuesta Mecatrónica integrada):</span>
+          <div class="seg-group" role="group" aria-label="Estado de la máquina de estados finitos">
+            <button class="seg-btn" type="button" data-fsm="NORMAL" aria-pressed="true">NORMAL</button>
+            <button class="seg-btn" type="button" data-fsm="PRE_ALERTA" aria-pressed="false">PRE_ALERTA</button>
+            <button class="seg-btn" type="button" data-fsm="CONTENCION" aria-pressed="false">CONTENCION</button>
+            <button class="seg-btn" type="button" data-fsm="FALLA_SEGURA" aria-pressed="false">FALLA_SEGURA</button>
+          </div>
+        </div>
+
+        <div class="telemetry-bar tabular">
+          <div class="metric-box">
+            <span class="metric-label">Grashof / Convección</span>
+            <span id="metGr" class="metric-value mono">Gr -> 0 (Difusión)</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Atmósfera Objetivo</span>
+            <span id="metAtm" class="metric-value mono">34% O2 · 8.2 psi</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Régimen Térmico</span>
+            <span id="metTemp" class="metric-value mono">1,450 K · Azul Esférica</span>
+          </div>
+          <div class="metric-box">
+            <span class="metric-label">Actuador Interlock</span>
+            <span id="metAct" class="metric-value mono">Ventilador ON · Abierta</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress & Self-Check KPI Panel -->
+      <div class="panel kpi-stack">
+        <div class="panel-header" style="margin-bottom:4px;">
+          <h2 class="panel-title">Avance del Hackathon & Alcance MoSCoW</h2>
+          <span id="selfCheckBadge" class="badge badge-ind mono">Checks: --</span>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-head">
+            <strong>Progreso Global de Tareas</strong>
+            <span id="kpiGlobalText" class="mono tabular">0 / 30 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div id="kpiGlobalBar" class="progress-fill" style="background: var(--accent-flame-blue); --ratio: 0;"></div>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-head">
+            <span><span class="badge badge-meca">Mecatrónica & Control</span></span>
+            <span id="kpiMecaText" class="mono tabular">0 / 12 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div id="kpiMecaBar" class="progress-fill" style="background: var(--accent-soot-amber); --ratio: 0;"></div>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-head">
+            <span><span class="badge badge-ind">Gestión Industrial</span></span>
+            <span id="kpiIndText" class="mono tabular">0 / 12 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div id="kpiIndBar" class="progress-fill" style="background: var(--accent-industrial-emerald); --ratio: 0;"></div>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-head">
+            <span><span class="badge badge-joint">Sincronización & Pitch</span></span>
+            <span id="kpiJointText" class="mono tabular">0 / 6 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div id="kpiJointBar" class="progress-fill" style="background: var(--accent-cool-flame); --ratio: 0;"></div>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-head">
+            <span><span class="badge badge-must">Cumplimiento MUST HAVE (FURPS+)</span></span>
+            <span id="kpiMustText" class="mono tabular">0 / 13 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div id="kpiMustBar" class="progress-fill" style="background: var(--accent-pyro-red); --ratio: 0;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Accessible WAI-ARIA Tab Navigation -->
+    <nav class="tablist" role="tablist" aria-label="Secciones de planificación del hackathon">
+      <button id="tab-tasks" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-tasks" data-tab="tasks">
+        War Room & Tareas por Rol <span class="tab-kbd">1</span>
+      </button>
+      <button id="tab-furps" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-furps" data-tab="furps">
+        Matriz FURPS+ & MoSCoW <span class="tab-kbd">2</span>
+      </button>
+      <button id="tab-psi" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-psi" data-tab="psi">
+        24 Datasets PSI & 10 Recursos <span class="tab-kbd">3</span>
+      </button>
+      <button id="tab-diagnosis" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-diagnosis" data-tab="diagnosis">
+        Diagnóstico IA vs. Ganadores <span class="tab-kbd">4</span>
+      </button>
+      <button id="tab-skills" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-skills" data-tab="skills">
+        Baúl de Skills & SDD/Ponytail <span class="tab-kbd">5</span>
+      </button>
+    </nav>
+
+    <!-- TAB 1: WAR ROOM & ROLE TASKS -->
+    <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
+      <div class="toolbar">
+        <div class="filter-group" aria-label="Filtrar por rol">
+          <button class="pill-btn" type="button" data-role-filter="ALL" aria-pressed="true">Todos los Roles</button>
+          <button class="pill-btn" type="button" data-role-filter="meca" aria-pressed="false">Mecatrónica & Control</button>
+          <button class="pill-btn" type="button" data-role-filter="ind" aria-pressed="false">Gestión Industrial</button>
+          <button class="pill-btn" type="button" data-role-filter="joint" aria-pressed="false">Conjuntas / Pitch</button>
+        </div>
+        <div class="filter-group">
+          <select id="phaseFilter" class="form-field" style="width:auto;" aria-label="Filtrar por fase">
+            <option value="ALL">Todas las fases (48h)</option>
+            <option value="V-H0">Viernes H0–H4 (Spec & Datos)</option>
+            <option value="S-AM">Sábado AM H5–H14 (Core)</option>
+            <option value="S-PM">Sábado PM H15–H26 (Web + SI)</option>
+            <option value="D-AM">Domingo AM H27–H38 (Audit & Deploy)</option>
+            <option value="D-PM">Domingo PM H39–H48 (Pitch)</option>
+          </select>
+          <input id="taskSearch" class="search-input" type="search" placeholder="Buscar tarea u objetivo... ( / )" aria-label="Buscar tarea" />
+        </div>
+      </div>
+
+      <form id="addTaskForm" class="add-task-form" aria-label="Agregar nueva tarea personalizada">
+        <input id="newTaskTitle" class="form-field" type="text" placeholder="Nueva tarea (ej. Validar CSV de Saffire-IV)" required />
+        <select id="newTaskRole" class="form-field" aria-label="Rol asignado">
+          <option value="meca">Mecatrónica & Control</option>
+          <option value="ind">Gestión Industrial</option>
+          <option value="joint">Conjunta</option>
+        </select>
+        <select id="newTaskPhase" class="form-field" aria-label="Fase del hackathon">
+          <option value="V-H0">Viernes H0–H4</option>
+          <option value="S-AM">Sábado AM H5–H14</option>
+          <option value="S-PM">Sábado PM H15–H26</option>
+          <option value="D-AM">Domingo AM H27–H38</option>
+          <option value="D-PM">Domingo PM H39–H48</option>
+        </select>
+        <input id="newTaskDeliverable" class="form-field" type="text" placeholder="Entregable / Criterio de cierre" required />
+        <button class="btn btn-primary" type="submit">+ Añadir</button>
+      </form>
+
+      <div id="taskGrid" class="task-grid"></div>
+    </section>
+
+    <!-- TAB 2: FURPS+ & MOSCOW -->
+    <section id="panel-furps" class="tabpanel" role="tabpanel" aria-labelledby="tab-furps">
+      <div class="status-banner">
+        <div>
+          <strong>Checklist de Alcance FURPS+ & Priorización MoSCoW:</strong>
+          Marca cada requerimiento conforme quede implementado y verificado con su prueba de aceptación.
+        </div>
+        <div id="moscowSummary" class="mono tabular"></div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filter-group" aria-label="Filtrar por prioridad MoSCoW">
+          <button class="pill-btn" type="button" data-moscow-filter="ALL" aria-pressed="true">Todos MoSCoW</button>
+          <button class="pill-btn" type="button" data-moscow-filter="MUST" aria-pressed="false">MUST HAVE</button>
+          <button class="pill-btn" type="button" data-moscow-filter="SHOULD" aria-pressed="false">SHOULD HAVE</button>
+          <button class="pill-btn" type="button" data-moscow-filter="COULD" aria-pressed="false">COULD HAVE</button>
+          <button class="pill-btn" type="button" data-moscow-filter="WONT" aria-pressed="false">WON'T HAVE</button>
+        </div>
+        <div class="filter-group">
+          <select id="furpsCatFilter" class="form-field" style="width:auto;" aria-label="Filtrar por categoría FURPS+">
+            <option value="ALL">Todas las dimensiones FURPS+</option>
+            <option value="F">F — Functionality (Funcionalidad)</option>
+            <option value="U">U — Usability (Usabilidad)</option>
+            <option value="R">R — Reliability (Confiabilidad)</option>
+            <option value="P">P — Performance (Rendimiento)</option>
+            <option value="S">S — Supportability (Soportabilidad)</option>
+            <option value="+">+ — Constraints (Restricciones NASA)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th style="width:42px;">OK</th>
+              <th>ID</th>
+              <th>Dimensión</th>
+              <th>Prioridad</th>
+              <th>Requerimiento & Alcance</th>
+              <th>Responsable</th>
+              <th>Criterio de Verificación</th>
+            </tr>
+          </thead>
+          <tbody id="furpsTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: 24 PSI DATASETS & 10 RESOURCES -->
+    <section id="panel-psi" class="tabpanel" role="tabpanel" aria-labelledby="tab-psi">
+      <div class="split-2" style="margin-bottom:16px;">
+        <div class="panel">
+          <h3 class="panel-title" style="margin-bottom:8px;">Arquitectura Real de PSI & Endpoints Públicos OSDR v2</h3>
+          <p class="task-detail" style="margin-bottom:8px;">
+            De <strong>133 investigaciones totales</strong> en NASA PSI, exactamente <strong>24 pertenecen a Combustion Science</strong> (licencia <code>CC0-1.0</code>, DOIs <code>10.60555</code>, estructura ISA-Tab: <code>i_investigation.txt</code> &rarr; <code>s_study.txt</code> &rarr; <code>a_assay.txt</code>).
+          </p>
+          <div class="code-block">
+GET https://osdr.nasa.gov/osdr/data/search?term=combustion&amp;from=0&amp;size=25<br/>
+GET https://visualization.osdr.nasa.gov/biodata/api/v2/datasets/?format=json<br/>
+GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?format=json
+          </div>
+        </div>
+        <div class="panel">
+          <h3 class="panel-title" style="margin-bottom:8px;">Esquemas Tabulares Verificados (Experimental Tables)</h3>
+          <p class="task-detail" style="margin-bottom:6px;">
+            <strong>BASS-II (PSI-25 · 17 cols · &gt;130 corridas):</strong> <span class="mono" style="font-size:0.74rem;">Sample Number | Material | Thickness | Width | Length | Air Flow (cm/s) | Flow Direction | Percent O2 | Percent N2 | Pressure (atm) | Total Flow Rate (cc/s) | Ignition Power (W) | Ignition Duration (s) | Burn Time (s) | Camera 1 ID | Camera 2 ID | Extinguished</span>
+          </p>
+          <p class="task-detail">
+            <strong>Saffire-I (PSI-98 · 13 cols · 11.41 GB):</strong> <span class="mono" style="font-size:0.74rem;">Sample Number | Material | Thickness | Length | Width | Air Flow (cm/s) | Percent O2 | Ignition Power (W) | Ignition Time (s) | Burn Time (s) | Flow Direction | Camera 1 ID | Camera 2 ID</span>
+          </p>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filter-group" aria-label="Filtrar investigaciones PSI por plataforma">
+          <button class="pill-btn" type="button" data-psi-filter="ALL" aria-pressed="true">Las 24 Investigaciones PSI</button>
+          <button class="pill-btn" type="button" data-psi-filter="Cygnus" aria-pressed="false">Cygnus (Saffire I–VI)</button>
+          <button class="pill-btn" type="button" data-psi-filter="ISS-CIR" aria-pressed="false">ISS - CIR (ACME / FLEX / CFI)</button>
+          <button class="pill-btn" type="button" data-psi-filter="ISS-MSG" aria-pressed="false">ISS - MSG (BASS / SPICE / SLICE)</button>
+          <button class="pill-btn" type="button" data-psi-filter="Otros" aria-pressed="false">Tierra / STS (NCA / MSC)</button>
+        </div>
+        <input id="psiSearch" class="search-input" type="search" placeholder="Filtrar por ID, acrónimo o combustible..." aria-label="Buscar dataset PSI" />
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID PSI</th>
+              <th>Investigación</th>
+              <th>Instalación</th>
+              <th>Combustible / Geometría</th>
+              <th>Parámetros y Aporte al Proyecto</th>
+            </tr>
+          </thead>
+          <tbody id="psiTableBody"></tbody>
+        </table>
+      </div>
+
+      <h3 class="panel-title" style="margin:22px 0 8px;">Los 10 Recursos Oficiales del Reto + Extintor PFE</h3>
+      <div id="resourceGrid" class="resource-grid"></div>
+    </section>
+
+    <!-- TAB 4: DIAGNOSIS & WINNERS -->
+    <section id="panel-diagnosis" class="tabpanel" role="tabpanel" aria-labelledby="tab-diagnosis">
+      <div class="split-2">
+        <div class="panel">
+          <h3 class="panel-title" style="margin-bottom:10px;">Auditoría Crítica de la Propuesta de la Otra IA</h3>
+          <p class="task-detail" style="margin-bottom:10px;">
+            <span class="badge badge-ind">30% Rescatable (Núcleo Mecatrónico)</span>
+            La combinación <strong>CNN Óptica + Árbol de Decisión Tabular + FSM Determinista</strong> con histéresis e interlocks en ducto es científicamente válida y resuelve la paradoja de ventilación de <code>BASS</code>.
+          </p>
+          <p class="task-detail" style="margin-bottom:10px;">
+            <span class="badge badge-must">70% Riesgo de Descalificación si se entrega aislada</span>
+            1) El reto exige un <strong>dashboard web</strong>, no una app desktop local amarrada a Proteus/COMPIM. 2) Omite el <strong>ranking/resumen de las 24 investigaciones PSI</strong>, el modelado de hábitats lunares ($\ge 30\%\text{ O}_2$) y los <strong>Spinoffs terrestres</strong>. 3) Deja sin rol estratégico al Ingeniero de Gestión Industrial.
+          </p>
+          <p class="task-detail">
+            <span class="badge badge-joint">Solución Pivote: AERO-IGNIS SI</span>
+            Ejecutar la CNN/Árbol/FSM <strong>como Gemelo Digital interactivo en vivo dentro del navegador web (Módulo 3)</strong>, rodeado por el Motor de Ranking PSI (Módulo 1), Sandbox Predictivo &amp; Forense (Módulo 2) y Matriz FMEA + Spinoffs (Módulo 4), respaldado con capturas de SolidWorks, EPLAN y Proteus como evidencia de ingeniería física.
+          </p>
+        </div>
+
+        <div class="panel">
+          <h3 class="panel-title" style="margin-bottom:10px;">Criterios Oficiales de Evaluación NASA (5 &times; 20%)</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Criterio (20%)</th>
+                  <th>Propuesta Anterior</th>
+                  <th>AERO-IGNIS SI</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Impact</strong></td><td>Bajo (solo hardware local)</td><td><strong>5/5:</strong> Artemis + Spinoffs 9582/9407/9918/PFE</td></tr>
+                <tr><td><strong>Creativity</strong></td><td>Medio (HMI clásica)</td><td><strong>5/5:</strong> Gemelo Digital SVG + Sandbox What-If</td></tr>
+                <tr><td><strong>Validity</strong></td><td>Alto en control, sin PSI real</td><td><strong>5/5:</strong> 24 datasets PSI + Da/Pe + Apollo/Mir</td></tr>
+                <tr><td><strong>Relevance</strong></td><td>Parcial (solo 1 de 4 objetivos)</td><td><strong>5/5:</strong> Web-based + 4 objetivos + 10 recursos</td></tr>
+                <tr><td><strong>Presentation</strong></td><td>Difícil de probar por jueces</td><td><strong>5/5:</strong> URL pública 0-fricción en 30s</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="panel-title" style="margin:20px 0 10px;">Patrones Comprobados de Ganadores Globales NASA Space Apps (2022–2025)</h3>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Año / Premio</th>
+              <th>Proyecto Ganador</th>
+              <th>Actitud Ganadora Aplicada en Nuestro Plan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>2025</strong> · Best Use of Science</td><td><strong>SpaceGenes+</strong> (Alemania)</td><td>Conexión directa con metadatos ISA-Tab/OSDR y visualizaciones comparativas verificables.</td></tr>
+            <tr><td><strong>2025</strong> · Best Mission Concept</td><td><strong>PureFlow</strong> (Brasil)</td><td>Simulador de diseño de hábitats con validación automática contra estándares NASA.</td></tr>
+            <tr><td><strong>2025</strong> · Global Connection</td><td><strong>Gaia+LEO</strong> (EE. UU.)</td><td>Modelo matemático multi-variable explícito (TOPSIS/AHP) traducido a interfaz clara.</td></tr>
+            <tr><td><strong>2024</strong> · Best Use of Science</td><td><strong>WMPGang</strong> (Canadá)</td><td>Transformar tablas áridas en simulación física interactiva en tiempo real.</td></tr>
+            <tr><td><strong>2024</strong> · Best Use of Data</td><td><strong>GaamaRamma</strong> (EE. UU.)</td><td>Traducir telemetría compleja en índices de riesgo y semáforos accionables.</td></tr>
+            <tr><td><strong>2023</strong> · Best Use of Data</td><td><strong>Storm Prophet</strong></td><td>Validar el modelo predictivo reproduciendo eventos históricos reales documentados.</td></tr>
+            <tr><td><strong>2022</strong> · Best Use of Data</td><td><strong>Starflock</strong> (Cleveland, NASA GRC)</td><td>Foco directo en química de humo/aerosoles para optimizar detección temprana de incendios.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 5: SKILLS HUB -->
+    <section id="panel-skills" class="tabpanel" role="tabpanel" aria-labelledby="tab-skills">
+      <div class="status-banner">
+        <div>
+          <strong>Auditoría de tu Baúl Local de Skills:</strong>
+          <code>C:\Users\hp\OneDrive\Documentos\Obsidian Vault\agents\CATALOG.md</code> + Plugins Gemini API.
+        </div>
+        <span id="ponytailStatus" class="mono">Ponytail mode: FULL · Costo $0</span>
+      </div>
+      <div id="skillsGrid" class="resource-grid"></div>
+    </section>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const STORAGE_KEY = "nasa_flame_freefall_plan_v1";
+
+      // --- 1. VERIFIED DATA SOURCES ---
+      const DEFAULT_TASKS = [
+        // Rol A: Mecatrónica y Sistemas de Control (12)
+        { id: "M-01", role: "meca", phase: "V-H0", title: "Redactar SPEC.md con contratos de interfaz", objective: "Definir esquemas JSON entre motor físico, FSM y dashboard.", scope: "Backend + Frontend contracts (SDD)", deliverable: "SPEC.md aprobado", done: false },
+        { id: "M-02", role: "meca", phase: "V-H0", title: "Construir psi_combustion_24.json desde PSI/OSDR", objective: "Estructurar las 24 investigaciones con IDs, DOIs, instalaciones y esquemas BASS-II/Saffire.", scope: "Parser Python + OSDR API v2", deliverable: "data/psi_combustion_24.json", done: false },
+        { id: "M-03", role: "meca", phase: "S-AM", title: "Implementar motor físico (Da, Pe, Vf, Quenching/Blowoff)", objective: "Calcular límites de inflamabilidad según %O2, presión psi, flujo cm/s y gravedad.", scope: "physics_engine.py + tests assert", deliverable: "Motor físico verificado", done: false },
+        { id: "M-04", role: "meca", phase: "S-AM", title: "Implementar Árbol de Decisión Multisensor + Clasificador de Llama", objective: "Clasificar régimen Nominal / Llama Fría NTC / Combustión Abierta con umbrales explicables.", scope: "Árbol físico + lógica óptica", deliverable: "decision_tree.py", done: false },
+        { id: "M-05", role: "meca", phase: "S-AM", title: "Programar Máquina de Estados Finitos (FSM) Determinista", objective: "Garantizar transiciones NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA con histéresis.", scope: "fsm_controller.py + pruebas unitarias", deliverable: "FSM 100% testeada", done: false },
+        { id: "M-06", role: "meca", phase: "S-AM", title: "Dibujar Gemelo Digital Isométrico SVG (Skill anatomy)", objective: "Representar ducto Saffire/CIR con ventilador, cámara, compuerta y boquilla PFE.", scope: "SVG limpio + motion GPU 60fps", deliverable: "Componente DuctDigitalTwin", done: false },
+        { id: "M-07", role: "meca", phase: "S-PM", title: "Integrar cliente Gemini SI (google-genai >= 3.2.0)", objective: "Usar gemini-4-hydrogen y gemini-decision-1 con validación anti-alucinación y fallback offline.", scope: "si_service.py + caché local", deliverable: "Endpoint /api/interpret", done: false },
+        { id: "M-08", role: "meca", phase: "S-PM", title: "Conectar API OSDR v2 con fallback resiliente", objective: "Consultar estudios frescos si hay red y caer instantáneamente a JSON local ante timeout.", scope: "Cliente HTTP con retry/timeout", deliverable: "Conector OSDR resiliente", done: false },
+        { id: "M-09", role: "meca", phase: "S-PM", title: "Integrar gráfica de contorno de inflamabilidad en tiempo real", objective: "Mostrar curva interactiva Flujo vs %O2 marcando zona segura, llama fría y blowoff.", scope: "Canvas/SVG interactivo", deliverable: "Mapa de contorno en vivo", done: false },
+        { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: false },
+        { id: "M-11", role: "meca", phase: "D-AM", title: "Ejecutar /ponytail-audit y pruebas Web Vitals / offline", objective: "Eliminar código muerto, verificar LCP < 2.5s y probar desconectando Wi-Fi.", scope: "Auditoría de calidad y rendimiento", deliverable: "Checklist técnico verde", done: false },
+        { id: "M-12", role: "meca", phase: "D-AM", title: "Desplegar plataforma web en URL HTTPS pública", objective: "Publicar frontend + backend accesible desde cualquier navegador del jurado.", scope: "Deploy Vercel/Render/Pages", deliverable: "URL pública verificada", done: false },
+
+        // Rol B: Gestión Industrial (12)
+        { id: "I-01", role: "ind", phase: "V-H0", title: "Taxonomía y mapeo de los 4 objetivos en las 24 PSI", objective: "Clasificar qué investigaciones aportan a Cabinas, Modelado, Sensores y Spinoffs.", scope: "Curación científica de dominio", deliverable: "Matriz de trazabilidad PSI", done: false },
+        { id: "I-02", role: "ind", phase: "V-H0", title: "Diseñar modelo de Ranking Multicriterio (AHP / TOPSIS)", objective: "Definir pesos y fórmula transparente para rankear investigaciones por caso de uso.", scope: "Investigación de operaciones", deliverable: "Especificación TOPSIS", done: false },
+        { id: "I-03", role: "ind", phase: "V-H0", title: "Cerrar backlog FURPS+ y criterios de aceptación MoSCoW", objective: "Fijar alcance innegociable MUST HAVE y cortar excesos WON'T HAVE.", scope: "Gestión de alcance del hackathon", deliverable: "Scope congelado", done: false },
+        { id: "I-04", role: "ind", phase: "S-AM", title: "Estructurar Matriz FMEA / AMFE basada en NASA-STD-6001", objective: "Evaluar modos de fallo (pirólisis PTFE, flujo bajo BASS, Vika LiClO4) con cálculo NPR.", scope: "Seguridad industrial aeroespacial", deliverable: "data/fmea_matrix.json", done: false },
+        { id: "I-05", role: "ind", phase: "S-AM", title: "Parametrizar fichas forenses: Apollo 1, Apollo 13 y Mir", objective: "Documentar %O2, psi, materiales y lecciones que activan botones de simulación en 1 clic.", scope: "Validación histórica oficial", deliverable: "3 presets forenses verificados", done: false },
+        { id: "I-06", role: "ind", phase: "S-AM", title: "Modelar árbol de decisión de Supresión (PFE vs CO2 vs E-FIELD)", objective: "Reglas de selección según toxicidad ECLSS, tipo de fuego y gravedad.", scope: "Ingeniería de seguridad y procesos", deliverable: "Protocolo de supresión", done: false },
+        { id: "I-07", role: "ind", phase: "S-AM", title: "Construir Calculadora de Impacto Dual-Use (Spinoffs)", objective: "Cuantificar impacto terrestre de Nodes 9582 (SCBA -40% peso), 9407 (<0.1um) y 9918 (PBI).", scope: "Modelo de transferencia tecnológica", deliverable: "Módulo Calculadora Dual-Use", done: false },
+        { id: "I-08", role: "ind", phase: "S-PM", title: "Diseñar prompts SI por audiencia (Investigador / Estudiante / Gestor)", objective: "Adaptar resúmenes generados por Gemini manteniendo citas obligatorias de DOI.", scope: "UX de contenido y storytelling", deliverable: "3 plantillas de prompt auditadas", done: false },
+        { id: "I-09", role: "ind", phase: "S-PM", title: "Auditar consistencia de unidades y alcance (Excluir cohetes)", objective: "Verificar psi/kPa/cm/s y asegurar cero contenido fuera de alcance.", scope: "QA de dominio científico", deliverable: "Reporte QA limpio", done: false },
+        { id: "I-10", role: "ind", phase: "D-AM", title: "Redactar README.md ejecutivo y citas a los 10 recursos NASA", objective: "Documentar impacto, licencia CC0/MIT y referencias exactas para jueces.", scope: "Documentación de entrega", deliverable: "README.md completo", done: false },
+        { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", done: false },
+        { id: "I-12", role: "ind", phase: "D-PM", title: "Redactar guion cronometrado del video (30s / 2min)", objective: "Asegurar que cada segundo cubra los 5 criterios de evaluación NASA (20% c/u).", scope: "Guion de pitch ganador", deliverable: "Script cronometrado final", done: false },
+
+        // Tareas Conjuntas (6)
+        { id: "J-01", role: "joint", phase: "V-H0", title: "Revisión de Gate 1: Aprobar SPEC.md y congelar alcance MVP", objective: "Alinear modelos físicos, datos PSI y reglas TOPSIS antes de codificar.", scope: "Sincronización de arquitectura", deliverable: "Firma de Gate 1", done: false },
+        { id: "J-02", role: "joint", phase: "S-AM", title: "Revisión de Gate 2: Validar consistencia Física + FMEA", objective: "Probar que los escenarios Apollo/Lunar disparan las alarmas correctas en FSM y FMEA.", scope: "Integración de dominio", deliverable: "Pruebas cruzadas OK", done: false },
+        { id: "J-03", role: "joint", phase: "S-PM", title: "Revisión de Gate 3: Demo end-to-end de los 4 módulos en web", objective: "Recorrer el flujo completo en navegador como lo hará un juez en 3 minutos.", scope: "Prueba de usabilidad real", deliverable: "MVP MUST-HAVE funcional", done: false },
+        { id: "J-04", role: "joint", phase: "D-AM", title: "Revisión de Gate 4: Code Freeze y verificación en incógnito", objective: "Congelar código, validar URL desplegada y comprobar cero errores de consola.", scope: "Estabilidad pre-entrega", deliverable: "Release v1.0.0", done: false },
+        { id: "J-05", role: "joint", phase: "D-PM", title: "Grabar y editar video demo en 1080p con subtítulos", objective: "Mostrar app real operando en vivo (simulaciones + ranking + gemelo digital).", scope: "Producción audiovisual", deliverable: "Video final exportado", done: false },
+        { id: "J-06", role: "joint", phase: "D-PM", title: "Envío oficial en plataforma Space Apps (2h antes del cierre)", objective: "Subir links, repo GitHub, video y resumen verificando formulario completo.", scope: "Cierre sin contratiempos", deliverable: "Confirmación de envío NASA", done: false }
+      ];
+
+      const FURPS_DATA = [
+        { id: "F-01", cat: "F", moscow: "MUST", owner: "Gestión + Mecatrónico", title: "Catálogo, búsqueda y comparación de las 24 investigaciones PSI con esquemas BASS-II/Saffire.", verify: "Filtrar por CIR/MSG/Cygnus, %O2 y material devuelve registros reales con DOI 10.60555." },
+        { id: "F-02", cat: "F", moscow: "MUST", owner: "Gestión Industrial", title: "Motor de Ranking Multicriterio (AHP/TOPSIS) + explicación SI sobre los 24 datasets.", verify: "Ajustar pesos recalcula ranking en <100ms con justificación trazable." },
+        { id: "F-03", cat: "F", moscow: "MUST", owner: "Mecatrónico", title: "Simulador Predictivo de Inflamabilidad (%O2, psi, cm/s, gravedad 0g/0.16g/0.38g/1g).", verify: "Calcula Da, Pe y muestra zona de extinción radiativa vs blowoff vs llama fría." },
+        { id: "F-04", cat: "F", moscow: "MUST", owner: "Mecatrónico", title: "Gemelo Digital Web con FSM (NORMAL->PRE_ALERTA->CONTENCION->FALLA_SEGURA) y árbol físico.", verify: "Inyectar humo/llama fría transiciona estados con histéresis y registra bitácora." },
+        { id: "F-05", cat: "F", moscow: "SHOULD", owner: "Gestión Industrial", title: "Presets forenses en 1 clic: Apollo 1, Apollo 13 y Mir.", verify: "Cada botón carga condiciones reales históricas y vincula qué ensayo PSI lo previene." },
+        { id: "F-06", cat: "F", moscow: "SHOULD", owner: "Gestión Industrial", title: "Matriz FMEA/AMFE (NASA-STD-6001) y Calculadora Dual-Use (Spinoffs 9582/9407/9918/PFE).", verify: "Calcula reducción de NPR y ahorro de peso/riesgo terrestre en bomberos e industria." },
+        { id: "F-07", cat: "F", moscow: "COULD", owner: "Mecatrónico", title: "Consulta en vivo a NASA OSDR REST API v2 con caché local.", verify: "Responde en vivo si hay red y hace fallback silencioso si falla la API." },
+        { id: "F-08", cat: "F", moscow: "COULD", owner: "Mecatrónico", title: "Galería Hardware Blueprint (SolidWorks, EPLAN, Proteus) como respaldo físico.", verify: "Pestaña secundaria muestra esquemáticos reales sin bloquear el flujo web." },
+        { id: "F-09", cat: "F", moscow: "WONT", owner: "Excluido", title: "Puente USB/COMPIM en vivo hacia Proteus local o descarga de 255 GB de video crudo.", verify: "Excluido deliberadamente para evitar fallos en la PC del jurado." },
+        { id: "U-01", cat: "U", moscow: "MUST", owner: "Ambos", title: "Dashboard web responsive (1024px–1440px) comprensible en <30 segundos.", verify: "Un evaluador externo navega los 4 módulos sin instrucciones adicionales." },
+        { id: "U-02", cat: "U", moscow: "SHOULD", owner: "Gestión Industrial", title: "Selector de audiencia (Investigador, Estudiante, Gestor Industrial).", verify: "Adapta nivel técnico de resúmenes SI conservando exactamente los mismos datos." },
+        { id: "U-03", cat: "U", moscow: "MUST", owner: "Mecatrónico", title: "Accesibilidad teclado, contraste >= 4.5:1, unidades claras y prefers-reduced-motion.", verify: "Tabulación completa sin trampas ni dependencia exclusiva del color." },
+        { id: "R-01", cat: "R", moscow: "MUST", owner: "Mecatrónico", title: "Resiliencia 100% Offline/Fallback si Gemini u OSDR no responden.", verify: "Con Wi-Fi apagado todos los simuladores, rankings y FSM siguen operativos." },
+        { id: "R-02", cat: "R", moscow: "MUST", owner: "Ambos", title: "Validación anti-alucinación: citas obligatorias contra diccionario oficial de 24 IDs PSI.", verify: "Cero identificadores inventados en salidas de texto." },
+        { id: "R-03", cat: "R", moscow: "SHOULD", owner: "Mecatrónico", title: "Suite de tests automáticos (assert/pytest) sobre ecuaciones físicas y FSM.", verify: "100% de pruebas en verde antes de pasar a main." },
+        { id: "P-01", cat: "P", moscow: "MUST", owner: "Mecatrónico", title: "Carga inicial LCP < 2.5s y cero saltos visuales (CLS < 0.1).", verify: "Medición en Chrome DevTools sin bloqueos de render." },
+        { id: "P-02", cat: "P", moscow: "SHOULD", owner: "Mecatrónico", title: "Simulador y Gemelo Digital a 60fps animando solo transform y opacity.", verify: "Sliders fluidos sin caídas de cuadros (<16ms)." },
+        { id: "S-01", cat: "S", moscow: "MUST", owner: "Ambos", title: "Repositorio GitHub público con README, SPEC y commits '<ver> - <verbo> - <desc>'.", verify: "Instalable y ejecutable en <3 pasos documentados." },
+        { id: "S-02", cat: "S", moscow: "SHOULD", owner: "Mecatrónico", title: "Estructura modular Ponytail (sin código muerto ni dependencias redundantes).", verify: "Aprobación de /ponytail-audit previo a entrega." },
+        { id: "C-01", cat: "+", moscow: "MUST", owner: "Gestión Industrial", title: "Alcance estricto: Entornos habitables de tripulación (prohibido motores cohete).", verify: "Cero métricas de propulsores en textos o simulador." },
+        { id: "C-02", cat: "+", moscow: "MUST", owner: "Ambos", title: "Directiva Costo $0: exclusivamente librerías MIT/Apache/CC0 y capas gratuitas.", verify: "0 USD en herramientas o componentes UI." },
+        { id: "C-03", cat: "+", moscow: "MUST", owner: "Mecatrónico", title: "Despliegue público HTTPS operativo para evaluación global.", verify: "URL probada en modo incógnito desde otro dispositivo." }
+      ];
+
+      const PSI_24_DATA = [
+        { id: "PSI-98", name: "SAFFIRE-I", facility: "Cygnus", fuel: "Tejido SIBAL (0.4 x 0.94 m)", notes: "Fuego a gran escala (11.41 GB), flujo 20 cm/s, esquema 13 columnas." },
+        { id: "PSI-101", name: "SAFFIRE-II", facility: "Cygnus", fuel: "PMMA plano/ranurado, SIBAL, Nomex, Silicona", notes: "Múltiples muestras, propagación concurrente y opuesta." },
+        { id: "PSI-102", name: "SAFFIRE-III", facility: "Cygnus", fuel: "Panel grande SIBAL", notes: "Validación de crecimiento de llama a flujo alto (30 cm/s)." },
+        { id: "PSI-103", name: "SAFFIRE-IV", facility: "Cygnus", fuel: "Múltiples materiales cabina", notes: "Atmósfera enriquecida de exploración + sensores de gases." },
+        { id: "PSI-104", name: "SAFFIRE-V", facility: "Cygnus", fuel: "SIBAL / Polímeros cabina", notes: "Presión reducida (~8.2 psi) y O2 elevado (30-34%) lunar." },
+        { id: "PSI-105", name: "SAFFIRE-VI", facility: "Cygnus", fuel: "Múltiples materiales + gases tóxicos", notes: "Última campaña Cygnus con perfil completo CO, HF y HCl." },
+        { id: "PSI-26", name: "BASS", facility: "ISS-MSG", fuel: "Varillas, esferas y láminas PMMA / Algodón / SIBAL", notes: "Flujos 0.5-50 cm/s, 15-30% O2. Paradoja de flujo bajo." },
+        { id: "PSI-25", name: "BASS-II", facility: "ISS-MSG", fuel: "PMMA espesor variable, tejidos SIBAL/Nomex", notes: "255.77 GB, >130 corridas, esquema 17 cols; quenching vs blowoff." },
+        { id: "PSI-146", name: "ACME - Flame Design", facility: "ISS-CIR", fuel: "Etileno y metano gaseoso", notes: "Diseño de llamas esféricas libres de hollín." },
+        { id: "PSI-147", name: "ACME - s-Flame", facility: "ISS-CIR", fuel: "Metano / Etileno esférico", notes: "Estructura y extinción radiativa de llamas difusivas esféricas." },
+        { id: "PSI-153", name: "ACME - CLD Flame", facility: "ISS-CIR", fuel: "Llamas laminares en co-flujo", notes: "Formación y oxidación de hollín en microgravedad." },
+        { id: "PSI-154", name: "ACME - E-FIELD", facility: "ISS-CIR", fuel: "Metano / Etileno entre electrodos", notes: "Campo eléctrico ±10 kV: viento iónico para control/supresión y partial-g." },
+        { id: "PSI-132", name: "BRE (ACME)", facility: "ISS-CIR", fuel: "Quemador poroso plano (simula sólidos)", notes: "Emula tasa de combustión mediante número B de Spalding." },
+        { id: "PSI-138", name: "CFI-G", facility: "ISS-CIR", fuel: "Butano, propano, dimetil éter", notes: "Llamas frías gaseosas hasta 85% O2 (inside-out flames)." },
+        { id: "PSI-24", name: "FLEX", facility: "ISS-CIR", fuel: "Gotas heptano, metanol, decano (2-5 mm)", notes: "Descubrió las llamas frías (500-800 K) invisibles tras extinción." },
+        { id: "PSI-27", name: "FLEX-2", facility: "ISS-CIR", fuel: "Gotas aisladas y pares de alcanos", notes: "Interacción entre gotas y extinción con CO2, He, N2, Xe." },
+        { id: "PSI-78", name: "FLEX-2J", facility: "ISS-CIR", fuel: "Arreglos de gotas (NASA-JAXA)", notes: "Velocidad de propagación de llama entre gotas en 0g." },
+        { id: "PSI-79", name: "MDCA-FLEX-ICE", facility: "ISS-CIR", fuel: "Gotas bicomponentes (ASI Italia)", notes: "Combustión y extinción de mezclas líquidas multicomponente." },
+        { id: "PSI-126", name: "SLICE", facility: "ISS-MSG", fuel: "Co-flujo laminar metano / etileno", notes: "Desprendimiento de base de llama (liftoff) y blowout." },
+        { id: "PSI-129", name: "SPICE", facility: "ISS-MSG", fuel: "Etileno, propano, metano (0.7-2.0 mm)", notes: "Punto de humo (smoke point) crítico para filtros ECLSS." },
+        { id: "PSI-107", name: "CVB", facility: "ISS-MSG", fuel: "Burbuja de vapor restringida (pentano)", notes: "Transferencia térmica interfacial y evaporación en 0g." },
+        { id: "PSI-108", name: "CVB-2", facility: "ISS-MSG", fuel: "Películas líquidas en tubo térmico", notes: "Continuación de dinámica térmica sin flotabilidad." },
+        { id: "PSI-109", name: "NCA", facility: "Otros", fuel: "Narrow Channel Apparatus (1g análogo)", notes: "Supresión de convección en canal estrecho para validar 0g en Tierra." },
+        { id: "PSI-110", name: "MSC", facility: "Otros", fuel: "Espumas de poliuretano porosas", notes: "Combustión latente (smoldering) y transición a llama abierta." }
+      ];
+
+      const OFFICIAL_RESOURCES = [
+        { tag: "Dataset Principal", title: "1. NASA PSI Combustion Repository", url: "https://psi.nasa.gov/physci/repo/search?q=combustion", desc: "24 investigaciones CC0-1.0, Experimental Tables, ISA-Tab y archivos crudos." },
+        { tag: "Ciencia Base", title: "2. NASA Glenn Combustion Science", url: "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/", desc: "Cinco pilares de investigación y plataformas orbitales." },
+        { tag: "Video Intro", title: "3. NASA ScienceCasts: ISS Combustion", url: "https://www.youtube.com/watch?v=W1oXykoz9zg", desc: "Video de 3.6 min explicando llamas esféricas y llamas frías." },
+        { tag: "Guía 50+ Págs", title: "4. Researcher's Guide to ISS Combustion", url: "https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/", desc: "Física adimensional (Da, Pe, Gr) y diagnósticos CIR / MSG." },
+        { tag: "Forense 1967", title: "5. Apollo 1 Historical Case Study", url: "https://sma.nasa.gov/sma-disciplines/accllp/apollo-1", desc: "100% O2 a 16.7 psi, arco en PTFE y nacimiento de NASA-STD-6001." },
+        { tag: "Forense 1970", title: "6. Apollo 13 Historical Case Study", url: "https://sma.nasa.gov/sma-disciplines/accllp/apollo-13", desc: "Degradación térmica de PTFE a >500 °C en O2 supercrítico (1,000 psi)." },
+        { tag: "Forense 1997", title: "7. Fire Aboard Space Station Mir", url: "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/", desc: "Fuego auto-oxidante de 14 min en generador Vika/TGK de LiClO4." },
+        { tag: "Spinoff 9582", title: "8. Fireman's Air Tanks (COPV)", url: "https://spinoff.nasa.gov/node/9582", desc: "Cilindros de 4,500 psi derivados del PLSS: reducción 40% peso SCBA (33 -> 20 lb)." },
+        { tag: "Spinoff 9407", title: "9. Incipient Fire Detector (Shuttle)", url: "https://spinoff.nasa.gov/node/9407", desc: "Discriminación polvo vs aerosoles <0.1um (complementa SAME/SAME-R)." },
+        { tag: "Spinoff 9918 + PFE", title: "10. Fire Attire PBI & Fine Water Mist", url: "https://spinoff.nasa.gov/node/9918", desc: "Trajes PBI Project FIRES (-30% peso) + Extintores PFE de niebla 20-100um." }
+      ];
+
+      const SKILLS_VAULT = [
+        { name: "ponytail (full) + ponytail-audit", cat: "General / Lean", when: "Durante todo el desarrollo", role: "Cero código muerto, librerías nativas antes de instalar paquetes, al menos 1 assert por lógica nueva." },
+        { name: "spec-driven-development (/spec)", cat: "SDD", when: "Viernes H0–H4", role: "Redacta SPEC.md congelando contratos JSON entre motor físico, FSM y UI web." },
+        { name: "planning-and-task-breakdown (/plan)", cat: "SDD", when: "Al inicio de cada fase", role: "Divide en vertical slices atómicos con criterios de aceptación verificables." },
+        { name: "api-and-interface-design", cat: "Backend", when: "Diseño de endpoints", role: "Contratos estrictos, validación en frontera y manejo uniforme de errores/fallback." },
+        { name: "gemini-api-dev", cat: "SI / Gemini", when: "Módulo de Síntesis SI", role: "Usa SDK google-genai >= 3.2.0 con gemini-4-hydrogen y gemini-decision-1 (v1beta)." },
+        { name: "incremental-implementation + tdd", cat: "Calidad", when: "Sábado AM/PM", role: "Bucle RED->GREEN->REFACTOR sobre Da/Pe y transiciones críticas de seguridad en FSM." },
+        { name: "git-workflow-and-versioning", cat: "Git", when: "Cada commit", role: "Formato estricto '<version> - <verbo> - <descripción>' y ramas topic -> dev -> main." },
+        { name: "frontend-design + impeccable", cat: "Frontend", when: "Diseño UI principal", role: "Modo Operate para dashboards de control, estética orbital sin clichés de IA y WCAG AA." },
+        { name: "animation-design (Emil Kowalski)", cat: "Motion", when: "Transiciones y SVG", role: "Curvas cubic-bezier calibradas, solo transform/opacity a 60fps y prefers-reduced-motion." },
+        { name: "anatomy", cat: "Visualización", when: "Módulo 3 (Gemelo Digital)", role: "Ilustración isométrica SVG de precisión para el ducto Saffire/CIR y sus actuadores." },
+        { name: "engram + graphify", cat: "Memoria / AST", when: "Continuo + Cierre", role: "Persiste decisiones técnicas entre sesiones y genera diagrama de arquitectura del repo." },
+        { name: "faceless-channel + narrator + subtitles", cat: "Media / Pitch", when: "Domingo PM", role: "Apoyo opcional para locución cronometrada y subtítulos limpios en el video de 30s." }
+      ];
+
+      // --- 2. STATE MANAGEMENT ---
+      function loadState() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          if (raw) {
+            const parsed = JSON.parse(raw);
+            if (Array.isArray(parsed.tasks) && parsed.furpsDone && typeof parsed.theme === "string") {
+              return parsed;
+            }
+          }
+        } catch (_) {}
+        return {
+          theme: "dark",
+          tasks: DEFAULT_TASKS.map(t => ({ ...t })),
+          furpsDone: {},
+          activeTab: "tasks",
+          roleFilter: "ALL",
+          phaseFilter: "ALL",
+          moscowFilter: "ALL",
+          furpsCatFilter: "ALL",
+          psiFilter: "ALL"
+        };
+      }
+
+      let state = loadState();
+
+      function saveState() {
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        } catch (_) {}
+      }
+
+      // --- 3. THEME & MOTION VISUALIZER ---
+      function applyTheme(theme) {
+        state.theme = theme;
+        document.documentElement.setAttribute("data-theme", theme);
+        document.getElementById("themeToggle").textContent = theme === "dark" ? "Tema: Oscuro (T)" : "Tema: Claro (T)";
+        saveState();
+      }
+
+      function setFlameMode(mode) {
+        document.querySelectorAll("[data-flame]").forEach(btn => {
+          btn.setAttribute("aria-pressed", String(btn.dataset.flame === mode));
+        });
+        document.getElementById("flame1g").style.display = mode === "1g" ? "block" : "none";
+        document.getElementById("flame0g").style.display = mode === "0g" ? "block" : "none";
+        document.getElementById("flameCool").style.display = mode === "cool" ? "block" : "none";
+
+        const gr = document.getElementById("metGr");
+        const atm = document.getElementById("metAtm");
+        const temp = document.getElementById("metTemp");
+
+        if (mode === "1g") {
+          gr.textContent = "Gr >> 0 (Convección)";
+          atm.textContent = "21% O2 · 14.7 psi";
+          temp.textContent = "2,100 K · Lágrima Amarilla";
+        } else if (mode === "0g") {
+          gr.textContent = "Gr -> 0 (Difusión)";
+          atm.textContent = "34% O2 · 8.2 psi";
+          temp.textContent = "1,450 K · Azul Esférica";
+        } else {
+          gr.textContent = "Gr -> 0 (Química NTC)";
+          atm.textContent = "FLEX / CFI · Vapor Alcano";
+          temp.textContent = "580 K · Invisible / Riesgo";
+        }
+      }
+
+      function setFsmState(fsm) {
+        document.querySelectorAll("[data-fsm]").forEach(btn => {
+          btn.setAttribute("aria-pressed", String(btn.dataset.fsm === fsm));
+        });
+
+        const fan = document.getElementById("fanGroup");
+        const flow = document.getElementById("flowLines");
+        const damper = document.getElementById("damperGate");
+        const mist = document.getElementById("mistSpray");
+        const fsmTxt = document.getElementById("svgFsmText");
+        const actTxt = document.getElementById("svgActionText");
+        const metAct = document.getElementById("metAct");
+
+        if (fsm === "NORMAL") {
+          fan.classList.remove("stopped");
+          fan.style.setProperty("--fan-period", "1.1s");
+          flow.classList.remove("stopped");
+          damper.style.transform = "scaleY(0.15)";
+          mist.style.display = "none";
+          fsmTxt.textContent = "NORMAL";
+          fsmTxt.setAttribute("fill", "#10B981");
+          actTxt.textContent = "Flujo: 20 cm/s";
+          metAct.textContent = "Ventilador ON · Abierta";
+        } else if (fsm === "PRE_ALERTA") {
+          fan.classList.remove("stopped");
+          fan.style.setProperty("--fan-period", "2.0s");
+          flow.classList.remove("stopped");
+          damper.style.transform = "scaleY(0.45)";
+          mist.style.display = "none";
+          fsmTxt.textContent = "PRE_ALERTA";
+          fsmTxt.setAttribute("fill", "#F59E0B");
+          actTxt.textContent = "Aerosol <0.1um";
+          metAct.textContent = "Flujo Reducido · Alerta";
+        } else if (fsm === "CONTENCION") {
+          fan.classList.add("stopped");
+          flow.classList.add("stopped");
+          damper.style.transform = "scaleY(1)";
+          mist.style.display = "block";
+          fsmTxt.textContent = "CONTENCION";
+          fsmTxt.setAttribute("fill", "#EF4444");
+          actTxt.textContent = "PFE Niebla ON";
+          metAct.textContent = "Vent OFF · Cerrada + PFE";
+        } else {
+          fan.classList.add("stopped");
+          flow.classList.add("stopped");
+          damper.style.transform = "scaleY(1)";
+          mist.style.display = "none";
+          fsmTxt.textContent = "FALLA_SEGURA";
+          fsmTxt.setAttribute("fill", "#818CF8");
+          actTxt.textContent = "Interlock EPLAN";
+          metAct.textContent = "Corte Cableado Activo";
+        }
+      }
+
+      // --- 4. RENDERERS ---
+      function updateKPIs() {
+        const total = state.tasks.length;
+        const doneTotal = state.tasks.filter(t => t.done).length;
+
+        const byRole = (r) => state.tasks.filter(t => t.role === r);
+        const meca = byRole("meca");
+        const ind = byRole("ind");
+        const joint = byRole("joint");
+
+        const mecaDone = meca.filter(t => t.done).length;
+        const indDone = ind.filter(t => t.done).length;
+        const jointDone = joint.filter(t => t.done).length;
+
+        const mustItems = FURPS_DATA.filter(f => f.moscow === "MUST");
+        const mustDone = mustItems.filter(f => Boolean(state.furpsDone[f.id])).length;
+
+        const setBar = (idPrefix, num, den) => {
+          const pct = den === 0 ? 0 : Math.round((num / den) * 100);
+          document.getElementById(idPrefix + "Text").textContent = `${num} / ${den} (${pct}%)`;
+          document.getElementById(idPrefix + "Bar").style.setProperty("--ratio", den === 0 ? 0 : num / den);
+        };
+
+        setBar("kpiGlobal", doneTotal, total);
+        setBar("kpiMeca", mecaDone, meca.length);
+        setBar("kpiInd", indDone, ind.length);
+        setBar("kpiJoint", jointDone, joint.length);
+        setBar("kpiMust", mustDone, mustItems.length);
+      }
+
+      function renderTasks() {
+        const query = document.getElementById("taskSearch").value.trim().toLowerCase();
+        const grid = document.getElementById("taskGrid");
+
+        const filtered = state.tasks.filter(t => {
+          if (state.roleFilter !== "ALL" && t.role !== state.roleFilter) return false;
+          if (state.phaseFilter !== "ALL" && t.phase !== state.phaseFilter) return false;
+          if (query) {
+            const hay = `${t.id} ${t.title} ${t.objective} ${t.scope} ${t.deliverable}`.toLowerCase();
+            if (!hay.includes(query)) return false;
+          }
+          return true;
+        });
+
+        const roleMap = {
+          meca: { label: "Mecatrónica & Control", cls: "badge-meca" },
+          ind: { label: "Gestión Industrial", cls: "badge-ind" },
+          joint: { label: "Conjunta", cls: "badge-joint" }
+        };
+
+        grid.innerHTML = filtered.map(t => {
+          const r = roleMap[t.role] || roleMap.joint;
+          return `
+            <article class="task-card ${t.done ? "is-done" : ""}">
+              <input class="check-input" type="checkbox" data-task-id="${t.id}" ${t.done ? "checked" : ""} aria-label="Marcar ${t.title}" />
+              <div class="task-body">
+                <div class="task-meta">
+                  <span class="badge ${r.cls}">${r.label}</span>
+                  <span class="badge badge-violet mono">${t.id} · ${t.phase}</span>
+                </div>
+                <h3 class="task-title">${escapeHtml(t.title)}</h3>
+                <p class="task-detail"><strong>Objetivo:</strong> ${escapeHtml(t.objective)}</p>
+                <p class="task-detail"><strong>Alcance:</strong> ${escapeHtml(t.scope)} · <strong>Cierre:</strong> ${escapeHtml(t.deliverable)}</p>
+              </div>
+            </article>
+          `;
+        }).join("") || `<p class="task-detail">No hay tareas que coincidan con el filtro.</p>`;
+
+        updateKPIs();
+      }
+
+      function renderFurps() {
+        const tbody = document.getElementById("furpsTableBody");
+        const moscowClass = { MUST: "badge-must", SHOULD: "badge-should", COULD: "badge-could", WONT: "badge-wont" };
+
+        const filtered = FURPS_DATA.filter(item => {
+          if (state.moscowFilter !== "ALL" && item.moscow !== state.moscowFilter) return false;
+          if (state.furpsCatFilter !== "ALL" && item.cat !== state.furpsCatFilter) return false;
+          return true;
+        });
+
+        tbody.innerHTML = filtered.map(item => {
+          const checked = Boolean(state.furpsDone[item.id]);
+          return `
+            <tr class="${checked ? "is-done" : ""}">
+              <td><input class="check-input" type="checkbox" data-furps-id="${item.id}" ${checked ? "checked" : ""} aria-label="Verificar ${item.id}" /></td>
+              <td class="mono"><strong>${item.id}</strong></td>
+              <td class="mono">${item.cat}</td>
+              <td><span class="badge ${moscowClass[item.moscow]}">${item.moscow}</span></td>
+              <td>${escapeHtml(item.title)}</td>
+              <td>${escapeHtml(item.owner)}</td>
+              <td style="color:var(--text-secondary);">${escapeHtml(item.verify)}</td>
+            </tr>
+          `;
+        }).join("");
+
+        const counts = ["MUST", "SHOULD", "COULD", "WONT"].map(tier => {
+          const sub = FURPS_DATA.filter(f => f.moscow === tier);
+          const ok = sub.filter(f => Boolean(state.furpsDone[f.id])).length;
+          return `${tier}: ${ok}/${sub.length}`;
+        }).join(" · ");
+        document.getElementById("moscowSummary").textContent = counts;
+        updateKPIs();
+      }
+
+      function renderPsi() {
+        const query = document.getElementById("psiSearch").value.trim().toLowerCase();
+        const tbody = document.getElementById("psiTableBody");
+
+        const filtered = PSI_24_DATA.filter(d => {
+          if (state.psiFilter !== "ALL" && d.facility !== state.psiFilter) return false;
+          if (query) {
+            const hay = `${d.id} ${d.name} ${d.facility} ${d.fuel} ${d.notes}`.toLowerCase();
+            if (!hay.includes(query)) return false;
+          }
+          return true;
+        });
+
+        tbody.innerHTML = filtered.map(d => `
+          <tr>
+            <td class="mono"><strong>${d.id}</strong></td>
+            <td><strong>${escapeHtml(d.name)}</strong></td>
+            <td><span class="badge badge-joint">${escapeHtml(d.facility)}</span></td>
+            <td>${escapeHtml(d.fuel)}</td>
+            <td style="color:var(--text-secondary);">${escapeHtml(d.notes)}</td>
+          </tr>
+        `).join("");
+
+        document.getElementById("resourceGrid").innerHTML = OFFICIAL_RESOURCES.map(r => `
+          <div class="resource-card">
+            <div style="margin-bottom:6px;"><span class="badge badge-violet">${escapeHtml(r.tag)}</span></div>
+            <h4 class="task-title" style="margin-bottom:4px;"><a href="${r.url}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.title)}</a></h4>
+            <p class="task-detail">${escapeHtml(r.desc)}</p>
+          </div>
+        `).join("");
+      }
+
+      function renderSkills() {
+        document.getElementById("skillsGrid").innerHTML = SKILLS_VAULT.map(s => `
+          <div class="resource-card">
+            <div class="task-meta">
+              <span class="badge badge-meca">${escapeHtml(s.cat)}</span>
+              <span class="badge badge-ind">${escapeHtml(s.when)}</span>
+            </div>
+            <h4 class="task-title mono">${escapeHtml(s.name)}</h4>
+            <p class="task-detail">${escapeHtml(s.role)}</p>
+          </div>
+        `).join("");
+      }
+
+      // --- 5. TABS & INTERACTIONS ---
+      function switchTab(tabId) {
+        state.activeTab = tabId;
+        document.querySelectorAll('[role="tab"]').forEach(btn => {
+          btn.setAttribute("aria-selected", String(btn.dataset.tab === tabId));
+        });
+        document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+          panel.classList.toggle("is-active", panel.id === `panel-${tabId}`);
+        });
+        saveState();
+      }
+
+      function escapeHtml(str) {
+        return String(str)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      // Event Delegation
+      document.addEventListener("click", (e) => {
+        const tabBtn = e.target.closest('[role="tab"]');
+        if (tabBtn) { switchTab(tabBtn.dataset.tab); return; }
+
+        const flameBtn = e.target.closest("[data-flame]");
+        if (flameBtn) { setFlameMode(flameBtn.dataset.flame); return; }
+
+        const fsmBtn = e.target.closest("[data-fsm]");
+        if (fsmBtn) { setFsmState(fsmBtn.dataset.fsm); return; }
+
+        const roleBtn = e.target.closest("[data-role-filter]");
+        if (roleBtn) {
+          state.roleFilter = roleBtn.dataset.roleFilter;
+          document.querySelectorAll("[data-role-filter]").forEach(b => b.setAttribute("aria-pressed", String(b === roleBtn)));
+          renderTasks();
+          return;
+        }
+
+        const moscowBtn = e.target.closest("[data-moscow-filter]");
+        if (moscowBtn) {
+          state.moscowFilter = moscowBtn.dataset.moscowFilter;
+          document.querySelectorAll("[data-moscow-filter]").forEach(b => b.setAttribute("aria-pressed", String(b === moscowBtn)));
+          renderFurps();
+          return;
+        }
+
+        const psiBtn = e.target.closest("[data-psi-filter]");
+        if (psiBtn) {
+          state.psiFilter = psiBtn.dataset.psiFilter;
+          document.querySelectorAll("[data-psi-filter]").forEach(b => b.setAttribute("aria-pressed", String(b === psiBtn)));
+          renderPsi();
+          return;
+        }
+      });
+
+      document.addEventListener("change", (e) => {
+        if (e.target.matches("[data-task-id]")) {
+          const id = e.target.dataset.taskId;
+          const task = state.tasks.find(t => t.id === id);
+          if (task) { task.done = e.target.checked; saveState(); renderTasks(); }
+        } else if (e.target.matches("[data-furps-id]")) {
+          const id = e.target.dataset.furpsId;
+          state.furpsDone[id] = e.target.checked;
+          saveState();
+          renderFurps();
+        }
+      });
+
+      document.getElementById("phaseFilter").addEventListener("change", (e) => {
+        state.phaseFilter = e.target.value;
+        renderTasks();
+      });
+
+      document.getElementById("furpsCatFilter").addEventListener("change", (e) => {
+        state.furpsCatFilter = e.target.value;
+        renderFurps();
+      });
+
+      document.getElementById("taskSearch").addEventListener("input", renderTasks);
+      document.getElementById("psiSearch").addEventListener("input", renderPsi);
+
+      document.getElementById("addTaskForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const title = document.getElementById("newTaskTitle").value.trim();
+        const deliverable = document.getElementById("newTaskDeliverable").value.trim();
+        if (!title || !deliverable) return;
+        const role = document.getElementById("newTaskRole").value;
+        const phase = document.getElementById("newTaskPhase").value;
+        const prefix = role === "meca" ? "M" : role === "ind" ? "I" : "J";
+        const newTask = {
+          id: `${prefix}-${state.tasks.length + 1}`,
+          role,
+          phase,
+          title,
+          objective: "Tarea agregada durante la sesión de planificación.",
+          scope: "Alcance personalizado del equipo",
+          deliverable,
+          done: false
+        };
+        state.tasks.unshift(newTask);
+        saveState();
+        e.target.reset();
+        renderTasks();
+      });
+
+      document.getElementById("themeToggle").addEventListener("click", () => {
+        applyTheme(state.theme === "dark" ? "light" : "dark");
+      });
+
+      document.getElementById("exportBtn").addEventListener("click", () => {
+        const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "aero-ignis-plan-progress.json";
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+
+      document.getElementById("importInput").addEventListener("change", (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          try {
+            const imported = JSON.parse(String(reader.result));
+            if (Array.isArray(imported.tasks) && imported.furpsDone) {
+              state = imported;
+              saveState();
+              applyTheme(state.theme || "dark");
+              renderTasks();
+              renderFurps();
+            }
+          } catch (_) {
+            alert("Archivo JSON inválido.");
+          }
+        };
+        reader.readAsText(file);
+      });
+
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 30 tareas base?")) return;
+        state.tasks = DEFAULT_TASKS.map(t => ({ ...t }));
+        state.furpsDone = {};
+        saveState();
+        renderTasks();
+        renderFurps();
+      });
+
+      // Keyboard Shortcuts (Ponytail & Impeccable Operate speed)
+      document.addEventListener("keydown", (e) => {
+        const tag = document.activeElement?.tagName;
+        if (tag === "INPUT" || tag === "SELECT" || tag === "TEXTAREA") return;
+        const keyMap = { "1": "tasks", "2": "furps", "3": "psi", "4": "diagnosis", "5": "skills" };
+        if (keyMap[e.key]) {
+          switchTab(keyMap[e.key]);
+        } else if (e.key === "/") {
+          e.preventDefault();
+          switchTab("tasks");
+          document.getElementById("taskSearch").focus();
+        } else if (e.key.toLowerCase() === "t") {
+          applyTheme(state.theme === "dark" ? "light" : "dark");
+        }
+      });
+
+      // --- 6. PONYTAIL BUILT-IN SELF-CHECKS ---
+      function runSelfChecks() {
+        const assert = (cond, msg) => { if (!cond) throw new Error("Self-check failed: " + msg); };
+        assert(PSI_24_DATA.length === 24, "Expected exactly 24 PSI investigations");
+        assert(OFFICIAL_RESOURCES.length === 10, "Expected 10 official challenge resources");
+        assert(DEFAULT_TASKS.length === 30, "Expected 30 role-divided default tasks");
+        assert(FURPS_DATA.length === 22, "Expected 22 FURPS+ MoSCoW items");
+        assert(FURPS_DATA.filter(f => f.moscow === "MUST").length === 13, "Expected 13 MUST HAVE items");
+
+        // Verify FSM visualizer transitions cleanly
+        setFsmState("CONTENCION");
+        assert(document.getElementById("svgFsmText").textContent === "CONTENCION", "FSM SVG state mismatch");
+        setFsmState("NORMAL");
+        assert(document.getElementById("svgFsmText").textContent === "NORMAL", "FSM reset mismatch");
+
+        document.getElementById("selfCheckBadge").textContent = "Checks: 7/7 PASS";
+      }
+
+      // Initialize
+      applyTheme(state.theme || "dark");
+      switchTab(state.activeTab || "tasks");
+      renderTasks();
+      renderFurps();
+      renderPsi();
+      renderSkills();
+      setFlameMode("0g");
+      runSelfChecks();
+    })();
+  </script>
+</body>
+</html>

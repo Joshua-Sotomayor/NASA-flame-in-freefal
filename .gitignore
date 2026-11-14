@@ -1,0 +1,38 @@
+# Secrets & Environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Build
+node_modules/
+dist/
+build/
+.next/
+
+# Unsafe / Unverified Serialized Models (Only SHA-256 verified weights in artifacts/models/ are allowed)
+*.pkl
+*.pickle
+artifacts/raw_downloads/
+*.zip
+*.tar.gz
+
+# OS & Editor
+.DS_Store
+Thumbs.db
+.vscode/settings.json
