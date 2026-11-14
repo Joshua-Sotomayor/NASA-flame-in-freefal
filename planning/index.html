@@ -902,6 +902,15 @@
 
     <!-- TAB 1: WAR ROOM & ROLE TASKS -->
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
+      <div class="status-banner" id="iterationBanner">
+        <div>
+          <strong>Estado de la Iteración Actual: Spec SDD v1.0 (POO + ML/DL Propio + Blindaje OWASP)</strong><br />
+          <span><strong>Logrado:</strong> M-01 (<code>SPEC.md</code>), I-03 (<code>tasks/todo.md</code> + Scope FURPS+), J-01 (Gate 1 · ramas Git <code>main</code> &rarr; <code>dev</code> &rarr; <code>docs/spec-poo-ml-security</code>) + C-01/C-02 verificados.<br />
+          <strong>Siguiente tras aprobar SPEC:</strong> M-02 + I-01 (ingesta 24 PSI + BASS-II/Saffire) &rarr; Task 2 Seguridad (RateLimiter, Pydantic <code>extra="forbid"</code>, SHA-256) &rarr; Tasks 3–6 Pipeline ML/DL + FSM.</span>
+        </div>
+        <span class="mono badge badge-joint">Gate 1 · 3/30 (10%)</span>
+      </div>
+
       <div class="toolbar">
         <div class="filter-group" aria-label="Filtrar por rol">
           <button class="pill-btn" type="button" data-role-filter="ALL" aria-pressed="true">Todos los Roles</button>
@@ -1117,7 +1126,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
       <div class="status-banner">
         <div>
           <strong>Auditoría de tu Baúl Local de Skills:</strong>
-          <code>C:\Users\hp\OneDrive\Documentos\Obsidian Vault\agents\CATALOG.md</code> + Plugins Gemini API.
+          <code>C:\Users\hp\OneDrive\Documentos\Obsidian Vault\agents\CATALOG.md</code> + Pipeline ML/DL Propio + Seguridad OWASP.
         </div>
         <span id="ponytailStatus" class="mono">Ponytail mode: FULL · Costo $0</span>
       </div>
@@ -1129,18 +1138,18 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
     (function () {
       "use strict";
 
-      const STORAGE_KEY = "nasa_flame_freefall_plan_v1";
+      const STORAGE_KEY = "nasa_flame_freefall_plan_v2";
 
       // --- 1. VERIFIED DATA SOURCES ---
       const DEFAULT_TASKS = [
         // Rol A: Mecatrónica y Sistemas de Control (12)
-        { id: "M-01", role: "meca", phase: "V-H0", title: "Redactar SPEC.md con contratos de interfaz", objective: "Definir esquemas JSON entre motor físico, FSM y dashboard.", scope: "Backend + Frontend contracts (SDD)", deliverable: "SPEC.md aprobado", done: false },
+        { id: "M-01", role: "meca", phase: "V-H0", title: "Redactar SPEC.md con contratos de interfaz", objective: "Definir esquemas JSON, clases POO y controles OWASP entre motor físico, pipeline ML/DL, FSM y dashboard.", scope: "Backend + Frontend contracts (SDD + POO)", deliverable: "SPEC.md aprobado", done: true },
         { id: "M-02", role: "meca", phase: "V-H0", title: "Construir psi_combustion_24.json desde PSI/OSDR", objective: "Estructurar las 24 investigaciones con IDs, DOIs, instalaciones y esquemas BASS-II/Saffire.", scope: "Parser Python + OSDR API v2", deliverable: "data/psi_combustion_24.json", done: false },
         { id: "M-03", role: "meca", phase: "S-AM", title: "Implementar motor físico (Da, Pe, Vf, Quenching/Blowoff)", objective: "Calcular límites de inflamabilidad según %O2, presión psi, flujo cm/s y gravedad.", scope: "physics_engine.py + tests assert", deliverable: "Motor físico verificado", done: false },
         { id: "M-04", role: "meca", phase: "S-AM", title: "Implementar Árbol de Decisión Multisensor + Clasificador de Llama", objective: "Clasificar régimen Nominal / Llama Fría NTC / Combustión Abierta con umbrales explicables.", scope: "Árbol físico + lógica óptica", deliverable: "decision_tree.py", done: false },
         { id: "M-05", role: "meca", phase: "S-AM", title: "Programar Máquina de Estados Finitos (FSM) Determinista", objective: "Garantizar transiciones NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA con histéresis.", scope: "fsm_controller.py + pruebas unitarias", deliverable: "FSM 100% testeada", done: false },
         { id: "M-06", role: "meca", phase: "S-AM", title: "Dibujar Gemelo Digital Isométrico SVG (Skill anatomy)", objective: "Representar ducto Saffire/CIR con ventilador, cámara, compuerta y boquilla PFE.", scope: "SVG limpio + motion GPU 60fps", deliverable: "Componente DuctDigitalTwin", done: false },
-        { id: "M-07", role: "meca", phase: "S-PM", title: "Integrar cliente Gemini SI (google-genai >= 3.2.0)", objective: "Usar gemini-4-hydrogen y gemini-decision-1 con validación anti-alucinación y fallback offline.", scope: "si_service.py + caché local", deliverable: "Endpoint /api/interpret", done: false },
+        { id: "M-07", role: "meca", phase: "S-PM", title: "Entrenar pipeline ML/DL (RandomForest sobre tablas BASS-II/Saffire + CNN .onnx de régimen de llama + motor TF-IDF/TextRank)", objective: "Exportar pesos ligeros (.joblib / .onnx) con manifiesto SHA-256 verificado y cero dependencia de API keys.", scope: "train_models.py + pesos SHA-256", deliverable: "Modelos .joblib / .onnx auditados", done: false },
         { id: "M-08", role: "meca", phase: "S-PM", title: "Conectar API OSDR v2 con fallback resiliente", objective: "Consultar estudios frescos si hay red y caer instantáneamente a JSON local ante timeout.", scope: "Cliente HTTP con retry/timeout", deliverable: "Conector OSDR resiliente", done: false },
         { id: "M-09", role: "meca", phase: "S-PM", title: "Integrar gráfica de contorno de inflamabilidad en tiempo real", objective: "Mostrar curva interactiva Flujo vs %O2 marcando zona segura, llama fría y blowoff.", scope: "Canvas/SVG interactivo", deliverable: "Mapa de contorno en vivo", done: false },
         { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: false },
@@ -1150,19 +1159,19 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         // Rol B: Gestión Industrial (12)
         { id: "I-01", role: "ind", phase: "V-H0", title: "Taxonomía y mapeo de los 4 objetivos en las 24 PSI", objective: "Clasificar qué investigaciones aportan a Cabinas, Modelado, Sensores y Spinoffs.", scope: "Curación científica de dominio", deliverable: "Matriz de trazabilidad PSI", done: false },
         { id: "I-02", role: "ind", phase: "V-H0", title: "Diseñar modelo de Ranking Multicriterio (AHP / TOPSIS)", objective: "Definir pesos y fórmula transparente para rankear investigaciones por caso de uso.", scope: "Investigación de operaciones", deliverable: "Especificación TOPSIS", done: false },
-        { id: "I-03", role: "ind", phase: "V-H0", title: "Cerrar backlog FURPS+ y criterios de aceptación MoSCoW", objective: "Fijar alcance innegociable MUST HAVE y cortar excesos WON'T HAVE.", scope: "Gestión de alcance del hackathon", deliverable: "Scope congelado", done: false },
+        { id: "I-03", role: "ind", phase: "V-H0", title: "Cerrar backlog FURPS+ y criterios de aceptación MoSCoW", objective: "Fijar alcance innegociable MUST HAVE y congelar tasks/todo.md con tareas auditables.", scope: "Gestión de alcance del hackathon", deliverable: "Scope congelado (tasks/todo.md)", done: true },
         { id: "I-04", role: "ind", phase: "S-AM", title: "Estructurar Matriz FMEA / AMFE basada en NASA-STD-6001", objective: "Evaluar modos de fallo (pirólisis PTFE, flujo bajo BASS, Vika LiClO4) con cálculo NPR.", scope: "Seguridad industrial aeroespacial", deliverable: "data/fmea_matrix.json", done: false },
         { id: "I-05", role: "ind", phase: "S-AM", title: "Parametrizar fichas forenses: Apollo 1, Apollo 13 y Mir", objective: "Documentar %O2, psi, materiales y lecciones que activan botones de simulación en 1 clic.", scope: "Validación histórica oficial", deliverable: "3 presets forenses verificados", done: false },
         { id: "I-06", role: "ind", phase: "S-AM", title: "Modelar árbol de decisión de Supresión (PFE vs CO2 vs E-FIELD)", objective: "Reglas de selección según toxicidad ECLSS, tipo de fuego y gravedad.", scope: "Ingeniería de seguridad y procesos", deliverable: "Protocolo de supresión", done: false },
         { id: "I-07", role: "ind", phase: "S-AM", title: "Construir Calculadora de Impacto Dual-Use (Spinoffs)", objective: "Cuantificar impacto terrestre de Nodes 9582 (SCBA -40% peso), 9407 (<0.1um) y 9918 (PBI).", scope: "Modelo de transferencia tecnológica", deliverable: "Módulo Calculadora Dual-Use", done: false },
-        { id: "I-08", role: "ind", phase: "S-PM", title: "Diseñar prompts SI por audiencia (Investigador / Estudiante / Gestor)", objective: "Adaptar resúmenes generados por Gemini manteniendo citas obligatorias de DOI.", scope: "UX de contenido y storytelling", deliverable: "3 plantillas de prompt auditadas", done: false },
+        { id: "I-08", role: "ind", phase: "S-PM", title: "Definir reglas de interpretación determinista y plantillas dinámicas basadas en Feature Importance y salida TOPSIS", objective: "Adaptar resúmenes por audiencia (Investigador, Estudiante, Gestor) con citas de los 24 IDs PSI y sin LLM externo.", scope: "UX de contenido y reglas explicables", deliverable: "3 plantillas deterministas auditadas", done: false },
         { id: "I-09", role: "ind", phase: "S-PM", title: "Auditar consistencia de unidades y alcance (Excluir cohetes)", objective: "Verificar psi/kPa/cm/s y asegurar cero contenido fuera de alcance.", scope: "QA de dominio científico", deliverable: "Reporte QA limpio", done: false },
         { id: "I-10", role: "ind", phase: "D-AM", title: "Redactar README.md ejecutivo y citas a los 10 recursos NASA", objective: "Documentar impacto, licencia CC0/MIT y referencias exactas para jueces.", scope: "Documentación de entrega", deliverable: "README.md completo", done: false },
         { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", done: false },
         { id: "I-12", role: "ind", phase: "D-PM", title: "Redactar guion cronometrado del video (30s / 2min)", objective: "Asegurar que cada segundo cubra los 5 criterios de evaluación NASA (20% c/u).", scope: "Guion de pitch ganador", deliverable: "Script cronometrado final", done: false },
 
         // Tareas Conjuntas (6)
-        { id: "J-01", role: "joint", phase: "V-H0", title: "Revisión de Gate 1: Aprobar SPEC.md y congelar alcance MVP", objective: "Alinear modelos físicos, datos PSI y reglas TOPSIS antes de codificar.", scope: "Sincronización de arquitectura", deliverable: "Firma de Gate 1", done: false },
+        { id: "J-01", role: "joint", phase: "V-H0", title: "Revisión de Gate 1: Aprobar SPEC.md y congelar alcance MVP", objective: "Alinear arquitectura POO, pipeline ML/DL propio, seguridad OWASP y flujo Git antes de codificar.", scope: "Sincronización de arquitectura", deliverable: "SPEC.md + tasks/todo.md listos para aprobación", done: true },
         { id: "J-02", role: "joint", phase: "S-AM", title: "Revisión de Gate 2: Validar consistencia Física + FMEA", objective: "Probar que los escenarios Apollo/Lunar disparan las alarmas correctas en FSM y FMEA.", scope: "Integración de dominio", deliverable: "Pruebas cruzadas OK", done: false },
         { id: "J-03", role: "joint", phase: "S-PM", title: "Revisión de Gate 3: Demo end-to-end de los 4 módulos en web", objective: "Recorrer el flujo completo en navegador como lo hará un juez en 3 minutos.", scope: "Prueba de usabilidad real", deliverable: "MVP MUST-HAVE funcional", done: false },
         { id: "J-04", role: "joint", phase: "D-AM", title: "Revisión de Gate 4: Code Freeze y verificación en incógnito", objective: "Congelar código, validar URL desplegada y comprobar cero errores de consola.", scope: "Estabilidad pre-entrega", deliverable: "Release v1.0.0", done: false },
@@ -1183,8 +1192,8 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "U-01", cat: "U", moscow: "MUST", owner: "Ambos", title: "Dashboard web responsive (1024px–1440px) comprensible en <30 segundos.", verify: "Un evaluador externo navega los 4 módulos sin instrucciones adicionales." },
         { id: "U-02", cat: "U", moscow: "SHOULD", owner: "Gestión Industrial", title: "Selector de audiencia (Investigador, Estudiante, Gestor Industrial).", verify: "Adapta nivel técnico de resúmenes SI conservando exactamente los mismos datos." },
         { id: "U-03", cat: "U", moscow: "MUST", owner: "Mecatrónico", title: "Accesibilidad teclado, contraste >= 4.5:1, unidades claras y prefers-reduced-motion.", verify: "Tabulación completa sin trampas ni dependencia exclusiva del color." },
-        { id: "R-01", cat: "R", moscow: "MUST", owner: "Mecatrónico", title: "Resiliencia 100% Offline/Fallback si Gemini u OSDR no responden.", verify: "Con Wi-Fi apagado todos los simuladores, rankings y FSM siguen operativos." },
-        { id: "R-02", cat: "R", moscow: "MUST", owner: "Ambos", title: "Validación anti-alucinación: citas obligatorias contra diccionario oficial de 24 IDs PSI.", verify: "Cero identificadores inventados en salidas de texto." },
+        { id: "R-01", cat: "R", moscow: "MUST", owner: "Mecatrónico", title: "Resiliencia 100% Offline con modelos propios (.joblib/.onnx) verificados por SHA-256 y fallback OSDR local.", verify: "Con Wi-Fi apagado y sin API keys los 3 modelos ML/DL, TOPSIS y la FSM operan sin red." },
+        { id: "R-02", cat: "R", moscow: "MUST", owner: "Ambos", title: "Blindaje OWASP (Zero API keys, RateLimiter anti-DDoS, payload <= 16 KB, Pydantic extra='forbid' y citas PSI validas).", verify: "Pruebas de fuzzing/inyección bloqueadas con HTTP 422/413/429 y cero IDs PSI inventados." },
         { id: "R-03", cat: "R", moscow: "SHOULD", owner: "Mecatrónico", title: "Suite de tests automáticos (assert/pytest) sobre ecuaciones físicas y FSM.", verify: "100% de pruebas en verde antes de pasar a main." },
         { id: "P-01", cat: "P", moscow: "MUST", owner: "Mecatrónico", title: "Carga inicial LCP < 2.5s y cero saltos visuales (CLS < 0.1).", verify: "Medición en Chrome DevTools sin bloqueos de render." },
         { id: "P-02", cat: "P", moscow: "SHOULD", owner: "Mecatrónico", title: "Simulador y Gemelo Digital a 60fps animando solo transform y opacity.", verify: "Sliders fluidos sin caídas de cuadros (<16ms)." },
@@ -1240,7 +1249,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { name: "spec-driven-development (/spec)", cat: "SDD", when: "Viernes H0–H4", role: "Redacta SPEC.md congelando contratos JSON entre motor físico, FSM y UI web." },
         { name: "planning-and-task-breakdown (/plan)", cat: "SDD", when: "Al inicio de cada fase", role: "Divide en vertical slices atómicos con criterios de aceptación verificables." },
         { name: "api-and-interface-design", cat: "Backend", when: "Diseño de endpoints", role: "Contratos estrictos, validación en frontera y manejo uniforme de errores/fallback." },
-        { name: "gemini-api-dev", cat: "SI / Gemini", when: "Módulo de Síntesis SI", role: "Usa SDK google-genai >= 3.2.0 con gemini-4-hydrogen y gemini-decision-1 (v1beta)." },
+        { name: "security-and-hardening", cat: "Seguridad OWASP", when: "Fronteras API y Pesos ML", role: "Zero API keys en runtime, RateLimiter anti-DDoS, validación Pydantic anti-inyección y hash SHA-256 en .joblib/.onnx." },
         { name: "incremental-implementation + tdd", cat: "Calidad", when: "Sábado AM/PM", role: "Bucle RED->GREEN->REFACTOR sobre Da/Pe y transiciones críticas de seguridad en FSM." },
         { name: "git-workflow-and-versioning", cat: "Git", when: "Cada commit", role: "Formato estricto '<version> - <verbo> - <descripción>' y ramas topic -> dev -> main." },
         { name: "frontend-design + impeccable", cat: "Frontend", when: "Diseño UI principal", role: "Modo Operate para dashboards de control, estética orbital sin clichés de IA y WCAG AA." },
@@ -1264,7 +1273,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         return {
           theme: "dark",
           tasks: DEFAULT_TASKS.map(t => ({ ...t })),
-          furpsDone: {},
+          furpsDone: { "C-01": true, "C-02": true },
           activeTab: "tasks",
           roleFilter: "ALL",
           phaseFilter: "ALL",
@@ -1665,7 +1674,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
       document.getElementById("resetBtn").addEventListener("click", () => {
         if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 30 tareas base?")) return;
         state.tasks = DEFAULT_TASKS.map(t => ({ ...t }));
-        state.furpsDone = {};
+        state.furpsDone = { "C-01": true, "C-02": true };
         saveState();
         renderTasks();
         renderFurps();
@@ -1696,13 +1705,19 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         assert(FURPS_DATA.length === 22, "Expected 22 FURPS+ MoSCoW items");
         assert(FURPS_DATA.filter(f => f.moscow === "MUST").length === 13, "Expected 13 MUST HAVE items");
 
+        const m07 = DEFAULT_TASKS.find(t => t.id === "M-07");
+        assert(m07 && m07.title.includes(".onnx") && m07.objective.includes(".joblib"), "M-07 must reference local ML/DL weights");
+        const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
+        assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS"), "I-08 must reference deterministic rules");
+        assert(DEFAULT_TASKS.filter(t => t.done).length === 3, "Expected 3 Gate-1 tasks marked done by default");
+
         // Verify FSM visualizer transitions cleanly
         setFsmState("CONTENCION");
         assert(document.getElementById("svgFsmText").textContent === "CONTENCION", "FSM SVG state mismatch");
         setFsmState("NORMAL");
         assert(document.getElementById("svgFsmText").textContent === "NORMAL", "FSM reset mismatch");
 
-        document.getElementById("selfCheckBadge").textContent = "Checks: 7/7 PASS";
+        document.getElementById("selfCheckBadge").textContent = "Checks: 10/10 PASS";
       }
 
       // Initialize
