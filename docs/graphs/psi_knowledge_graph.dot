@@ -1,0 +1,181 @@
+digraph PSI_Knowledge_Graph {
+  graph [
+    rankdir=LR,
+    bgcolor="#0B0F19",
+    fontname="Segoe UI",
+    fontsize=13,
+    fontcolor="#E2E8F0",
+    pad="0.45",
+    nodesep="0.28",
+    ranksep="0.95",
+    splines=polyline,
+    label="AERO-IGNIS SI: Mapa de Conocimiento NASA PSI (24 Investigaciones) -> Modelos ML/DL -> Objetivos -> Roles",
+    labelloc=t
+  ];
+  node [
+    shape=box,
+    style="rounded,filled",
+    fontname="Segoe UI",
+    fontsize=10,
+    fontcolor="#F8FAFC",
+    penwidth=1.4,
+    margin="0.14,0.08"
+  ];
+  edge [
+    color="#475569",
+    penwidth=1.15,
+    arrowsize=0.75
+  ];
+
+  subgraph cluster_cygnus {
+    label="Campanas Cygnus (Gran Escala)";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#F59E0B";
+    fontcolor="#FBBF24";
+    PSI_98  [label="PSI-98 SAFFIRE-I\nSIBAL 20 cm/s (13 cols)", fillcolor="#1E293B", color="#F59E0B"];
+    PSI_101 [label="PSI-101 SAFFIRE-II\nPMMA/SIBAL/Nomex", fillcolor="#1E293B", color="#F59E0B"];
+    PSI_102 [label="PSI-102 SAFFIRE-III\nPanel grande 30 cm/s", fillcolor="#1E293B", color="#F59E0B"];
+    PSI_103 [label="PSI-103 SAFFIRE-IV\nAtmosfera 30-34% O2", fillcolor="#1E293B", color="#F59E0B"];
+    PSI_104 [label="PSI-104 SAFFIRE-V\nHabitat lunar 8.2 psi", fillcolor="#1E293B", color="#F59E0B"];
+    PSI_105 [label="PSI-105 SAFFIRE-VI\nGases CO, HF, HCl", fillcolor="#1E293B", color="#F59E0B"];
+  }
+
+  subgraph cluster_solids {
+    label="Solidos, Porosos y Smoldering";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#F97316";
+    fontcolor="#FB923C";
+    PSI_26  [label="PSI-26 BASS\nParadoja flujo bajo", fillcolor="#1E293B", color="#F97316"];
+    PSI_25  [label="PSI-25 BASS-II\n>130 corridas (17 cols)", fillcolor="#1E293B", color="#F97316"];
+    PSI_132 [label="PSI-132 BRE (ACME)\nNumero B de Spalding", fillcolor="#1E293B", color="#F97316"];
+    PSI_109 [label="PSI-109 NCA\nCanal estrecho 1g analogo", fillcolor="#1E293B", color="#F97316"];
+    PSI_110 [label="PSI-110 MSC\nSmoldering en espumas", fillcolor="#1E293B", color="#F97316"];
+  }
+
+  subgraph cluster_droplets {
+    label="Gotas y Llamas Frias (ISS-CIR)";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#38BDF8";
+    fontcolor="#38BDF8";
+    PSI_24  [label="PSI-24 FLEX\nLlamas frias 500-800 K", fillcolor="#1E293B", color="#38BDF8"];
+    PSI_27  [label="PSI-27 FLEX-2\nDilucion N2, CO2, He, Xe", fillcolor="#1E293B", color="#38BDF8"];
+    PSI_78  [label="PSI-78 FLEX-2J\nArreglos de gotas JAXA", fillcolor="#1E293B", color="#38BDF8"];
+    PSI_79  [label="PSI-79 MDCA-FLEX-ICE\nMezclas bicomponentes", fillcolor="#1E293B", color="#38BDF8"];
+    PSI_138 [label="PSI-138 CFI-G\nLlamas frias gaseosas", fillcolor="#1E293B", color="#38BDF8"];
+  }
+
+  subgraph cluster_gases {
+    label="Gases, Hollin, E-FIELD y Termofluidos";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#818CF8";
+    fontcolor="#A5B4FC";
+    PSI_146 [label="PSI-146 ACME Flame Design\nLlamas esfericas sin hollin", fillcolor="#1E293B", color="#818CF8"];
+    PSI_147 [label="PSI-147 ACME s-Flame\nExtincion radiativa", fillcolor="#1E293B", color="#818CF8"];
+    PSI_153 [label="PSI-153 ACME CLD Flame\nOxidacion de hollin", fillcolor="#1E293B", color="#818CF8"];
+    PSI_154 [label="PSI-154 ACME E-FIELD\nCampo electrico +/-10 kV", fillcolor="#1E293B", color="#818CF8"];
+    PSI_126 [label="PSI-126 SLICE\nLiftoff y blowout", fillcolor="#1E293B", color="#818CF8"];
+    PSI_129 [label="PSI-129 SPICE + SAME/DAFT\nSmoke point y <0.1 um", fillcolor="#1E293B", color="#818CF8"];
+    PSI_107 [label="PSI-107 CVB\nBurbuja vapor interfacial", fillcolor="#1E293B", color="#818CF8"];
+    PSI_108 [label="PSI-108 CVB-2\nPelicula liquida 0g", fillcolor="#1E293B", color="#818CF8"];
+  }
+
+  subgraph cluster_context {
+    label="Recursos Forenses y Spinoffs";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#10B981";
+    fontcolor="#34D399";
+    FORENSE  [label="Apollo 1 / Apollo 13 / Mir\nNASA-STD-6001 & LiClO4", fillcolor="#1E293B", color="#EF4444"];
+    SPINOFFS [label="Spinoffs 9582, 9407, 9918\nSCBA + Sensor <0.1um + PBI + PFE", fillcolor="#1E293B", color="#10B981"];
+  }
+
+  subgraph cluster_models {
+    label="Pipeline 100% ML/DL Propio";
+    style="rounded,filled";
+    fillcolor="#0F172A";
+    color="#38BDF8";
+    fontcolor="#7DD3FC";
+    M1 [label="Modelo 1: FlammabilityPredictor\nRandomForest + GBR + Da/Pe + SHAP\n(.joblib local + Colab)", fillcolor="#172554", color="#38BDF8"];
+    M2 [label="Modelo 2: DuctSafetyOrchestrator\nCNN PyTorch (.onnx) + DecisionTree + FSM\n(Colab T4 + CPU fallback)", fillcolor="#172554", color="#EF4444"];
+    M3 [label="Modelo 3: Ranking & Extractive NLP\nPCA + K-Means + TF-IDF + TextRank + TOPSIS\n+ Plantillas writing-craft", fillcolor="#172554", color="#10B981"];
+    M4 [label="Motor Gobernanza Dual-Use\nMatriz FMEA NASA-STD-6001\n+ Calculadora Spinoffs", fillcolor="#172554", color="#F59E0B"];
+  }
+
+  subgraph cluster_objectives {
+    label="4 Objetivos Oficiales Space Apps";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#A855F7";
+    fontcolor="#C084FC";
+    O1 [label="O1: Resumir, agrupar y rankear\nlas 24 PSI por audiencia", fillcolor="#2E1065", color="#A855F7"];
+    O2 [label="O2: Predecir inflamabilidad\nen habitats lunares y rovers", fillcolor="#2E1065", color="#A855F7"];
+    O3 [label="O3: Deteccion temprana, supresion\ny gemelo digital con FSM", fillcolor="#2E1065", color="#A855F7"];
+    O4 [label="O4: Validar forense historico\ny transferencia Dual-Use Tierra", fillcolor="#2E1065", color="#A855F7"];
+  }
+
+  subgraph cluster_roles {
+    label="Dominio y Liderazgo de Equipo";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#E2E8F0";
+    fontcolor="#F8FAFC";
+    R_MECA [label="Mecatronica y Control\nFisica Da/Pe, CNN .onnx,\nDecisionTree, FSM, FastAPI, TDD", fillcolor="#451A03", color="#F59E0B"];
+    R_COMB [label="Dominio Combinado\nBASS-II/Saffire, Forense,\nFMEA + Feature Importance", fillcolor="#1E1B4B", color="#818CF8"];
+    R_IND  [label="Gestion Industrial\nTOPSIS/AHP, Taxonomy 24 PSI,\nwriting-craft, Spinoffs, Pitch", fillcolor="#064E3B", color="#10B981"];
+  }
+
+  // Cygnus edges
+  PSI_98  -> {M1 M2 M3} [color="#F59E0B"];
+  PSI_101 -> {M1 M3} [color="#F59E0B"];
+  PSI_102 -> {M1 M2 M3} [color="#F59E0B"];
+  PSI_103 -> {M1 M2 M3} [color="#F59E0B"];
+  PSI_104 -> {M1 M3} [color="#F59E0B"];
+  PSI_105 -> {M2 M3 M4} [color="#F59E0B"];
+
+  // Solids edges
+  PSI_26  -> {M1 M2 M3} [color="#F97316"];
+  PSI_25  -> {M1 M2 M3} [color="#F97316"];
+  PSI_132 -> {M1 M3} [color="#F97316"];
+  PSI_109 -> {M1 M3} [color="#F97316"];
+  PSI_110 -> {M2 M3 M4} [color="#F97316"];
+
+  // Droplets & Cool Flames edges
+  PSI_24  -> {M2 M3} [color="#38BDF8"];
+  PSI_27  -> {M2 M3 M4} [color="#38BDF8"];
+  PSI_78  -> {M1 M3} [color="#38BDF8"];
+  PSI_79  -> {M1 M3} [color="#38BDF8"];
+  PSI_138 -> {M2 M3} [color="#38BDF8"];
+
+  // Gases, E-FIELD & CVB edges
+  PSI_146 -> {M2 M3} [color="#818CF8"];
+  PSI_147 -> {M1 M2 M3} [color="#818CF8"];
+  PSI_153 -> {M2 M3} [color="#818CF8"];
+  PSI_154 -> {M2 M3 M4} [color="#818CF8"];
+  PSI_126 -> {M1 M2 M3} [color="#818CF8"];
+  PSI_129 -> {M2 M3 M4} [color="#818CF8"];
+  PSI_107 -> {M1 M3} [color="#818CF8"];
+  PSI_108 -> {M3 M4} [color="#818CF8"];
+
+  // Forensic & Spinoffs edges
+  FORENSE  -> {M1 M4} [color="#EF4444"];
+  SPINOFFS -> {M3 M4} [color="#10B981"];
+
+  // Models -> Objectives
+  M1 -> {O2 O4} [color="#38BDF8", penwidth=1.8];
+  M2 -> O3      [color="#EF4444", penwidth=1.8];
+  M3 -> {O1 O4} [color="#10B981", penwidth=1.8];
+  M4 -> {O3 O4} [color="#F59E0B", penwidth=1.8];
+
+  // Objectives -> Roles
+  O1 -> R_IND  [color="#10B981", penwidth=2.0];
+  O1 -> R_COMB [color="#818CF8", style=dashed];
+  O2 -> R_COMB [color="#818CF8", penwidth=2.0];
+  O2 -> R_MECA [color="#F59E0B", style=dashed];
+  O3 -> R_MECA [color="#F59E0B", penwidth=2.0];
+  O4 -> R_IND  [color="#10B981", penwidth=2.0];
+  O4 -> R_COMB [color="#818CF8", style=dashed];
+}
