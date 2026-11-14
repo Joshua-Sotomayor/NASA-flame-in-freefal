@@ -904,9 +904,9 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual: Spec SDD v1.0 (POO + ML/DL Propio + Blindaje OWASP)</strong><br />
-          <span><strong>Logrado:</strong> M-01 (<code>SPEC.md</code>), I-03 (<code>tasks/todo.md</code> + Scope FURPS+), J-01 (Gate 1 · ramas Git <code>main</code> &rarr; <code>dev</code> &rarr; <code>docs/spec-poo-ml-security</code>) + C-01/C-02 verificados.<br />
-          <strong>Siguiente tras aprobar SPEC:</strong> M-02 + I-01 (ingesta 24 PSI + BASS-II/Saffire) &rarr; Task 2 Seguridad (RateLimiter, Pydantic <code>extra="forbid"</code>, SHA-256) &rarr; Tasks 3–6 Pipeline ML/DL + FSM.</span>
+          <strong>Estado de la Iteración Actual: Spec SDD v1.1 + Base Obsidian + Graphviz + TDD + writing-craft + GitHub</strong><br />
+          <span><strong>Logrado:</strong> M-01 (<code>SPEC.md</code> v1.1), I-03 (<code>tasks/todo.md</code> con TDD Piramidal), J-01 (Gate 1), remoto GitHub <code>origin</code> + licencia <code>MIT</code>, Hub <code>.agents/skills.json</code> (con <code>writing-craft</code> + <code>TDD</code>), Base de Conocimiento Obsidian (24 PSI + Canvas + 3 grafos <code>dot/svg</code>) y notebook <code>notebooks/AERO_IGNIS_Colab_Training.ipynb</code>.<br />
+          <strong>Siguiente tras aprobar SPEC:</strong> <code>Task 1</code> (Test RED &rarr; dataset 24 PSI + POO) &rarr; <code>Task 2</code> (SecurityGuard) &rarr; <code>Task 3</code> (Entrenamiento Colab/Local + SHA-256).</span>
         </div>
         <span class="mono badge badge-joint">Gate 1 · 3/30 (10%)</span>
       </div>
@@ -1052,6 +1052,24 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         </table>
       </div>
 
+      <h3 class="panel-title" style="margin:22px 0 8px;">Mapa Graphviz: Conexión 24 PSI &rarr; Modelos ML/DL (Colab / Local) &rarr; Objetivos &rarr; Roles</h3>
+      <div class="split-2" style="margin-bottom:20px;">
+        <div class="panel">
+          <h4 class="task-title" style="margin-bottom:8px;">Grafo de Conocimiento PSI &amp; Dominios (<code>psi_knowledge_graph.svg</code>)</h4>
+          <p class="task-detail" style="margin-bottom:8px;">Sincronizado con la carpeta Obsidian <code>Proyectos\NASA_Flame_In_Freefall\</code> (24 fichas PSI, 10 nodos de Objetivos/Modelos/Roles y <code>.canvas</code>).</p>
+          <a href="../docs/graphs/psi_knowledge_graph.svg" target="_blank" rel="noopener noreferrer">
+            <img src="../docs/graphs/psi_knowledge_graph.svg" alt="Grafo Graphviz conectando las 24 investigaciones PSI con modelos ML, objetivos y roles" style="width:100%; height:auto; border-radius:var(--radius-md); border:1px solid var(--border-subtle);" />
+          </a>
+        </div>
+        <div class="panel">
+          <h4 class="task-title" style="margin-bottom:8px;">Pipeline Dual Colab T4 / CPU Local (<code>ml_dl_colab_pipeline.svg</code>)</h4>
+          <p class="task-detail" style="margin-bottom:8px;">Streaming selectivo OSDR API v2 en <code>notebooks/AERO_IGNIS_Colab_Training.ipynb</code> + entrenamiento CPU local + manifiesto <code>SHA-256</code>.</p>
+          <a href="../docs/graphs/ml_dl_colab_pipeline.svg" target="_blank" rel="noopener noreferrer">
+            <img src="../docs/graphs/ml_dl_colab_pipeline.svg" alt="Grafo Graphviz del pipeline dual Google Colab GPU y CPU local con SHA-256" style="width:100%; height:auto; border-radius:var(--radius-md); border:1px solid var(--border-subtle);" />
+          </a>
+        </div>
+      </div>
+
       <h3 class="panel-title" style="margin:22px 0 8px;">Los 10 Recursos Oficiales del Reto + Extintor PFE</h3>
       <div id="resourceGrid" class="resource-grid"></div>
     </section>
@@ -1125,12 +1143,19 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
     <section id="panel-skills" class="tabpanel" role="tabpanel" aria-labelledby="tab-skills">
       <div class="status-banner">
         <div>
-          <strong>Auditoría de tu Baúl Local de Skills:</strong>
-          <code>C:\Users\hp\OneDrive\Documentos\Obsidian Vault\agents\CATALOG.md</code> + Pipeline ML/DL Propio + Seguridad OWASP.
+          <strong>Auditoría y Vinculación de Skills (.agents/skills.json):</strong>
+          <code>C:\Users\hp\OneDrive\Documentos\Obsidian Vault\agents\CATALOG.md</code> + <code>writing-craft</code> + TDD Piramidal + Graphviz.
         </div>
         <span id="ponytailStatus" class="mono">Ponytail mode: FULL · Costo $0</span>
       </div>
       <div id="skillsGrid" class="resource-grid"></div>
+      <div class="panel" style="margin-top:20px;">
+        <h3 class="panel-title" style="margin-bottom:8px;">Arquitectura TDD (Unitarias 80% + Integración 15% + E2E 5%) + SDD + writing-craft</h3>
+        <p class="task-detail" style="margin-bottom:8px;">Flujo de calidad integrado con <code>pytest</code>, ciclo RED &rarr; GREEN &rarr; REFACTOR, blindaje OWASP y disciplina editorial anti-<em>AI slop</em>.</p>
+        <a href="../docs/graphs/tdd_sdd_architecture.svg" target="_blank" rel="noopener noreferrer">
+          <img src="../docs/graphs/tdd_sdd_architecture.svg" alt="Diagrama Graphviz del flujo SDD, piramide TDD, writing-craft y ramas Git" style="width:100%; height:auto; border-radius:var(--radius-md); border:1px solid var(--border-subtle);" />
+        </a>
+      </div>
     </section>
   </div>
 
@@ -1138,7 +1163,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
     (function () {
       "use strict";
 
-      const STORAGE_KEY = "nasa_flame_freefall_plan_v2";
+      const STORAGE_KEY = "nasa_flame_freefall_plan_v3";
 
       // --- 1. VERIFIED DATA SOURCES ---
       const DEFAULT_TASKS = [
@@ -1149,7 +1174,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "M-04", role: "meca", phase: "S-AM", title: "Implementar Árbol de Decisión Multisensor + Clasificador de Llama", objective: "Clasificar régimen Nominal / Llama Fría NTC / Combustión Abierta con umbrales explicables.", scope: "Árbol físico + lógica óptica", deliverable: "decision_tree.py", done: false },
         { id: "M-05", role: "meca", phase: "S-AM", title: "Programar Máquina de Estados Finitos (FSM) Determinista", objective: "Garantizar transiciones NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA con histéresis.", scope: "fsm_controller.py + pruebas unitarias", deliverable: "FSM 100% testeada", done: false },
         { id: "M-06", role: "meca", phase: "S-AM", title: "Dibujar Gemelo Digital Isométrico SVG (Skill anatomy)", objective: "Representar ducto Saffire/CIR con ventilador, cámara, compuerta y boquilla PFE.", scope: "SVG limpio + motion GPU 60fps", deliverable: "Componente DuctDigitalTwin", done: false },
-        { id: "M-07", role: "meca", phase: "S-PM", title: "Entrenar pipeline ML/DL (RandomForest sobre tablas BASS-II/Saffire + CNN .onnx de régimen de llama + motor TF-IDF/TextRank)", objective: "Exportar pesos ligeros (.joblib / .onnx) con manifiesto SHA-256 verificado y cero dependencia de API keys.", scope: "train_models.py + pesos SHA-256", deliverable: "Modelos .joblib / .onnx auditados", done: false },
+        { id: "M-07", role: "meca", phase: "S-PM", title: "Entrenar pipeline ML/DL (RandomForest sobre tablas BASS-II/Saffire + CNN .onnx de régimen de llama + motor TF-IDF/TextRank)", objective: "Ejecutar en Google Colab T4 GPU / CPU local y exportar pesos ligeros (.joblib / .onnx) con manifiesto SHA-256 verificado.", scope: "Colab .ipynb + train_models.py + SHA-256", deliverable: "Modelos .joblib / .onnx auditados", done: false },
         { id: "M-08", role: "meca", phase: "S-PM", title: "Conectar API OSDR v2 con fallback resiliente", objective: "Consultar estudios frescos si hay red y caer instantáneamente a JSON local ante timeout.", scope: "Cliente HTTP con retry/timeout", deliverable: "Conector OSDR resiliente", done: false },
         { id: "M-09", role: "meca", phase: "S-PM", title: "Integrar gráfica de contorno de inflamabilidad en tiempo real", objective: "Mostrar curva interactiva Flujo vs %O2 marcando zona segura, llama fría y blowoff.", scope: "Canvas/SVG interactivo", deliverable: "Mapa de contorno en vivo", done: false },
         { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: false },
@@ -1164,7 +1189,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "I-05", role: "ind", phase: "S-AM", title: "Parametrizar fichas forenses: Apollo 1, Apollo 13 y Mir", objective: "Documentar %O2, psi, materiales y lecciones que activan botones de simulación en 1 clic.", scope: "Validación histórica oficial", deliverable: "3 presets forenses verificados", done: false },
         { id: "I-06", role: "ind", phase: "S-AM", title: "Modelar árbol de decisión de Supresión (PFE vs CO2 vs E-FIELD)", objective: "Reglas de selección según toxicidad ECLSS, tipo de fuego y gravedad.", scope: "Ingeniería de seguridad y procesos", deliverable: "Protocolo de supresión", done: false },
         { id: "I-07", role: "ind", phase: "S-AM", title: "Construir Calculadora de Impacto Dual-Use (Spinoffs)", objective: "Cuantificar impacto terrestre de Nodes 9582 (SCBA -40% peso), 9407 (<0.1um) y 9918 (PBI).", scope: "Modelo de transferencia tecnológica", deliverable: "Módulo Calculadora Dual-Use", done: false },
-        { id: "I-08", role: "ind", phase: "S-PM", title: "Definir reglas de interpretación determinista y plantillas dinámicas basadas en Feature Importance y salida TOPSIS", objective: "Adaptar resúmenes por audiencia (Investigador, Estudiante, Gestor) con citas de los 24 IDs PSI y sin LLM externo.", scope: "UX de contenido y reglas explicables", deliverable: "3 plantillas deterministas auditadas", done: false },
+        { id: "I-08", role: "ind", phase: "S-PM", title: "Definir reglas de interpretación determinista y plantillas dinámicas basadas en Feature Importance y salida TOPSIS", objective: "Aplicar skill writing-craft (academic/plain) por audiencia (Investigador, Estudiante, Gestor) con citas PSI válidas y cero AI slop.", scope: "writing-craft + reglas explicables", deliverable: "3 plantillas deterministas auditadas", done: false },
         { id: "I-09", role: "ind", phase: "S-PM", title: "Auditar consistencia de unidades y alcance (Excluir cohetes)", objective: "Verificar psi/kPa/cm/s y asegurar cero contenido fuera de alcance.", scope: "QA de dominio científico", deliverable: "Reporte QA limpio", done: false },
         { id: "I-10", role: "ind", phase: "D-AM", title: "Redactar README.md ejecutivo y citas a los 10 recursos NASA", objective: "Documentar impacto, licencia CC0/MIT y referencias exactas para jueces.", scope: "Documentación de entrega", deliverable: "README.md completo", done: false },
         { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", done: false },
@@ -1194,7 +1219,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "U-03", cat: "U", moscow: "MUST", owner: "Mecatrónico", title: "Accesibilidad teclado, contraste >= 4.5:1, unidades claras y prefers-reduced-motion.", verify: "Tabulación completa sin trampas ni dependencia exclusiva del color." },
         { id: "R-01", cat: "R", moscow: "MUST", owner: "Mecatrónico", title: "Resiliencia 100% Offline con modelos propios (.joblib/.onnx) verificados por SHA-256 y fallback OSDR local.", verify: "Con Wi-Fi apagado y sin API keys los 3 modelos ML/DL, TOPSIS y la FSM operan sin red." },
         { id: "R-02", cat: "R", moscow: "MUST", owner: "Ambos", title: "Blindaje OWASP (Zero API keys, RateLimiter anti-DDoS, payload <= 16 KB, Pydantic extra='forbid' y citas PSI validas).", verify: "Pruebas de fuzzing/inyección bloqueadas con HTTP 422/413/429 y cero IDs PSI inventados." },
-        { id: "R-03", cat: "R", moscow: "SHOULD", owner: "Mecatrónico", title: "Suite de tests automáticos (assert/pytest) sobre ecuaciones físicas y FSM.", verify: "100% de pruebas en verde antes de pasar a main." },
+        { id: "R-03", cat: "R", moscow: "MUST", owner: "Mecatrónico", title: "Suite TDD obligatoria (RED->GREEN->REFACTOR): Pruebas Unitarias (~80%) + Pruebas de Integración (~15%) + E2E (~5%) sobre física, ML, FSM y API.", verify: "pytest tests/unit tests/integration -v al 100% antes de cada merge a dev/main." },
         { id: "P-01", cat: "P", moscow: "MUST", owner: "Mecatrónico", title: "Carga inicial LCP < 2.5s y cero saltos visuales (CLS < 0.1).", verify: "Medición en Chrome DevTools sin bloqueos de render." },
         { id: "P-02", cat: "P", moscow: "SHOULD", owner: "Mecatrónico", title: "Simulador y Gemelo Digital a 60fps animando solo transform y opacity.", verify: "Sliders fluidos sin caídas de cuadros (<16ms)." },
         { id: "S-01", cat: "S", moscow: "MUST", owner: "Ambos", title: "Repositorio GitHub público con README, SPEC y commits '<ver> - <verbo> - <desc>'.", verify: "Instalable y ejecutable en <3 pasos documentados." },
@@ -1246,16 +1271,17 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
 
       const SKILLS_VAULT = [
         { name: "ponytail (full) + ponytail-audit", cat: "General / Lean", when: "Durante todo el desarrollo", role: "Cero código muerto, librerías nativas antes de instalar paquetes, al menos 1 assert por lógica nueva." },
+        { name: "writing-craft (plain | academic | style-edit)", cat: "Redacción / Anti-Slop", when: "Docs, Pitch y Plantillas SI", role: "Cero AI tells (ai-tells-es-en), rigor academic para Investigador y claridad plain para Estudiante/Gestor con citas DOI intactas." },
         { name: "spec-driven-development (/spec)", cat: "SDD", when: "Viernes H0–H4", role: "Redacta SPEC.md congelando contratos JSON entre motor físico, FSM y UI web." },
         { name: "planning-and-task-breakdown (/plan)", cat: "SDD", when: "Al inicio de cada fase", role: "Divide en vertical slices atómicos con criterios de aceptación verificables." },
         { name: "api-and-interface-design", cat: "Backend", when: "Diseño de endpoints", role: "Contratos estrictos, validación en frontera y manejo uniforme de errores/fallback." },
         { name: "security-and-hardening", cat: "Seguridad OWASP", when: "Fronteras API y Pesos ML", role: "Zero API keys en runtime, RateLimiter anti-DDoS, validación Pydantic anti-inyección y hash SHA-256 en .joblib/.onnx." },
-        { name: "incremental-implementation + tdd", cat: "Calidad", when: "Sábado AM/PM", role: "Bucle RED->GREEN->REFACTOR sobre Da/Pe y transiciones críticas de seguridad en FSM." },
+        { name: "incremental-implementation + test-driven-development", cat: "Calidad / TDD", when: "Cada Slice (RED->GREEN->REFACTOR)", role: "Pirámide TDD (80% Unitarias / 15% Integración / 5% E2E) + patrón Prove-It sobre Da/Pe, ML, FSM y API FastAPI." },
         { name: "git-workflow-and-versioning", cat: "Git", when: "Cada commit", role: "Formato estricto '<version> - <verbo> - <descripción>' y ramas topic -> dev -> main." },
         { name: "frontend-design + impeccable", cat: "Frontend", when: "Diseño UI principal", role: "Modo Operate para dashboards de control, estética orbital sin clichés de IA y WCAG AA." },
         { name: "animation-design (Emil Kowalski)", cat: "Motion", when: "Transiciones y SVG", role: "Curvas cubic-bezier calibradas, solo transform/opacity a 60fps y prefers-reduced-motion." },
         { name: "anatomy", cat: "Visualización", when: "Módulo 3 (Gemelo Digital)", role: "Ilustración isométrica SVG de precisión para el ducto Saffire/CIR y sus actuadores." },
-        { name: "engram + graphify", cat: "Memoria / AST", when: "Continuo + Cierre", role: "Persiste decisiones técnicas entre sesiones y genera diagrama de arquitectura del repo." },
+        { name: "engram + graphify + Graphviz (dot)", cat: "Memoria / Grafos", when: "Base Obsidian + Cierre", role: "Persiste decisiones, genera grafo del conocimiento en Obsidian (24 PSI + Canvas + .dot/.svg) y diagrama del repo." },
         { name: "faceless-channel + narrator + subtitles", cat: "Media / Pitch", when: "Domingo PM", role: "Apoyo opcional para locución cronometrada y subtítulos limpios en el video de 30s." }
       ];
 
@@ -1273,7 +1299,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         return {
           theme: "dark",
           tasks: DEFAULT_TASKS.map(t => ({ ...t })),
-          furpsDone: { "C-01": true, "C-02": true },
+          furpsDone: { "C-01": true, "C-02": true, "S-01": true },
           activeTab: "tasks",
           roleFilter: "ALL",
           phaseFilter: "ALL",
@@ -1674,7 +1700,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
       document.getElementById("resetBtn").addEventListener("click", () => {
         if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 30 tareas base?")) return;
         state.tasks = DEFAULT_TASKS.map(t => ({ ...t }));
-        state.furpsDone = { "C-01": true, "C-02": true };
+        state.furpsDone = { "C-01": true, "C-02": true, "S-01": true };
         saveState();
         renderTasks();
         renderFurps();
@@ -1703,12 +1729,15 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         assert(OFFICIAL_RESOURCES.length === 10, "Expected 10 official challenge resources");
         assert(DEFAULT_TASKS.length === 30, "Expected 30 role-divided default tasks");
         assert(FURPS_DATA.length === 22, "Expected 22 FURPS+ MoSCoW items");
-        assert(FURPS_DATA.filter(f => f.moscow === "MUST").length === 13, "Expected 13 MUST HAVE items");
+        assert(FURPS_DATA.filter(f => f.moscow === "MUST").length === 14, "Expected 14 MUST HAVE items");
+        assert(SKILLS_VAULT.length === 13, "Expected 13 audited skills in SKILLS_VAULT");
+        assert(SKILLS_VAULT.some(s => s.name.includes("writing-craft")), "writing-craft must be registered in SKILLS_VAULT");
+        assert(SKILLS_VAULT.some(s => s.role.includes("80%") && s.role.includes("15%")), "TDD pyramid 80%/15% must be registered");
 
         const m07 = DEFAULT_TASKS.find(t => t.id === "M-07");
-        assert(m07 && m07.title.includes(".onnx") && m07.objective.includes(".joblib"), "M-07 must reference local ML/DL weights");
+        assert(m07 && m07.title.includes(".onnx") && m07.objective.includes("Colab") && m07.objective.includes(".joblib"), "M-07 must reference Colab and local ML/DL weights");
         const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
-        assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS"), "I-08 must reference deterministic rules");
+        assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS") && i08.objective.includes("writing-craft"), "I-08 must reference deterministic rules and writing-craft");
         assert(DEFAULT_TASKS.filter(t => t.done).length === 3, "Expected 3 Gate-1 tasks marked done by default");
 
         // Verify FSM visualizer transitions cleanly
@@ -1717,7 +1746,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         setFsmState("NORMAL");
         assert(document.getElementById("svgFsmText").textContent === "NORMAL", "FSM reset mismatch");
 
-        document.getElementById("selfCheckBadge").textContent = "Checks: 10/10 PASS";
+        document.getElementById("selfCheckBadge").textContent = "Checks: 13/13 PASS";
       }
 
       // Initialize
