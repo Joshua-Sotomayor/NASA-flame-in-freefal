@@ -7,11 +7,13 @@ inyeccion de dependencias en `app.state.services` y blindaje OWASP (`SecurityBou
 from __future__ import annotations
 
 from dataclasses import dataclass
+import os
 from pathlib import Path
 import sys
 from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -128,8 +130,18 @@ def create_app(
         models_verified_sha256=True,
     )
     install_security_handlers(app, guard)
+    allowed_origins_raw = os.getenv("ALLOWED_ORIGINS", "").strip()
+    allowed_origins = [origin.strip() for origin in allowed_origins_raw.split(",") if origin.strip()]
+    if allowed_origins:
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=allowed_origins,
+            allow_credentials=False,
+            allow_methods=["GET", "POST", "HEAD", "OPTIONS"],
+            allow_headers=["Content-Type", "Accept"],
+        )
 
-    @app.get("/api/v1/health")
+    @app.api_route("/api/v1/health", methods=["GET", "HEAD"])
     def health(request: Request) -> dict[str, Any]:
         svc: AeroIgnisServices = request.app.state.services
         return {
@@ -238,7 +250,7 @@ def create_app(
             raise HTTPException(status_code=404, detail="Archivo frontend aun no disponible.")
         return FileResponse(path=safe_path)
 
-    @app.get("/", include_in_schema=False)
+    @app.api_route("/", methods=["GET", "HEAD"], include_in_schema=False)
     def serve_dashboard_root() -> FileResponse:
         return _serve_frontend_asset("index.html")
 
@@ -285,4 +297,6 @@ app = create_app()
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    host = os.getenv("HOST", "127.0.0.1")
+    port = int(os.getenv("PORT", "8000"))
+    uvicorn.run(app, host=host, port=port)

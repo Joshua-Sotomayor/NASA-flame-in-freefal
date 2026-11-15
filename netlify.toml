@@ -1,0 +1,16 @@
+[build]
+  publish = "frontend"
+
+# Proxy opcional si se separa el frontend en Netlify CDN hacia la API en Render
+[[redirects]]
+  from = "/api/*"
+  to = "https://aero-ignis-si.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "no-referrer"
