@@ -1,0 +1,84 @@
+digraph ML_DL_Colab_Pipeline {
+  graph [
+    rankdir=TB,
+    bgcolor="#0B0F19",
+    fontname="Segoe UI",
+    fontsize=13,
+    fontcolor="#E2E8F0",
+    pad="0.45",
+    nodesep="0.35",
+    ranksep="0.7",
+    label="Arquitectura Dual de Entrenamiento ML/DL (Google Colab GPU vs Local CPU) y Despliegue Seguro",
+    labelloc=t
+  ];
+  node [
+    shape=box,
+    style="rounded,filled",
+    fontname="Segoe UI",
+    fontsize=10,
+    fontcolor="#F8FAFC",
+    penwidth=1.4,
+    margin="0.16,0.10"
+  ];
+  edge [
+    color="#64748B",
+    penwidth=1.25,
+    arrowsize=0.8
+  ];
+
+  subgraph cluster_sources {
+    label="1. Fuentes Oficiales NASA (Sin descargar 255 GB)";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#38BDF8";
+    fontcolor="#38BDF8";
+    OSDR  [label="OSDR REST API v2 & AWS S3\n(s3://nasa-osdr/ --no-sign-request)", fillcolor="#1E293B", color="#38BDF8"];
+    ISA   [label="24 Metadatos ISA-Tab\n(i_investigation, s_study, a_assay)", fillcolor="#1E293B", color="#38BDF8"];
+    TABLES [label="Experimental Tables CSV\nBASS-II (17 cols) + Saffire (13 cols)", fillcolor="#1E293B", color="#38BDF8"];
+    FRAMES [label="Frames & Curvas Representativas\nBASS-II, FLEX (Cool Flame), ACME, SPICE", fillcolor="#1E293B", color="#38BDF8"];
+  }
+
+  subgraph cluster_training {
+    label="2. Entrenamiento Build-Time (Dual: Colab T4 GPU + CPU Local Determinista)";
+    style="rounded,filled";
+    fillcolor="#0F172A";
+    color="#F59E0B";
+    fontcolor="#FBBF24";
+    COLAB [label="Google Colab T4 GPU\nnotebooks/AERO_IGNIS_Colab_Training.ipynb\nStreaming OSDR + Data Augmentation 0g + Validacion Cruzada", fillcolor="#451A03", color="#F59E0B"];
+    LOCAL [label="Local CPU Reproducible (<5s)\nbackend/train_models.py\nSemilla fija + fallback TDD sin internet", fillcolor="#1E293B", color="#10B981"];
+
+    TRAIN_RF  [label="Modelo 1: RandomForest + GBR\nPredice Extinguished, Burn Time, Vf\n+ Feature Importance", fillcolor="#172554", color="#38BDF8"];
+    TRAIN_CNN [label="Modelo 2: PyTorch FlameCNN -> ONNX\n4 clases + DecisionTreeClassifier\n(<0.1 um, CO, dT/dt, flujo)", fillcolor="#172554", color="#EF4444"];
+    TRAIN_NLP [label="Modelo 3: TF-IDF + PCA + K-Means\nClusters 2D + TextRank + Coseno\n+ TOPSIS/AHP", fillcolor="#172554", color="#10B981"];
+  }
+
+  subgraph cluster_artifacts {
+    label="3. Artefactos Verificados (<15 MB en Repo Git)";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#EF4444";
+    fontcolor="#FCA5A5";
+    WEIGHTS  [label="flammability_rf.joblib | burntime_gbr.joblib\nflame_cnn.onnx | sensor_tree.joblib\npsi_tfidf_kmeans.joblib", fillcolor="#1E293B", color="#94A3B8"];
+    MANIFEST [label="artifacts/models/manifest.sha256.json\nDigests SHA-256 obligatorios", fillcolor="#450A0A", color="#EF4444"];
+  }
+
+  subgraph cluster_runtime {
+    label="4. Run-Time POO Blindado (0 API Keys Externas)";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#10B981";
+    fontcolor="#34D399";
+    GUARD [label="SecurityBoundaryGuard\nverify_model_sha256() + RateLimiter\n+ Pydantic extra='forbid' + <=16 KB", fillcolor="#064E3B", color="#10B981"];
+    POO   [label="Servicios POO FastAPI\nFlammabilityPredictor | DuctSafetyOrchestrator\nExtractiveNlpEngine (writing-craft) | Governance", fillcolor="#1E293B", color="#38BDF8"];
+    UI    [label="Dashboard Web Auto-Contenido\n4 Modulos + Gemelo Digital SVG + 100% Offline", fillcolor="#2E1065", color="#A855F7"];
+  }
+
+  OSDR -> {ISA TABLES FRAMES} [color="#38BDF8"];
+  {ISA TABLES FRAMES} -> COLAB [color="#F59E0B", label="Streaming OSDR"];
+  {ISA TABLES} -> LOCAL [color="#10B981", style=dashed, label="Snapshot curado Git"];
+  COLAB -> {TRAIN_RF TRAIN_CNN TRAIN_NLP} [color="#F59E0B"];
+  LOCAL -> {TRAIN_RF TRAIN_CNN TRAIN_NLP} [color="#10B981", style=dashed];
+  {TRAIN_RF TRAIN_CNN TRAIN_NLP} -> WEIGHTS -> MANIFEST [color="#EF4444"];
+  MANIFEST -> GUARD [color="#EF4444", penwidth=1.8, label="Verifica SHA-256\nantes de cargar"];
+  GUARD -> POO -> UI [color="#10B981", penwidth=1.8];
+}

@@ -1,0 +1,73 @@
+digraph TDD_SDD_Architecture {
+  graph [
+    rankdir=LR,
+    bgcolor="#0B0F19",
+    fontname="Segoe UI",
+    fontsize=13,
+    fontcolor="#E2E8F0",
+    pad="0.45",
+    nodesep="0.35",
+    ranksep="0.85",
+    label="Flujo Integrado: SDD + TDD (Piramide Unitaria e Integracion) + writing-craft + Security + Git",
+    labelloc=t
+  ];
+  node [
+    shape=box,
+    style="rounded,filled",
+    fontname="Segoe UI",
+    fontsize=10,
+    fontcolor="#F8FAFC",
+    penwidth=1.4,
+    margin="0.16,0.10"
+  ];
+  edge [
+    color="#64748B",
+    penwidth=1.25,
+    arrowsize=0.8
+  ];
+
+  subgraph cluster_skills {
+    label="Gobernanza de Skills (Obsidian Vault)";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#A855F7";
+    fontcolor="#C084FC";
+    SDD   [label="spec-driven-development\nSPEC.md + tasks/todo.md", fillcolor="#2E1065", color="#A855F7"];
+    TDD_S [label="test-driven-development\nRED -> GREEN -> REFACTOR\n+ Prove-It Bug Pattern", fillcolor="#172554", color="#38BDF8"];
+    WC    [label="writing-craft\nplain | academic | style-edit\nCero AI Tells en textos y SI", fillcolor="#064E3B", color="#10B981"];
+    SEC   [label="security-and-hardening\nOWASP / STRIDE / SHA-256\nanti-DDoS & anti-Inyeccion", fillcolor="#450A0A", color="#EF4444"];
+    PNY   [label="ponytail + git-workflow\nCodigo minimo + commits\n<ver> - <verbo> - <desc>", fillcolor="#451A03", color="#F59E0B"];
+  }
+
+  subgraph cluster_pyramid {
+    label="Piramide de Pruebas TDD (pytest + Playwright/Chrome DevTools)";
+    style="rounded,filled";
+    fillcolor="#0F172A";
+    color="#38BDF8";
+    fontcolor="#7DD3FC";
+    UNIT  [label="1. Pruebas Unitarias (~80% — Small/ms)\ntests/unit/\n- Fisica Da, Pe, Vf (BASS-II)\n- Reglas DecisionTree & FSM + Hist.\n- Ranking TOPSIS & TextRank\n- Sanitizer, RateLimiter & SHA-256\n- Validador citas 24 IDs + cero AI slop", fillcolor="#172554", color="#38BDF8"];
+    INTEG [label="2. Pruebas de Integracion (~15% — Medium/s)\ntests/integration/\n- FastAPI TestClient <-> Clases POO\n- Carga real .joblib/.onnx + manifest\n- Bloqueos 413 (>16KB), 422 (XSS/SQLi),\n  429 (DDoS) e IntegrityError (hash falso)\n- Client OSDR allowlist anti-SSRF", fillcolor="#1E1B4B", color="#818CF8"];
+    E2E   [label="3. Pruebas E2E (~5% — Large)\nNavegador Headless / Chrome DevTools\n- Flujo 4 modulos <3 min\n- LCP <2.5s, CLS <0.1, 0 errores consola\n- Modo 100% offline verificado", fillcolor="#3B0764", color="#C084FC"];
+  }
+
+  subgraph cluster_git {
+    label="Flujo Git & Obsidian";
+    style="rounded,filled";
+    fillcolor="#111827";
+    color="#F59E0B";
+    fontcolor="#FBBF24";
+    TOPIC [label="Ramas Topic\nfeat/* | docs/* | fix/*", fillcolor="#1E293B", color="#F59E0B"];
+    DEV   [label="Rama dev\nIntegracion + Suite Verde", fillcolor="#1E293B", color="#38BDF8"];
+    MAIN  [label="Rama main (origin GitHub)\nTag v1.0.0 + MIT LICENSE", fillcolor="#064E3B", color="#10B981"];
+  }
+
+  SDD -> TDD_S [color="#A855F7"];
+  TDD_S -> UNIT -> INTEG -> E2E [color="#38BDF8", penwidth=1.8];
+  SEC -> {UNIT INTEG} [color="#EF4444"];
+  WC -> {UNIT E2E} [color="#10B981"];
+  PNY -> TOPIC [color="#F59E0B"];
+  UNIT -> TOPIC [color="#38BDF8"];
+  INTEG -> DEV [color="#818CF8"];
+  E2E -> MAIN [color="#10B981"];
+  TOPIC -> DEV -> MAIN [color="#F59E0B", penwidth=1.8];
+}

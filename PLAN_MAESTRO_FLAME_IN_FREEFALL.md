@@ -35,7 +35,7 @@ En lugar de desechar la idea mecatrónica, la **elevamos** dentro de una **arqui
 
 | Módulo Web ("AERO-IGNIS SI") | Qué Hace y Qué Resuelve del Reto Oficial | Perfil Líder | Cómo Integra la Idea de la Otra IA |
 | :--- | :--- | :--- | :--- |
-| **Módulo 1: PSI Intelligence & Ranking Engine** | Ingiere, resume, compara y **rankea** (mediante modelo multicriterio AHP/TOPSIS + Gemini SI) las **24 investigaciones de PSI** según su relevancia para cabinas habitables, detección y supresión. | **Ingeniero de Gestión Industrial** (modelo de ranking, taxonomía) + Mecatrónico (pipeline/API OSDR) | Sustituye la ingesta ciega por un explorador vivo de las *Experimental Tables* reales de PSI (`BASS-II`, `Saffire`, `FLEX`, `ACME`). |
+| **Módulo 1: PSI Intelligence & Ranking Engine** | Ingiere, agrupa (`PCA + K-Means`), resume (`TF-IDF + TextRank`) y **rankea** (mediante modelo multicriterio `AHP/TOPSIS`) las **24 investigaciones de PSI** según su relevancia para cabinas habitables, detección y supresión. | **Ingeniero de Gestión Industrial** (modelo TOPSIS, taxonomía) + Mecatrónico (pipeline NLP/API OSDR) | Sustituye la ingesta ciega por un explorador vivo de las *Experimental Tables* reales de PSI (`BASS-II`, `Saffire`, `FLEX`, `ACME`). |
 | **Módulo 2: Predictive Flammability & Forensic Sandbox** | Simulador interactivo ($\%\text{O}_2$, presión $\text{psi}$, flujo $\text{cm/s}$, gravedad $0g / 0.16g / 0.38g / 1g$) que calcula límites de inflamabilidad ($\text{Da}$, $\text{Pe}$, $V_f$) y reproduce en 1 clic **Apollo 1**, **Apollo 13** y **Mir**. | **Co-liderado** (Mecatrónico: física/ecuaciones; Gestión Industrial: estándares `NASA-STD-6001` y forense) | Reemplaza el entrenamiento con datos sintéticos por correlaciones físicas calibradas con las curvas reales de PSI. |
 | **Módulo 3: Deterministic FSM & Duct Digital Twin** | **Gemelo Digital Web en vivo** (SVG isométrico estilo `anatomy`) de un ducto `Saffire/CIR` gobernado por el Árbol de Decisión explicable + clasificador óptico de llama + FSM (`NORMAL → PRE_ALERTA → CONTENCION → FALLA_SEGURA`) con actuación sobre ventilador y compuerta. | **Ingeniero Mecatrónico y de Control** | **Aquí vive al 100% la propuesta de la otra IA**, ejecutándose directamente en el navegador para el jurado, respaldada por una galería técnica con tus esquemáticos reales de `SolidWorks`, `EPLAN` y `Proteus` como evidencia de validación física. |
 | **Módulo 4: FMEA Risk Governance & Earth Spinoff Calculator** | Matriz AMFE/FMEA de escenarios de fuego en cabina, árbol de decisión de supresión (**Niebla Fina de Agua PFE** vs. $\text{CO}_2$ vs. `E-FIELD`) y calculadora de impacto **Dual-Use Tierra $\leftrightarrow$ Espacio** (`Spinoffs 9582, 9407, 9918`). | **Ingeniero de Gestión Industrial** | Convierte los hallazgos técnicos de las 3 etapas en decisiones accionables de seguridad industrial y retorno terrestre. |
@@ -158,7 +158,7 @@ Cada registro en `psi.nasa.gov` se estructura en **9 bloques estandarizados** co
 
 ### 3.3 Las 7 "Actitudes Ganadoras" para Nuestro Equipo
 1. **Obsesión por la Trazabilidad:** Cada número en pantalla debe decir de qué investigación (`PSI-25`, `PSI-98`, `PSI-24`) y qué parámetro proviene.
-2. **Demo Web Auto-Contenida (Zero-Friction):** Si el juez abre la URL, debe funcionar en 2 segundos sin instalar drivers, sin puertos COM ni scripts locales complejos (los datos curados + el gemelo digital corren directo en el navegador; la API de Gemini y OSDR añaden inteligencia en vivo con fallback offline resiliente).
+2. **Demo Web Auto-Contenida (Zero-Friction):** Si el juez abre la URL, debe funcionar en 2 segundos sin instalar drivers, sin puertos COM ni scripts locales complejos (los 3 modelos ML/DL propios exportados a `.joblib`/`.onnx`, los datos curados y el gemelo digital corren directo en el servidor/navegador sin API keys externas ni riesgo de cuota).
 3. **Explicabilidad sobre Magia:** Los ingenieros de NASA Glenn odian las cajas negras; un Árbol de Decisión con umbrales físicos reales y una FSM auditable superan por mucho a un prompt genérico.
 4. **Enfoque en "Decision Support":** No mostrar solo gráficas descriptivas; entregar un **veredicto accionable** (ej. *"Riesgo Crítico en Hábitat Lunar 34% O2 / 8.2 psi: Cambiar material a Nomex, usar sensor submicrónico Node 9407 y supresión PFE Niebla Fina"*).
 5. **Integración Real de Ambos Perfiles:** El proyecto se ve simultáneamente robusto en **física/control** y en **gestión de riesgos/estándares/impacto**.
@@ -173,7 +173,7 @@ Cada registro en `psi.nasa.gov` se estructura en **9 bloques estandarizados** co
 | :--- | :--- | :--- | :--- |
 | **Datos y Ciencia (PSI)** | Conexión API OSDR v2 (`v2/datasets`), parser ISA-Tab/CSV (`BASS-II`, `Saffire`, `FLEX`, `ACME`, `SPICE`, `SAME`) y normalización de unidades ($\text{psi} \leftrightarrow \text{kPa}$, $\text{cm/s}$). | Taxonomía de las 24 investigaciones, definición de pesos y criterios del **Ranking Multicriterio (AHP/TOPSIS)** para los 4 objetivos del reto. | Dataset maestro curado `psi_combustion_24.json` + Motor de Ranking explicable. |
 | **Física y Simulación** | Implementación de correlaciones adimensionales ($\text{Da}$, $\text{Pe}$, $V_f$, constante $K$ de gota, mapa *Quenching vs. Blowoff*) y Gemelo Digital Web del ducto con FSM (`NORMAL → PRE_ALERTA → CONTENCION → FALLA_SEGURA`). | Parametrización de escenarios operativos reales: ISS ($21\%\text{ O}_2, 14.7\text{ psi}$), Hábitat Lunar ($34\%\text{ O}_2, 8.2\text{ psi}$), Traje EVA ($100\%\text{ O}_2, 4.3\text{ psi}$) y validación forense (**Apollo 1, Apollo 13, Mir**). | Simulador de Inflamabilidad + Gemelo Digital FSM en tiempo real en la Web + Galería de respaldo (`SolidWorks`, `EPLAN`, `Proteus`). |
-| **Motor SI (Inteligencia)** | Clasificador óptico ligero / lógica de firma visual de llama + Árbol de Decisión de sensores ($\Delta T/\Delta t$, $\text{CO}$, partículas $<0.1\,\mu\text{m}$). | Ingeniería de prompts estructurados para **Gemini SI** (`gemini-4-hydrogen` + `gemini-decision-1`) orientada a resúmenes ejecutivos para ingenieros, estudiantes y gestores de seguridad. | Módulo de Síntesis e Interpretación SI citando DOIs de PSI y estándares `NASA-STD-6001`. |
+| **Motor SI (100% ML/DL Propio)** | `RandomForest`/`GBR` sobre `BASS-II`/`Saffire`, `CNN (.onnx)` visual + `DecisionTree` de sensores + `PCA/K-Means/TF-IDF/TextRank`. | Reglas de interpretación determinista y plantillas dinámicas basadas en **Feature Importance (SHAP)** y salida **TOPSIS** para Investigador, Estudiante y Gestor. | Módulo de Síntesis e Interpretación ML auditable citando DOIs de PSI y `NASA-STD-6001`. |
 | **Gobernanza y Dual-Use** | Especificación técnica de interlocks físicos (ventilador, compuerta, PFE niebla fina, electrodos `E-FIELD`). | Matriz **FMEA/AMFE** (Severidad $\times$ Ocurrencia $\times$ Detección = NPR), árbol de decisión de supresión y **Calculadora de Impacto Dual-Use** (`Spinoffs 9582, 9407, 9918`). | Módulo de Riesgos, Cumplimiento Normativo y Transferencia Terrestre. |
 | **Organización y Pitch** | Arquitectura de software, repo Git (`<version> - <verbo> - <descripción>`), pruebas unitarias y estabilidad de demo en vivo. | Gestión del backlog **FURPS+ / MoSCoW**, control de tiempos del hackathon, redacción del guion de storytelling y grabación/edición del video de 30s/2min. | Repositorio limpio en GitHub + Demo Web desplegada + Pitch ganador. |
 
@@ -189,15 +189,16 @@ Antes de escribir una sola línea de código del proyecto futuro, seleccionamos 
 | **`ponytail-audit` / `ponytail-debt`** | `categories/general/ponytail/skills` | Auditoría relámpago antes de congelar el código el domingo para eliminar código muerto, cuellos de botella y rastrear atajos documentados. | Sábado noche y Domingo mañana (pre-freeze). |
 | **`spec-driven-development`** (`/spec`) | `categories/organizers/agent-skills` | Redactar `SPEC.md` con contratos de interfaz entre el motor físico/SI y el frontend **antes** de programar, evitando retrabajo entre ambos perfiles. | Hora 1 del Hackathon (Viernes noche). |
 | **`planning-and-task-breakdown`** (`/plan`) | `categories/organizers/agent-skills` | Descomponer en *vertical slices* atómicos (1 funcionalidad completa end-to-end por bloque) con criterios de aceptación verificables. | Al cerrar `SPEC.md` y cada bloque de 4 horas. |
-| **`api-and-interface-design`** | `categories/organizers/agent-skills` | Contratos JSON estrictos (esquemas Pydantic/TypeScript) entre `psi_combustion_24.json`, la API OSDR v2, Gemini SI y la UI. | Diseño de Backend / Endpoints. |
-| **`incremental-implementation`** (`/build`) + **`test-driven-development`** (`/test`) | `categories/organizers/agent-skills` | Construir en incrementos pequeños con pruebas automáticas de las ecuaciones físicas ($\text{Da}$, $\text{Pe}$) y transiciones de la FSM (prohibido que la FSM falle una transición de seguridad). | Durante todo el Sábado (implementación core). |
-| **`git-workflow-and-versioning`** | `categories/organizers/agent-skills` | Mantiene el historial limpio bajo el estándar `<version> - <verbo> - <descripción>` y ramas `feat/...`, `design/...` $\rightarrow$ `dev` $\rightarrow$ `main`. | En cada commit atómico. |
-| **`gemini-api-dev`** | `.gemini/config/plugins/gemini-api` | Uso correcto del SDK actual `google-genai >= 3.2.0` (prohibido el obsoleto `google-generativeai`), con `gemini-4-hydrogen` para resúmenes SI y `gemini-decision-1` (`v1beta` Decisions API) para evaluación calibrada de inflamabilidad/relevancia. | Integración del motor SI en el backend. |
+| **`api-and-interface-design`** | `categories/organizers/agent-skills` | Contratos JSON estrictos (esquemas Pydantic `extra="forbid"`) entre `psi_combustion_24.json`, la API OSDR v2, los 3 modelos ML/DL propios y la UI. | Diseño de Backend / Endpoints. |
+| **`incremental-implementation`** (`/build`) + **`test-driven-development`** (`/test`) | `categories/organizers/agent-skills` | Pirámide TDD obligatoria (`~80%` unitarias, `~15%` integración FastAPI/POO, `~5%` E2E), bucle **RED → GREEN → REFACTOR** y patrón *Prove-It* sobre física ($\text{Da}$, $\text{Pe}$), modelos ML y FSM. | En toda lógica nueva (Sábado AM/PM). |
+| **`writing-craft`** (`plain` / `academic` / `style-edit`) | `categories/general/writing-craft` | Gobierna la redacción técnica, el pitch y las 3 plantillas deterministas por audiencia (`Investigador`, `Estudiante`, `Gestor`), eliminando *AI slop* (`ai-tells-es-en.md`) y preservando cifras y DOIs `10.60555`. | Docs, `ExtractiveNlpEngine` y storytelling. |
+| **`git-workflow-and-versioning`** | `categories/organizers/agent-skills` | Mantiene el historial limpio bajo el estándar `<version> - <verbo> - <descripción>` y ramas `feat/...`, `design/...` $\rightarrow$ `dev` $\rightarrow$ `main` $\rightarrow$ `origin` GitHub (`MIT`). | En cada commit atómico. |
+| **`security-and-hardening`** | `categories/organizers/agent-skills` | Blindaje OWASP/STRIDE: cero API keys, anti-DDoS (`RateLimiter` + tope 16 KB), anti-inyección (SQLi/XSS/Command/SSRF) y verificación criptográfica `SHA-256` de `.joblib`/`.onnx`. | En todas las fronteras de API y carga de modelos. |
 | **`frontend-design` + `impeccable` (`Operate`)** | `categories/frontend/` | Estética de *Sala de Control Orbital y Laboratorio de Combustión* (cero estética genérica de IA, contraste WCAG AA, modo `Operate` enfocado en legibilidad y escaneabilidad rápida para ingenieros). | Diseño de la UI del dashboard principal. |
 | **`animation-design`** | `categories/frontend/animation-design` | Curvas calibradas de Emil Kowalski (`--ease-out`, `--ease-drawer`), animaciones GPU únicamente sobre `transform`/`opacity` (<300ms), cambios de pestaña instantáneos y soporte obligatorio `@media (prefers-reduced-motion: reduce)`. | Micro-interacciones y transiciones de estado en la FSM y simulador. |
 | **`anatomy`** | `categories/frontend/anatomy` | Generación de ilustración técnica isométrica SVG de alta precisión para el **Gemelo Digital del Ducto `Saffire / CIR`** (ventilador, compuerta cortafuego, cámara óptica, probeta de combustible y boquilla PFE de niebla fina). | Módulo 3 (Gemelo Digital). |
 | **`shadcn-ui` + `frontend-ui-engineering` + `FREE_COMPONENT_LIBRARIES`** | `categories/frontend/` | Tabs accesibles WAI-ARIA, tarjetas compuestas, tablas filtrables y **Política estricta de Costo $0** (solo código libre MIT/Apache). | Estructura de componentes del dashboard. |
-| **`graphify` & `engram`** | `categories/organizers/` & `general/` | `engram` guarda decisiones técnicas entre sesiones para no perder contexto; `graphify` mapea dependencias del repo en `GRAPH_REPORT.md` (útil como diagrama técnico para los jueces). | Continuo + Documentación final. |
+| **`graphify` + `Graphviz (dot.exe)` & `engram`** | `categories/organizers/` & `general/` | `engram` persiste decisiones; `graphify` y **Graphviz** generan la base de conocimiento interconectada en `Obsidian Vault\Proyectos\NASA_Flame_In_Freefall\` (24 fichas PSI, `.canvas` y `.dot/.svg`) y `GRAPH_REPORT.md`. | Continuo + Base de Conocimiento + Cierre. |
 | **`faceless-channel` / `narrator` / `subtitles`** | `categories/media/` | Si deciden generar locución clara en inglés con subtítulos quemados sincronizados para el video obligatorio de 30 segundos del Space Apps. | Domingo tarde (Entrega y Pitch). |
 
 ---
@@ -227,9 +228,9 @@ Antes de escribir una sola línea de código del proyecto futuro, seleccionamos 
 ### R — Reliability (Confiabilidad)
 | ID | Requerimiento | Prioridad MoSCoW | Responsable | Criterio de Verificación |
 | :--- | :--- | :---: | :---: | :--- |
-| **R-01** | Operación **100% resiliente Offline/Fallback**: si la API de NASA OSDR o Gemini excede cuota/red, el motor local determinista y dataset curado mantienen el 100% de la demo viva. | **MUST HAVE** | Mecatrónico | Desconectando el Wi-Fi, todas las pestañas, simulaciones, rankings y FSM siguen operando sin errores en consola. |
-| **R-02** | Garantía anti-alucinación: toda respuesta de Gemini SI debe validar citas contra el diccionario oficial de los 24 IDs de PSI. | **MUST HAVE** | Mecatrónico + Gestión | Ningún ID o porcentaje inventado se muestra sin etiqueta de fuente (`PSI-XX`, `NASA-STD-6001`). |
-| **R-03** | Pruebas automatizadas (`assert` / `pytest`) sobre las transiciones de la FSM y cálculo de límites de inflamabilidad. | **SHOULD HAVE** | Mecatrónico | Suite de pruebas pasa al 100% antes de cada merge a `dev`/`main`. |
+| **R-01** | Operación **100% propia sin API keys externas**: modelos `.joblib`/`.onnx` locales con verificación `SHA-256` + fallback ante fallo de red OSDR. | **MUST HAVE** | Mecatrónico | Desconectando el Wi-Fi, todos los modelos ML, simulaciones, rankings y FSM operan sin errores; hash corrupto aborta carga. |
+| **R-02** | Blindaje anti-DDoS, anti-inyección y cero alucinaciones: `RateLimiter`, payloads $\le 16\text{ KB}$, validación Pydantic estricta y citas verificadas contra los 24 IDs PSI. | **MUST HAVE** | Mecatrónico + Gestión | Pruebas de abuso (XSS, SQLi, SSRF, `>16KB`, ráfaga `429`) pasan al 100%; cero IDs inventados. |
+| **R-03** | Suite TDD obligatoria (**RED $\rightarrow$ GREEN $\rightarrow$ REFACTOR**): Pruebas Unitarias (`~80%`) + Pruebas de Integración (`~15%`) + E2E (`~5%`) sobre física, ML, FSM y API. | **MUST HAVE** | Mecatrónico | `pytest tests/unit tests/integration -v` al 100% antes de cada merge a `dev`/`main`. |
 
 ### P — Performance (Rendimiento)
 | ID | Requerimiento | Prioridad MoSCoW | Responsable | Criterio de Verificación |
@@ -262,18 +263,18 @@ flowchart TD
         A3["Casos Históricos & Spinoffs<br/>(Apollo 1/13, Mir, Nodes 9582/9407/9918, PFE)"]
     end
 
-    subgraph ENGINE["2. Motor Determinista + SI (Backend / Core)"]
-        B1["Motor Físico & Simulador<br/>(Da, Pe, Vf, Quenching vs Blowoff)"]
-        B2["Ranking Multicriterio<br/>(AHP/TOPSIS sobre 24 datasets)"]
-        B3["Gemelo Digital FSM + Árbol<br/>(NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA)"]
-        B4["Capa SI Gemini (google-genai)<br/>(gemini-4-hydrogen + gemini-decision-1)"]
+    subgraph ENGINE["2. Motor POO + Pipeline 100% ML/DL Propio + SecurityGuard"]
+        B1["FlammabilityPredictor<br/>(Da/Pe + RandomForest/GBR .joblib)"]
+        B2["TopsisRanker &amp; ExtractiveNlpEngine<br/>(AHP/TOPSIS + PCA/K-Means + TF-IDF/TextRank)"]
+        B3["DuctSafetyOrchestrator<br/>(CNN .onnx + DecisionTree + FSM Determinista)"]
+        B4["SecurityBoundaryGuard &amp; Governance<br/>(RateLimit/Pydantic/SHA-256 + FMEA/Spinoffs)"]
     end
 
     subgraph UI["3. Dashboard Web Interactivo (Impeccable + Anatomy + Kowalski Motion)"]
-        C1["Vista 1: Explorador y Ranking PSI"]
-        C2["Vista 2: Sandbox Inflamabilidad & Forense"]
+        C1["Vista 1: Explorador, Clusters y Ranking PSI"]
+        C2["Vista 2: Sandbox Inflamabilidad RF &amp; Forense"]
         C3["Vista 3: Gemelo Digital Ducto + Hardware Blueprint"]
-        C4["Vista 4: Matriz FMEA & Calculadora Dual-Use Tierra"]
+        C4["Vista 4: Matriz FMEA &amp; Calculadora Dual-Use Tierra"]
     end
 
     A1 --> B1 & B2
@@ -282,27 +283,42 @@ flowchart TD
     B1 --> C2
     B2 --> C1
     B3 --> C3
-    B4 --> C1 & C2 & C4
+    B4 --> C1 & C2 & C3 & C4
 ```
 
-### Estructura de Directorios Limpia (Filosofía Ponytail)
+### Estructura de Directorios Limpia (POO + Seguridad + Ponytail)
 ```text
 NASA/
+├── .agents/skills.json                 # Vinculo al Hub Local Obsidian Vault/agents
+├── .gitignore                          # Bloquea .env*, *.key, *.pem, *.pkl sin verificar
+├── .env.example                        # Variables seguras sin secretos
+├── LICENSE                             # Licencia MIT (sincronizada con GitHub)
+├── SPEC.md                             # Contrato SDD v1.1 (POO, ML/DL, TDD, writing-craft, OWASP)
 ├── PLAN_MAESTRO_FLAME_IN_FREEFALL.md   # Este plan maestro y análisis estratégico
+├── docs/graphs/                        # Grafos Graphviz (.dot, .svg, .png) de PSI/ML/TDD
+├── notebooks/                          # AERO_IGNIS_Colab_Training.ipynb (Colab T4 GPU + SHA-256)
 ├── planning/
-│   └── index.html                       # Dashboard organizativo interactivo (Roles, FURPS+, MoSCoW, 24 PSI)
-└── (Proyecto futuro tras aprobar SPEC.md)
-    ├── SPEC.md                          # Contrato SDD de interfaces y física
-    ├── data/
-    │   ├── psi_combustion_24.json       # Censo estructurado + muestras reales BASS-II/Saffire
-    │   └── cases_and_spinoffs.json      # Apollo 1/13, Mir y Spinoffs 9582/9407/9918/PFE
-    ├── backend/                         # Python (FastAPI ligero o módulos puros + google-genai)
-    │   ├── physics_engine.py            # Correlaciones Da, Pe, Vf, régimen de llama
-    │   ├── ranking_topsis.py            # Ranking multicriterio determinista
-    │   ├── fsm_controller.py            # Árbol de decisión + FSM de seguridad + tests assert
-    │   └── si_service.py                # Cliente Gemini 4 Hydrogen / Decision 1 con fallback
-    ├── frontend/                        # Web Dashboard (React/Vite o HTML/Tailwind + SVG Anatomy)
-    └── docs/hardware_blueprint/         # Evidencia SolidWorks, EPLAN y Proteus como validación física
+│   └── index.html                      # War Room interactivo (Roles, FURPS+, MoSCoW, 24 PSI)
+├── tasks/
+│   └── todo.md                         # Backlog auditable TDD (Unit + Integración) en slices
+├── data/
+│   ├── psi_combustion_24.json          # Censo estructurado + esquemas BASS-II/Saffire
+│   ├── bass_saffire_runs.csv           # Corridas de entrenamiento ML
+│   └── cases_and_spinoffs.json         # Apollo 1/13, Mir y Spinoffs 9582/9407/9918/PFE
+├── artifacts/models/                   # Pesos exportados (.joblib/.onnx) + manifest.sha256.json
+├── backend/                            # Arquitectura POO (FastAPI + Pydantic v2 + scikit-learn + onnxruntime)
+│   ├── security.py                     # SecurityBoundaryGuard (Anti-DDoS, Anti-Inyección, SHA-256)
+│   ├── domain.py                       # Value Objects (@dataclass frozen) & PsiRepository
+│   ├── physics_ml.py                   # DimensionlessPhysicsCalculator + FlammabilityPredictor
+│   ├── ranking_nlp.py                  # TopsisMultiCriteriaRanker + ExtractiveNlpEngine (writing-craft)
+│   ├── duct_twin.py                    # OnnxFlameVisionModel + DeterministicFsmController
+│   ├── governance.py                   # GovernanceAndSpinoffService (FMEA + Dual-Use)
+│   ├── train_models.py                 # Pipeline Build-Time CPU local + hashes SHA-256
+│   └── main.py                         # Ensamblaje FastAPI con cabeceras de seguridad
+├── frontend/                           # Dashboard Web (HTML/CSS/JS + SVG Isométrico Anatomy)
+└── tests/
+    ├── unit/                           # (~80%) Pruebas unitarias aisladas (ms)
+    └── integration/                    # (~15%) Pruebas de integración FastAPI / ONNX / OWASP
 ```
 
 ---
@@ -311,8 +327,8 @@ NASA/
 
 | Bloque Temporal | Mecatrónica y Sistemas de Control | Gestión Industrial | Checkpoint de Verificación (Go / No-Go) |
 | :--- | :--- | :--- | :--- |
-| **Viernes Noche (H0–H4)**<br>*Alineación y Datos* | Redactar `SPEC.md` técnico, script único de curación PSI/OSDR y estructura JSON de las 24 investigaciones. | Definir matriz de criterios AHP/TOPSIS para el ranking, taxonomía de los 10 recursos y matriz FURPS+ MoSCoW final. | **Gate 1:** `SPEC.md` aprobado y `psi_combustion_24.json` validado sin datos faltantes. |
-| **Sábado Mañana (H5–H14)**<br>*Core Determinista* | Programar `physics_engine.py`, `fsm_controller.py` (con tests unitarios) y el **SVG isométrico del ducto (`anatomy`)**. | Construir la lógica de scoring **FMEA / `NASA-STD-6001`**, fichas forenses (Apollo 1/13, Mir) y calculadora de Spinoffs terrestres. | **Gate 2:** Todos los cálculos físicos y transiciones FSM pasan sus `assert` sin errores. |
-| **Sábado Tarde-Noche (H15–H26)**<br>*Integración Web + SI* | Integrar el backend con el frontend web, conectar Gemini SI (`google-genai`) con fallback offline y animar el Gemelo Digital a 60fps. | Poblar textos científicos curados para 3 audiencias (Investigador, Estudiante, Gestor), validar accesibilidad y verificar consistencia de unidades. | **Gate 3 (MVP MUST-HAVE):** Los 4 módulos funcionan de extremo a extremo en navegador (con y sin Wi-Fi). |
+| **Viernes Noche (H0–H4)**<br>*Alineación y Datos* | `SPEC.md` POO + `.gitignore` + `PsiRepository` (`psi_combustion_24.json`) + `SecurityBoundaryGuard`. | Definir matriz AHP/TOPSIS, taxonomía de los 10 recursos y congelar backlog FURPS+ MoSCoW. | **Gate 1:** `SPEC.md` aprobado y `psi_combustion_24.json` + capa de seguridad validados. |
+| **Sábado Mañana (H5–H14)**<br>*Core ML/DL + POO* | Entrenar y exportar `RandomForest/GBR` + `CNN .onnx` + `DecisionTree` + `TF-IDF/K-Means` con hashes `SHA-256` y programar `DuctSafetyOrchestrator`. | Construir scoring **FMEA / `NASA-STD-6001`**, fichas forenses (Apollo 1/13, Mir) y calculadora de Spinoffs terrestres. | **Gate 2:** Todos los tests físicos, FSM, ML y pruebas de abuso de seguridad pasan al 100%. |
+| **Sábado Tarde-Noche (H15–H26)**<br>*Integración Web + ML* | Ensamblar FastAPI POO, conectar `FlammabilityPredictor` / `ExtractiveNlpEngine` y animar el Gemelo Digital SVG a 60fps. | Implementar reglas deterministas sobre **Feature Importance + TOPSIS** para los 3 perfiles (Investigador, Estudiante, Gestor) y auditar accesibilidad. | **Gate 3 (MVP MUST-HAVE):** Los 4 módulos funcionan de extremo a extremo en navegador sin API keys externas. |
 | **Domingo Mañana (H27–H38)**<br>*Pulido, Audit y Hardware* | Ejecutar `/ponytail-audit`, revisar Web Vitals (LCP/CLS), subir evidencias de SolidWorks/EPLAN/Proteus en la pestaña Blueprint y desplegar URL pública. | Ejecutar **Checklist MoSCoW**, preparar el deck de 7 slides, redactar el guion de 30s/2min y verificar que se citen explícitamente los 10 recursos NASA. | **Gate 4 (Code Freeze):** URL pública estable en modo incógnito + repo limpio con `README.md`. |
 | **Domingo Tarde (H39–H48)**<br>*Pitch y Entrega* | Grabar captura de pantalla en 1080p operando el Simulador y el Gemelo Digital FSM en tiempo real. | Locución/edición del video de 30s–2min (usando `faceless-channel`/`narrator`/`subtitles` si aplica) y envío oficial en Space Apps 2h antes del cierre. | **Gate 5 (Entrega Final):** Proyecto publicado y verificado con link funcional en la plataforma de NASA Space Apps. |
