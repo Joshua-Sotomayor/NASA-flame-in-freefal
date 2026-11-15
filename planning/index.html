@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual: Spec SDD v1.1 + Base Obsidian + Graphviz + TDD + writing-craft + GitHub</strong><br />
-          <span><strong>Logrado:</strong> M-01 (<code>SPEC.md</code> v1.1), I-03 (<code>tasks/todo.md</code> con TDD Piramidal), J-01 (Gate 1), remoto GitHub <code>origin</code> + licencia <code>MIT</code>, Hub <code>.agents/skills.json</code> (con <code>writing-craft</code> + <code>TDD</code>), Base de Conocimiento Obsidian (24 PSI + Canvas + 3 grafos <code>dot/svg</code>) y notebook <code>notebooks/AERO_IGNIS_Colab_Training.ipynb</code>.<br />
-          <strong>Siguiente tras aprobar SPEC:</strong> <code>Task 1</code> (Test RED &rarr; dataset 24 PSI + POO) &rarr; <code>Task 2</code> (SecurityGuard) &rarr; <code>Task 3</code> (Entrenamiento Colab/Local + SHA-256).</span>
+          <strong>Estado de la Iteración Actual (0.3.0): Slice 1 Completado — Repositorio POO 24 PSI + Tablas BASS-II/Saffire + OSDR Resiliente</strong><br />
+          <span><strong>Logrado (5/30):</strong> <code>M-01</code>, <code>I-03</code>, <code>J-01</code>, <strong><code>M-02</code></strong> (<code>data/psi_combustion_24.json</code>, 566 corridas en <code>data/bass_saffire_runs.csv</code>, <code>data/cases_and_spinoffs.json</code>) y <strong><code>M-08</code></strong> (<code>backend/domain.py</code> con anti-SSRF y fallback offline, <code>7/7 pytest PASS</code>).<br />
+          <strong>Siguiente en curso:</strong> <code>Task 2 (0.4.0)</code> — <code>SecurityBoundaryGuard</code> (RateLimiter, payload &le;16 KB, cabeceras CSP y SHA-256) &rarr; <code>Task 3 (0.5.0)</code> — Pipeline ML/DL propio.</span>
         </div>
-        <span class="mono badge badge-joint">Gate 1 · 3/30 (10%)</span>
+        <span class="mono badge badge-joint">0.3.0 · 5/30 (17%)</span>
       </div>
 
       <div class="toolbar">
@@ -1169,13 +1169,13 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
       const DEFAULT_TASKS = [
         // Rol A: Mecatrónica y Sistemas de Control (12)
         { id: "M-01", role: "meca", phase: "V-H0", title: "Redactar SPEC.md con contratos de interfaz", objective: "Definir esquemas JSON, clases POO y controles OWASP entre motor físico, pipeline ML/DL, FSM y dashboard.", scope: "Backend + Frontend contracts (SDD + POO)", deliverable: "SPEC.md aprobado", done: true },
-        { id: "M-02", role: "meca", phase: "V-H0", title: "Construir psi_combustion_24.json desde PSI/OSDR", objective: "Estructurar las 24 investigaciones con IDs, DOIs, instalaciones y esquemas BASS-II/Saffire.", scope: "Parser Python + OSDR API v2", deliverable: "data/psi_combustion_24.json", done: false },
+        { id: "M-02", role: "meca", phase: "V-H0", title: "Construir psi_combustion_24.json desde PSI/OSDR", objective: "Estructurar las 24 investigaciones con IDs, DOIs, instalaciones y esquemas BASS-II/Saffire.", scope: "Parser Python + OSDR API v2", deliverable: "data/psi_combustion_24.json", done: true },
         { id: "M-03", role: "meca", phase: "S-AM", title: "Implementar motor físico (Da, Pe, Vf, Quenching/Blowoff)", objective: "Calcular límites de inflamabilidad según %O2, presión psi, flujo cm/s y gravedad.", scope: "physics_engine.py + tests assert", deliverable: "Motor físico verificado", done: false },
         { id: "M-04", role: "meca", phase: "S-AM", title: "Implementar Árbol de Decisión Multisensor + Clasificador de Llama", objective: "Clasificar régimen Nominal / Llama Fría NTC / Combustión Abierta con umbrales explicables.", scope: "Árbol físico + lógica óptica", deliverable: "decision_tree.py", done: false },
         { id: "M-05", role: "meca", phase: "S-AM", title: "Programar Máquina de Estados Finitos (FSM) Determinista", objective: "Garantizar transiciones NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA con histéresis.", scope: "fsm_controller.py + pruebas unitarias", deliverable: "FSM 100% testeada", done: false },
         { id: "M-06", role: "meca", phase: "S-AM", title: "Dibujar Gemelo Digital Isométrico SVG (Skill anatomy)", objective: "Representar ducto Saffire/CIR con ventilador, cámara, compuerta y boquilla PFE.", scope: "SVG limpio + motion GPU 60fps", deliverable: "Componente DuctDigitalTwin", done: false },
         { id: "M-07", role: "meca", phase: "S-PM", title: "Entrenar pipeline ML/DL (RandomForest sobre tablas BASS-II/Saffire + CNN .onnx de régimen de llama + motor TF-IDF/TextRank)", objective: "Ejecutar en Google Colab T4 GPU / CPU local y exportar pesos ligeros (.joblib / .onnx) con manifiesto SHA-256 verificado.", scope: "Colab .ipynb + train_models.py + SHA-256", deliverable: "Modelos .joblib / .onnx auditados", done: false },
-        { id: "M-08", role: "meca", phase: "S-PM", title: "Conectar API OSDR v2 con fallback resiliente", objective: "Consultar estudios frescos si hay red y caer instantáneamente a JSON local ante timeout.", scope: "Cliente HTTP con retry/timeout", deliverable: "Conector OSDR resiliente", done: false },
+        { id: "M-08", role: "meca", phase: "S-PM", title: "Conectar API OSDR v2 con fallback resiliente", objective: "Consultar estudios frescos si hay red y caer instantáneamente a JSON local ante timeout.", scope: "Cliente HTTP con retry/timeout", deliverable: "Conector OSDR resiliente", done: true },
         { id: "M-09", role: "meca", phase: "S-PM", title: "Integrar gráfica de contorno de inflamabilidad en tiempo real", objective: "Mostrar curva interactiva Flujo vs %O2 marcando zona segura, llama fría y blowoff.", scope: "Canvas/SVG interactivo", deliverable: "Mapa de contorno en vivo", done: false },
         { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: false },
         { id: "M-11", role: "meca", phase: "D-AM", title: "Ejecutar /ponytail-audit y pruebas Web Vitals / offline", objective: "Eliminar código muerto, verificar LCP < 2.5s y probar desconectando Wi-Fi.", scope: "Auditoría de calidad y rendimiento", deliverable: "Checklist técnico verde", done: false },
@@ -1285,6 +1285,8 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { name: "faceless-channel + narrator + subtitles", cat: "Media / Pitch", when: "Domingo PM", role: "Apoyo opcional para locución cronometrada y subtítulos limpios en el video de 30s." }
       ];
 
+      const DEFAULT_FURPS_DONE = { "C-01": true, "C-02": true, "S-01": true, "F-01": true, "F-07": true };
+
       // --- 2. STATE MANAGEMENT ---
       function loadState() {
         try {
@@ -1292,14 +1294,23 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
           if (raw) {
             const parsed = JSON.parse(raw);
             if (Array.isArray(parsed.tasks) && parsed.furpsDone && typeof parsed.theme === "string") {
-              return parsed;
+              const savedDoneMap = new Map(parsed.tasks.map(t => [t.id, Boolean(t.done)]));
+              const customTasks = parsed.tasks.filter(t => !DEFAULT_TASKS.some(d => d.id === t.id));
+              return {
+                ...parsed,
+                tasks: [
+                  ...customTasks,
+                  ...DEFAULT_TASKS.map(t => ({ ...t, done: Boolean(t.done || savedDoneMap.get(t.id)) }))
+                ],
+                furpsDone: { ...DEFAULT_FURPS_DONE, ...parsed.furpsDone }
+              };
             }
           }
         } catch (_) {}
         return {
           theme: "dark",
           tasks: DEFAULT_TASKS.map(t => ({ ...t })),
-          furpsDone: { "C-01": true, "C-02": true, "S-01": true },
+          furpsDone: { ...DEFAULT_FURPS_DONE },
           activeTab: "tasks",
           roleFilter: "ALL",
           phaseFilter: "ALL",
@@ -1700,7 +1711,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
       document.getElementById("resetBtn").addEventListener("click", () => {
         if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 30 tareas base?")) return;
         state.tasks = DEFAULT_TASKS.map(t => ({ ...t }));
-        state.furpsDone = { "C-01": true, "C-02": true, "S-01": true };
+        state.furpsDone = { ...DEFAULT_FURPS_DONE };
         saveState();
         renderTasks();
         renderFurps();
@@ -1738,7 +1749,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         assert(m07 && m07.title.includes(".onnx") && m07.objective.includes("Colab") && m07.objective.includes(".joblib"), "M-07 must reference Colab and local ML/DL weights");
         const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
         assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS") && i08.objective.includes("writing-craft"), "I-08 must reference deterministic rules and writing-craft");
-        assert(DEFAULT_TASKS.filter(t => t.done).length === 3, "Expected 3 Gate-1 tasks marked done by default");
+        assert(DEFAULT_TASKS.filter(t => t.done).length === 5, "Expected 5 baseline + Slice 1 tasks marked done by default");
 
         // Verify FSM visualizer transitions cleanly
         setFsmState("CONTENCION");

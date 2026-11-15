@@ -10,13 +10,13 @@
   - Hub de Skills vinculado en [.agents/skills.json](file:///C:/Users/hp/OneDrive/Documentos/NASA/.agents/skills.json) (incluyendo **`writing-craft`** y **`test-driven-development`**).
   - Base de conocimiento completa en `Obsidian Vault\Proyectos\NASA_Flame_In_Freefall\` (24 fichas PSI, 10 nodos, Canvas, 3 grafos Graphviz `.dot/.svg/.png`) y notebook GPU [notebooks/AERO_IGNIS_Colab_Training.ipynb](file:///C:/Users/hp/OneDrive/Documentos/NASA/notebooks/AERO_IGNIS_Colab_Training.ipynb).
   - [SPEC.md](file:///C:/Users/hp/OneDrive/Documentos/NASA/SPEC.md) v1.1.0 y War Room [planning/index.html](file:///C:/Users/hp/OneDrive/Documentos/NASA/planning/index.html) actualizados.
-- [ ] **Aprobación Humana de `SPEC.md` v1.1.0:** Confirmar antes de escribir el primer test RED de `Task 1`.
+- [x] **Aprobación Humana de `SPEC.md` v1.1.0:** Aprobado para iniciar la ejecución por *vertical slices* TDD.
 
 ---
 
 ## Fase 1: Cimientos de Datos y Seguridad (Viernes `H0–H4`)
 
-### Task 1 (`M-02` + `I-01`): Repositorio de Dominio POO y Dataset Maestro de las 24 PSI
+### [x] Task 1 (`M-02` + `I-01` / `M-08`): Repositorio de Dominio POO y Dataset Maestro de las 24 PSI
 - **Responsable:** Mecatrónico (POO `PsiRepository`) + Gestión Industrial (taxonomía y 10 recursos).
 - **Alcance:** Crear `data/psi_combustion_24.json`, `data/bass_saffire_runs.csv` (muestras calibradas `BASS-II` 17 cols y `Saffire-I` 13 cols), `data/cases_and_spinoffs.json` y `backend/domain.py` (`PsiInvestigation`, `PsiRepository`, `OsdrApiClient` allowlisted).
 - **Pruebas TDD (Escribir RED primero):**
