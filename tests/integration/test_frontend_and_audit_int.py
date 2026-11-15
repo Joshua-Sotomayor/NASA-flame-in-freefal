@@ -114,12 +114,16 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert '<section id="panel-museum" class="tabpanel is-active"' in r_root.text
     assert r_root.text.index('id="tab-museum"') < r_root.text.index('id="tab-explorer"')
 
-    # M-15: Favicon NASA, seccion academica de modelos, estetica retro orbital y responsive
+    # M-15 / M-16: Favicon NASA, sin tarjetas laterales, cuadrantes claros, Mermaid claro y botones uniformes
     assert '<link rel="icon"' in r_root.text
     assert 'id="tab-models"' in r_root.text
     assert 'id="panel-models"' in r_root.text
     assert 'id="orbitalBackdropCanvas"' in r_root.text
     assert "mission-decal-strip" in r_root.text
+    assert "retro-decal-rail" not in r_root.text
+    assert "quadrant-legend-grid" in r_root.text
+    assert "flowchart LR" in r_root.text
+    assert r_root.text.count("btn btn-cobalt") == 3
     assert "/api/v1/models/download/" in r_root.text
 
     r_fav_svg = client.get("/favicon.svg")
@@ -130,9 +134,11 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert r_fav_ico.status_code == 200
     assert "<svg" in r_fav_ico.text
 
-    r_graph = client.get("/assets/graphs/ml_dl_colab_pipeline.svg")
-    assert r_graph.status_code == 200
-    assert "<svg" in r_graph.text
+    for graph_name in ("ml_dl_colab_pipeline.svg", "psi_knowledge_graph.svg"):
+        r_graph = client.get(f"/assets/graphs/{graph_name}")
+        assert r_graph.status_code == 200
+        assert "<svg" in r_graph.text
+        assert "#F4F7FB" in r_graph.text
 
     for slug, expected_file in (
         ("flammability-rf", "flammability_rf.joblib"),
@@ -171,6 +177,7 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert "toggleTheme" not in r_js.text
     assert "data-label=" in r_js.text
     assert "initOrbitalBackdrop" in r_js.text
+    assert "PSI_PLAIN_GUIDE" in r_js.text
     lowered_js = r_js.text.lower()
     for term in BANNED_PUBLIC_DEV_JARGON:
         assert term not in lowered_js, f"Termino tecnico interno visible en app.js: {term}"
