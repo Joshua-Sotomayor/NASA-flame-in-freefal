@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.6.0): Slice 4 Completado — Motor Físico Adimensional (Da/Pe/Vf) + FlammabilityPredictor RF/GBR</strong><br />
-          <span><strong>Logrado (7/30 tareas + F-03 verificado):</strong> <strong><code>M-03</code></strong> (<code>backend/physics_ml.py</code> une ecuaciones <code>Da</code>, <code>Pe</code>, <code>Vf</code> y regímenes Quenching/Blowoff con <code>flammability_rf.joblib</code> + <code>burntime_gbr.joblib</code> verificados por <code>SHA-256</code> y presets Apollo 1/Apollo 13/Mir, <code>5/5 pytest PASS</code>).<br />
-          <strong>Siguiente en curso:</strong> <code>Task 5 (0.6.1)</code> — <code>DuctSafetyOrchestrator</code> (CNN ONNX + Árbol de Sensores + FSM Determinista).</span>
+          <strong>Estado de la Iteración Actual (0.6.1): Slice 5 Completado — Orquestador Ducto (CNN ONNX + Árbol Físico + FSM Determinista)</strong><br />
+          <span><strong>Logrado (9/30 tareas + F-04 verificado):</strong> <strong><code>M-04</code></strong> y <strong><code>M-05</code></strong> (<code>backend/duct_twin.py</code> con <code>flame_cnn.onnx</code>, traza de decisión en <code>sensor_tree.joblib</code>, FSM con histéresis, latch Llama Fría NTC e interlock <code>FALLA_SEGURA</code>, <code>5/5 pytest PASS</code>).<br />
+          <strong>Siguiente en curso:</strong> <code>Task 6 &amp; 7 (0.7.0)</code> — Ranking TOPSIS, NLP (<code>writing-craft</code>), Gobernanza FMEA/Spinoffs y ensamblaje FastAPI POO (6 endpoints).</span>
         </div>
-        <span class="mono badge badge-joint">0.6.0 · 7/30 (23%)</span>
+        <span class="mono badge badge-joint">0.6.1 · 9/30 (30%)</span>
       </div>
 
       <div class="toolbar">
@@ -1171,8 +1171,8 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "M-01", role: "meca", phase: "V-H0", title: "Redactar SPEC.md con contratos de interfaz", objective: "Definir esquemas JSON, clases POO y controles OWASP entre motor físico, pipeline ML/DL, FSM y dashboard.", scope: "Backend + Frontend contracts (SDD + POO)", deliverable: "SPEC.md aprobado", done: true },
         { id: "M-02", role: "meca", phase: "V-H0", title: "Construir psi_combustion_24.json desde PSI/OSDR", objective: "Estructurar las 24 investigaciones con IDs, DOIs, instalaciones y esquemas BASS-II/Saffire.", scope: "Parser Python + OSDR API v2", deliverable: "data/psi_combustion_24.json", done: true },
         { id: "M-03", role: "meca", phase: "S-AM", title: "Implementar motor físico (Da, Pe, Vf, Quenching/Blowoff)", objective: "Calcular límites de inflamabilidad según %O2, presión psi, flujo cm/s y gravedad.", scope: "physics_engine.py + tests assert", deliverable: "Motor físico verificado", done: true },
-        { id: "M-04", role: "meca", phase: "S-AM", title: "Implementar Árbol de Decisión Multisensor + Clasificador de Llama", objective: "Clasificar régimen Nominal / Llama Fría NTC / Combustión Abierta con umbrales explicables.", scope: "Árbol físico + lógica óptica", deliverable: "decision_tree.py", done: false },
-        { id: "M-05", role: "meca", phase: "S-AM", title: "Programar Máquina de Estados Finitos (FSM) Determinista", objective: "Garantizar transiciones NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA con histéresis.", scope: "fsm_controller.py + pruebas unitarias", deliverable: "FSM 100% testeada", done: false },
+        { id: "M-04", role: "meca", phase: "S-AM", title: "Implementar Árbol de Decisión Multisensor + Clasificador de Llama", objective: "Clasificar régimen Nominal / Llama Fría NTC / Combustión Abierta con umbrales explicables.", scope: "Árbol físico + lógica óptica", deliverable: "decision_tree.py", done: true },
+        { id: "M-05", role: "meca", phase: "S-AM", title: "Programar Máquina de Estados Finitos (FSM) Determinista", objective: "Garantizar transiciones NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA con histéresis.", scope: "fsm_controller.py + pruebas unitarias", deliverable: "FSM 100% testeada", done: true },
         { id: "M-06", role: "meca", phase: "S-AM", title: "Dibujar Gemelo Digital Isométrico SVG (Skill anatomy)", objective: "Representar ducto Saffire/CIR con ventilador, cámara, compuerta y boquilla PFE.", scope: "SVG limpio + motion GPU 60fps", deliverable: "Componente DuctDigitalTwin", done: false },
         { id: "M-07", role: "meca", phase: "S-PM", title: "Entrenar pipeline ML/DL (RandomForest sobre tablas BASS-II/Saffire + CNN .onnx de régimen de llama + motor TF-IDF/TextRank)", objective: "Ejecutar en Google Colab T4 GPU / CPU local y exportar pesos ligeros (.joblib / .onnx) con manifiesto SHA-256 verificado.", scope: "Colab .ipynb + train_models.py + SHA-256", deliverable: "Modelos .joblib / .onnx auditados", done: true },
         { id: "M-08", role: "meca", phase: "S-PM", title: "Conectar API OSDR v2 con fallback resiliente", objective: "Consultar estudios frescos si hay red y caer instantáneamente a JSON local ante timeout.", scope: "Cliente HTTP con retry/timeout", deliverable: "Conector OSDR resiliente", done: true },
@@ -1285,7 +1285,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { name: "faceless-channel + narrator + subtitles", cat: "Media / Pitch", when: "Domingo PM", role: "Apoyo opcional para locución cronometrada y subtítulos limpios en el video de 30s." }
       ];
 
-      const DEFAULT_FURPS_DONE = { "C-01": true, "C-02": true, "S-01": true, "F-01": true, "F-03": true, "F-07": true, "R-01": true, "R-02": true };
+      const DEFAULT_FURPS_DONE = { "C-01": true, "C-02": true, "S-01": true, "F-01": true, "F-03": true, "F-04": true, "F-07": true, "R-01": true, "R-02": true };
 
       // --- 2. STATE MANAGEMENT ---
       function loadState() {
@@ -1749,7 +1749,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         assert(m07 && m07.title.includes(".onnx") && m07.objective.includes("Colab") && m07.objective.includes(".joblib"), "M-07 must reference Colab and local ML/DL weights");
         const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
         assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS") && i08.objective.includes("writing-craft"), "I-08 must reference deterministic rules and writing-craft");
-        assert(DEFAULT_TASKS.filter(t => t.done).length === 7, "Expected 7 baseline + Slice 4 tasks marked done by default");
+        assert(DEFAULT_TASKS.filter(t => t.done).length === 9, "Expected 9 baseline + Slice 5 tasks marked done by default");
 
         // Verify FSM visualizer transitions cleanly
         setFsmState("CONTENCION");
