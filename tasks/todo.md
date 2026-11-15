@@ -141,12 +141,12 @@
 
 > Regla: antes de trabajar, todo nuevo chat pregunta el perfil activo (`meca` / `ind` / `joint`) y respeta los archivos bloqueados por cada rama. Los archivos del tablero ([planning/index.html](planning/index.html), [tasks/todo.md](tasks/todo.md)) solo se editan al cerrar una tarea tras `git pull --rebase origin dev`.
 
-| ID | Perfil | Rama Dedicada | Módulos / Archivos Bloqueados (*Lock*) |
-| :--- | :---: | :--- | :--- |
-| **`M-13`** | `meca` | `feat/meca-m13-ui-refactor` | `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` |
-| **`M-12`** | `meca` | `feat/meca-m12-deploy-render-netlify` | `Dockerfile`, `render.yaml`, `netlify.toml`, `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js` |
-| **`I-01`** | `ind` | `feat/ind-i01-psi-taxonomy` | `docs/industrial/matriz_trazabilidad_psi.md`, `data/psi_combustion_24.json` (solo lectura/validación) |
-| **`I-02`** | `ind` | `feat/ind-i02-topsis-spec` | `docs/industrial/especificacion_topsis.md`, `tests/unit/test_ranking_and_writing_unit.py` |
+| ID | Perfil | Rama Dedicada | Módulos / Archivos Bloqueados (*Lock*) | Estado |
+| :--- | :---: | :--- | :--- | :---: |
+| **`M-13`** | `meca` | `feat/meca-m13-ui-refactor` | `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` | Pendiente |
+| **`M-12`** | `meca` | `feat/meca-m12-deploy-render-netlify` | `Dockerfile`, `render.yaml`, `netlify.toml`, `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js` | Pendiente |
+| **`I-01`** | `ind` | `feat/ind-i01-psi-taxonomy` | `docs/industrial/matriz_trazabilidad_psi.md`, `data/psi_combustion_24.json` (solo lectura/validación) | **Listo [x]** |
+| **`I-02`** | `ind` | `feat/ind-i02-topsis-spec` | `docs/industrial/especificacion_topsis.md`, `tests/unit/test_ranking_and_writing_unit.py` | Siguiente |
 | **`I-04`** | `ind` | `feat/ind-i04-fmea-matrix` | `docs/industrial/fmea_nasa_std_6001.md`, `data/cases_and_spinoffs.json` (sección FMEA) |
 | **`I-05`** | `ind` | `feat/ind-i05-forensic-presets` | `docs/industrial/fichas_forenses.md`, `data/cases_and_spinoffs.json` (sección `forensic_presets`) |
 | **`I-06`** | `ind` | `feat/ind-i06-suppression-tree` | `docs/industrial/protocolo_supresion_eclss.md`, `backend/governance.py` (reglas supresión) |

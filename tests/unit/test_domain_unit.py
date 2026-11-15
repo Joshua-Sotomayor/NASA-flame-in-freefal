@@ -3,6 +3,7 @@
 from dataclasses import FrozenInstanceError
 from pathlib import Path
 import json
+import re
 import pytest
 
 from backend.domain import (
@@ -108,3 +109,53 @@ def test_osdr_client_rejects_invalid_accession_format() -> None:
     client = OsdrApiClient()
     with pytest.raises(SecurityViolationError):
         client.fetch_study_metadata("../../../etc/passwd")
+
+
+def test_psi_taxonomy_validation_and_objective_invariants() -> None:
+    data_path = Path(__file__).resolve().parents[2] / "data" / "psi_combustion_24.json"
+    assert data_path.exists(), "Archivo maestro data/psi_combustion_24.json inexistente"
+
+    repo = PsiRepository(data_path=data_path)
+    all_items = repo.all_investigations()
+    assert len(all_items) == 24, "Debe contener exactamente 24 investigaciones PSI"
+
+    facilities_count = {"Cygnus": 0, "ISS-MSG": 0, "ISS-CIR": 0, "Otros": 0}
+    categories = set()
+    banned_keywords = ("rocket", "cohete", "thruster", "propulsor", "bipropellant")
+    doi_pattern = re.compile(r"^10\.60555/psi-\d+$")
+
+    for item in all_items:
+        assert doi_pattern.match(item.doi), f"DOI inválido en {item.psi_id}: {item.doi}"
+        assert item.facility in facilities_count, f"Instalación no reconocida en {item.psi_id}: {item.facility}"
+        facilities_count[item.facility] += 1
+
+        assert 10.0 <= item.o2_min <= item.o2_max <= 100.0, f"Rango O2 inválido en {item.psi_id}"
+        assert 5.0 <= item.pressure_psi_min <= item.pressure_psi_max <= 35.0, f"Presión inválida en {item.psi_id}"
+        assert 0.0 <= item.flow_cm_s_max <= 100.0, f"Velocidad de flujo anormal en {item.psi_id}"
+
+        scores_dict = dict(item.criteria_scores)
+        for criterion in ("habitat", "modeling", "sensors", "spinoff"):
+            assert criterion in scores_dict, f"Falta criterio {criterion} en {item.psi_id}"
+            score = scores_dict[criterion]
+            assert 0.0 <= score <= 1.0, f"Puntuación fuera de rango [0, 1] en {item.psi_id}: {score}"
+
+        blob = f"{item.acronym} {item.objectives} {item.approach} {item.earth_benefits}".lower()
+        for banned in banned_keywords:
+            assert banned not in blob, f"Término prohibido C-01 '{banned}' hallado en {item.psi_id}"
+
+        categories.add(item.category)
+
+    assert facilities_count["Cygnus"] == 6
+    assert facilities_count["ISS-MSG"] == 6
+    assert facilities_count["ISS-CIR"] == 10
+    assert facilities_count["Otros"] == 2
+
+    expected_categories = {
+        "Campanas Saffire (Cabina Real)",
+        "Solidos en Microgravedad",
+        "Llamas Gaseosas y Campos Electricos",
+        "Gotas y Llamas Frias",
+        "Termofluidos Interfaciales",
+    }
+    assert categories == expected_categories
+

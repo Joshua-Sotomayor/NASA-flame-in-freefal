@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.9.1): Slice 7 Completado + Protocolo Multi-Perfil &amp; Cola M-13</strong><br />
-          <span><strong>Logrado (15/31 tareas · Mecatrónica 11/13 · Gate 3 E2E + F-08/U-01/U-03/P-01/P-02/S-02 verificados):</strong> <strong><code>M-06, M-09, M-10, M-11, J-03</code></strong> (<code>frontend/</code> servido por FastAPI con SVG Isométrico y Contorno en tiempo real, Hardware Blueprint SolidWorks/EPLAN/Proteus, y <code>33/33 pytest PASS</code>).<br />
-          <strong>Siguiente en curso:</strong> Mecatrónica <code>M-13</code> (Refactor visual UI/UX — rama <code>feat/meca-m13-ui-refactor</code>) $\rightarrow$ <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-01, I-02, I-04..I-12</code>) · Cierre (<code>J-04..J-06</code>).</span>
+          <strong>Estado de la Iteración Actual (0.9.3): Slice I-01 Completado + Matriz de Trazabilidad PSI</strong><br />
+          <span><strong>Logrado (16/31 tareas · Mecatrónica 11/13 · Gestión Industrial 2/12 · 34/34 pytest PASS):</strong> <strong><code>I-01</code></strong> (Matriz de trazabilidad y gobernanza de datos de las 24 PSI en <code>docs/industrial/matriz_trazabilidad_psi.md</code> bajo <code>writing-craft</code> académico, sin AI slop, con 10 recursos oficiales y pruebas unitarias de taxonomía).<br />
+          <strong>Siguiente en curso:</strong> Gestión Industrial <code>I-02</code> (Especificación modelo TOPSIS/AHP) $\rightarrow$ Mecatrónica <code>M-13</code> (Refactor visual UI/UX — rama <code>feat/meca-m13-ui-refactor</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.9.1 · 15/31 (48%)</span>
+        <span class="mono badge badge-joint">0.9.3 · 16/31 (52%)</span>
       </div>
 
       <div class="toolbar">
@@ -1183,7 +1183,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "M-12", role: "meca", phase: "D-AM", title: "Desplegar plataforma web en URL HTTPS pública", objective: "Publicar FastAPI + frontend en Render (o Netlify proxy + Render) con CORS/CSP seguros y $0 USD.", scope: "Deploy Render / Netlify + Render", deliverable: "URL pública verificada", modules: "Dockerfile, render.yaml, netlify.toml, backend/main.py, backend/security.py, frontend/app.js", branch: "feat/meca-m12-deploy-render-netlify", done: false },
 
         // Rol B: Gestión Industrial (12)
-        { id: "I-01", role: "ind", phase: "V-H0", title: "Taxonomía y mapeo de los 4 objetivos en las 24 PSI", objective: "Clasificar qué investigaciones aportan a Cabinas, Modelado, Sensores y Spinoffs.", scope: "Curación científica de dominio", deliverable: "Matriz de trazabilidad PSI", modules: "docs/industrial/matriz_trazabilidad_psi.md, data/psi_combustion_24.json (solo lectura/validación)", branch: "feat/ind-i01-psi-taxonomy", done: false },
+        { id: "I-01", role: "ind", phase: "V-H0", title: "Taxonomía y mapeo de los 4 objetivos en las 24 PSI", objective: "Clasificar qué investigaciones aportan a Cabinas, Modelado, Sensores y Spinoffs.", scope: "Curación científica de dominio", deliverable: "Matriz de trazabilidad PSI", modules: "docs/industrial/matriz_trazabilidad_psi.md, data/psi_combustion_24.json (solo lectura/validación)", branch: "feat/ind-i01-psi-taxonomy", done: true },
         { id: "I-02", role: "ind", phase: "V-H0", title: "Diseñar modelo de Ranking Multicriterio (AHP / TOPSIS)", objective: "Definir pesos y fórmula transparente para rankear investigaciones por caso de uso.", scope: "Investigación de operaciones", deliverable: "Especificación TOPSIS", modules: "docs/industrial/especificacion_topsis.md, tests/unit/test_ranking_and_writing_unit.py", branch: "feat/ind-i02-topsis-spec", done: false },
         { id: "I-03", role: "ind", phase: "V-H0", title: "Cerrar backlog FURPS+ y criterios de aceptación MoSCoW", objective: "Fijar alcance innegociable MUST HAVE y congelar tasks/todo.md con tareas auditables.", scope: "Gestión de alcance del hackathon", deliverable: "Scope congelado (tasks/todo.md)", done: true },
         { id: "I-04", role: "ind", phase: "S-AM", title: "Estructurar Matriz FMEA / AMFE basada en NASA-STD-6001", objective: "Evaluar modos de fallo (pirólisis PTFE, flujo bajo BASS, Vika LiClO4) con cálculo NPR.", scope: "Seguridad industrial aeroespacial", deliverable: "data/fmea_matrix.json / validación", modules: "docs/industrial/fmea_nasa_std_6001.md, data/cases_and_spinoffs.json (bloque FMEA)", branch: "feat/ind-i04-fmea-matrix", done: false },
