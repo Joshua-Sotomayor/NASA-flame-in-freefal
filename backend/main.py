@@ -10,7 +10,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Literal
 
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, HTTPException, Query, Request
+from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field
 
 from backend.domain import PsiRepository
@@ -90,11 +91,13 @@ class AeroIgnisServices:
 def create_app(
     data_dir: Path | None = None,
     artifacts_dir: Path | None = None,
+    frontend_dir: Path | None = None,
     rate_limiter: SlidingWindowRateLimiter | None = None,
 ) -> FastAPI:
     """Factoria principal FastAPI ensamblando capas unidireccionales POO."""
     resolved_data = Path(data_dir or (DEFAULT_ROOT_DIR / "data"))
     resolved_artifacts = Path(artifacts_dir or (DEFAULT_ROOT_DIR / "artifacts" / "models"))
+    resolved_frontend = Path(frontend_dir or (DEFAULT_ROOT_DIR / "frontend"))
 
     guard = SecurityBoundaryGuard(
         max_payload_bytes=16384,
@@ -223,6 +226,31 @@ def create_app(
             },
             "spinoff_metrics": dual_use.to_dict(),
         }
+
+    def _serve_frontend_asset(asset_name: str) -> FileResponse:
+        allowed_assets = {"index.html", "styles.css", "app.js"}
+        if asset_name not in allowed_assets:
+            raise HTTPException(status_code=404, detail="Recurso no encontrado.")
+        safe_path = guard.resolve_within_root(resolved_frontend / asset_name, resolved_frontend)
+        if not safe_path.is_file():
+            raise HTTPException(status_code=404, detail="Archivo frontend aun no disponible.")
+        return FileResponse(path=safe_path)
+
+    @app.get("/", include_in_schema=False)
+    def serve_dashboard_root() -> FileResponse:
+        return _serve_frontend_asset("index.html")
+
+    @app.get("/styles.css", include_in_schema=False)
+    def serve_dashboard_css_root() -> FileResponse:
+        return _serve_frontend_asset("styles.css")
+
+    @app.get("/app.js", include_in_schema=False)
+    def serve_dashboard_js_root() -> FileResponse:
+        return _serve_frontend_asset("app.js")
+
+    @app.get("/frontend/{asset_name}", include_in_schema=False)
+    def serve_dashboard_asset(asset_name: str) -> FileResponse:
+        return _serve_frontend_asset(asset_name)
 
     return app
 

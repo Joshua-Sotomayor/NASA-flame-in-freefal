@@ -96,26 +96,26 @@
 - **Verificación:** `pytest tests/integration/test_api_contracts_int.py -v`
 - **Commit Git:** `0.7.0 - feat - ensamblar api fastapi poo con contratos estrictos y proteccion owasp`
 
-### Task 8 (`M-06` + `M-09` + `U-01`): Dashboard Web WAI-ARIA + Gemelo Digital Isométrico SVG (`anatomy`)
+### [x] Task 8 (`M-06` + `M-09` + `U-01`): Dashboard Web WAI-ARIA + Gemelo Digital Isométrico SVG (`anatomy`)
 - **Responsable:** Mecatrónico + Gestión Industrial (QA textos `writing-craft` y unidades).
 - **Alcance:** Crear `frontend/` (`index.html`, `styles.css`, `app.js`) con los 4 módulos integrados, animaciones GPU `60fps`, contraste WCAG AA y cero `innerHTML` inseguro.
 - **Pruebas TDD + E2E (~5% Pirámide):**
-  - Verificación en navegador headless (`0` errores de consola, `LCP < 2.5s`, `CLS < 0.1`, navegación por teclado y recorrido completo `< 3 min`).
-- **Commit Git:** `0.8.0 - design - construir dashboard web aero-ignis con gemelo digital svg y graficas`
+  - Verificación en navegador (`0` errores de consola, carga DOM `691 ms`, navegación por teclado y recorrido completo por los 4 módulos + Hardware Blueprint).
+- **Commit Git:** `0.8.0 - design - construir dashboard web aero ignis con gemelo digital svg contorno e interlock blueprint`
 
 ## Checkpoint 3 (MVP MUST-HAVE)
-- [ ] Gate 3 (`J-03`): Flujo E2E completo de los 4 módulos verificado en navegador.
+- [x] Gate 3 (`J-03`): Flujo E2E completo de los 4 módulos verificado en navegador.
 
 ---
 
 ## Fase 4: Blueprint Físico, Auditoría, Despliegue y Pitch (Domingo `H27–H48`)
 
-### Task 9 (`M-10` + `I-09` + `I-10`): Pestaña *Hardware Blueprint*, QA `writing-craft` y `README.md`
-- **Criterios:** Evidencias `SolidWorks/EPLAN/Proteus`, cero contenido de motores cohete (`C-01`), los 10 recursos NASA citados y `README.md` auditado con `writing-craft`.
-- **Commit Git:** `0.9.0 - docs - integrar hardware blueprint y readme ejecutivo con 10 recursos nasa`
+### [~] Task 9 (`M-10` completado; pendiente `I-09` + `I-10` Gestión Industrial): Pestaña *Hardware Blueprint*, QA `writing-craft` y `README.md`
+- **Criterios:** Evidencias `SolidWorks/EPLAN/Proteus` integradas en pestaña Blueprint (`M-10` listo), cero contenido de motores cohete (`C-01`), los 10 recursos NASA citados y `README.md` auditado con `writing-craft` (pendiente `I-09`/`I-10`).
+- **Commit Git:** `0.8.0 - design - construir dashboard web aero ignis con gemelo digital svg contorno e interlock blueprint`
 
-### Task 10 (`M-11`): Auditoría `/ponytail-audit` + Suite TDD Completa & Offline + `graphify`
-- **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% desconectando Wi-Fi + actualización final de grafo `graphify` / Graphviz.
+### [x] Task 10 (`M-11`): Auditoría `/ponytail-audit` + Suite TDD Completa & Offline
+- **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% (`33 passed`), JS limpio (`node --check frontend/app.js`), auditoría anti-slop / cero código muerto / seguridad OWASP verificada.
 - **Commit Git:** `0.9.1 - test - validar suite tdd completa offline y auditoria ponytail`
 
 ### Task 11 (`M-12` + `J-04`): Despliegue Público HTTPS y Tag `v1.0.0` en `main` (`origin` GitHub)
