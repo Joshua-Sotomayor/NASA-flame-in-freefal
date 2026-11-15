@@ -11,9 +11,10 @@ import json
 import math
 from pathlib import Path
 import re
-from typing import Any, Callable
+from typing import Any, Callable, Sequence
 from urllib.parse import urlsplit
 
+import numpy as np
 import requests
 
 
@@ -41,6 +42,85 @@ MATERIAL_REACTIVITY_MAP: dict[str, float] = {
     "Kapton": 0.35,
     "PTFE": 0.25,
 }
+
+FLAME_CLASS_LABELS: tuple[str, ...] = (
+    "Nominal",
+    "Llama Esferica Azul 0g",
+    "Llama Fria NTC",
+    "Propagacion Abierta",
+)
+
+OPTICAL_PRESET_TO_IDX: dict[str, int] = {
+    "nominal": 0,
+    "spherical_0g": 1,
+    "cool_flame_ntc": 2,
+    "open_propagation": 3,
+}
+
+SENSOR_FEATURES: tuple[str, ...] = (
+    "delta_t_dt",
+    "co_ppm",
+    "submicron_aerosol",
+    "airflow_cm_s",
+)
+
+SENSOR_CLASS_LABELS: tuple[str, ...] = (
+    "Nominal",
+    "Pre_Alerta",
+    "Contencion",
+)
+
+
+def generate_optical_frame(
+    preset: str,
+    noise_std: float = 0.04,
+    seed: int | None = None,
+) -> np.ndarray:
+    """Genera una imagen termica/optica sintetica 64x64 calibrada por regimen fisico."""
+    key = preset.strip().lower()
+    if key not in OPTICAL_PRESET_TO_IDX:
+        raise ValueError(f"Preset optico desconocido: {preset}")
+
+    rng = np.random.default_rng(seed)
+    yy, xx = np.mgrid[-1:1:64j, -1:1:64j]
+    rr = np.sqrt(xx**2 + yy**2)
+
+    cls_idx = OPTICAL_PRESET_TO_IDX[key]
+    if cls_idx == 0:
+        base = np.full((64, 64), 0.08, dtype=np.float32)
+    elif cls_idx == 1:
+        base = (0.75 * np.exp(-(rr**2) / 0.14)).astype(np.float32)
+    elif cls_idx == 2:
+        base = (0.30 * np.exp(-((rr - 0.38) ** 2) / 0.045)).astype(np.float32)
+    else:
+        shift = xx + 0.35 * (yy**2)
+        base = (0.95 * np.exp(-((shift - 0.15) ** 2 + (yy**2)) / 0.18)).astype(np.float32)
+
+    if noise_std > 0.0:
+        noise = rng.normal(0.0, noise_std, (64, 64)).astype(np.float32)
+        base = base + noise
+    return np.clip(base, 0.0, 1.0).astype(np.float32)
+
+
+def preset_to_input_tensor(
+    preset: str | None = None,
+    optical_vector: Sequence[float] | None = None,
+    seed: int = 42,
+) -> np.ndarray:
+    """Convierte un preset o vector de 64 floats en tensor float32 `(1, 1, 64, 64)`."""
+    if optical_vector is not None:
+        arr = np.asarray(optical_vector, dtype=np.float32)
+        if arr.shape != (64,):
+            raise ValueError("optical_vector debe tener exactamente 64 valores flotantes.")
+        if not np.isfinite(arr).all():
+            raise ValueError("optical_vector contiene valores no finitos.")
+        grid_8x8 = np.clip(arr.reshape(8, 8), 0.0, 1.0)
+        upscaled = np.kron(grid_8x8, np.ones((8, 8), dtype=np.float32))
+        return upscaled[None, None, :, :].astype(np.float32)
+
+    chosen = preset or "nominal"
+    frame = generate_optical_frame(preset=chosen, noise_std=0.0, seed=seed)
+    return frame[None, None, :, :].astype(np.float32)
 
 
 class SecurityViolationError(ValueError):

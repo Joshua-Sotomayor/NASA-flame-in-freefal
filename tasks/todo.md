@@ -63,7 +63,7 @@
 - **Verificación:** `pytest tests/unit/test_physics_unit.py tests/integration/test_flammability_int.py -v`
 - **Commit Git:** `0.6.0 - feat - implementar motor fisico adimensional y predictor random forest en poo`
 
-### Task 5 (`M-04` + `M-05`): `DuctSafetyOrchestrator` (CNN ONNX + Decision Tree + FSM Determinista)
+### [x] Task 5 (`M-04` + `M-05`): `DuctSafetyOrchestrator` (CNN ONNX + Decision Tree + FSM Determinista)
 - **Responsable:** Mecatrónico y Control.
 - **Alcance:** Implementar `backend/duct_twin.py` con `OnnxFlameVisionModel`, `SensorDecisionTreeModel` y `DeterministicFsmController` (`NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA` con histéresis temporal e interlock `comm_ok=False`).
 - **Pruebas TDD (Escribir RED primero):**
