@@ -114,6 +114,37 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert '<section id="panel-museum" class="tabpanel is-active"' in r_root.text
     assert r_root.text.index('id="tab-museum"') < r_root.text.index('id="tab-explorer"')
 
+    # M-15: Favicon NASA, seccion academica de modelos, estetica retro orbital y responsive
+    assert '<link rel="icon"' in r_root.text
+    assert 'id="tab-models"' in r_root.text
+    assert 'id="panel-models"' in r_root.text
+    assert 'id="orbitalBackdropCanvas"' in r_root.text
+    assert "mission-decal-strip" in r_root.text
+    assert "/api/v1/models/download/" in r_root.text
+
+    r_fav_svg = client.get("/favicon.svg")
+    assert r_fav_svg.status_code == 200
+    assert "<svg" in r_fav_svg.text
+
+    r_fav_ico = client.get("/favicon.ico")
+    assert r_fav_ico.status_code == 200
+    assert "<svg" in r_fav_ico.text
+
+    r_graph = client.get("/assets/graphs/ml_dl_colab_pipeline.svg")
+    assert r_graph.status_code == 200
+    assert "<svg" in r_graph.text
+
+    for slug, expected_file in (
+        ("flammability-rf", "flammability_rf.joblib"),
+        ("flame-cnn", "flame_cnn.onnx"),
+        ("code-train-local", "train_models.py"),
+    ):
+        r_dl = client.get(f"/api/v1/models/download/{slug}")
+        assert r_dl.status_code == 200
+        assert expected_file in r_dl.headers.get("content-disposition", "")
+
+    assert client.get("/api/v1/models/download/nonexistent-slug").status_code == 404
+
     # Cero jerga interna de programacion o LLM en textos visibles de HTML
     lowered_html = r_root.text.lower()
     for term in BANNED_PUBLIC_DEV_JARGON:
@@ -124,6 +155,7 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert r_css.status_code == 200
     assert "prefers-reduced-motion" in r_css.text
     assert "Geist Pixel" in r_css.text
+    assert "attr(data-label)" in r_css.text
 
     r_font = client.get("/GeistPixel-Square.woff2")
     assert r_font.status_code == 200
@@ -137,6 +169,8 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert r_js.status_code == 200
     assert "escapeHtml" in r_js.text
     assert "toggleTheme" not in r_js.text
+    assert "data-label=" in r_js.text
+    assert "initOrbitalBackdrop" in r_js.text
     lowered_js = r_js.text.lower()
     for term in BANNED_PUBLIC_DEV_JARGON:
         assert term not in lowered_js, f"Termino tecnico interno visible en app.js: {term}"
