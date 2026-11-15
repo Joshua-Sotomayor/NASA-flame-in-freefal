@@ -832,7 +832,7 @@
         <div class="progress-row">
           <div class="progress-head">
             <strong>Progreso Global de Tareas</strong>
-            <span id="kpiGlobalText" class="mono tabular">0 / 30 (0%)</span>
+            <span id="kpiGlobalText" class="mono tabular">0 / 31 (0%)</span>
           </div>
           <div class="progress-track">
             <div id="kpiGlobalBar" class="progress-fill" style="background: var(--accent-flame-blue); --ratio: 0;"></div>
@@ -842,7 +842,7 @@
         <div class="progress-row">
           <div class="progress-head">
             <span><span class="badge badge-meca">Mecatrónica & Control</span></span>
-            <span id="kpiMecaText" class="mono tabular">0 / 12 (0%)</span>
+            <span id="kpiMecaText" class="mono tabular">0 / 13 (0%)</span>
           </div>
           <div class="progress-track">
             <div id="kpiMecaBar" class="progress-fill" style="background: var(--accent-soot-amber); --ratio: 0;"></div>
@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.9.1): Slice 7 Completado — Dashboard Web WAI-ARIA, Gemelo SVG, Contorno, Blueprint &amp; Auditoría Ponytail</strong><br />
-          <span><strong>Logrado (15/30 tareas · Mecatrónica 11/12 · Gate 3 E2E + F-08/U-01/U-03/P-01/P-02/S-02 verificados):</strong> <strong><code>M-06, M-09, M-10, M-11, J-03</code></strong> (<code>frontend/</code> servido por FastAPI con SVG Isométrico y Contorno en tiempo real, Hardware Blueprint SolidWorks/EPLAN/Proteus, flujo E2E en navegador <code>0</code> errores consola / <code>691 ms</code> DOM load, y <code>33/33 pytest PASS</code>).<br />
-          <strong>Pendiente equipo / cierre final:</strong> Tareas de Gestión Industrial (<code>I-01, I-02, I-04..I-12</code>), despliegue HTTPS (<code>M-12</code>) y pitch/envío (<code>J-04..J-06</code>).</span>
+          <strong>Estado de la Iteración Actual (0.9.1): Slice 7 Completado + Protocolo Multi-Perfil &amp; Cola M-13</strong><br />
+          <span><strong>Logrado (15/31 tareas · Mecatrónica 11/13 · Gate 3 E2E + F-08/U-01/U-03/P-01/P-02/S-02 verificados):</strong> <strong><code>M-06, M-09, M-10, M-11, J-03</code></strong> (<code>frontend/</code> servido por FastAPI con SVG Isométrico y Contorno en tiempo real, Hardware Blueprint SolidWorks/EPLAN/Proteus, y <code>33/33 pytest PASS</code>).<br />
+          <strong>Siguiente en curso:</strong> Mecatrónica <code>M-13</code> (Refactor visual UI/UX — rama <code>feat/meca-m13-ui-refactor</code>) $\rightarrow$ <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-01, I-02, I-04..I-12</code>) · Cierre (<code>J-04..J-06</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.9.1 · 15/30 (50%)</span>
+        <span class="mono badge badge-joint">0.9.1 · 15/31 (48%)</span>
       </div>
 
       <div class="toolbar">
@@ -1179,29 +1179,30 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "M-09", role: "meca", phase: "S-PM", title: "Integrar gráfica de contorno de inflamabilidad en tiempo real", objective: "Mostrar curva interactiva Flujo vs %O2 marcando zona segura, llama fría y blowoff.", scope: "Canvas/SVG interactivo", deliverable: "Mapa de contorno en vivo", done: true },
         { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: true },
         { id: "M-11", role: "meca", phase: "D-AM", title: "Ejecutar /ponytail-audit y pruebas Web Vitals / offline", objective: "Eliminar código muerto, verificar LCP < 2.5s y probar desconectando Wi-Fi.", scope: "Auditoría de calidad y rendimiento", deliverable: "Checklist técnico verde", done: true },
-        { id: "M-12", role: "meca", phase: "D-AM", title: "Desplegar plataforma web en URL HTTPS pública", objective: "Publicar frontend + backend accesible desde cualquier navegador del jurado.", scope: "Deploy Vercel/Render/Pages", deliverable: "URL pública verificada", done: false },
+        { id: "M-13", role: "meca", phase: "D-AM", title: "Refactor del apartado visual de la plataforma web (UI/UX)", objective: "Refinar estética, jerarquía visual y acabado del dashboard conservando contratos REST, SVG y accesibilidad WAI-ARIA.", scope: "Refactor visual frontend (siguiente en turno)", deliverable: "UI refactorizada + 33/33 pytest verde", modules: "frontend/index.html, frontend/styles.css, frontend/app.js, tests/integration/test_frontend_and_audit_int.py", branch: "feat/meca-m13-ui-refactor", done: false },
+        { id: "M-12", role: "meca", phase: "D-AM", title: "Desplegar plataforma web en URL HTTPS pública", objective: "Publicar FastAPI + frontend en Render (o Netlify proxy + Render) con CORS/CSP seguros y $0 USD.", scope: "Deploy Render / Netlify + Render", deliverable: "URL pública verificada", modules: "Dockerfile, render.yaml, netlify.toml, backend/main.py, backend/security.py, frontend/app.js", branch: "feat/meca-m12-deploy-render-netlify", done: false },
 
         // Rol B: Gestión Industrial (12)
-        { id: "I-01", role: "ind", phase: "V-H0", title: "Taxonomía y mapeo de los 4 objetivos en las 24 PSI", objective: "Clasificar qué investigaciones aportan a Cabinas, Modelado, Sensores y Spinoffs.", scope: "Curación científica de dominio", deliverable: "Matriz de trazabilidad PSI", done: false },
-        { id: "I-02", role: "ind", phase: "V-H0", title: "Diseñar modelo de Ranking Multicriterio (AHP / TOPSIS)", objective: "Definir pesos y fórmula transparente para rankear investigaciones por caso de uso.", scope: "Investigación de operaciones", deliverable: "Especificación TOPSIS", done: false },
+        { id: "I-01", role: "ind", phase: "V-H0", title: "Taxonomía y mapeo de los 4 objetivos en las 24 PSI", objective: "Clasificar qué investigaciones aportan a Cabinas, Modelado, Sensores y Spinoffs.", scope: "Curación científica de dominio", deliverable: "Matriz de trazabilidad PSI", modules: "docs/industrial/matriz_trazabilidad_psi.md, data/psi_combustion_24.json (solo lectura/validación)", branch: "feat/ind-i01-psi-taxonomy", done: false },
+        { id: "I-02", role: "ind", phase: "V-H0", title: "Diseñar modelo de Ranking Multicriterio (AHP / TOPSIS)", objective: "Definir pesos y fórmula transparente para rankear investigaciones por caso de uso.", scope: "Investigación de operaciones", deliverable: "Especificación TOPSIS", modules: "docs/industrial/especificacion_topsis.md, tests/unit/test_ranking_and_writing_unit.py", branch: "feat/ind-i02-topsis-spec", done: false },
         { id: "I-03", role: "ind", phase: "V-H0", title: "Cerrar backlog FURPS+ y criterios de aceptación MoSCoW", objective: "Fijar alcance innegociable MUST HAVE y congelar tasks/todo.md con tareas auditables.", scope: "Gestión de alcance del hackathon", deliverable: "Scope congelado (tasks/todo.md)", done: true },
-        { id: "I-04", role: "ind", phase: "S-AM", title: "Estructurar Matriz FMEA / AMFE basada en NASA-STD-6001", objective: "Evaluar modos de fallo (pirólisis PTFE, flujo bajo BASS, Vika LiClO4) con cálculo NPR.", scope: "Seguridad industrial aeroespacial", deliverable: "data/fmea_matrix.json", done: false },
-        { id: "I-05", role: "ind", phase: "S-AM", title: "Parametrizar fichas forenses: Apollo 1, Apollo 13 y Mir", objective: "Documentar %O2, psi, materiales y lecciones que activan botones de simulación en 1 clic.", scope: "Validación histórica oficial", deliverable: "3 presets forenses verificados", done: false },
-        { id: "I-06", role: "ind", phase: "S-AM", title: "Modelar árbol de decisión de Supresión (PFE vs CO2 vs E-FIELD)", objective: "Reglas de selección según toxicidad ECLSS, tipo de fuego y gravedad.", scope: "Ingeniería de seguridad y procesos", deliverable: "Protocolo de supresión", done: false },
-        { id: "I-07", role: "ind", phase: "S-AM", title: "Construir Calculadora de Impacto Dual-Use (Spinoffs)", objective: "Cuantificar impacto terrestre de Nodes 9582 (SCBA -40% peso), 9407 (<0.1um) y 9918 (PBI).", scope: "Modelo de transferencia tecnológica", deliverable: "Módulo Calculadora Dual-Use", done: false },
-        { id: "I-08", role: "ind", phase: "S-PM", title: "Definir reglas de interpretación determinista y plantillas dinámicas basadas en Feature Importance y salida TOPSIS", objective: "Aplicar skill writing-craft (academic/plain) por audiencia (Investigador, Estudiante, Gestor) con citas PSI válidas y cero AI slop.", scope: "writing-craft + reglas explicables", deliverable: "3 plantillas deterministas auditadas", done: false },
-        { id: "I-09", role: "ind", phase: "S-PM", title: "Auditar consistencia de unidades y alcance (Excluir cohetes)", objective: "Verificar psi/kPa/cm/s y asegurar cero contenido fuera de alcance.", scope: "QA de dominio científico", deliverable: "Reporte QA limpio", done: false },
-        { id: "I-10", role: "ind", phase: "D-AM", title: "Redactar README.md ejecutivo y citas a los 10 recursos NASA", objective: "Documentar impacto, licencia CC0/MIT y referencias exactas para jueces.", scope: "Documentación de entrega", deliverable: "README.md completo", done: false },
-        { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", done: false },
-        { id: "I-12", role: "ind", phase: "D-PM", title: "Redactar guion cronometrado del video (30s / 2min)", objective: "Asegurar que cada segundo cubra los 5 criterios de evaluación NASA (20% c/u).", scope: "Guion de pitch ganador", deliverable: "Script cronometrado final", done: false },
+        { id: "I-04", role: "ind", phase: "S-AM", title: "Estructurar Matriz FMEA / AMFE basada en NASA-STD-6001", objective: "Evaluar modos de fallo (pirólisis PTFE, flujo bajo BASS, Vika LiClO4) con cálculo NPR.", scope: "Seguridad industrial aeroespacial", deliverable: "data/fmea_matrix.json / validación", modules: "docs/industrial/fmea_nasa_std_6001.md, data/cases_and_spinoffs.json (bloque FMEA)", branch: "feat/ind-i04-fmea-matrix", done: false },
+        { id: "I-05", role: "ind", phase: "S-AM", title: "Parametrizar fichas forenses: Apollo 1, Apollo 13 y Mir", objective: "Documentar %O2, psi, materiales y lecciones que activan botones de simulación en 1 clic.", scope: "Validación histórica oficial", deliverable: "3 presets forenses verificados", modules: "docs/industrial/fichas_forenses.md, data/cases_and_spinoffs.json (bloque forensic_presets)", branch: "feat/ind-i05-forensic-presets", done: false },
+        { id: "I-06", role: "ind", phase: "S-AM", title: "Modelar árbol de decisión de Supresión (PFE vs CO2 vs E-FIELD)", objective: "Reglas de selección según toxicidad ECLSS, tipo de fuego y gravedad.", scope: "Ingeniería de seguridad y procesos", deliverable: "Protocolo de supresión", modules: "docs/industrial/protocolo_supresion_eclss.md, backend/governance.py (reglas)", branch: "feat/ind-i06-suppression-tree", done: false },
+        { id: "I-07", role: "ind", phase: "S-AM", title: "Construir Calculadora de Impacto Dual-Use (Spinoffs)", objective: "Cuantificar impacto terrestre de Nodes 9582 (SCBA -40% peso), 9407 (<0.1um) y 9918 (PBI).", scope: "Modelo de transferencia tecnológica", deliverable: "Módulo Calculadora Dual-Use validado", modules: "docs/industrial/impacto_dual_use.md, data/cases_and_spinoffs.json (bloque spinoffs)", branch: "feat/ind-i07-dual-use-spinoffs", done: false },
+        { id: "I-08", role: "ind", phase: "S-PM", title: "Definir reglas de interpretación determinista y plantillas dinámicas basadas en Feature Importance y salida TOPSIS", objective: "Aplicar skill writing-craft (academic/plain) por audiencia (Investigador, Estudiante, Gestor) con citas PSI válidas y cero AI slop.", scope: "writing-craft + reglas explicables", deliverable: "3 plantillas deterministas auditadas", modules: "docs/industrial/plantillas_writing_craft.md, backend/ranking_nlp.py (solo plantillas), tests/unit/test_ranking_and_writing_unit.py", branch: "feat/ind-i08-writing-craft-templates", done: false },
+        { id: "I-09", role: "ind", phase: "S-PM", title: "Auditar consistencia de unidades y alcance (Excluir cohetes)", objective: "Verificar psi/kPa/cm/s y asegurar cero contenido fuera de alcance.", scope: "QA de dominio científico", deliverable: "Reporte QA limpio", modules: "docs/industrial/qa_unidades_alcance.md", branch: "feat/ind-i09-qa-units-scope", done: false },
+        { id: "I-10", role: "ind", phase: "D-AM", title: "Redactar README.md ejecutivo y citas a los 10 recursos NASA", objective: "Documentar impacto, licencia CC0/MIT y referencias exactas para jueces.", scope: "Documentación de entrega", deliverable: "README.md completo", modules: "README.md", branch: "feat/ind-i10-readme-ejecutivo", done: false },
+        { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", modules: "docs/pitch/deck_7_slides.md", branch: "feat/ind-i11-pitch-deck", done: false },
+        { id: "I-12", role: "ind", phase: "D-PM", title: "Redactar guion cronometrado del video (30s / 2min)", objective: "Asegurar que cada segundo cubra los 5 criterios de evaluación NASA (20% c/u).", scope: "Guion de pitch ganador", deliverable: "Script cronometrado final", modules: "docs/pitch/guion_video_demo.md", branch: "feat/ind-i12-video-script", done: false },
 
         // Tareas Conjuntas (6)
         { id: "J-01", role: "joint", phase: "V-H0", title: "Revisión de Gate 1: Aprobar SPEC.md y congelar alcance MVP", objective: "Alinear arquitectura POO, pipeline ML/DL propio, seguridad OWASP y flujo Git antes de codificar.", scope: "Sincronización de arquitectura", deliverable: "SPEC.md + tasks/todo.md listos para aprobación", done: true },
         { id: "J-02", role: "joint", phase: "S-AM", title: "Revisión de Gate 2: Validar consistencia Física + FMEA", objective: "Probar que los escenarios Apollo/Lunar disparan las alarmas correctas en FSM y FMEA.", scope: "Integración de dominio", deliverable: "Pruebas cruzadas OK", done: true },
         { id: "J-03", role: "joint", phase: "S-PM", title: "Revisión de Gate 3: Demo end-to-end de los 4 módulos en web", objective: "Recorrer el flujo completo en navegador como lo hará un juez en 3 minutos.", scope: "Prueba de usabilidad real", deliverable: "MVP MUST-HAVE funcional", done: true },
-        { id: "J-04", role: "joint", phase: "D-AM", title: "Revisión de Gate 4: Code Freeze y verificación en incógnito", objective: "Congelar código, validar URL desplegada y comprobar cero errores de consola.", scope: "Estabilidad pre-entrega", deliverable: "Release v1.0.0", done: false },
-        { id: "J-05", role: "joint", phase: "D-PM", title: "Grabar y editar video demo en 1080p con subtítulos", objective: "Mostrar app real operando en vivo (simulaciones + ranking + gemelo digital).", scope: "Producción audiovisual", deliverable: "Video final exportado", done: false },
-        { id: "J-06", role: "joint", phase: "D-PM", title: "Envío oficial en plataforma Space Apps (2h antes del cierre)", objective: "Subir links, repo GitHub, video y resumen verificando formulario completo.", scope: "Cierre sin contratiempos", deliverable: "Confirmación de envío NASA", done: false }
+        { id: "J-04", role: "joint", phase: "D-AM", title: "Revisión de Gate 4: Code Freeze y verificación en incógnito", objective: "Congelar código, validar URL desplegada y comprobar cero errores de consola.", scope: "Estabilidad pre-entrega", deliverable: "Release v1.0.0", modules: "planning/index.html, tasks/todo.md, tag Git v1.0.0 (solo tras merge dev -> main)", branch: "release/v1.0.0", done: false },
+        { id: "J-05", role: "joint", phase: "D-PM", title: "Grabar y editar video demo en 1080p con subtítulos", objective: "Mostrar app real operando en vivo (simulaciones + ranking + gemelo digital).", scope: "Producción audiovisual", deliverable: "Video final exportado", modules: "docs/pitch/checklist_grabacion.md (archivo de video externo)", branch: "docs/joint-j05-video-checklist", done: false },
+        { id: "J-06", role: "joint", phase: "D-PM", title: "Envío oficial en plataforma Space Apps (2h antes del cierre)", objective: "Subir links, repo GitHub, video y resumen verificando formulario completo.", scope: "Cierre sin contratiempos", deliverable: "Confirmación de envío NASA", modules: "docs/pitch/submission_space_apps.md", branch: "docs/joint-j06-submission", done: false }
       ];
 
       const FURPS_DATA = [
@@ -1455,7 +1456,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
           if (state.roleFilter !== "ALL" && t.role !== state.roleFilter) return false;
           if (state.phaseFilter !== "ALL" && t.phase !== state.phaseFilter) return false;
           if (query) {
-            const hay = `${t.id} ${t.title} ${t.objective} ${t.scope} ${t.deliverable}`.toLowerCase();
+            const hay = `${t.id} ${t.title} ${t.objective} ${t.scope} ${t.deliverable} ${t.modules || ""} ${t.branch || ""}`.toLowerCase();
             if (!hay.includes(query)) return false;
           }
           return true;
@@ -1469,6 +1470,9 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
 
         grid.innerHTML = filtered.map(t => {
           const r = roleMap[t.role] || roleMap.joint;
+          const lockHtml = (t.modules || t.branch)
+            ? `<p class="task-detail"><strong>Módulos / Lock:</strong> <code class="mono">${escapeHtml(t.modules || "N/A")}</code>${t.branch ? ` · <strong>Rama:</strong> <code class="mono">${escapeHtml(t.branch)}</code>` : ""}</p>`
+            : "";
           return `
             <article class="task-card ${t.done ? "is-done" : ""}">
               <input class="check-input" type="checkbox" data-task-id="${t.id}" ${t.done ? "checked" : ""} aria-label="Marcar ${t.title}" />
@@ -1480,6 +1484,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
                 <h3 class="task-title">${escapeHtml(t.title)}</h3>
                 <p class="task-detail"><strong>Objetivo:</strong> ${escapeHtml(t.objective)}</p>
                 <p class="task-detail"><strong>Alcance:</strong> ${escapeHtml(t.scope)} · <strong>Cierre:</strong> ${escapeHtml(t.deliverable)}</p>
+                ${lockHtml}
               </div>
             </article>
           `;
@@ -1709,7 +1714,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
       });
 
       document.getElementById("resetBtn").addEventListener("click", () => {
-        if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 30 tareas base?")) return;
+        if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 31 tareas base?")) return;
         state.tasks = DEFAULT_TASKS.map(t => ({ ...t }));
         state.furpsDone = { ...DEFAULT_FURPS_DONE };
         saveState();
@@ -1738,7 +1743,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         const assert = (cond, msg) => { if (!cond) throw new Error("Self-check failed: " + msg); };
         assert(PSI_24_DATA.length === 24, "Expected exactly 24 PSI investigations");
         assert(OFFICIAL_RESOURCES.length === 10, "Expected 10 official challenge resources");
-        assert(DEFAULT_TASKS.length === 30, "Expected 30 role-divided default tasks");
+        assert(DEFAULT_TASKS.length === 31, "Expected 31 role-divided default tasks");
         assert(FURPS_DATA.length === 22, "Expected 22 FURPS+ MoSCoW items");
         assert(FURPS_DATA.filter(f => f.moscow === "MUST").length === 14, "Expected 14 MUST HAVE items");
         assert(SKILLS_VAULT.length === 13, "Expected 13 audited skills in SKILLS_VAULT");
@@ -1747,8 +1752,11 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
 
         const m07 = DEFAULT_TASKS.find(t => t.id === "M-07");
         assert(m07 && m07.title.includes(".onnx") && m07.objective.includes("Colab") && m07.objective.includes(".joblib"), "M-07 must reference Colab and local ML/DL weights");
+        const m13 = DEFAULT_TASKS.find(t => t.id === "M-13");
+        assert(m13 && m13.role === "meca" && m13.done === false && Boolean(m13.modules) && Boolean(m13.branch), "M-13 must be pending with UI refactor scope and branch lock");
         const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
         assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS") && i08.objective.includes("writing-craft"), "I-08 must reference deterministic rules and writing-craft");
+        assert(DEFAULT_TASKS.filter(t => !t.done).every(t => Boolean(t.modules) && Boolean(t.branch)), "All pending tasks must declare modules lock and dedicated branch");
         assert(DEFAULT_TASKS.filter(t => t.done).length === 15, "Expected 15 baseline + Slice 7 tasks marked done by default");
 
         // Verify FSM visualizer transitions cleanly
