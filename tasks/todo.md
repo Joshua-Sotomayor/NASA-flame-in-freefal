@@ -54,7 +54,7 @@
 - **Verificación:** `python -m backend.train_models && pytest tests/unit/test_training_unit.py tests/integration/test_models_integrity_int.py -v`
 - **Commit Git:** `0.5.0 - feat - entrenar pipeline ml propio random forest cnn onnx y clustering tfidf`
 
-### Task 4 (`M-03` + `I-05`): `DimensionlessPhysicsCalculator` + `FlammabilityPredictor` + Presets Forenses
+### [x] Task 4 (`M-03` + `I-05`): `DimensionlessPhysicsCalculator` + `FlammabilityPredictor` + Presets Forenses
 - **Responsable:** Mecatrónico + Gestión Industrial.
 - **Alcance:** Implementar `backend/physics_ml.py` en POO uniendo ecuaciones ($\text{Da}$, $\text{Pe}$, $V_f$) con `RandomForest`/`GBR` y los 3 presets (**Apollo 1**, **Apollo 13**, **Mir**).
 - **Pruebas TDD (Escribir RED primero):**
