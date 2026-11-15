@@ -23,6 +23,25 @@ _ACCESSION_PATTERN: re.Pattern[str] = re.compile(r"^(OSD|PSI)-(\d{1,5})$")
 _MAX_PAGE_SIZE: int = 50
 _MAX_PAGE_NUMBER: int = 10
 
+FLAMMABILITY_FEATURES: tuple[str, ...] = (
+    "o2_pct",
+    "pressure_atm",
+    "air_flow_cms",
+    "gravity_g",
+    "thickness_cm",
+    "flow_concurrent",
+    "material_reactivity",
+)
+
+MATERIAL_REACTIVITY_MAP: dict[str, float] = {
+    "Algodon": 1.35,
+    "PMMA": 1.15,
+    "SIBAL": 1.05,
+    "Nomex": 0.42,
+    "Kapton": 0.35,
+    "PTFE": 0.25,
+}
+
 
 class SecurityViolationError(ValueError):
     """Se lanza cuando una entrada o URL infringe las politicas de frontera segura (SSRF/formato)."""

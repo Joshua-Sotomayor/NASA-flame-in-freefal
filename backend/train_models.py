@@ -24,29 +24,11 @@ from sklearn.tree import DecisionTreeClassifier
 import torch
 import torch.nn as nn
 
+from backend.domain import FLAMMABILITY_FEATURES, MATERIAL_REACTIVITY_MAP
 from backend.security import SecurityBoundaryGuard
 
 
 SEED: int = 42
-
-FLAMMABILITY_FEATURES: tuple[str, ...] = (
-    "o2_pct",
-    "pressure_atm",
-    "air_flow_cms",
-    "gravity_g",
-    "thickness_cm",
-    "flow_concurrent",
-    "material_reactivity",
-)
-
-MATERIAL_REACTIVITY_MAP: dict[str, float] = {
-    "Algodon": 1.35,
-    "PMMA": 1.15,
-    "SIBAL": 1.05,
-    "Nomex": 0.42,
-    "Kapton": 0.35,
-    "PTFE": 0.25,
-}
 
 FLAME_CLASS_LABELS: tuple[str, ...] = (
     "Nominal",
