@@ -125,12 +125,12 @@
 - **Alcance:** Cabecera centrada `NASA [Logo] + ENREDADOS` en `Geist Pixel` con sombras en capas, paleta fría azul/rojo del emblema NASA y cursiva editorial; eliminación de insignias técnicas del encabezado; pestaña `01 Museo y Glosario` al inicio; mapa PCA sin solapes de texto con líneas guía y aro #1; selector curado de temas y sliders en tiempo real alineados al estudio #1; contorno dinámico de inflamabilidad y factores de influencia sensibles al escenario; comparador FMEA (`NPR base` vs `activo`), redacción humanizada `writing-craft` y veredicto triple de agente extintor.
 - **Commits Git:** `0.9.3 - refactor - redisenar interfaz web nasa enredados con mini museo glosario y arranque directo` y `0.9.4 - refactor - pulir interactividad ux paleta nasa sombras cursivas y orden de museo`
 
-### [ ] Task 11 (`M-12` + `J-04`): Despliegue Público HTTPS y Tag `v1.0.0` en `main` (`origin` GitHub)
-- **Responsable:** Mecatrónico (`M-12`) + Conjunta (`J-04`).
+### [~] Task 11 (`M-12` completada en código; pendiente activación/verificación `J-04`): Despliegue Público HTTPS Todo-en-Uno en Render + UptimeRobot
+- **Responsable:** Mecatrónico (`M-12` listo) + Conjunta (`J-04`).
 - **Rama dedicada:** `feat/meca-m12-deploy-render-netlify` $\rightarrow$ `release/v1.0.0`
-- **Módulos / Archivos bloqueados (Lock):** `Dockerfile`, `render.yaml`, `netlify.toml` (o `_redirects` proxy `/api/*`), `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js`.
-- **Criterios:** Despliegue en **Render** (todo-en-uno FastAPI + `frontend/`) o **Netlify (CDN `frontend/`) + Render (API FastAPI)** a `$0 USD`, merge `dev -> main`, tag `v1.0.0`, push a `origin` y URL HTTPS verificada en modo incógnito.
-- **Commit Git:** `1.0.0 - ship - liberar plataforma aero-ignis si v1.0.0 en produccion`
+- **Módulos / Archivos:** `Dockerfile`, `.dockerignore`, `render.yaml`, `netlify.toml`, `requirements/base.txt`, `requirements/dev.txt`, `docs/deploy_render_uptimerobot.md`, `backend/main.py`, `backend/security.py`, `tests/integration/test_deploy_readiness_int.py`.
+- **Criterios:** Artefactos y servidor optimizados para Render Free (`512 MB RAM`, sin `torch` en producción, `HEAD/GET` en `/api/v1/health` y `/` para UptimeRobot cada 5 min, `X-Forwarded-For` en `RateLimiter`) (`M-12` listo); pendiente conectar cuenta Render + UptimeRobot, merge final `v1.0.0` y prueba en incógnito (`J-04`).
+- **Commit Git:** `0.9.12 - ship - preparar despliegue render todo en uno uptimerobot y pruebas tdd m12`
 
 ### [ ] Task 12 (`I-11` + `I-12` + `J-05` + `J-06`): Deck 7 Slides, Video Demo 1080p y Envío Oficial
 - **Responsable:** Gestión Industrial (`I-11`, `I-12`) + Conjunta (`J-05`, `J-06`).
@@ -145,7 +145,7 @@
 | ID | Perfil | Rama Dedicada | Módulos / Archivos Bloqueados (*Lock*) | Estado |
 | :--- | :---: | :--- | :--- | :---: |
 | **`M-13`** | `meca` | `feat/meca-m13-ui-refactor` $\rightarrow$ `feat/meca-m14-ux-nasa-palette` | `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` | **Listo [x]** |
-| **`M-12`** | `meca` | `feat/meca-m12-deploy-render-netlify` | `Dockerfile`, `render.yaml`, `netlify.toml`, `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js` | Pendiente |
+| **`M-12`** | `meca` | `feat/meca-m12-deploy-render-netlify` | `Dockerfile`, `.dockerignore`, `render.yaml`, `netlify.toml`, `requirements/*`, `docs/deploy_render_uptimerobot.md`, `backend/main.py`, `backend/security.py`, `tests/integration/test_deploy_readiness_int.py` | **Listo [x]** |
 | **`I-01`** | `ind` | `feat/ind-i01-psi-taxonomy` | `docs/industrial/matriz_trazabilidad_psi.md`, `data/psi_combustion_24.json` (solo lectura/validación) | **Listo [x]** |
 | **`I-02`** | `ind` | `feat/ind-i02-topsis-spec` | `docs/industrial/especificacion_topsis.md`, `tests/unit/test_ranking_and_writing_unit.py` | **Listo [x]** |
 | **`I-04`** | `ind` | `feat/ind-i04-fmea-matrix` | `docs/industrial/fmea_nasa_std_6001.md`, `data/cases_and_spinoffs.json` (sección FMEA), `tests/unit/test_fmea_unit.py` | **Listo [x]** |
