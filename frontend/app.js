@@ -1,6 +1,33 @@
 (function () {
   "use strict";
 
+  const PSI_PLAIN_GUIDE = {
+    "PSI-98": "Primer gran incendio controlado en una nave Cygnus: midió cómo crece el fuego sobre telas con aire en movimiento.",
+    "PSI-101": "Comparó 9 materiales reales de cabina para distinguir telas seguras (Nomex) frente a plásticos que propagan fuego.",
+    "PSI-102": "Demostró cuánto se acelera un incendio a gran escala cuando los ventiladores suben su velocidad un 50%.",
+    "PSI-103": "Evaluó detectores de humo en atmósferas con más oxígeno y menos presión usadas antes de caminatas espaciales.",
+    "PSI-104": "Simuló el aire exacto de los hábitats lunares Artemis (34% oxígeno y 8.2 psi) en un incendio de escala real.",
+    "PSI-105": "Midió gases tóxicos y ácidos invisibles (CO, HF, HCl) que quedan flotando en la cabina después del incendio.",
+    "PSI-26": "Probó en la ISS que una brisa suave en el espacio hace arder sólidos con menos oxígeno del que necesitan en Tierra.",
+    "PSI-25": "Más de 130 pruebas en cabina: definió el mapa maestro de cuándo la llama se apaga sola o avanza en plásticos y telas.",
+    "PSI-146": "Estudió llamas esféricas limpias en microgravedad para diseñar quemadores y sensores con mínima emisión de hollín.",
+    "PSI-147": "Midió el punto exacto en que una llama pierde su calor por radiación y se apaga sola cuando no hay gravedad.",
+    "PSI-153": "Rastreó con láser cómo nace y desaparece el hollín flotante para calibrar alarmas ópticas de humo.",
+    "PSI-154": "Demostró cómo empujar y apagar llamas usando campos eléctricos de alto voltaje sin mojar equipos electrónicos.",
+    "PSI-132": "Replicó materiales sólidos usando quemadores porosos precisos para abaratar pruebas de inflamabilidad.",
+    "PSI-138": "Estudió llamas frías invisibles en gases hasta 85% de oxígeno para evitar re-encendidos ocultos.",
+    "PSI-24": "Descubrió llamas frías silenciosas (500–800 K) que siguen quemando vapores invisibles después de apagarse la luz.",
+    "PSI-27": "Midió qué cantidad exacta de gases inertes (nitrógeno, CO2, helio) apaga tanto llamas calientes como frías.",
+    "PSI-78": "Proyecto NASA-JAXA que midió cómo salta el fuego de una gota de combustible a otra sin gravedad.",
+    "PSI-79": "Cooperación con Italia sobre mezclas líquidas para evitar micro-explosiones en sistemas cerrados.",
+    "PSI-126": "Encontró la velocidad exacta de aire capaz de arrancar y apagar una llama por efecto de soplado.",
+    "PSI-129": "Midió partículas de humo menores a 0.1 micras; base directa para detectores tempranos en hospitales y naves.",
+    "PSI-107": "Observó cómo hierven y se evaporan películas finas de líquido sin gravedad para mejorar enfriamiento por niebla.",
+    "PSI-108": "Estudió puntos calientes en líquidos y tuberías térmicas para proteger baterías y sistemas electrónicos.",
+    "PSI-109": "Validó un túnel terrestre estrecho que imita la gravedad cero y reduce costos antes de lanzar experimentos.",
+    "PSI-110": "Estudió la brasa lenta sin llama abierta en espumas de relleno para detectar incendios nocturnos antes del fuego."
+  };
+
   const OFFLINE_PSI = [
     { psi_id: "PSI-98", acronym: "SAFFIRE-I", facility: "Cygnus", doi: "10.60555/psi-98", criteria_scores: { habitat: 0.95, modeling: 0.91, sensors: 0.86, spinoff: 0.84 }, earth_benefits: "Calibrar modelos de incendio en aeronaves y edificios presurizados." },
     { psi_id: "PSI-101", acronym: "SAFFIRE-II", facility: "Cygnus", doi: "10.60555/psi-101", criteria_scores: { habitat: 0.96, modeling: 0.89, sensors: 0.80, spinoff: 0.88 }, earth_benefits: "Seleccionar textiles retardantes seguros para transporte." },
@@ -160,14 +187,29 @@
     const clamp = (val, lo, hi) => Math.min(hi, Math.max(lo, val));
     const xs = points.map((p) => p.x);
     const ys = points.map((p) => p.y);
-    const minX = Math.min(...xs), spanX = Math.max(0.05, Math.max(...xs) - minX);
-    const minY = Math.min(...ys), spanY = Math.max(0.05, Math.max(...ys) - minY);
+    const padMinX = Math.min(...xs, -0.05) - 0.06;
+    const padMaxX = Math.max(...xs, 0.05) + 0.06;
+    const padMinY = Math.min(...ys, -0.05) - 0.06;
+    const padMaxY = Math.max(...ys, 0.05) + 0.06;
+    const spanX = Math.max(0.12, padMaxX - padMinX);
+    const spanY = Math.max(0.12, padMaxY - padMinY);
 
-    const coords = points.map((pt, idx) => {
-      const baseNx = 56 + ((pt.x - minX) / spanX) * 336;
-      const baseNy = 194 - ((pt.y - minY) / spanY) * 158;
-      return { pt, idx, nx: baseNx, ny: baseNy, isTop: pt.psi_id === topPsiId };
-    });
+    // Marco interno: x [42..524], y [22..266]. Zona activa de puntos: x [56..504], y [62..228]
+    const toPlotX = (vx) => 56 + ((vx - padMinX) / spanX) * 448;
+    const toPlotY = (vy) => 228 - ((vy - padMinY) / spanY) * 166;
+
+    const hasZeroX = padMinX < 0 && padMaxX > 0;
+    const hasZeroY = padMinY < 0 && padMaxY > 0;
+    const axisX = clamp(hasZeroX ? toPlotX(0) : 283, 145, 410);
+    const axisY = clamp(hasZeroY ? toPlotY(0) : 145, 74, 212);
+
+    const coords = points.map((pt, idx) => ({
+      pt,
+      idx,
+      nx: clamp(toPlotX(pt.x), 56, 504),
+      ny: clamp(toPlotY(pt.y), 62, 226),
+      isTop: pt.psi_id === topPsiId
+    }));
 
     // Separacion deterministica leve si dos puntos caen casi encima
     for (let i = 0; i < coords.length; i += 1) {
@@ -175,16 +217,22 @@
         const dx = coords[j].nx - coords[i].nx;
         const dy = coords[j].ny - coords[i].ny;
         const d = Math.hypot(dx, dy);
-        if (d < 8) {
+        if (d < 9) {
           const ang = (j * 2.1) % (Math.PI * 2);
-          coords[j].nx = clamp(coords[j].nx + Math.cos(ang) * 7.5, 42, 412);
-          coords[j].ny = clamp(coords[j].ny + Math.sin(ang) * 7.5, 28, 200);
+          coords[j].nx = clamp(coords[j].nx + Math.cos(ang) * 8.2, 54, 506);
+          coords[j].ny = clamp(coords[j].ny + Math.sin(ang) * 8.2, 60, 228);
         }
       }
     }
 
     const order = [...coords].sort((a, b) => (a.isTop === b.isTop ? a.ny - b.ny : a.isTop ? -1 : 1));
-    const placedBoxes = [];
+    // Pre-reservar cajas de las 4 cabeceras de cuadrante para evitar superposicion con etiquetas
+    const placedBoxes = [
+      { x1: 46, y1: 25, x2: 236, y2: 55 },
+      { x1: 318, y1: 25, x2: 520, y2: 55 },
+      { x1: 46, y1: 234, x2: 244, y2: 264 },
+      { x1: 312, y1: 234, x2: 520, y2: 264 }
+    ];
     const offsets = [
       [10, 3], [-1, 3], [0, -12], [0, 16],
       [12, -13], [-1, -13], [12, 18], [-1, 18],
@@ -196,13 +244,12 @@
 
     const placed = order.map((item) => {
       const label = item.pt.acronym || item.pt.psi_id;
-      const w = Math.max(28, label.length * 5.15 + 6);
-      const h = 11.5;
+      const w = Math.max(28, label.length * 5.25 + 6);
       let best = null;
       for (const [oxRaw, oy] of offsets) {
         const ox = oxRaw === -1 ? -w - 9 : oxRaw;
-        const tx = clamp(item.nx + ox, 30, 448 - w);
-        const ty = clamp(item.ny + oy, 25, 206);
+        const tx = clamp(item.nx + ox, 46, 518 - w);
+        const ty = clamp(item.ny + oy, 64, 232);
         const box = { x1: tx - 2, y1: ty - 9, x2: tx + w, y2: ty + 2.5 };
 
         let hits = 0;
@@ -221,8 +268,44 @@
         if (hits === 0 && dotHits === 0 && dist < 24) break;
       }
       placedBoxes.push(best.box);
-      return { ...item, label, w, h, tx: best.tx, ty: best.ty, box: best.box };
+      return { ...item, label, w, tx: best.tx, ty: best.ty, box: best.box };
     });
+
+    const quadrantBg = `
+      <rect x="42" y="22" width="${(axisX - 42).toFixed(1)}" height="${(axisY - 22).toFixed(1)}" fill="rgba(200, 40, 18, 0.045)" />
+      <rect x="${axisX.toFixed(1)}" y="22" width="${(524 - axisX).toFixed(1)}" height="${(axisY - 22).toFixed(1)}" fill="rgba(6, 95, 70, 0.045)" />
+      <rect x="42" y="${axisY.toFixed(1)}" width="${(axisX - 42).toFixed(1)}" height="${(266 - axisY).toFixed(1)}" fill="rgba(11, 61, 145, 0.045)" />
+      <rect x="${axisX.toFixed(1)}" y="${axisY.toFixed(1)}" width="${(524 - axisX).toFixed(1)}" height="${(266 - axisY).toFixed(1)}" fill="rgba(75, 46, 131, 0.045)" />
+    `;
+
+    const quadrantHeaders = `
+      <g>
+        <rect x="48" y="27" width="184" height="25" rx="3" fill="#FFEAE5" stroke="#C82812" stroke-width="0.9" />
+        <text x="55" y="38" fill="#9E1C0B" font-size="8.2" font-weight="bold" font-family="monospace">I · GOTAS Y LLAMAS FRÍAS</text>
+        <text x="55" y="48" fill="#1E2E4A" font-size="7.3" font-family="sans-serif">Líquidos y vapores silenciosos (CIR)</text>
+
+        <rect x="326" y="27" width="192" height="25" rx="3" fill="#E6F6F0" stroke="#065F46" stroke-width="0.9" />
+        <text x="511" y="38" text-anchor="end" fill="#065F46" font-size="8.2" font-weight="bold" font-family="monospace">II · INCENDIOS A GRAN ESCALA</text>
+        <text x="511" y="48" text-anchor="end" fill="#1E2E4A" font-size="7.3" font-family="sans-serif">Cabinas Cygnus y atmósfera lunar</text>
+
+        <rect x="48" y="236" width="192" height="25" rx="3" fill="#E0ECFF" stroke="#0B3D91" stroke-width="0.9" />
+        <text x="55" y="247" fill="#0B3D91" font-size="8.2" font-weight="bold" font-family="monospace">III · GASES, HOLLÍN Y CAMPOS</text>
+        <text x="55" y="257" fill="#1E2E4A" font-size="7.3" font-family="sans-serif">Química de flama, humo &lt;0.1 um y kV</text>
+
+        <rect x="318" y="236" width="200" height="25" rx="3" fill="#F3E8FF" stroke="#4B2E83" stroke-width="0.9" />
+        <text x="511" y="247" text-anchor="end" fill="#4B2E83" font-size="8.2" font-weight="bold" font-family="monospace">IV · SÓLIDOS Y BRASAS LENTAS</text>
+        <text x="511" y="257" text-anchor="end" fill="#1E2E4A" font-size="7.3" font-family="sans-serif">Telas, acrílicos, cables y espumas</text>
+      </g>
+    `;
+
+    const axisCaptions = `
+      <text x="283" y="14" text-anchor="middle" fill="#0A1931" font-size="8.6" font-weight="bold" font-family="sans-serif">4 cuadrantes por tipo de combustible y escala de la nave espacial</text>
+      <text x="48" y="282" text-anchor="start" fill="#1E2E4A" font-size="8" font-family="sans-serif">← Cámaras pequeñas en la ISS</text>
+      <text x="283" y="282" text-anchor="middle" fill="#0B3D91" font-size="8" font-weight="bold" font-family="sans-serif">| Eje Horizontal: Escala del Ensayo |</text>
+      <text x="518" y="282" text-anchor="end" fill="#1E2E4A" font-size="8" font-family="sans-serif">Naves completas Cygnus / Sólidos →</text>
+      <text x="283" y="297" text-anchor="middle" fill="#415678" font-size="7.6" font-family="sans-serif">Cada punto representa un estudio oficial NASA; los puntos cercanos comparten objetivos, sensores y física.</text>
+      <text x="16" y="144" transform="rotate(-90 16 144)" text-anchor="middle" fill="#1E2E4A" font-size="8" font-weight="bold" font-family="sans-serif">← Gases y Sólidos   |   Gotas y Escala Nave →</text>
+    `;
 
     const leaders = placed.map((p) => {
       const ax = clamp(p.nx, p.box.x1, p.box.x2);
@@ -233,17 +316,18 @@
 
     const dots = placed.map((p) => {
       const fill = colors[p.pt.cluster_id % colors.length];
-      const halo = p.isTop ? `<circle cx="${p.nx.toFixed(1)}" cy="${p.ny.toFixed(1)}" r="9.5" fill="none" stroke="#C82812" stroke-width="2" />` : "";
-      return `<g>${halo}<circle cx="${p.nx.toFixed(1)}" cy="${p.ny.toFixed(1)}" r="5.3" fill="${fill}" stroke="#FFFFFF" stroke-width="1.2" opacity="0.96" /><title>${escapeHtml(p.pt.psi_id + " · " + p.label)}</title></g>`;
+      const halo = p.isTop ? `<circle cx="${p.nx.toFixed(1)}" cy="${p.ny.toFixed(1)}" r="9.8" fill="none" stroke="#C82812" stroke-width="2.1" />` : "";
+      const note = PSI_PLAIN_GUIDE[p.pt.psi_id] || "";
+      return `<g>${halo}<circle cx="${p.nx.toFixed(1)}" cy="${p.ny.toFixed(1)}" r="5.5" fill="${fill}" stroke="#FFFFFF" stroke-width="1.3" opacity="0.96" /><title>${escapeHtml(p.pt.psi_id + " · " + p.label + ": " + note)}</title></g>`;
     }).join("");
 
     const labels = placed.map((p) => {
-      const ink = p.isTop ? "#0B3D91" : "#1E2E4A";
-      const weight = p.isTop ? "700" : "500";
-      return `<g><rect x="${(p.tx - 1.5).toFixed(1)}" y="${(p.ty - 8.5).toFixed(1)}" width="${p.w.toFixed(1)}" height="11" rx="2" fill="rgba(255,255,255,0.88)" /><text x="${p.tx.toFixed(1)}" y="${p.ty.toFixed(1)}" fill="${ink}" font-size="8.3" font-weight="${weight}" font-family="monospace">${escapeHtml(p.label)}</text></g>`;
+      const ink = p.isTop ? "#C82812" : "#1E2E4A";
+      const weight = p.isTop ? "700" : "600";
+      return `<g><rect x="${(p.tx - 1.5).toFixed(1)}" y="${(p.ty - 8.5).toFixed(1)}" width="${p.w.toFixed(1)}" height="11" rx="2" fill="rgba(255,255,255,0.9)" /><text x="${p.tx.toFixed(1)}" y="${p.ty.toFixed(1)}" fill="${ink}" font-size="8.2" font-weight="${weight}" font-family="monospace">${escapeHtml(p.label)}</text></g>`;
     }).join("");
 
-    svg.innerHTML = `<rect x="24" y="14" width="432" height="198" rx="2" fill="#FFFFFF" stroke="#C5D3E8" /><line x1="24" y1="113" x2="456" y2="113" stroke="#DCE6F5" stroke-dasharray="4 3" /><line x1="240" y1="14" x2="240" y2="212" stroke="#DCE6F5" stroke-dasharray="4 3" />${leaders}${dots}${labels}`;
+    svg.innerHTML = `<rect x="42" y="22" width="482" height="244" rx="3" fill="#FFFFFF" stroke="#9EB4D4" stroke-width="1.2" />${quadrantBg}<line x1="42" y1="${axisY.toFixed(1)}" x2="524" y2="${axisY.toFixed(1)}" stroke="#9EB4D4" stroke-width="1.1" stroke-dasharray="5 3" /><line x1="${axisX.toFixed(1)}" y1="22" x2="${axisX.toFixed(1)}" y2="266" stroke="#9EB4D4" stroke-width="1.1" stroke-dasharray="5 3" />${quadrantHeaders}${leaders}${dots}${labels}${axisCaptions}`;
   }
 
   function refreshExplorerLabels() {
@@ -333,15 +417,22 @@
       .map((b) => `<li>${escapeHtml(b)}</li>`)
       .join("");
     renderClustersSvg(clusters, lastRankedTopId);
-    document.getElementById("psiRankBody").innerHTML = ranked.slice(0, 12).map((r) => `
+    document.getElementById("psiRankBody").innerHTML = ranked.slice(0, 12).map((r) => {
+      const importance = PSI_PLAIN_GUIDE[r.psi_id] || "Evidencia NASA de combustión en cabinas sin gravedad.";
+      return `
       <tr>
         <td class="mono" data-label="Orden"><strong>#${r.rank}</strong></td>
-        <td data-label="Estudio"><strong>${escapeHtml(r.psi_id)}</strong> · ${escapeHtml(r.acronym)}</td>
-        <td data-label="Instalación"><span class="badge badge-info">${escapeHtml(r.facility)}</span></td>
-        <td class="mono tabular" data-label="Índice">${Number(r.topsis_score).toFixed(3)}</td>
-        <td class="mono" data-label="DOI">${escapeHtml(r.doi)}</td>
-      </tr>
-    `).join("");
+        <td data-label="Estudio e Instalación">
+          <strong>${escapeHtml(r.psi_id)} · ${escapeHtml(r.acronym)}</strong><br />
+          <span class="badge badge-info" style="margin-top:4px;">${escapeHtml(r.facility)}</span>
+        </td>
+        <td data-label="Importancia">${escapeHtml(importance)}</td>
+        <td class="mono tabular" data-label="Índice y DOI">
+          <strong>${Number(r.topsis_score).toFixed(3)}</strong><br />
+          <small>${escapeHtml(r.doi)}</small>
+        </td>
+      </tr>`;
+    }).join("");
   }
 
   // --- MODULO 3: INFLAMABILIDAD EN CABINA ---
@@ -849,7 +940,7 @@
     });
   }
 
-  // --- FONDO ORBITAL RETRO EN BUCLE SOBRE TEMA CLARO ---
+  // --- FONDO ORBITAL MULTI-TRAYECTORIA EN BUCLE SOBRE TEMA CLARO ---
   function initOrbitalBackdrop() {
     const canvas = document.getElementById("orbitalBackdropCanvas");
     if (!canvas || !canvas.getContext) return;
@@ -872,15 +963,61 @@
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     }
 
+    function drawOrbitAndCraft(cx, cy, rx, ry, rot, dash, strokeColor, craftColor, angle, label, withTail) {
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(rot);
+
+      ctx.setLineDash(dash);
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = 1.3;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rx, ry, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      if (withTail) {
+        ctx.setLineDash([]);
+        ctx.strokeStyle = craftColor;
+        ctx.lineWidth = 2.0;
+        ctx.beginPath();
+        ctx.ellipse(0, 0, rx, ry, 0, angle - 0.32, angle);
+        ctx.stroke();
+      }
+
+      const sx = Math.cos(angle) * rx;
+      const sy = Math.sin(angle) * ry;
+      ctx.setLineDash([]);
+      ctx.fillStyle = craftColor;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 4.1, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.strokeStyle = strokeColor;
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 9.5, 0, Math.PI * 2);
+      ctx.stroke();
+
+      if (label && width >= 720) {
+        ctx.rotate(-rot);
+        const gx = sx * Math.cos(rot) - sy * Math.sin(rot);
+        const gy = sx * Math.sin(rot) + sy * Math.cos(rot);
+        ctx.font = "10px monospace";
+        ctx.fillStyle = craftColor;
+        ctx.fillText(label, gx + 12, gy + 3);
+      }
+      ctx.restore();
+    }
+
     function drawFrame(t) {
       ctx.clearRect(0, 0, width, height);
 
       // Reticulas fiduciales tipo camara Apollo (Reseau)
       ctx.strokeStyle = "rgba(11, 61, 145, 0.13)";
       ctx.lineWidth = 1;
-      const step = width < 680 ? 140 : 200;
-      for (let x = 72; x < width - 36; x += step) {
-        for (let y = 72; y < height - 36; y += step) {
+      const step = width < 680 ? 130 : 185;
+      for (let x = 64; x < width - 32; x += step) {
+        for (let y = 64; y < height - 32; y += step) {
           ctx.beginPath();
           ctx.moveTo(x - 5, y);
           ctx.lineTo(x + 5, y);
@@ -891,60 +1028,59 @@
       }
 
       const cx = width * 0.5;
-      const cy = height * 0.46;
-      const rx1 = Math.max(220, width * 0.44);
-      const ry1 = Math.max(120, height * 0.25);
+      const cy = height * 0.47;
+      const baseRx = Math.max(210, width * 0.45);
+      const baseRy = Math.max(125, height * 0.27);
 
-      // Orbita primaria azul cobalto NASA
+      // Anillo graduado central estilo telemetria espacial
+      const ringR = Math.min(width, height) * 0.34;
       ctx.save();
       ctx.translate(cx, cy);
-      ctx.rotate(-0.22);
-      ctx.setLineDash([6, 7]);
-      ctx.strokeStyle = "rgba(11, 61, 145, 0.14)";
-      ctx.lineWidth = 1.25;
+      ctx.strokeStyle = "rgba(11, 61, 145, 0.08)";
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.ellipse(0, 0, rx1, ry1, 0, 0, Math.PI * 2);
+      ctx.arc(0, 0, ringR, 0, Math.PI * 2);
       ctx.stroke();
-
-      // Orbita secundaria roja vector
-      ctx.setLineDash([3, 9]);
-      ctx.strokeStyle = "rgba(200, 40, 18, 0.11)";
-      ctx.beginPath();
-      ctx.ellipse(0, 0, rx1 * 0.78, ry1 * 0.86, 0.38, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Satelite orbital 1 (ISS-0g)
-      const a1 = t * 0.35;
-      const sx1 = Math.cos(a1) * rx1;
-      const sy1 = Math.sin(a1) * ry1;
-      ctx.fillStyle = "rgba(11, 61, 145, 0.45)";
-      ctx.beginPath();
-      ctx.arc(sx1, sy1, 4.2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = "rgba(11, 61, 145, 0.28)";
-      ctx.beginPath();
-      ctx.arc(sx1, sy1, 10, 0, Math.PI * 2);
-      ctx.stroke();
-
-      if (width >= 680) {
-        ctx.font = "10px monospace";
-        ctx.fillStyle = "rgba(11, 61, 145, 0.48)";
-        ctx.fillText("ISS-0G // LEO 408KM", sx1 + 14, sy1 + 3);
+      for (let deg = 0; deg < 360; deg += 30) {
+        const rad = (deg * Math.PI) / 180 + t * 0.04;
+        ctx.beginPath();
+        ctx.moveTo(Math.cos(rad) * (ringR - 5), Math.sin(rad) * (ringR - 5));
+        ctx.lineTo(Math.cos(rad) * (ringR + 5), Math.sin(rad) * (ringR + 5));
+        ctx.stroke();
       }
-
-      // Vector orbital 2 (Cygnus Saffire)
-      const a2 = -t * 0.24 + 2.1;
-      const rot = 0.38;
-      const lx = Math.cos(a2) * rx1 * 0.78;
-      const ly = Math.sin(a2) * ry1 * 0.86;
-      const sx2 = lx * Math.cos(rot) - ly * Math.sin(rot);
-      const sy2 = lx * Math.sin(rot) + ly * Math.cos(rot);
-      ctx.fillStyle = "rgba(200, 40, 18, 0.42)";
-      ctx.beginPath();
-      ctx.arc(sx2, sy2, 3.6, 0, Math.PI * 2);
-      ctx.fill();
       ctx.restore();
+
+      // 6 orbitas con distintas inclinaciones, radios y naves animadas
+      drawOrbitAndCraft(
+        cx, cy, baseRx * 1.04, baseRy * 1.04, -0.22, [7, 6],
+        "rgba(11, 61, 145, 0.17)", "rgba(11, 61, 145, 0.52)", t * 0.36,
+        "ISS-0G // LEO 408 KM", true
+      );
+      drawOrbitAndCraft(
+        cx, cy, baseRx * 0.82, baseRy * 0.90, 0.34, [4, 8],
+        "rgba(200, 40, 18, 0.14)", "rgba(200, 40, 18, 0.48)", -t * 0.27 + 1.9,
+        "CYGNUS // SAFFIRE", true
+      );
+      drawOrbitAndCraft(
+        cx, cy, baseRx * 1.18, baseRy * 1.32, 0.12, [10, 8],
+        "rgba(6, 95, 70, 0.13)", "rgba(6, 95, 70, 0.45)", t * 0.19 + 4.1,
+        "ARTEMIS // TRANSITO LUNAR", true
+      );
+      drawOrbitAndCraft(
+        cx, cy, baseRx * 0.62, baseRy * 1.24, -0.68, [3, 6],
+        "rgba(65, 86, 120, 0.14)", "rgba(65, 86, 120, 0.44)", t * 0.44 + 0.7,
+        "", false
+      );
+      drawOrbitAndCraft(
+        width * 0.22, height * 0.26, Math.max(115, width * 0.16), Math.max(58, height * 0.11), 0.46, [5, 5],
+        "rgba(120, 53, 15, 0.12)", "rgba(120, 53, 15, 0.42)", -t * 0.52 + 2.6,
+        "", false
+      );
+      drawOrbitAndCraft(
+        width * 0.80, height * 0.74, Math.max(125, width * 0.17), Math.max(62, height * 0.12), -0.35, [6, 5],
+        "rgba(11, 61, 145, 0.13)", "rgba(200, 40, 18, 0.42)", t * 0.48 + 3.4,
+        "", false
+      );
     }
 
     function tick() {
