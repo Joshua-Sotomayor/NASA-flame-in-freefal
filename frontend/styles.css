@@ -10,25 +10,25 @@
 
 :root {
   color-scheme: light;
-  --bg-paper: #F8FAFC;
-  --bg-band: #EEF2F6;
-  --bg-plot: #F1F5F9;
+  --bg-paper: #F4F7FB;
+  --bg-band: #E8EEF7;
+  --bg-plot: #EDF2FA;
   --bg-surface: #FFFFFF;
 
-  --ink-primary: #18181B;
-  --ink-secondary: #3F3F46;
-  --ink-muted: #52525B;
+  --ink-primary: #0A1931;
+  --ink-secondary: #1E2E4A;
+  --ink-muted: #415678;
 
-  --border-hairline: #CBD5E1;
-  --border-mid: #94A3B8;
-  --border-strong: #18181B;
+  --border-hairline: #C5D3E8;
+  --border-mid: #7E97B8;
+  --border-strong: #0B3D91;
 
-  --accent-rust: #B43E18;
-  --accent-rust-ink: #7C280C;
-  --bg-rust-tint: #FDECE6;
+  --accent-rust: #C82812;
+  --accent-rust-ink: #9E1C0B;
+  --bg-rust-tint: #FFEAE5;
 
-  --accent-cobalt: #0B3B66;
-  --bg-cobalt-tint: #E6F0FA;
+  --accent-cobalt: #0B3D91;
+  --bg-cobalt-tint: #E0ECFF;
 
   --accent-emerald: #065F46;
   --bg-emerald-tint: #E6F6F0;
@@ -132,31 +132,31 @@ body {
   height: 58px;
   flex-shrink: 0;
   display: block;
+  filter: drop-shadow(0 3px 6px rgba(11, 61, 145, 0.22));
+}
+
+.wordmark-nasa {
+  color: var(--accent-cobalt);
+  text-shadow: 2px 2px 0 #FFFFFF, 4px 4px 0 rgba(11, 61, 145, 0.24);
 }
 
 .masthead-plus {
   color: var(--accent-rust);
+  text-shadow: 2px 2px 0 rgba(252, 61, 33, 0.25);
 }
 
 .masthead-team {
-  color: var(--accent-cobalt);
+  color: var(--ink-primary);
+  text-shadow: 2px 2px 0 #FFFFFF, 4px 4px 0 rgba(252, 61, 33, 0.28);
 }
 
 .masthead-subtitle {
   margin: 2px 0 0;
   font-size: 1rem;
+  font-style: italic;
   color: var(--ink-secondary);
   max-width: 68ch;
   text-wrap: balance;
-}
-
-.masthead-status {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-top: 4px;
 }
 
 /* Badges de estado sobre papel claro (contraste >= 4.5:1) */
@@ -251,7 +251,7 @@ body {
 
 @media (hover: hover) and (pointer: fine) {
   .tab-btn:hover:not([aria-selected="true"]) {
-    background: #E2E8F0;
+    background: #DCE6F5;
     color: var(--ink-primary);
   }
 }
@@ -295,6 +295,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
   margin: 0;
   color: var(--ink-secondary);
   font-size: 0.94rem;
+  font-style: italic;
   max-width: 78ch;
   text-wrap: pretty;
 }
@@ -499,6 +500,7 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
   font-family: var(--font-pixel);
   font-size: 1.05rem;
   font-weight: 500;
+  font-style: normal;
   color: var(--ink-primary);
 }
 
@@ -519,12 +521,21 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 .prose-note {
   margin: 10px 0 0;
   font-size: 0.87rem;
+  font-style: italic;
   color: var(--ink-secondary);
   max-width: 70ch;
   text-wrap: pretty;
 }
 
 /* Sintesis y listas editoriales */
+.synthesis-explainer {
+  margin: 0 0 10px;
+  font-size: 0.87rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  max-width: 68ch;
+}
+
 .bullet-list {
   margin: 10px 0 0;
   padding-left: 18px;
@@ -532,14 +543,20 @@ button:focus-visible, input:focus-visible, select:focus-visible, a:focus-visible
 
 .bullet-list li {
   margin-bottom: 8px;
+  font-style: normal;
   color: var(--ink-secondary);
   max-width: 68ch;
   text-wrap: pretty;
 }
 
+.synthesis-lead {
+  font-style: italic;
+}
+
 .inline-readout {
   font-family: var(--font-mono);
   font-size: 0.82rem;
+  font-style: normal;
   color: var(--accent-cobalt);
   word-break: break-word;
 }
@@ -557,6 +574,7 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
+  font-style: normal;
   text-align: left;
 }
 
@@ -575,6 +593,72 @@ td {
   border-bottom: 1px solid var(--border-hairline);
   color: var(--ink-secondary);
   vertical-align: top;
+}
+
+/* Comparativa FMEA y veredicto de supresion (Modulo 4) */
+.fmea-compare-banner {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--border-hairline);
+  border-top: 2px solid var(--accent-cobalt);
+  background: var(--bg-band);
+  margin-bottom: 14px;
+}
+
+.fmea-compare-cell {
+  padding: 12px 14px;
+  border-right: 1px solid var(--border-hairline);
+}
+
+.fmea-compare-cell:last-child {
+  border-right: none;
+}
+
+.fmea-compare-label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+}
+
+.fmea-compare-val {
+  display: block;
+  margin-top: 4px;
+  font-family: var(--font-pixel);
+  font-size: 1.05rem;
+  font-style: normal;
+  color: var(--ink-primary);
+}
+
+.supp-verdict-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-surface);
+  margin-top: 12px;
+}
+
+.supp-verdict-cell {
+  padding: 12px 14px;
+  border-right: 1px solid var(--border-hairline);
+}
+
+.supp-verdict-cell:last-child {
+  border-right: none;
+}
+
+.supp-verdict-cell .metric-label {
+  color: var(--ink-muted);
+  font-weight: 700;
+}
+
+.supp-verdict-text {
+  display: block;
+  margin: 4px 0 0;
+  font-size: 0.84rem;
+  line-height: 1.48;
+  font-style: normal;
+  color: var(--ink-secondary);
 }
 
 /* Barras de explicabilidad */
@@ -660,6 +744,7 @@ td {
 .history-copy p {
   margin: 0;
   font-size: 0.86rem;
+  font-style: italic;
   color: var(--ink-secondary);
   text-wrap: pretty;
 }
@@ -722,6 +807,7 @@ td {
 .museum-summary {
   margin: 0;
   font-size: 0.87rem;
+  font-style: italic;
   color: var(--ink-secondary);
   text-wrap: pretty;
 }
@@ -740,6 +826,7 @@ td {
 .museum-caption {
   font-family: var(--font-mono);
   font-size: 0.72rem;
+  font-style: italic;
   color: var(--ink-muted);
 }
 
@@ -799,6 +886,7 @@ td {
 .glossary-entry p {
   margin: 0;
   font-size: 0.87rem;
+  font-style: italic;
   color: var(--ink-secondary);
   text-wrap: pretty;
 }
@@ -923,8 +1011,19 @@ td {
   }
   .tablist,
   .form-grid,
-  .history-entry {
+  .history-entry,
+  .fmea-compare-banner,
+  .supp-verdict-grid {
     grid-template-columns: 1fr;
+  }
+  .fmea-compare-cell,
+  .supp-verdict-cell {
+    border-right: none;
+    border-bottom: 1px solid var(--border-hairline);
+  }
+  .fmea-compare-cell:last-child,
+  .supp-verdict-cell:last-child {
+    border-bottom: none;
   }
   .metric-ledger {
     grid-template-columns: repeat(2, minmax(0, 1fr));

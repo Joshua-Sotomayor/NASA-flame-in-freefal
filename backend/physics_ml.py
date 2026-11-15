@@ -7,7 +7,7 @@ presets forenses historicos oficiales (Apollo 1, Apollo 13, Mir y Artemis).
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import json
 import math
 from pathlib import Path
@@ -24,12 +24,12 @@ VALID_GRAVITIES: tuple[float, ...] = (0.0, 0.16, 0.38, 1.0)
 VALID_FLOW_DIRS: frozenset[str] = frozenset({"concurrent", "opposed"})
 
 FEATURE_DISPLAY_LABELS: dict[str, str] = {
-    "o2_pct": "Concentracion O2 (%)",
+    "o2_pct": "Concentración O2 (%)",
     "material_reactivity": "Reactividad del Material",
     "thickness_cm": "Espesor de Muestra (cm)",
     "air_flow_cms": "Velocidad de Flujo (cm/s)",
-    "pressure_atm": "Presion de Cabina (atm)",
-    "flow_concurrent": "Direccion de Flujo",
+    "pressure_atm": "Presión de Cabina (atm)",
+    "flow_concurrent": "Dirección de Flujo",
     "gravity_g": "Nivel de Gravedad (g)",
 }
 
@@ -231,6 +231,109 @@ class FlammabilityPredictor:
             feature_names=tuple(rf_bundle.get("feature_names", FLAMMABILITY_FEATURES)),
         )
 
+    @staticmethod
+    def _metric_delta(base: PhysicsMetrics, m_a: PhysicsMetrics, m_b: PhysicsMetrics) -> float:
+        """Cuantifica la variacion relativa combinada de Vf, extincion y Damkohler."""
+        vf_scale = max(0.25, 0.5 * (m_a.flame_spread_mm_s + m_b.flame_spread_mm_s), 0.5 * base.flame_spread_mm_s)
+        da_scale = max(0.25, 0.5 * (m_a.damkohler + m_b.damkohler), 0.5 * base.damkohler)
+        return (
+            abs(m_a.flame_spread_mm_s - m_b.flame_spread_mm_s) / vf_scale
+            + 3.0 * abs(m_a.extinguished_prob_prior - m_b.extinguished_prob_prior)
+            + abs(m_a.damkohler - m_b.damkohler) / da_scale
+        )
+
+    def _compute_local_sensitivities(
+        self,
+        state: AtmosphericState,
+        base: PhysicsMetrics,
+    ) -> dict[str, float]:
+        """Calcula sensibilidad fisica local determinista alrededor del estado actual."""
+        calc = self._calculator
+        sensitivities: dict[str, float] = {}
+
+        lo_o2 = max(10.0, state.o2_pct - 3.0)
+        hi_o2 = min(100.0, state.o2_pct + 3.0)
+        o2_delta = self._metric_delta(
+            base,
+            calc.compute_dimensionless(replace(state, o2_pct=lo_o2)),
+            calc.compute_dimensionless(replace(state, o2_pct=hi_o2)),
+        )
+        sensitivities["o2_pct"] = (
+            o2_delta
+            * (6.0 / max(1e-6, hi_o2 - lo_o2))
+            * (1.0 + 0.02 * max(0.0, state.o2_pct - 21.0))
+        )
+
+        lo_p = max(1.0, state.pressure_psi - 2.5)
+        hi_p = min(30.0, state.pressure_psi + 2.5)
+        p_delta = self._metric_delta(
+            base,
+            calc.compute_dimensionless(replace(state, pressure_psi=lo_p)),
+            calc.compute_dimensionless(replace(state, pressure_psi=hi_p)),
+        )
+        sensitivities["pressure_atm"] = (
+            p_delta
+            * (5.0 / max(1e-6, hi_p - lo_p))
+            * (0.9 + 0.08 * state.pressure_psi)
+        )
+
+        lo_t = (
+            max(0.2, state.thickness_mm * 0.75)
+            if state.thickness_mm >= 0.25
+            else max(0.1, state.thickness_mm * 0.75)
+        )
+        hi_t = min(50.0, max(lo_t + 0.05, state.thickness_mm * 1.25))
+        t_delta = self._metric_delta(
+            base,
+            calc.compute_dimensionless(replace(state, thickness_mm=lo_t)),
+            calc.compute_dimensionless(replace(state, thickness_mm=hi_t)),
+        )
+        sensitivities["thickness_cm"] = (
+            t_delta
+            * ((0.5 * state.thickness_mm) / max(1e-6, hi_t - lo_t))
+            * (1.0 + 0.08 * min(state.thickness_mm, 15.0))
+        )
+
+        lo_f = max(0.0, state.flow_cm_s - 4.0)
+        hi_f = min(60.0, state.flow_cm_s + 4.0)
+        f_delta = self._metric_delta(
+            base,
+            calc.compute_dimensionless(replace(state, flow_cm_s=lo_f)),
+            calc.compute_dimensionless(replace(state, flow_cm_s=hi_f)),
+        ) * (8.0 / max(1e-6, hi_f - lo_f))
+        if state.flow_cm_s < 3.0 and state.gravity_g < 0.05:
+            f_delta *= 1.65
+        sensitivities["air_flow_cms"] = f_delta
+
+        mat_deltas = [
+            self._metric_delta(
+                base,
+                calc.compute_dimensionless(replace(state, material=mat)),
+                base,
+            )
+            for mat in MATERIAL_REACTIVITY_MAP
+            if mat != state.material
+        ]
+        sensitivities["material_reactivity"] = (
+            0.45 * float(np.sqrt(np.mean(np.square(mat_deltas)))) if mat_deltas else 0.0
+        )
+
+        sensitivities["flow_concurrent"] = 0.55 * self._metric_delta(
+            base,
+            calc.compute_dimensionless(replace(state, flow_dir="concurrent")),
+            calc.compute_dimensionless(replace(state, flow_dir="opposed")),
+        )
+        sensitivities["gravity_g"] = (
+            0.45
+            * self._metric_delta(
+                base,
+                calc.compute_dimensionless(replace(state, gravity_g=0.0)),
+                calc.compute_dimensionless(replace(state, gravity_g=1.0)),
+            )
+            * (1.0 + 0.35 * state.gravity_g)
+        )
+        return sensitivities
+
     def predict(self, state: AtmosphericState) -> FlammabilityPrediction:
         """Ejecuta inferencia ML + ajuste fisico monotono y expone importancia de variables."""
         phys = self._calculator.compute_dimensionless(state)
@@ -250,13 +353,31 @@ class FlammabilityPredictor:
         burn_val = max(1.0, 0.70 * burn_ml + 0.30 * phys.burn_time_s_prior)
 
         raw_importances = np.asarray(self._rf_model.feature_importances_, dtype=np.float64)
-        total_imp = float(raw_importances.sum()) or 1.0
+        rf_total = float(raw_importances.sum())
+        rf_norm = (
+            raw_importances / rf_total
+            if rf_total > 0.0
+            else np.full(len(self._feature_names), 1.0 / max(1, len(self._feature_names)), dtype=np.float64)
+        )
+
+        local_map = self._compute_local_sensitivities(state, phys)
+        local_arr = np.array(
+            [max(0.0, float(local_map.get(name, 0.0))) for name in self._feature_names],
+            dtype=np.float64,
+        )
+        local_total = float(local_arr.sum())
+        local_norm = local_arr / local_total if local_total > 0.0 else rf_norm
+
+        blended = 0.30 * rf_norm + 0.70 * local_norm
+        blended_total = float(blended.sum()) or 1.0
+        normalized = blended / blended_total
+
         contributions = [
             FeatureContribution(
                 feature=FEATURE_DISPLAY_LABELS.get(name, name),
-                importance=float(val / total_imp),
+                importance=float(val),
             )
-            for name, val in zip(self._feature_names, raw_importances)
+            for name, val in zip(self._feature_names, normalized)
         ]
         contributions.sort(key=lambda item: item.importance, reverse=True)
 
