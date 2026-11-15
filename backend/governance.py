@@ -164,6 +164,8 @@ class GovernanceAndSpinoffService:
     ) -> SuppressionRecommendation:
         """Arbol de decision PFE vs CO2 vs E-FIELD segun toxicidad ECLSS y fisica 0g."""
         kind = fire_type.strip().lower()
+        if not kind:
+            raise ValueError("fire_type no puede estar vacio.")
         if auto_oxidizing or kind in {"auto_oxidizing", "vika", "liclo4", "smoldering"}:
             return SuppressionRecommendation(
                 recommended_agent="PFE",
