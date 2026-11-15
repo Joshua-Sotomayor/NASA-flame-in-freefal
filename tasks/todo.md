@@ -25,7 +25,7 @@
 - **Verificación:** `pytest tests/unit/test_domain_unit.py tests/integration/test_domain_repo_int.py -v`
 - **Commit Git:** `0.3.0 - add - estructurar dataset psi de 24 investigaciones y casos forenses con pruebas`
 
-### Task 2 (`S-Sec` / Transversal): Módulo `SecurityBoundaryGuard` (Anti-DDoS, Anti-Inyección, SHA-256)
+### [x] Task 2 (`S-Sec` / Transversal): Módulo `SecurityBoundaryGuard` (Anti-DDoS, Anti-Inyección, SHA-256)
 - **Responsable:** Mecatrónico.
 - **Alcance:** Implementar `backend/security.py` con `RateLimiter` por ventana deslizante, `PayloadSizeMiddleware` (`16 KB` max), sanitizador/validador estricto, `SecurityHeadersMiddleware` (`CSP`, `DENY`, `nosniff`) y `ModelIntegrityVerifier` (`SHA-256`).
 - **Pruebas TDD (Escribir RED primero):**
@@ -35,8 +35,8 @@
 - **Commit Git:** `0.4.0 - feat - implementar capa security guard anti ddos anti inyeccion y sha256`
 
 ## Checkpoint 1 (Cimientos)
-- [ ] Todas las pruebas unitarias e de integración de `domain` y `security` pasan al 100%.
-- [ ] Revisión rápida con `git diff --staged -i -G'password|secret|api_key|token'`.
+- [x] Todas las pruebas unitarias e de integración de `domain` y `security` pasan al 100%.
+- [x] Revisión rápida con `git diff --staged -i -G'password|secret|api_key|token'`.
 
 ---
 

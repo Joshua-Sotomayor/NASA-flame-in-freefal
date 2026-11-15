@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.3.0): Slice 1 Completado — Repositorio POO 24 PSI + Tablas BASS-II/Saffire + OSDR Resiliente</strong><br />
-          <span><strong>Logrado (5/30):</strong> <code>M-01</code>, <code>I-03</code>, <code>J-01</code>, <strong><code>M-02</code></strong> (<code>data/psi_combustion_24.json</code>, 566 corridas en <code>data/bass_saffire_runs.csv</code>, <code>data/cases_and_spinoffs.json</code>) y <strong><code>M-08</code></strong> (<code>backend/domain.py</code> con anti-SSRF y fallback offline, <code>7/7 pytest PASS</code>).<br />
-          <strong>Siguiente en curso:</strong> <code>Task 2 (0.4.0)</code> — <code>SecurityBoundaryGuard</code> (RateLimiter, payload &le;16 KB, cabeceras CSP y SHA-256) &rarr; <code>Task 3 (0.5.0)</code> — Pipeline ML/DL propio.</span>
+          <strong>Estado de la Iteración Actual (0.4.0): Slice 2 Completado — Capa SecurityBoundaryGuard (OWASP/STRIDE)</strong><br />
+          <span><strong>Logrado (5/30 tareas + R-02 verificado):</strong> <code>backend/security.py</code> blindado con <code>SlidingWindowRateLimiter</code> (60/20 req/min), tope <code>16 KB</code> (HTTP 413), sanitizador XSS/SQLi, cabeceras <code>CSP/DENY/nosniff</code> y verificador <code>SHA-256</code> (bloquea <code>.pkl/.pickle</code>), <code>12/12 pytest PASS</code>.<br />
+          <strong>Siguiente en curso:</strong> <code>Task 3 (0.5.0)</code> — Entrenar pipeline ML/DL propio (<code>RandomForest + GBR + CNN ONNX + DecisionTree + TF-IDF/PCA/K-Means</code>) con manifiesto SHA-256.</span>
         </div>
-        <span class="mono badge badge-joint">0.3.0 · 5/30 (17%)</span>
+        <span class="mono badge badge-joint">0.4.0 · 5/30 (17%)</span>
       </div>
 
       <div class="toolbar">
@@ -1285,7 +1285,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { name: "faceless-channel + narrator + subtitles", cat: "Media / Pitch", when: "Domingo PM", role: "Apoyo opcional para locución cronometrada y subtítulos limpios en el video de 30s." }
       ];
 
-      const DEFAULT_FURPS_DONE = { "C-01": true, "C-02": true, "S-01": true, "F-01": true, "F-07": true };
+      const DEFAULT_FURPS_DONE = { "C-01": true, "C-02": true, "S-01": true, "F-01": true, "F-07": true, "R-02": true };
 
       // --- 2. STATE MANAGEMENT ---
       function loadState() {
