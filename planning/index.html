@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.9.3): Refactor Visual M-13 Completado (NASA + ENREDADOS, Mini Museo y Glosario)</strong><br />
-          <span><strong>Logrado (16/31 tareas · Mecatrónica 12/13 · Gate 3 E2E + F-08/U-01/U-03/P-01/P-02/S-02 verificados):</strong> <strong><code>M-06, M-09, M-10, M-11, M-13, J-03</code></strong> (UI clara editorial con <code>Geist Pixel</code>, cabecera <code>NASA + ENREDADOS</code>, introducciones accesibles <code>writing-craft</code>, Mini Museo con 6 fotos reales NASA, Glosario interactivo, arranque directo <code>py main.py</code>, carpeta <code>requirements/</code> y <code>34/34 pytest PASS</code>).<br />
+          <strong>Estado de la Iteración Actual (0.9.4): Refactor Visual y UX Completado (Paleta NASA, Sombras, Museo #01 y Gráficas Reactivas)</strong><br />
+          <span><strong>Logrado (16/31 tareas · Mecatrónica 12/13 · Gate 3 E2E + F-08/U-01/U-03/P-01/P-02/S-02 verificados):</strong> <strong><code>M-06, M-09, M-10, M-11, M-13, J-03</code></strong> (UI clara editorial con <code>Geist Pixel</code>, paleta del logo NASA con sombras en cabecera y cursivas editoriales, <code>01 Museo y Glosario</code> de apertura, mapa PCA sin solapamientos, contorno e importancia sensibles al escenario, comparador FMEA y <code>34/34 pytest PASS</code> sin HTTP 429).<br />
           <strong>Siguiente en curso:</strong> Mecatrónica <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-01, I-02, I-04..I-12</code>) · Cierre (<code>J-04..J-06</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.9.3 · 16/31 (52%)</span>
+        <span class="mono badge badge-joint">0.9.4 · 16/31 (52%)</span>
       </div>
 
       <div class="toolbar">
@@ -1179,7 +1179,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "M-09", role: "meca", phase: "S-PM", title: "Integrar gráfica de contorno de inflamabilidad en tiempo real", objective: "Mostrar curva interactiva Flujo vs %O2 marcando zona segura, llama fría y blowoff.", scope: "Canvas/SVG interactivo", deliverable: "Mapa de contorno en vivo", done: true },
         { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: true },
         { id: "M-11", role: "meca", phase: "D-AM", title: "Ejecutar /ponytail-audit y pruebas Web Vitals / offline", objective: "Eliminar código muerto, verificar LCP < 2.5s y probar desconectando Wi-Fi.", scope: "Auditoría de calidad y rendimiento", deliverable: "Checklist técnico verde", done: true },
-        { id: "M-13", role: "meca", phase: "D-AM", title: "Refactor del apartado visual de la plataforma web (UI/UX)", objective: "Refinar estética clara con Geist Pixel, cabecera NASA + ENREDADOS, redacción accesible, Mini Museo con fotos NASA, Glosario, requirements/ y arranque directo.", scope: "Refactor visual frontend + arranque directo", deliverable: "UI refactorizada + 34/34 pytest verde", modules: "frontend/*, backend/main.py, requirements/*, tests/integration/test_frontend_and_audit_int.py", branch: "feat/meca-m13-ui-refactor", done: true },
+        { id: "M-13", role: "meca", phase: "D-AM", title: "Refactor del apartado visual y pulido UX de la plataforma web (0.9.3–0.9.4)", objective: "Paleta azul/rojo del logo NASA con sombras en cabecera, cursivas editoriales, 01 Museo y Glosario al inicio, mapa PCA sin solapamientos, contorno/factores sensibles al escenario y comparador FMEA/supresión.", scope: "Refactor visual + interactividad UX", deliverable: "UI NASA + ENREDADOS + 34/34 pytest verde", modules: "frontend/*, backend/main.py, backend/physics_ml.py, backend/ranking_nlp.py, requirements/*, tests/integration/test_frontend_and_audit_int.py", branch: "feat/meca-m14-ux-nasa-palette", done: true },
         { id: "M-12", role: "meca", phase: "D-AM", title: "Desplegar plataforma web en URL HTTPS pública", objective: "Publicar FastAPI + frontend en Render (o Netlify proxy + Render) con CORS/CSP seguros y $0 USD.", scope: "Deploy Render / Netlify + Render", deliverable: "URL pública verificada", modules: "Dockerfile, render.yaml, netlify.toml, backend/main.py, backend/security.py, frontend/app.js", branch: "feat/meca-m12-deploy-render-netlify", done: false },
 
         // Rol B: Gestión Industrial (12)

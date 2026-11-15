@@ -100,9 +100,19 @@ def test_frontend_served_and_structural_requirements() -> None:
     for tech in ("SolidWorks", "EPLAN", "Proteus"):
         assert tech in r_root.text
 
-    # M-13: Tema claro permanente (sin #themeBtn) y fuente auto-alojada Geist Pixel
+    # M-13 / M-14: Tema claro permanente (sin #themeBtn), sin badges tecnicos de encabezado y Museo primero
     assert 'id="themeBtn"' not in r_root.text
     assert 'data-theme="dark"' not in r_root.text
+    assert "runtimeModeBadge" not in r_root.text
+    assert "shaBadge" not in r_root.text
+    assert "Catálogo Local Autónomo" not in r_root.text
+    assert "Registros NASA Verificados" not in r_root.text
+    assert '<select id="psiQueryInput">' in r_root.text
+    assert 'id="fmeaCompareBanner"' in r_root.text
+    assert 'id="suppAgentOut"' in r_root.text
+    assert 'id="tab-museum" class="tab-btn" role="tab" aria-selected="true"' in r_root.text
+    assert '<section id="panel-museum" class="tabpanel is-active"' in r_root.text
+    assert r_root.text.index('id="tab-museum"') < r_root.text.index('id="tab-explorer"')
 
     # Cero jerga interna de programacion o LLM en textos visibles de HTML
     lowered_html = r_root.text.lower()

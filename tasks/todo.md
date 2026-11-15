@@ -118,12 +118,12 @@
 - **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% (`33 passed`), JS limpio (`node --check frontend/app.js`), auditoría anti-slop / cero código muerto / seguridad OWASP verificada.
 - **Commit Git:** `0.9.1 - test - validar suite tdd completa offline y auditoria ponytail`
 
-### [x] Task 10B (`M-13` — Completada · Mecatrónica): Refactor del Apartado Visual de la Plataforma Web (UI/UX)
+### [x] Task 10B (`M-13` + pulido `M-14` `0.9.4` — Completada · Mecatrónica): Refactor Visual, Paleta NASA e Interactividad Web (UI/UX)
 - **Responsable:** Mecatrónico y de Control (`meca`).
-- **Rama dedicada:** `feat/meca-m13-ui-refactor`
-- **Módulos / Archivos:** `frontend/*`, `frontend/assets/museum/*`, `backend/main.py`, `backend/train_models.py`, `backend/ranking_nlp.py`, `requirements/*`, `requirements.txt`, `tests/integration/test_frontend_and_audit_int.py`.
-- **Alcance:** Cabecera centrada `NASA [Logo] + ENREDADOS` en `Geist Pixel`, tema claro permanente sin `#themeBtn`, redacción divulgativa/académica (`writing-craft`) sin jerga interna de IA/FastAPI, introducciones por sección, reseñas históricas con 6 fotos reales NASA, pestaña `06 Museo y Glosario`, carpeta `requirements/` y arranque directo `cd backend && py main.py` sin `ModuleNotFoundError`.
-- **Commit Git:** `0.9.3 - refactor - redisenar interfaz web nasa enredados con mini museo glosario y arranque directo`
+- **Ramas:** `feat/meca-m13-ui-refactor` (`0.9.3`) $\rightarrow$ `feat/meca-m14-ux-nasa-palette` (`0.9.4`).
+- **Módulos / Archivos:** `frontend/*`, `frontend/assets/museum/*`, `backend/main.py`, `backend/train_models.py`, `backend/ranking_nlp.py`, `backend/physics_ml.py`, `requirements/*`, `requirements.txt`, `tests/integration/test_frontend_and_audit_int.py`.
+- **Alcance:** Cabecera centrada `NASA [Logo] + ENREDADOS` en `Geist Pixel` con sombras en capas, paleta fría azul/rojo del emblema NASA y cursiva editorial; eliminación de insignias técnicas del encabezado; pestaña `01 Museo y Glosario` al inicio; mapa PCA sin solapes de texto con líneas guía y aro #1; selector curado de temas y sliders en tiempo real alineados al estudio #1; contorno dinámico de inflamabilidad y factores de influencia sensibles al escenario; comparador FMEA (`NPR base` vs `activo`), redacción humanizada `writing-craft` y veredicto triple de agente extintor.
+- **Commits Git:** `0.9.3 - refactor - redisenar interfaz web nasa enredados con mini museo glosario y arranque directo` y `0.9.4 - refactor - pulir interactividad ux paleta nasa sombras cursivas y orden de museo`
 
 ### [ ] Task 11 (`M-12` + `J-04`): Despliegue Público HTTPS y Tag `v1.0.0` en `main` (`origin` GitHub)
 - **Responsable:** Mecatrónico (`M-12`) + Conjunta (`J-04`).

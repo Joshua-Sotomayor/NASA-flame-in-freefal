@@ -10,6 +10,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 import math
 from pathlib import Path
+import re
 from typing import Any, Mapping, Sequence
 
 import joblib
@@ -255,6 +256,89 @@ class ExtractiveNlpEngine:
         )
         return [pair[0] for pair in ordered[:top_k]]
 
+    @staticmethod
+    def _sanitize_query_excerpt(query: str, max_words: int = 6) -> str:
+        cleaned = re.sub(r"[^0-9A-Za-zÁÉÍÓÚÜÑáéíóúüñ%+\-/ ]+", " ", query)
+        words = [w for w in cleaned.split() if w]
+        return " ".join(words[:max_words])
+
+    @staticmethod
+    def _lower_first(text: str) -> str:
+        cleaned = text.strip().rstrip(".")
+        if not cleaned:
+            return cleaned
+        first_word = cleaned.split()[0]
+        if len(first_word) > 1 and first_word[:2].isupper():
+            return cleaned
+        return cleaned[0].lower() + cleaned[1:]
+
+    @staticmethod
+    def _format_o2_range(item: PsiInvestigation, plain: bool = False) -> str:
+        if math.isclose(item.o2_min, item.o2_max, abs_tol=0.05):
+            return f"{item.o2_min:.0f}% de oxígeno" if plain else f"{item.o2_min:.0f}% de O2"
+        if plain:
+            return f"{item.o2_min:.0f}% a {item.o2_max:.0f}% de oxígeno"
+        return f"{item.o2_min:.0f}–{item.o2_max:.0f}% de O2"
+
+    @staticmethod
+    def _gloss_acronyms_plain(text: str) -> str:
+        replacements = (
+            (r"\bFDS\b", "simuladores de fuego (FDS)"),
+            (r"\bHVAC\b", "ventilación (HVAC)"),
+            (r"\bNFPA\b", "seguridad contra incendios (NFPA)"),
+            (r"\bNTC\b", "baja temperatura (NTC)"),
+            (r"\bECLSS\b", "soporte vital (ECLSS)"),
+        )
+        out = text
+        for pattern, repl in replacements:
+            if repl not in out:
+                out = re.sub(pattern, repl, out)
+        return out
+
+    @staticmethod
+    def _format_pressure_range(item: PsiInvestigation) -> str:
+        if math.isclose(item.pressure_psi_min, item.pressure_psi_max, abs_tol=0.05):
+            return f"{item.pressure_psi_min:.1f} psi"
+        return f"{item.pressure_psi_min:.1f}–{item.pressure_psi_max:.1f} psi"
+
+    @staticmethod
+    def _short_phrase(text: str, max_words: int = 6) -> str:
+        words = [w for w in text.strip().rstrip(".").split() if w]
+        if len(words) <= max_words:
+            return " ".join(words)
+        return " ".join(words[:max_words])
+
+    @staticmethod
+    def _dominant_criterion(
+        ranked: Sequence[RankedInvestigation],
+        by_id: Mapping[str, PsiInvestigation],
+        primary: PsiInvestigation,
+    ) -> str:
+        primary_scores = primary.criteria_dict()
+        aligned = [r for r in ranked if r.psi_id in by_id]
+        if len(aligned) < 3:
+            return max(CRITERIA_KEYS, key=lambda c: primary_scores.get(c, 0.0))
+
+        y = np.array([r.topsis_score for r in aligned], dtype=np.float64)
+        y_std = float(np.std(y))
+        best_key = CRITERIA_KEYS[0]
+        best_val = -math.inf
+        for crit in CRITERIA_KEYS:
+            x = np.array(
+                [by_id[r.psi_id].criteria_dict().get(crit, 0.5) for r in aligned],
+                dtype=np.float64,
+            )
+            x_std = float(np.std(x))
+            if x_std > 1e-9 and y_std > 1e-9:
+                corr = float(np.corrcoef(x, y)[0, 1])
+            else:
+                corr = 0.0
+            score = 0.65 * corr + 0.35 * float(primary_scores.get(crit, 0.5))
+            if score > best_val:
+                best_val = score
+                best_key = crit
+        return best_key
+
     def summarize_for_persona(
         self,
         investigations: Sequence[PsiInvestigation],
@@ -264,72 +348,175 @@ class ExtractiveNlpEngine:
     ) -> SynthesisReport:
         if persona not in VALID_PERSONAS:
             raise ValueError(f"Audiencia no soportada: {persona}")
+        if not investigations:
+            raise ValueError("Se requiere al menos una investigacion para generar la sintesis.")
 
         by_id = {inv.psi_id: inv for inv in investigations}
         sims = self._query_similarities(query)
 
-        # Combina TOPSIS con similitud coseno hacia la consulta cuando existe texto
+        # Combina prioridad multicriterio con afinidad textual hacia la consulta
         combined = sorted(
             ranked,
             key=lambda r: (-(0.70 * r.topsis_score + 0.30 * sims.get(r.psi_id, 0.0)), r.psi_id),
         )
-        top_pool = [by_id[r.psi_id] for r in combined[:6] if r.psi_id in by_id]
-        key_items = self._textrank_select(top_pool, top_k=3)
+        valid_combined = [r for r in combined if r.psi_id in by_id]
+        if not valid_combined:
+            ordered_items = list(investigations)
+        else:
+            ordered_items = []
+            seen_ids: set[str] = set()
+            for r in valid_combined:
+                if r.psi_id not in seen_ids:
+                    seen_ids.add(r.psi_id)
+                    ordered_items.append(by_id[r.psi_id])
+
+        primary = ordered_items[0]
+        secondary = ordered_items[1] if len(ordered_items) > 1 else primary
+        if len(ordered_items) > 2:
+            tertiary_pool = [
+                by_id[r.psi_id]
+                for r in valid_combined[2:6]
+                if r.psi_id not in {primary.psi_id, secondary.psi_id}
+            ] or ordered_items[2:6]
+            selected_tertiary = self._textrank_select(tertiary_pool, top_k=1)
+            tertiary = selected_tertiary[0] if selected_tertiary else ordered_items[2]
+            key_items = [primary, secondary, tertiary]
+        elif len(ordered_items) == 2:
+            tertiary = secondary
+            key_items = [primary, secondary]
+        else:
+            tertiary = primary
+            key_items = [primary]
+
         cited_dois = tuple(item.doi for item in key_items)
         evidence_ids = tuple(item.psi_id for item in key_items)
 
-        primary = key_items[0]
-        secondary = key_items[1] if len(key_items) > 1 else key_items[0]
-        tertiary = key_items[2] if len(key_items) > 2 else secondary
-        mats_primary = ", ".join(primary.materials[:2]) or "solidos de cabina"
+        dom_crit = self._dominant_criterion(ranked, by_id, primary)
+        top_score = valid_combined[0].topsis_score if valid_combined else 1.0
+        primary_sim = sims.get(primary.psi_id, 0.0)
+        query_excerpt = self._sanitize_query_excerpt(query, max_words=7)
+        query_short = self._sanitize_query_excerpt(query, max_words=5)
+
+        mats_primary = ", ".join(primary.materials[:2]) or "sólidos de cabina"
+        mat0_primary = self._short_phrase(primary.materials[0], max_words=6) if primary.materials else "sólidos de cabina"
+        mat0_secondary = self._short_phrase(secondary.materials[0], max_words=6) if secondary.materials else "materiales de cabina"
+        sensors_secondary = " y ".join(secondary.sensors[:2]) or "instrumentación óptica y de gases"
+        sensors_tertiary = " y ".join(tertiary.sensors[:2]) or "sensores de combustión"
+        sensor0_tertiary = self._short_phrase(tertiary.sensors[0], max_words=4) if tertiary.sensors else "sensores térmicos"
+
+        o2_academic = self._format_o2_range(primary, plain=False)
+        o2_plain = self._format_o2_range(primary, plain=True)
+        press_range = self._format_pressure_range(primary)
 
         if persona == "Investigador":
+            crit_academic = {
+                "habitat": "aplicabilidad directa a hábitats habitables",
+                "modeling": "valor para modelado físico y límites de propagación",
+                "sensors": "instrumentación y detección temprana",
+                "spinoff": "transferencia tecnológica a seguridad terrestre",
+            }[dom_crit]
+            if query_excerpt and primary_sim > 0.05:
+                lead_clause = (
+                    f"encabeza la selección al combinar prioridad en {crit_academic} "
+                    f"con afinidad temática hacia «{query_excerpt}»"
+                )
+            elif query_excerpt:
+                lead_clause = (
+                    f"lidera el orden por su peso en {crit_academic} "
+                    f"(índice {top_score:.2f}) ante la consulta «{query_excerpt}»"
+                )
+            else:
+                lead_clause = (
+                    f"ocupa el primer lugar por su desempeño en {crit_academic} "
+                    f"(índice multicriterio {top_score:.2f})"
+                )
+
             bullets = (
                 (
-                    f"La evidencia de {primary.psi_id} ({primary.acronym}, {primary.facility}) indica un rango "
-                    f"operativo de {primary.o2_min:.0f}-{primary.o2_max:.0f}% O2 y flujo hasta {primary.flow_cm_s_max:.0f} cm/s; "
-                    f"su enfoque en {mats_primary} es consistente con limites de Da/Pe en cabina ({primary.doi})."
+                    f"{primary.psi_id} ({primary.acronym}, {primary.facility}) {lead_clause}. "
+                    f"Documenta ensayos con {mats_primary} en {o2_academic} y {press_range} con flujos hasta "
+                    f"{primary.flow_cm_s_max:.0f} cm/s, acotando la relación entre reacción química y transporte térmico "
+                    f"(números de Damköhler y Péclet) ({primary.doi})."
                 ),
                 (
-                    f"El analisis extractivo cruza {secondary.psi_id} ({secondary.acronym}) y {tertiary.psi_id} ({tertiary.acronym}), "
-                    f"sugiriendo correlacion directa entre presion ({primary.pressure_psi_min:.1f}-{primary.pressure_psi_max:.1f} psi) "
-                    f"y dinamica de propagacion ({secondary.doi}, {tertiary.doi})."
+                    f"Metodología registrada en {primary.psi_id}: {primary.approach.rstrip('.')}. "
+                    f"Como referencia complementaria, {secondary.psi_id} ({secondary.acronym}, {secondary.facility}) "
+                    f"aporta evidencia para {self._lower_first(secondary.objectives)} ({secondary.doi})."
                 ),
                 (
-                    f"Metodologia observada en {primary.psi_id}: {primary.approach} El analisis multifactorial identifica variables "
-                    f"explicables sujetas a validacion frente a tabla experimental ({primary.doi})."
+                    f"En instrumentación y transferencia, {tertiary.psi_id} ({tertiary.acronym}) emplea "
+                    f"{sensors_tertiary} para {self._lower_first(tertiary.objectives)}, con utilidad directa para "
+                    f"{self._lower_first(tertiary.earth_benefits)} ({tertiary.doi})."
                 ),
             )
         elif persona == "Estudiante":
+            crit_plain = {
+                "habitat": "seguridad en cabinas con tripulación",
+                "modeling": "entender cómo avanza o se apaga el fuego",
+                "sensors": "sensores de alerta temprana",
+                "spinoff": "aplicaciones útiles en la Tierra",
+            }[dom_crit]
+            query_sentence = (
+                f" También coincide con tu búsqueda sobre {query_short}."
+                if query_short and primary_sim > 0.05
+                else ""
+            )
+            benefit_plain = self._gloss_acronyms_plain(self._lower_first(tertiary.earth_benefits))
             bullets = (
                 (
-                    f"{primary.psi_id} ({primary.acronym}) estudia fuego en microgravedad usando {mats_primary}. "
-                    f"Opera entre {primary.o2_min:.0f}% y {primary.o2_max:.0f}% de oxigeno ({primary.doi})."
+                    f"{primary.psi_id} ({primary.acronym}) lidera tu lista porque priorizaste {crit_plain}."
+                    f"{query_sentence} "
+                    f"En {primary.facility} estudia {mat0_primary} con {o2_plain} ({primary.doi})."
                 ),
                 (
-                    f"En {secondary.psi_id} ({secondary.acronym}), la falta de gravedad quita la conveccion caliente. "
-                    f"La llama depende del aire forzado a {primary.flow_cm_s_max:.0f} cm/s ({secondary.doi})."
+                    f"Sin gravedad, el aire caliente no sube y la llama depende del aire forzado. "
+                    f"Por eso {secondary.psi_id} ({secondary.acronym}) prueba {mat0_secondary} con flujos hasta "
+                    f"{secondary.flow_cm_s_max:.0f} cm/s ({secondary.doi})."
                 ),
                 (
-                    f"Beneficio en la Tierra con {tertiary.psi_id} ({tertiary.acronym}): {tertiary.earth_benefits} "
-                    f"Puedes revisar sensores como {primary.sensors[0]} ({tertiary.doi})."
+                    f"En la Tierra, {tertiary.psi_id} ({tertiary.acronym}) aporta datos para prevenir incendios. "
+                    f"Su meta práctica: {benefit_plain}. "
+                    f"Registra datos con {sensor0_tertiary} ({tertiary.doi})."
                 ),
             )
         else:
-            # Gestor Industrial (plain + proposal medible)
+            # Gestor Industrial (lenguaje claro + criterio operativo y retorno terrestre)
+            crit_industrial = {
+                "habitat": "seguridad operativa en cabinas presurizadas",
+                "modeling": "predicción de márgenes de propagación",
+                "sensors": "detección temprana de combustión",
+                "spinoff": "transferencia industrial y protección terrestre",
+            }[dom_crit]
+            if query_excerpt and primary_sim > 0.05:
+                lead_ind = (
+                    f"encabeza tu lista al unir prioridad en {crit_industrial} "
+                    f"con coincidencia temática en «{query_excerpt}»"
+                )
+            else:
+                lead_ind = (
+                    f"ocupa el primer puesto por tu énfasis en {crit_industrial} "
+                    f"(índice {top_score:.2f})"
+                )
+
+            sec_obj_plain = self._gloss_acronyms_plain(self._lower_first(secondary.objectives))
+            ter_ben_plain = self._gloss_acronyms_plain(self._lower_first(tertiary.earth_benefits))
             bullets = (
                 (
-                    f"Prioridad normativa ({primary.psi_id} - {primary.acronym}): valida riesgos en "
-                    f"{primary.o2_min:.0f}-{primary.o2_max:.0f}% O2 y {primary.pressure_psi_min:.1f} psi para reducir "
-                    f"el NPR antes de certificar cabinas ({primary.doi})."
+                    f"Prioridad operativa ({primary.psi_id} · {primary.acronym}): {lead_ind}. "
+                    f"Evalúa condiciones en {o2_academic} y {press_range} para disminuir la probabilidad de "
+                    f"propagación y respaldar la calificación de materiales bajo la norma espacial NASA-STD-6001 "
+                    f"({primary.doi})."
                 ),
                 (
-                    f"Sinergia operativa con {secondary.psi_id} ({secondary.acronym}) y {tertiary.psi_id}: "
-                    f"el monitoreo temprano respalda protocolos PFE y recorta peso SCBA en 40% ({secondary.doi})."
+                    f"Vigilancia y control ({secondary.psi_id} · {secondary.acronym} en {secondary.facility}): "
+                    f"emplea {sensors_secondary} con ventilación de hasta {secondary.flow_cm_s_max:.0f} cm/s para "
+                    f"{sec_obj_plain}, facilitando cortes tempranos de aire o extinción limpia sin residuos "
+                    f"corrosivos ({secondary.doi})."
                 ),
                 (
-                    f"Retorno terrestre medible: {primary.earth_benefits} Trazabilidad directa con matriz FMEA "
-                    f"NASA-STD-6001 y transferencia Spinoff ({tertiary.doi})."
+                    f"Retorno industrial ({tertiary.psi_id} · {tertiary.acronym}): apunta a {ter_ben_plain}. "
+                    f"Esta evidencia nutre el análisis de modos de falla (FMEA, evaluado por gravedad, frecuencia y "
+                    f"dificultad de detección) y acelera su adopción en la Tierra ({tertiary.doi})."
                 ),
             )
 
