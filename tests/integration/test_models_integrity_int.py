@@ -16,23 +16,34 @@ ROOT_DIR = Path(__file__).resolve().parents[2]
 ARTIFACTS_DIR = ROOT_DIR / "artifacts" / "models"
 
 
-def test_trained_artifacts_exist_under_15mb_and_verified_sha256() -> None:
+def test_trained_artifacts_exist_under_15mb_and_verified_sha256(tmp_path: Path) -> None:
+    guard = SecurityBoundaryGuard()
+    committed_manifest = ARTIFACTS_DIR / "manifest.sha256.json"
+    assert committed_manifest.exists()
+    committed_bytes = 0
+    for artifact_name in EXPECTED_ARTIFACTS:
+        artifact_path = ARTIFACTS_DIR / artifact_name
+        assert artifact_path.exists()
+        committed_bytes += artifact_path.stat().st_size
+        guard.verify_model_sha256(artifact_path, committed_manifest)
+    assert committed_bytes < 15 * 1024 * 1024
+
+    train_out = tmp_path / "models"
     start = time.perf_counter()
     manifest = train_all_models(
         data_dir=ROOT_DIR / "data",
-        output_dir=ARTIFACTS_DIR,
+        output_dir=train_out,
     )
     elapsed = time.perf_counter() - start
     assert elapsed < 15.0
 
-    manifest_path = ARTIFACTS_DIR / "manifest.sha256.json"
+    manifest_path = train_out / "manifest.sha256.json"
     assert manifest_path.exists()
     assert set(EXPECTED_ARTIFACTS).issubset(set(manifest["models"].keys()))
 
-    guard = SecurityBoundaryGuard()
     total_bytes = 0
     for artifact_name in EXPECTED_ARTIFACTS:
-        artifact_path = ARTIFACTS_DIR / artifact_name
+        artifact_path = train_out / artifact_name
         assert artifact_path.exists()
         total_bytes += artifact_path.stat().st_size
         guard.verify_model_sha256(artifact_path, manifest_path)
