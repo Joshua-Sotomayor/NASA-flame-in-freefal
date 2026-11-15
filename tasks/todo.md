@@ -118,11 +118,12 @@
 - **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% (`33 passed`), JS limpio (`node --check frontend/app.js`), auditoría anti-slop / cero código muerto / seguridad OWASP verificada.
 - **Commit Git:** `0.9.1 - test - validar suite tdd completa offline y auditoria ponytail`
 
-### [ ] Task 10B (`M-13` — Siguiente en turno · Mecatrónica): Refactor del Apartado Visual de la Plataforma Web (UI/UX)
+### [x] Task 10B (`M-13` — Completada · Mecatrónica): Refactor del Apartado Visual de la Plataforma Web (UI/UX)
 - **Responsable:** Mecatrónico y de Control (`meca`).
 - **Rama dedicada:** `feat/meca-m13-ui-refactor`
-- **Módulos / Archivos bloqueados (Lock):** `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` (cero cambios a `backend/*` o `data/*`).
-- **Alcance:** Pendiente de definición visual detallada por el usuario; conservar todos los IDs DOM contractuales (`ductDigitalTwinSvg`, `flammabilityContourSvg`), contratos `/api/v1/*`, accesibilidad WAI-ARIA y `33/33 pytest`.
+- **Módulos / Archivos:** `frontend/*`, `frontend/assets/museum/*`, `backend/main.py`, `backend/train_models.py`, `backend/ranking_nlp.py`, `requirements/*`, `requirements.txt`, `tests/integration/test_frontend_and_audit_int.py`.
+- **Alcance:** Cabecera centrada `NASA [Logo] + ENREDADOS` en `Geist Pixel`, tema claro permanente sin `#themeBtn`, redacción divulgativa/académica (`writing-craft`) sin jerga interna de IA/FastAPI, introducciones por sección, reseñas históricas con 6 fotos reales NASA, pestaña `06 Museo y Glosario`, carpeta `requirements/` y arranque directo `cd backend && py main.py` sin `ModuleNotFoundError`.
+- **Commit Git:** `0.9.3 - refactor - redisenar interfaz web nasa enredados con mini museo glosario y arranque directo`
 
 ### [ ] Task 11 (`M-12` + `J-04`): Despliegue Público HTTPS y Tag `v1.0.0` en `main` (`origin` GitHub)
 - **Responsable:** Mecatrónico (`M-12`) + Conjunta (`J-04`).

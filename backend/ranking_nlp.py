@@ -296,7 +296,7 @@ class ExtractiveNlpEngine:
                     f"y dinamica de propagacion ({secondary.doi}, {tertiary.doi})."
                 ),
                 (
-                    f"Metodologia observada en {primary.psi_id}: {primary.approach} Los modelos ML reportan variables "
+                    f"Metodologia observada en {primary.psi_id}: {primary.approach} El analisis multifactorial identifica variables "
                     f"explicables sujetas a validacion frente a tabla experimental ({primary.doi})."
                 ),
             )

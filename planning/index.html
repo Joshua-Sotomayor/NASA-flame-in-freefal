@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.9.1): Slice 7 Completado + Protocolo Multi-Perfil &amp; Cola M-13</strong><br />
-          <span><strong>Logrado (15/31 tareas · Mecatrónica 11/13 · Gate 3 E2E + F-08/U-01/U-03/P-01/P-02/S-02 verificados):</strong> <strong><code>M-06, M-09, M-10, M-11, J-03</code></strong> (<code>frontend/</code> servido por FastAPI con SVG Isométrico y Contorno en tiempo real, Hardware Blueprint SolidWorks/EPLAN/Proteus, y <code>33/33 pytest PASS</code>).<br />
-          <strong>Siguiente en curso:</strong> Mecatrónica <code>M-13</code> (Refactor visual UI/UX — rama <code>feat/meca-m13-ui-refactor</code>) $\rightarrow$ <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-01, I-02, I-04..I-12</code>) · Cierre (<code>J-04..J-06</code>).</span>
+          <strong>Estado de la Iteración Actual (0.9.3): Refactor Visual M-13 Completado (NASA + ENREDADOS, Mini Museo y Glosario)</strong><br />
+          <span><strong>Logrado (16/31 tareas · Mecatrónica 12/13 · Gate 3 E2E + F-08/U-01/U-03/P-01/P-02/S-02 verificados):</strong> <strong><code>M-06, M-09, M-10, M-11, M-13, J-03</code></strong> (UI clara editorial con <code>Geist Pixel</code>, cabecera <code>NASA + ENREDADOS</code>, introducciones accesibles <code>writing-craft</code>, Mini Museo con 6 fotos reales NASA, Glosario interactivo, arranque directo <code>py main.py</code>, carpeta <code>requirements/</code> y <code>34/34 pytest PASS</code>).<br />
+          <strong>Siguiente en curso:</strong> Mecatrónica <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-01, I-02, I-04..I-12</code>) · Cierre (<code>J-04..J-06</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.9.1 · 15/31 (48%)</span>
+        <span class="mono badge badge-joint">0.9.3 · 16/31 (52%)</span>
       </div>
 
       <div class="toolbar">
@@ -1179,7 +1179,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "M-09", role: "meca", phase: "S-PM", title: "Integrar gráfica de contorno de inflamabilidad en tiempo real", objective: "Mostrar curva interactiva Flujo vs %O2 marcando zona segura, llama fría y blowoff.", scope: "Canvas/SVG interactivo", deliverable: "Mapa de contorno en vivo", done: true },
         { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: true },
         { id: "M-11", role: "meca", phase: "D-AM", title: "Ejecutar /ponytail-audit y pruebas Web Vitals / offline", objective: "Eliminar código muerto, verificar LCP < 2.5s y probar desconectando Wi-Fi.", scope: "Auditoría de calidad y rendimiento", deliverable: "Checklist técnico verde", done: true },
-        { id: "M-13", role: "meca", phase: "D-AM", title: "Refactor del apartado visual de la plataforma web (UI/UX)", objective: "Refinar estética, jerarquía visual y acabado del dashboard conservando contratos REST, SVG y accesibilidad WAI-ARIA.", scope: "Refactor visual frontend (siguiente en turno)", deliverable: "UI refactorizada + 33/33 pytest verde", modules: "frontend/index.html, frontend/styles.css, frontend/app.js, tests/integration/test_frontend_and_audit_int.py", branch: "feat/meca-m13-ui-refactor", done: false },
+        { id: "M-13", role: "meca", phase: "D-AM", title: "Refactor del apartado visual de la plataforma web (UI/UX)", objective: "Refinar estética clara con Geist Pixel, cabecera NASA + ENREDADOS, redacción accesible, Mini Museo con fotos NASA, Glosario, requirements/ y arranque directo.", scope: "Refactor visual frontend + arranque directo", deliverable: "UI refactorizada + 34/34 pytest verde", modules: "frontend/*, backend/main.py, requirements/*, tests/integration/test_frontend_and_audit_int.py", branch: "feat/meca-m13-ui-refactor", done: true },
         { id: "M-12", role: "meca", phase: "D-AM", title: "Desplegar plataforma web en URL HTTPS pública", objective: "Publicar FastAPI + frontend en Render (o Netlify proxy + Render) con CORS/CSP seguros y $0 USD.", scope: "Deploy Render / Netlify + Render", deliverable: "URL pública verificada", modules: "Dockerfile, render.yaml, netlify.toml, backend/main.py, backend/security.py, frontend/app.js", branch: "feat/meca-m12-deploy-render-netlify", done: false },
 
         // Rol B: Gestión Industrial (12)
@@ -1753,11 +1753,11 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         const m07 = DEFAULT_TASKS.find(t => t.id === "M-07");
         assert(m07 && m07.title.includes(".onnx") && m07.objective.includes("Colab") && m07.objective.includes(".joblib"), "M-07 must reference Colab and local ML/DL weights");
         const m13 = DEFAULT_TASKS.find(t => t.id === "M-13");
-        assert(m13 && m13.role === "meca" && m13.done === false && Boolean(m13.modules) && Boolean(m13.branch), "M-13 must be pending with UI refactor scope and branch lock");
+        assert(m13 && m13.role === "meca" && m13.done === true && Boolean(m13.modules) && Boolean(m13.branch), "M-13 must be done with UI refactor scope and branch lock");
         const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
         assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS") && i08.objective.includes("writing-craft"), "I-08 must reference deterministic rules and writing-craft");
         assert(DEFAULT_TASKS.filter(t => !t.done).every(t => Boolean(t.modules) && Boolean(t.branch)), "All pending tasks must declare modules lock and dedicated branch");
-        assert(DEFAULT_TASKS.filter(t => t.done).length === 15, "Expected 15 baseline + Slice 7 tasks marked done by default");
+        assert(DEFAULT_TASKS.filter(t => t.done).length === 16, "Expected 16 baseline + Slice 7 + M-13 tasks marked done by default");
 
         // Verify FSM visualizer transitions cleanly
         setFsmState("CONTENCION");

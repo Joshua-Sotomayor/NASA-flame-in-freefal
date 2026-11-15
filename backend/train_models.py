@@ -10,6 +10,7 @@ import argparse
 from datetime import datetime, timezone
 import json
 from pathlib import Path
+import sys
 from typing import Any, Sequence
 
 import joblib
@@ -23,6 +24,10 @@ from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 import torch
 import torch.nn as nn
+
+ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
 
 from backend.domain import (
     FLAME_CLASS_LABELS,
@@ -274,8 +279,8 @@ def train_all_models(data_dir: Path, output_dir: Path) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Entrenamiento ML/DL local AERO-IGNIS SI.")
-    parser.add_argument("--data-dir", type=Path, default=Path("data"))
-    parser.add_argument("--output-dir", type=Path, default=Path("artifacts/models"))
+    parser.add_argument("--data-dir", type=Path, default=ROOT_DIR / "data")
+    parser.add_argument("--output-dir", type=Path, default=ROOT_DIR / "artifacts" / "models")
     args = parser.parse_args()
 
     manifest = train_all_models(data_dir=args.data_dir, output_dir=args.output_dir)
