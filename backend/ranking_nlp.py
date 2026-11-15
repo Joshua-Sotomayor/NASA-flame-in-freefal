@@ -22,6 +22,19 @@ from backend.security import SecurityBoundaryGuard
 
 CRITERIA_KEYS: tuple[str, ...] = ("habitat", "modeling", "sensors", "spinoff")
 VALID_PERSONAS: frozenset[str] = frozenset({"Investigador", "Estudiante", "Gestor Industrial"})
+FEATURE_LABELS: dict[str, str] = {
+    "o2_pct": "concentracion de O2",
+    "pressure_psi": "presion de cabina",
+    "flow_cm_s": "flujo de ventilacion",
+    "gravity_g": "nivel de gravedad",
+    "thickness_mm": "espesor de muestra",
+}
+CRITERIA_LABELS: dict[str, str] = {
+    "habitat": "seguridad en cabina habitable",
+    "modeling": "calibracion adimensional",
+    "sensors": "deteccion de llama y humo",
+    "spinoff": "impacto dual-use",
+}
 
 
 @dataclass(frozen=True)
@@ -345,6 +358,7 @@ class ExtractiveNlpEngine:
         ranked: Sequence[RankedInvestigation],
         query: str,
         persona: str,
+        feature_importance: Mapping[str, float] | None = None,
     ) -> SynthesisReport:
         if persona not in VALID_PERSONAS:
             raise ValueError(f"Audiencia no soportada: {persona}")
