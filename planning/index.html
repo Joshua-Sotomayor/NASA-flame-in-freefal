@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.9.11): Consolidación Total (`I-01..I-10` + `M-01..M-14`) en `dev` y `main`</strong><br />
-          <span><strong>Logrado (25/31 tareas · Mecatrónica 12/13 · Gestión Industrial 10/12 · Gate 3 E2E):</strong> <strong><code>M-06, M-09, M-10, M-11, M-13, J-03</code></strong> (UI editorial <code>Geist Pixel</code>, paleta NASA, <code>01 Museo y Glosario</code>, PCA sin solapes, contorno/FMEA reactivos) + <strong><code>I-01..I-10</code></strong> (PSI, TOPSIS, MoSCoW, FMEA, presets forenses, supresión ECLSS, Spinoffs, <code>writing-craft</code>, QA unidades y <code>README.md</code>) verificados con <strong><code>79/79 pytest PASS</code></strong>.<br />
-          <strong>Siguiente en curso:</strong> Mecatrónica <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-11 Deck 7 slides</code>, <code>I-12 Guion video</code>) · Cierre (<code>J-04..J-06</code>).</span>
+          <strong>Estado de la Iteración Actual (0.9.12): Deck Ejecutivo de 7 Diapositivas (`I-11`) Completado sobre Consolidación Total (`I-01..I-10` + `M-01..M-14`)</strong><br />
+          <span><strong>Logrado (26/31 tareas · Mecatrónica 12/13 · Gestión Industrial 11/12 · Gate 3 E2E):</strong> <strong><code>M-06, M-09, M-10, M-11, M-13, J-03</code></strong> (UI editorial <code>Geist Pixel</code>, paleta NASA, <code>01 Museo y Glosario</code>, PCA sin solapes, contorno/FMEA reactivos) + <strong><code>I-01..I-11</code></strong> (PSI, TOPSIS, MoSCoW, FMEA, presets forenses, supresión ECLSS, Spinoffs, <code>writing-craft</code>, QA unidades, <code>README.md</code> y deck 7 slides) verificados con <strong><code>82/82 pytest PASS</code></strong>.<br />
+          <strong>Siguiente en curso:</strong> Mecatrónica <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-12 Guion video 30s/2min</code>) · Cierre (<code>J-04..J-06</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.9.11 · 25/31 (81%)</span>
+        <span class="mono badge badge-joint">0.9.12 · 26/31 (84%)</span>
       </div>
 
       <div class="toolbar">
@@ -1193,7 +1193,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "I-08", role: "ind", phase: "S-PM", title: "Definir reglas de interpretación determinista y plantillas dinámicas basadas en Feature Importance y salida TOPSIS", objective: "Aplicar skill writing-craft (academic/plain) por audiencia (Investigador, Estudiante, Gestor) con citas PSI válidas y cero AI slop.", scope: "writing-craft + reglas explicables", deliverable: "3 plantillas deterministas auditadas", modules: "docs/industrial/plantillas_writing_craft.md, backend/ranking_nlp.py (solo plantillas), tests/unit/test_ranking_and_writing_unit.py", branch: "feat/ind-i08-writing-craft-templates", done: true },
         { id: "I-09", role: "ind", phase: "S-PM", title: "Auditar consistencia de unidades y alcance (Excluir cohetes)", objective: "Verificar psi/kPa/cm/s y asegurar cero contenido fuera de alcance.", scope: "QA de dominio científico", deliverable: "Reporte QA limpio", modules: "docs/industrial/qa_unidades_alcance.md", branch: "feat/ind-i09-qa-units-scope", done: true },
         { id: "I-10", role: "ind", phase: "D-AM", title: "Redactar README.md ejecutivo y citas a los 10 recursos NASA", objective: "Documentar impacto, licencia CC0/MIT y referencias exactas para jueces.", scope: "Documentación de entrega", deliverable: "README.md completo", modules: "README.md", branch: "feat/ind-i10-readme-ejecutivo", done: true },
-        { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", modules: "docs/pitch/deck_7_slides.md", branch: "feat/ind-i11-pitch-deck", done: false },
+        { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", modules: "docs/pitch/deck_7_slides.md", branch: "feat/ind-i11-pitch-deck", done: true },
         { id: "I-12", role: "ind", phase: "D-PM", title: "Redactar guion cronometrado del video (30s / 2min)", objective: "Asegurar que cada segundo cubra los 5 criterios de evaluación NASA (20% c/u).", scope: "Guion de pitch ganador", deliverable: "Script cronometrado final", modules: "docs/pitch/guion_video_demo.md", branch: "feat/ind-i12-video-script", done: false },
 
         // Tareas Conjuntas (6)

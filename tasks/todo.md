@@ -155,7 +155,7 @@
 | **`I-08`** | `ind` | `feat/ind-i08-writing-craft-templates` | `docs/industrial/plantillas_writing_craft.md`, `backend/ranking_nlp.py` (plantillas), `tests/unit/test_ranking_and_writing_unit.py` | **Listo [x]** |
 | **`I-09`** | `ind` | `feat/ind-i09-qa-units-scope` | `docs/industrial/qa_unidades_alcance.md`, `tests/unit/test_qa_units_scope_unit.py` | **Listo [x]** |
 | **`I-10`** | `ind` | `feat/ind-i10-readme-ejecutivo` | `README.md`, `tests/unit/test_readme_and_resources_unit.py` | **Listo [x]** |
-| **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md` | Pendiente |
+| **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md`, `tests/unit/test_pitch_deck_unit.py` | **Listo [x]** |
 | **`I-12`** | `ind` | `feat/ind-i12-video-script` | `docs/pitch/guion_video_demo.md` | Pendiente |
 | **`J-04`** | `joint` | `release/v1.0.0` | `planning/index.html`, `tasks/todo.md`, tag `v1.0.0` (después de merge `dev -> main`) | Pendiente |
 | **`J-05`** | `joint` | `docs/joint-j05-video-checklist` | `docs/pitch/checklist_grabacion.md` | Pendiente |
