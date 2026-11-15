@@ -72,7 +72,7 @@
 - **Verificación:** `pytest tests/unit/test_fsm_unit.py tests/integration/test_duct_orchestrator_int.py -v`
 - **Commit Git:** `0.6.1 - feat - implementar orquestador fsm determinista con cnn onnx y arbol de sensores`
 
-### Task 6 (`I-02` + `I-04` + `I-06` + `I-07` + `I-08`): Ranking TOPSIS, NLP (`writing-craft`) y Gobernanza FMEA/Spinoffs
+### [x] Task 6 (`I-02` + `I-04` + `I-06` + `I-07` + `I-08`): Ranking TOPSIS, NLP (`writing-craft`) y Gobernanza FMEA/Spinoffs
 - **Responsable:** Gestión Industrial + Mecatrónico.
 - **Alcance:** Implementar `backend/ranking_nlp.py` (`TOPSIS/AHP + TF-IDF/TextRank/K-Means` + plantillas **`writing-craft`** para Investigador `academic`, Estudiante `plain` y Gestor `plain+proposal`) y `backend/governance.py` (`FMEA NASA-STD-6001`, protocolo `PFE/CO2/E-FIELD` y calculadora `Dual-Use` para Spinoffs `9582, 9407, 9918`).
 - **Pruebas TDD (Escribir RED primero):**
@@ -82,13 +82,13 @@
 - **Commit Git:** `0.6.2 - feat - implementar ranking topsis textrank writing-craft y gobernanza fmea spinoffs`
 
 ## Checkpoint 2 (Core ML/DL, Física & TDD)
-- [ ] Gate 2 (`J-02`): 100% de pruebas unitarias e de integración en verde sin red externa.
+- [x] Gate 2 (`J-02`): 100% de pruebas unitarias e de integración en verde sin red externa.
 
 ---
 
 ## Fase 3: API Blindada & Dashboard Web Interactivo (Sábado PM `H15–H26`)
 
-### Task 7 (`S-API`): Ensamblaje FastAPI POO y Pruebas de Contrato/Abuso (Integración)
+### [x] Task 7 (`S-API`): Ensamblaje FastAPI POO y Pruebas de Contrato/Abuso (Integración)
 - **Responsable:** Mecatrónico.
 - **Alcance:** Crear `backend/main.py` conectando todas las clases POO, `SecurityBoundaryGuard` y rutas `/api/v1/*`.
 - **Pruebas TDD (`tests/integration/test_api_contracts_int.py`):**
