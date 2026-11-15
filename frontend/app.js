@@ -335,11 +335,11 @@
     renderClustersSvg(clusters, lastRankedTopId);
     document.getElementById("psiRankBody").innerHTML = ranked.slice(0, 12).map((r) => `
       <tr>
-        <td class="mono"><strong>#${r.rank}</strong></td>
-        <td><strong>${escapeHtml(r.psi_id)}</strong> · ${escapeHtml(r.acronym)}</td>
-        <td><span class="badge badge-info">${escapeHtml(r.facility)}</span></td>
-        <td class="mono tabular">${Number(r.topsis_score).toFixed(3)}</td>
-        <td class="mono">${escapeHtml(r.doi)}</td>
+        <td class="mono" data-label="Orden"><strong>#${r.rank}</strong></td>
+        <td data-label="Estudio"><strong>${escapeHtml(r.psi_id)}</strong> · ${escapeHtml(r.acronym)}</td>
+        <td data-label="Instalación"><span class="badge badge-info">${escapeHtml(r.facility)}</span></td>
+        <td class="mono tabular" data-label="Índice">${Number(r.topsis_score).toFixed(3)}</td>
+        <td class="mono" data-label="DOI">${escapeHtml(r.doi)}</td>
       </tr>
     `).join("");
   }
@@ -629,6 +629,27 @@
     }
   };
 
+  const FMEA_OFFLINE_ROWS = [
+    { mode_id: "FM-01", subsystem: "Arnés eléctrico en cabina (>=30% O2)", failure_mode: "Pirólisis de aislamiento PTFE (>500 C)", baseline_npr: 350, active_npr: 32, mitigation: "Detección <0.1 um (Spinoff 9407) + corte eléctrico directo + PBI/Kapton", linked_psi: "PSI-129" },
+    { mode_id: "FM-02", subsystem: "Ducto de ventilación en flujo bajo", failure_mode: "Ventilación estancada (<3 cm/s) con llama esférica", baseline_npr: 288, active_npr: 24, mitigation: "Histéresis temporal y cierre completo de compuerta en contención", linked_psi: "PSI-25" },
+    { mode_id: "FM-03", subsystem: "Vapores orgánicos (FLEX / CFI-G)", failure_mode: "Llama fría NTC invisible (500–800 K)", baseline_npr: 405, active_npr: 28, mitigation: "Modelo de visión óptica en clase NTC y bloqueo de rearme automático", linked_psi: "PSI-24" },
+    { mode_id: "FM-04", subsystem: "Espuma porosa en rack avio-electrónico", failure_mode: "Combustión latente sin llama visible", baseline_npr: 432, active_npr: 28, mitigation: "Reglas de decisión por CO, tasa térmica y aerosol submicrónico", linked_psi: "PSI-110" },
+    { mode_id: "FM-05", subsystem: "Generador sólido de oxígeno (LiClO4)", failure_mode: "Reacción auto-oxidante tipo soplete", baseline_npr: 210, active_npr: 16, mitigation: "Supresión directa por niebla fina PFE + máscara de tripulación", linked_psi: "PSI-105" },
+    { mode_id: "FM-06", subsystem: "Enlace serial estación <-> controlador", failure_mode: "Pérdida de comunicación UART / watchdog", baseline_npr: 216, active_npr: 6, mitigation: "Enclavamiento cableado EPLAN llevando el ducto a falla segura", linked_psi: "PSI-98" }
+  ];
+
+  function renderFmeaRows(rows, mitigated) {
+    return rows.map((r) => `
+      <tr>
+        <td class="mono" data-label="Código"><strong>${escapeHtml(r.mode_id)}</strong></td>
+        <td data-label="Subsistema y Fallo"><strong>${escapeHtml(humanizeFmeaText(r.subsystem))}</strong><br /><span>${escapeHtml(humanizeFmeaText(r.failure_mode))}</span></td>
+        <td class="mono tabular" data-label="Índice NPR"><strong>${mitigated ? r.active_npr : r.baseline_npr}</strong> <small>(base ${r.baseline_npr})</small></td>
+        <td data-label="Barrera de Mitigación">${escapeHtml(humanizeFmeaText(r.mitigation))}</td>
+        <td class="mono" data-label="Estudio NASA">${escapeHtml(r.linked_psi)}</td>
+      </tr>
+    `).join("");
+  }
+
   async function updateGovernance() {
     const mitigated = document.getElementById("fmeaMitigatedToggle").checked;
     const spinoffId = document.getElementById("spinoffSelect").value;
@@ -661,15 +682,7 @@
         ? "Barreras físicas y sensores activos en los 6 modos de fallo del ducto."
         : "Escenario sin barreras activas: representa el riesgo crudo antes de añadir sensores y compuerta.";
 
-      document.getElementById("fmeaTableBody").innerHTML = data.fmea_rows.map((r) => `
-        <tr>
-          <td class="mono"><strong>${escapeHtml(r.mode_id)}</strong></td>
-          <td><strong>${escapeHtml(humanizeFmeaText(r.subsystem))}</strong><br /><span>${escapeHtml(humanizeFmeaText(r.failure_mode))}</span></td>
-          <td class="mono tabular"><strong>${r.active_npr}</strong> <small>(base ${r.baseline_npr})</small></td>
-          <td>${escapeHtml(humanizeFmeaText(r.mitigation))}</td>
-          <td class="mono">${escapeHtml(r.linked_psi)}</td>
-        </tr>
-      `).join("");
+      document.getElementById("fmeaTableBody").innerHTML = renderFmeaRows(data.fmea_rows, true);
       const sp = data.spinoff_metrics;
       document.getElementById("spinWeightOut").textContent = sp.weight_saved_lb_total.toLocaleString() + " lb";
       document.getElementById("spinRiskOut").textContent = "-" + sp.risk_reduction_pct + "%";
@@ -684,6 +697,7 @@
       document.getElementById("fmeaSummaryLine").textContent = mitigated
         ? "Barreras de diseño activadas sobre el catálogo de riesgo local."
         : "Sin barreras activas: riesgo acumulado base sin compuerta ni sensores múltiples.";
+      document.getElementById("fmeaTableBody").innerHTML = renderFmeaRows(FMEA_OFFLINE_ROWS, mitigated);
       const sp = SPINOFF_OFFLINE[spinoffId];
       document.getElementById("spinWeightOut").textContent = (sp.weight * units).toLocaleString() + " lb";
       document.getElementById("spinRiskOut").textContent = "-" + sp.risk + "%";
@@ -830,11 +844,134 @@
     document.addEventListener("keydown", (e) => {
       const tag = document.activeElement && document.activeElement.tagName;
       if (tag === "INPUT" || tag === "SELECT") return;
-      const map = { "1": "museum", "2": "explorer", "3": "sandbox", "4": "twin", "5": "governance", "6": "blueprint" };
+      const map = { "1": "museum", "2": "explorer", "3": "sandbox", "4": "twin", "5": "governance", "6": "blueprint", "7": "models" };
       if (map[e.key]) switchTab(map[e.key]);
     });
   }
 
+  // --- FONDO ORBITAL RETRO EN BUCLE SOBRE TEMA CLARO ---
+  function initOrbitalBackdrop() {
+    const canvas = document.getElementById("orbitalBackdropCanvas");
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext("2d");
+    const reducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let width = 0;
+    let height = 0;
+    let dpr = 1;
+    let phase = 0;
+    let rafId = null;
+
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = width + "px";
+      canvas.style.height = height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function drawFrame(t) {
+      ctx.clearRect(0, 0, width, height);
+
+      // Reticulas fiduciales tipo camara Apollo (Reseau)
+      ctx.strokeStyle = "rgba(11, 61, 145, 0.13)";
+      ctx.lineWidth = 1;
+      const step = width < 680 ? 140 : 200;
+      for (let x = 72; x < width - 36; x += step) {
+        for (let y = 72; y < height - 36; y += step) {
+          ctx.beginPath();
+          ctx.moveTo(x - 5, y);
+          ctx.lineTo(x + 5, y);
+          ctx.moveTo(x, y - 5);
+          ctx.lineTo(x, y + 5);
+          ctx.stroke();
+        }
+      }
+
+      const cx = width * 0.5;
+      const cy = height * 0.46;
+      const rx1 = Math.max(220, width * 0.44);
+      const ry1 = Math.max(120, height * 0.25);
+
+      // Orbita primaria azul cobalto NASA
+      ctx.save();
+      ctx.translate(cx, cy);
+      ctx.rotate(-0.22);
+      ctx.setLineDash([6, 7]);
+      ctx.strokeStyle = "rgba(11, 61, 145, 0.14)";
+      ctx.lineWidth = 1.25;
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rx1, ry1, 0, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Orbita secundaria roja vector
+      ctx.setLineDash([3, 9]);
+      ctx.strokeStyle = "rgba(200, 40, 18, 0.11)";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, rx1 * 0.78, ry1 * 0.86, 0.38, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Satelite orbital 1 (ISS-0g)
+      const a1 = t * 0.35;
+      const sx1 = Math.cos(a1) * rx1;
+      const sy1 = Math.sin(a1) * ry1;
+      ctx.fillStyle = "rgba(11, 61, 145, 0.45)";
+      ctx.beginPath();
+      ctx.arc(sx1, sy1, 4.2, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "rgba(11, 61, 145, 0.28)";
+      ctx.beginPath();
+      ctx.arc(sx1, sy1, 10, 0, Math.PI * 2);
+      ctx.stroke();
+
+      if (width >= 680) {
+        ctx.font = "10px monospace";
+        ctx.fillStyle = "rgba(11, 61, 145, 0.48)";
+        ctx.fillText("ISS-0G // LEO 408KM", sx1 + 14, sy1 + 3);
+      }
+
+      // Vector orbital 2 (Cygnus Saffire)
+      const a2 = -t * 0.24 + 2.1;
+      const rot = 0.38;
+      const lx = Math.cos(a2) * rx1 * 0.78;
+      const ly = Math.sin(a2) * ry1 * 0.86;
+      const sx2 = lx * Math.cos(rot) - ly * Math.sin(rot);
+      const sy2 = lx * Math.sin(rot) + ly * Math.cos(rot);
+      ctx.fillStyle = "rgba(200, 40, 18, 0.42)";
+      ctx.beginPath();
+      ctx.arc(sx2, sy2, 3.6, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function tick() {
+      if (!document.hidden) {
+        phase += 0.008;
+        drawFrame(phase);
+      }
+      rafId = window.requestAnimationFrame(tick);
+    }
+
+    resize();
+    window.addEventListener("resize", () => {
+      resize();
+      if (reducedMotion) drawFrame(0.6);
+    });
+
+    if (reducedMotion) {
+      drawFrame(0.6);
+    } else {
+      rafId = window.requestAnimationFrame(tick);
+    }
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+    };
+  }
+
+  initOrbitalBackdrop();
   wireEvents();
   renderOfficialResources();
   renderMuseum();

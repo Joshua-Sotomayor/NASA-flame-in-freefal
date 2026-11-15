@@ -4,10 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NASA + ENREDADOS · Observatorio AERO-IGNIS SI</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.svg" />
   <link rel="preload" href="GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <canvas id="orbitalBackdropCanvas" class="orbital-backdrop" aria-hidden="true"></canvas>
+
+  <aside class="retro-decal-rail retro-decal-rail--left" aria-hidden="true">
+    <div class="retro-rail-stripe"></div>
+    <span class="retro-rail-tag">DOC-SPEC // GLENN-PSI-0G</span>
+    <svg class="retro-rail-glyph" viewBox="0 0 40 40">
+      <circle cx="20" cy="20" r="16" fill="none" stroke="#0B3D91" stroke-width="1.6" stroke-dasharray="3 2" />
+      <circle cx="20" cy="20" r="6" fill="none" stroke="#C82812" stroke-width="1.8" />
+      <line x1="20" y1="0" x2="20" y2="40" stroke="#0B3D91" stroke-width="0.9" />
+      <line x1="0" y1="20" x2="40" y2="20" stroke="#0B3D91" stroke-width="0.9" />
+    </svg>
+    <span class="retro-rail-scale">0g · 0.16g · 1.0g</span>
+    <span class="retro-rail-stamp">CABIN SAFETY</span>
+  </aside>
+
+  <aside class="retro-decal-rail retro-decal-rail--right" aria-hidden="true">
+    <div class="retro-rail-stripe retro-rail-stripe--red"></div>
+    <span class="retro-rail-tag">ISS LEO 408 KM · 51.6°</span>
+    <svg class="retro-rail-glyph" viewBox="0 0 40 40">
+      <ellipse cx="20" cy="20" rx="17" ry="7" transform="rotate(-28 20 20)" fill="none" stroke="#0B3D91" stroke-width="1.6" />
+      <path d="M11 30 L21 9 L30 30 L21 22 Z" fill="#FC3D21" opacity="0.88" />
+    </svg>
+    <span class="retro-rail-scale">STD-6001 REV.B</span>
+    <span class="retro-rail-stamp">AERO-IGNIS // 2026</span>
+  </aside>
+
   <div class="shell">
     <header class="masthead-hero">
       <div class="masthead-lockup">
@@ -33,6 +61,51 @@
       <p class="masthead-subtitle">
         Observatorio AERO-IGNIS SI · Ciencia de Combustión en Microgravedad y Seguridad en Cabinas Habitables
       </p>
+      <div class="mission-decal-strip" aria-label="Insignias de misión espacial de referencia">
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="18" cy="18" r="15" fill="#0B3D91" />
+            <circle cx="18" cy="18" r="6" fill="none" stroke="#E0F2FE" stroke-width="2" />
+            <circle cx="18" cy="18" r="2.2" fill="#FFFFFF" />
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">ISS · MSG / CIR</span>
+            <span class="mission-decal-sub">MICROGRAVITY 0g LAB</span>
+          </div>
+        </div>
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="3" y="3" width="30" height="30" rx="6" fill="#0B3D91" />
+            <path d="M9 24 L18 8 L27 24 L18 19 Z" fill="#FC3D21" />
+            <ellipse cx="18" cy="19" rx="12" ry="4" transform="rotate(-18 18 19)" fill="none" stroke="#FFFFFF" stroke-width="1.5" />
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">CYGNUS · SAFFIRE</span>
+            <span class="mission-decal-sub">FULL-SCALE CABIN FIRE</span>
+          </div>
+        </div>
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="18" cy="18" r="15" fill="#0A1931" stroke="#0B3D91" stroke-width="1.5" />
+            <path d="M21 8 A10 10 0 1 0 27 25 A8 8 0 1 1 21 8 Z" fill="#FFFFFF" />
+            <circle cx="24" cy="14" r="1.8" fill="#FC3D21" />
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">ARTEMIS · HABITAT</span>
+            <span class="mission-decal-sub">34% O2 · 8.2 PSI</span>
+          </div>
+        </div>
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <polygon points="18,3 33,12 28,31 8,31 3,12" fill="#C82812" />
+            <text x="18" y="21" text-anchor="middle" fill="#FFFFFF" font-size="8.5" font-weight="bold" font-family="monospace">6001</text>
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">APOLLO · STD-6001</span>
+            <span class="mission-decal-sub">CREW SAFETY HERITAGE</span>
+          </div>
+        </div>
+      </div>
     </header>
 
     <nav class="tablist" role="tablist" aria-label="Secciones del observatorio espacial">
@@ -59,6 +132,10 @@
       <button id="tab-blueprint" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-blueprint" data-tab="blueprint">
         <span class="tab-step">06</span>
         <span>Planos de Ingeniería</span>
+      </button>
+      <button id="tab-models" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-models" data-tab="models">
+        <span class="tab-step">07</span>
+        <span>Entrenamiento y Modelos</span>
       </button>
     </nav>
 
@@ -728,6 +805,225 @@
             <span class="badge badge-info">Acceso Público Verificado</span>
           </div>
           <div id="officialResourcesGrid" class="resource-index"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULO 7: METODOLOGIA ACADEMICA, ENTRENAMIENTO Y DESCARGAS -->
+    <section id="panel-models" class="tabpanel" role="tabpanel" aria-labelledby="tab-models">
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Metodología de entrenamiento, procedencia de datos y reproducibilidad</h2>
+          <p>
+            Esta sección documenta cómo se construyeron, calibraron y evaluaron los tres sistemas de aprendizaje automático y visión computacional del observatorio. Siguiendo estándares de transparencia científica, se detallan las fuentes empíricas de la NASA, las envolventes sintéticas empleadas, las limitaciones metodológicas observadas y los enlaces directos para descargar tanto los pesos compilados como el código fuente.
+          </p>
+        </div>
+
+        <!-- Bloque A: Honestidad Academica y Origen de los Datos -->
+        <div class="academic-honesty-band">
+          <div class="academic-col">
+            <div class="pane-head">
+              <h2 class="pane-title">1. Origen de los datos y naturaleza híbrida</h2>
+              <span class="badge badge-info">CC0-1.0 · NASA PSI / OSDR</span>
+            </div>
+            <p class="academic-prose">
+              El corpus documental y experimental proviene de dos niveles de evidencia claramente diferenciados:
+            </p>
+            <ul class="academic-list">
+              <li>
+                <strong>Metadatos de las 24 campañas NASA PSI:</strong> Fichas estructuradas bajo licencia pública <code>CC0-1.0</code> (<code>DOIs 10.60555/psi-24</code> a <code>10.60555/psi-154</code>), extraídas de los laboratorios orbitales <code>ISS-CIR</code>, <code>ISS-MSG</code>, naves <code>Cygnus</code> y plataformas terrestres de referencia (<code>psi_combustion_24.json</code>).
+              </li>
+              <li>
+                <strong>Tabla paramétrica de inflamabilidad (<code>N = 566</code> corridas):</strong> Registros en <code>bass_saffire_runs.csv</code> calibrados sobre las envolventes reportadas en <em>BASS-II</em> (<code>240</code> corridas, <code>15–23% O2</code>, flujo <code>0–50 cm/s</code>), <em>Saffire I–III</em> (<code>36</code>), <em>Saffire IV–V</em> (<code>64</code>, atmósferas lunares hasta <code>34% O2</code> y <code>8.2 psi</code>), <em>Saffire VI / Forense</em> (<code>172</code>) y <em>FLEX / CFI-G</em> (<code>54</code>). Resultan <code>256</code> corridas con auto-extinción y <code>310</code> de propagación sostenida.
+              </li>
+              <li>
+                <strong>Tensores ópticos y series de ducto:</strong> Dado que los repositorios completos de video de alta velocidad de <em>BASS-II</em> alcanzan <code>255.77 GB</code>, el entrenamiento local empleó <code>N = 180</code> matrices normalizadas de <code>64 × 64</code> píxeles (<code>45</code> por régimen con ruido gaussiano <code>σ = 0.035</code>) y <code>N = 600</code> vectores sintéticos de sensores calibrados con umbrales de <em>FLEX</em> y <em>SPICE</em>.
+              </li>
+            </ul>
+          </div>
+
+          <div class="academic-col academic-col--warn">
+            <div class="pane-head">
+              <h2 class="pane-title">2. Declaración de honestidad académica y límites</h2>
+              <span class="badge badge-warn">Alcance Experimental Acotado</span>
+            </div>
+            <p class="academic-prose">
+              Los indicadores reportados distinguen entre generalización estadística no trivial y verificación sobre generadores paramétricos:
+            </p>
+            <ul class="academic-list">
+              <li>
+                <strong>Solapamiento físico en inflamabilidad (<code>78.49%</code> CV):</strong> El clasificador de extinción alcanza una exactitud promedio de <code>0.7849</code> en validación cruzada estratificada de <code>5</code> pliegues. Este techo indica una ambigüedad real en la frontera entre extinción por radiación y llama estacionaria de bajo flujo, y resulta consistente con la dispersión experimental descrita en <em>BASS-II</em>.
+              </li>
+              <li>
+                <strong>Lectura crítica del <code>100.0%</code> en visión y árbol tabular:</strong> La exactitud de <code>1.000</code> en la red convolucional óptica y en el árbol de sensores refleja que ambos modelos se evaluaron sobre particiones sintéticas separables (<code>σ = 0.035</code> y fronteras deterministas de seguridad). No debe interpretarse como desempeño clínico sobre cámaras reales de vuelo espacial sin validación adicional.
+              </li>
+              <li>
+                <strong>Requisito para operación en vuelo real:</strong> La puesta en servicio sobre hardware orbital requiere reentrenamiento con fotogramas crudos descargados mediante el cuaderno GPU desde <code>osdr.nasa.gov</code> y ensayos de calificación bajo <code>NASA-STD-6001</code>.
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Bloque B: Medios de Entrenamiento y Descargas Globales -->
+        <div class="preset-band" style="border-top: 1px solid var(--border-hairline);">
+          <div class="pane-head">
+            <h2 class="pane-title">3. Medios de entrenamiento reproducible (Cloud GPU vs. CPU local)</h2>
+            <span class="badge badge-ok">Semilla SEED = 42 · Peso total 368.9 KB</span>
+          </div>
+          <div class="training-env-grid">
+            <article class="training-env-card">
+              <h3>Entorno Cloud: Google Colab · GPU NVIDIA Tesla T4</h3>
+              <p>
+                Cuaderno <code>AERO_IGNIS_Colab_Training.ipynb</code> diseñado para ingesta selectiva de tablas y fotogramas desde NASA OSDR sin descargar <code>255.77 GB</code> locales. Aplica rotaciones de <code>90°</code>, <code>180°</code> y <code>270°</code> físicamente válidas en microgravedad (ausencia de convección vertical) antes de exportar tensores al estándar ONNX.
+              </p>
+            </article>
+            <article class="training-env-card">
+              <h3>Entorno Local: CPU Determinista (Python · scikit-learn · PyTorch)</h3>
+              <p>
+                Script reproducible <code>train_models.py</code> que entrena los cinco artefactos en menos de <code>5</code> segundos sobre CPU estándar (<code>n_jobs = 1</code>, semilla <code>42</code>), genera el manifiesto de verificación criptográfica de 256 bits y permite ejecutar pruebas unitarias e integración sin conexión a internet.
+              </p>
+            </article>
+          </div>
+          <div class="download-toolbar" style="margin-top:14px;">
+            <a class="btn btn-primary" href="/api/v1/models/download/code-train-local" download>Descargar Entrenador Local (train_models.py)</a>
+            <a class="btn" href="/api/v1/models/download/code-colab-notebook" download>Descargar Cuaderno GPU Colab (.ipynb)</a>
+            <a class="btn" href="/api/v1/models/download/manifest-integrity" download>Manifiesto de Integridad (256 bits · .json)</a>
+          </div>
+        </div>
+
+        <!-- Bloque C: Fichas Academicas de los 3 Modelos y Descargas -->
+        <div class="models-triptych">
+          <article class="model-card">
+            <div class="pane-head">
+              <h2 class="pane-title">Modelo 1 · Inflamabilidad y Propagación</h2>
+              <span class="badge badge-info">CV 5-Fold: 78.49%</span>
+            </div>
+            <p class="academic-prose">
+              <strong>Metodología:</strong> Ensamble de Bosques Aleatorios (<em>Random Forest</em>, <code>120</code> árboles, profundidad máx. <code>8</code>) para probabilidad de auto-extinción y dos regresores por Potenciación del Gradiente (<em>Gradient Boosting</em>, <code>120</code> estimadores, profundidad <code>4</code>) para tiempo de quemado y velocidad de avance <code>Vf</code>, acoplados a <code>Da</code> y <code>Pe</code>.
+            </p>
+            <p class="academic-prose">
+              <strong>Datos y resultados:</strong> Entrenado con <code>566</code> corridas y <code>7</code> predictores físicos (<code>%O2</code>, presión en atmósferas, flujo, gravedad, espesor en cm, sentido de flujo y reactividad del material). Peso combinado: <code>169.8 KB</code> (clasificador) y <code>167.2 KB</code> (regresores).
+            </p>
+            <div class="download-stack">
+              <a class="btn" href="/api/v1/models/download/flammability-rf" download>Modelo Clasificador (.joblib · 169.8 KB)</a>
+              <a class="btn" href="/api/v1/models/download/burntime-gbr" download>Modelo Regresor (.joblib · 167.2 KB)</a>
+              <a class="btn" href="/api/v1/models/download/code-physics-ml" download>Código de Inferencia (physics_ml.py)</a>
+              <a class="btn" href="/api/v1/models/download/data-bass-saffire" download>Dataset Calibrado (bass_saffire_runs.csv)</a>
+            </div>
+          </article>
+
+          <article class="model-card">
+            <div class="pane-head">
+              <h2 class="pane-title">Modelo 2 · Visión Óptica y Sensores en Ducto</h2>
+              <span class="badge badge-warn">Sintético: 100.0%</span>
+            </div>
+            <p class="academic-prose">
+              <strong>Metodología:</strong> Red convolucional en PyTorch (<code>Conv2d 1→8→16</code>, <code>MaxPool2d</code>, <code>AvgPool2d</code>, capa lineal <code>256→4</code>, optimizador Adam con tasa <code>4e-3</code> durante <code>45</code> épocas) exportada al estándar ONNX (<code>opset 14</code>), en fusión con un Árbol de Decisión (profundidad <code>4</code>) y autómata con histéresis.
+            </p>
+            <p class="academic-prose">
+              <strong>Datos y resultados:</strong> <code>180</code> matrices ópticas de <code>64 × 64</code> (<code>4</code> regímenes) y <code>600</code> muestras de <code>dT/dt</code>, <code>CO</code>, aerosol <code>&lt;0.1 µm</code> y flujo. Exactitud en partición sintética de <code>1.000</code>, latencia menor a <code>5 ms</code> en CPU y tamaño compacto de <code>10.5 KB</code> (red) + <code>1.2 KB</code> (árbol).
+            </p>
+            <div class="download-stack">
+              <a class="btn" href="/api/v1/models/download/flame-cnn" download>Red Convolucional Óptica (.onnx · 10.5 KB)</a>
+              <a class="btn" href="/api/v1/models/download/sensor-tree" download>Árbol de Sensores (.joblib · 1.2 KB)</a>
+              <a class="btn" href="/api/v1/models/download/code-duct-twin" download>Código de Orquestación (duct_twin.py)</a>
+            </div>
+          </article>
+
+          <article class="model-card">
+            <div class="pane-head">
+              <h2 class="pane-title">Modelo 3 · Agrupamiento y Síntesis PSI</h2>
+              <span class="badge badge-ok">24 PSI · 4 Familias</span>
+            </div>
+            <p class="academic-prose">
+              <strong>Metodología:</strong> Vectorización por Frecuencia Léxica Inversa (<code>320</code> términos entre unigramas y bigramas), reducción dimensional mediante Análisis de Componentes Principales (<code>PCA</code>, <code>2</code> ejes), partición <code>K-Means</code> (<code>k = 4</code>) y ordenamiento multicriterio TOPSIS con extracción por similitud coseno.
+            </p>
+            <p class="academic-prose">
+              <strong>Datos y resultados:</strong> Corpus completo de las <code>24</code> investigaciones oficiales NASA PSI (objetivos, enfoque experimental, sensores y beneficios terrestres). Conserva trazabilidad literal a DOIs <code>10.60555</code> sin generación de texto libre ni alucinaciones; peso total de <code>20.2 KB</code>.
+            </p>
+            <div class="download-stack">
+              <a class="btn" href="/api/v1/models/download/psi-clusters" download>Modelo de Clústeres (.joblib · 20.2 KB)</a>
+              <a class="btn" href="/api/v1/models/download/code-ranking-nlp" download>Código TOPSIS y Síntesis (ranking_nlp.py)</a>
+              <a class="btn" href="/api/v1/models/download/data-psi-24" download>Corpus 24 Estudios (psi_combustion_24.json)</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Bloque D: Evidencia Visual del Entrenamiento y Datos -->
+        <div class="workbench-stage" style="border-top: 1px solid var(--border-strong);">
+          <div class="pane-head">
+            <h2 class="pane-title">4. Evidencia gráfica del entrenamiento y distribución del conjunto de datos</h2>
+            <span class="badge badge-info">Diagramas Verificados + Métricas Reales</span>
+          </div>
+
+          <div class="training-visual-grid">
+            <figure class="figure-frame">
+              <figcaption class="visual-caption">
+                <strong>Distribución empírica de corridas y desempeño por modelo</strong>
+                <span>566 corridas calibradas · 368.9 KB totales en 5 artefactos</span>
+              </figcaption>
+              <svg viewBox="0 0 540 280" role="img" aria-label="Gráfica de distribución de 566 corridas por campaña y exactitud comparativa de modelos">
+                <rect x="10" y="10" width="520" height="260" fill="#FFFFFF" stroke="#C5D3E8" />
+                <text x="24" y="34" fill="#0A1931" font-size="11" font-weight="bold" font-family="monospace">A. Corridas tabulares por campaña (N = 566)</text>
+
+                <text x="24" y="64" fill="#1E2E4A" font-size="9.5" font-family="monospace">BASS-II (ISS-MSG)</text>
+                <rect x="175" y="53" width="240" height="14" rx="2" fill="#0B3D91" />
+                <text x="423" y="64" fill="#0A1931" font-size="9.5" font-weight="bold" font-family="monospace">240 (42.4%)</text>
+
+                <text x="24" y="90" fill="#1E2E4A" font-size="9.5" font-family="monospace">SAFFIRE-VI / Forense</text>
+                <rect x="175" y="79" width="172" height="14" rx="2" fill="#C82812" />
+                <text x="355" y="90" fill="#0A1931" font-size="9.5" font-weight="bold" font-family="monospace">172 (30.4%)</text>
+
+                <text x="24" y="116" fill="#1E2E4A" font-size="9.5" font-family="monospace">SAFFIRE-IV / V Lunar</text>
+                <rect x="175" y="105" width="64" height="14" rx="2" fill="#065F46" />
+                <text x="247" y="116" fill="#0A1931" font-size="9.5" font-weight="bold" font-family="monospace">64 (11.3%)</text>
+
+                <text x="24" y="142" fill="#1E2E4A" font-size="9.5" font-family="monospace">FLEX / CFI-G (0g)</text>
+                <rect x="175" y="131" width="54" height="14" rx="2" fill="#78350F" />
+                <text x="237" y="142" fill="#0A1931" font-size="9.5" font-weight="bold" font-family="monospace">54 (9.5%)</text>
+
+                <text x="24" y="168" fill="#1E2E4A" font-size="9.5" font-family="monospace">SAFFIRE I–III Cygnus</text>
+                <rect x="175" y="157" width="36" height="14" rx="2" fill="#415678" />
+                <text x="219" y="168" fill="#0A1931" font-size="9.5" font-weight="bold" font-family="monospace">36 (6.4%)</text>
+
+                <line x1="24" y1="186" x2="516" y2="186" stroke="#DCE6F5" stroke-dasharray="4 3" />
+                <text x="24" y="206" fill="#0A1931" font-size="11" font-weight="bold" font-family="monospace">B. Exactitud declarada (CV real vs. sintética)</text>
+
+                <text x="24" y="229" fill="#1E2E4A" font-size="9" font-family="monospace">Clasificador Inflamabilidad (CV 5-fold)</text>
+                <rect x="275" y="219" width="157" height="12" rx="2" fill="#0B3D91" />
+                <text x="438" y="229" fill="#0B3D91" font-size="9.5" font-weight="bold" font-family="monospace">78.49%</text>
+
+                <text x="24" y="251" fill="#1E2E4A" font-size="9" font-family="monospace">Visión ONNX / Árbol (Partición sintética)</text>
+                <rect x="275" y="241" width="200" height="12" rx="2" fill="#065F46" />
+                <text x="481" y="251" fill="#065F46" font-size="9.5" font-weight="bold" font-family="monospace">100.0%*</text>
+              </svg>
+              <p class="prose-note">
+                *Nota metodológica: el 78.49% refleja validación cruzada sobre datos tabulares mixtos; el 100.0% corresponde a particiones sintéticas calibradas (N=180 imágenes y N=600 vectores de ducto).
+              </p>
+            </figure>
+
+            <figure class="figure-frame">
+              <figcaption class="visual-caption">
+                <strong>Pipeline Dual de Entrenamiento (Colab T4 GPU / CPU Local)</strong>
+                <a href="/assets/graphs/ml_dl_colab_pipeline.png" target="_blank" rel="noopener noreferrer">Abrir en alta resolución (PNG)</a>
+              </figcaption>
+              <img class="training-graph-img" src="/assets/graphs/ml_dl_colab_pipeline.svg" alt="Diagrama del pipeline de entrenamiento dual en Google Colab GPU T4 y CPU local con exportación ONNX y manifiesto de integridad" loading="lazy" />
+              <p class="prose-note">
+                Flujo completo desde la consulta selectiva a NASA OSDR y los generadores parametrizados hasta la compilación de los cinco artefactos auditables.
+              </p>
+            </figure>
+
+            <figure class="figure-frame training-visual-wide">
+              <figcaption class="visual-caption">
+                <strong>Cartografía de conocimiento: 24 Investigaciones PSI hacia Modelos y Objetivos</strong>
+                <a href="/assets/graphs/psi_knowledge_graph.png" target="_blank" rel="noopener noreferrer">Abrir en alta resolución (PNG)</a>
+              </figcaption>
+              <img class="training-graph-img" src="/assets/graphs/psi_knowledge_graph.svg" alt="Grafo de conocimiento conectando las veinticuatro investigaciones NASA PSI con los tres modelos de aprendizaje y los cuatro objetivos del observatorio" loading="lazy" />
+              <p class="prose-note">
+                Trazabilidad directa entre cada investigación experimental (Saffire, BASS-II, FLEX, ACME, SPICE, MSC), las variables extraídas y el modelo que las procesa.
+              </p>
+            </figure>
+          </div>
         </div>
       </div>
     </section>
