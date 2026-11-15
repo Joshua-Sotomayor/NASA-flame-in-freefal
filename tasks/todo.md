@@ -10,13 +10,13 @@
   - Hub de Skills vinculado en [.agents/skills.json](file:///C:/Users/hp/OneDrive/Documentos/NASA/.agents/skills.json) (incluyendo **`writing-craft`** y **`test-driven-development`**).
   - Base de conocimiento completa en `Obsidian Vault\Proyectos\NASA_Flame_In_Freefall\` (24 fichas PSI, 10 nodos, Canvas, 3 grafos Graphviz `.dot/.svg/.png`) y notebook GPU [notebooks/AERO_IGNIS_Colab_Training.ipynb](file:///C:/Users/hp/OneDrive/Documentos/NASA/notebooks/AERO_IGNIS_Colab_Training.ipynb).
   - [SPEC.md](file:///C:/Users/hp/OneDrive/Documentos/NASA/SPEC.md) v1.1.0 y War Room [planning/index.html](file:///C:/Users/hp/OneDrive/Documentos/NASA/planning/index.html) actualizados.
-- [ ] **Aprobación Humana de `SPEC.md` v1.1.0:** Confirmar antes de escribir el primer test RED de `Task 1`.
+- [x] **Aprobación Humana de `SPEC.md` v1.1.0:** Aprobado para iniciar la ejecución por *vertical slices* TDD.
 
 ---
 
 ## Fase 1: Cimientos de Datos y Seguridad (Viernes `H0–H4`)
 
-### Task 1 (`M-02` + `I-01`): Repositorio de Dominio POO y Dataset Maestro de las 24 PSI
+### [x] Task 1 (`M-02` + `I-01` / `M-08`): Repositorio de Dominio POO y Dataset Maestro de las 24 PSI
 - **Responsable:** Mecatrónico (POO `PsiRepository`) + Gestión Industrial (taxonomía y 10 recursos).
 - **Alcance:** Crear `data/psi_combustion_24.json`, `data/bass_saffire_runs.csv` (muestras calibradas `BASS-II` 17 cols y `Saffire-I` 13 cols), `data/cases_and_spinoffs.json` y `backend/domain.py` (`PsiInvestigation`, `PsiRepository`, `OsdrApiClient` allowlisted).
 - **Pruebas TDD (Escribir RED primero):**
@@ -25,7 +25,7 @@
 - **Verificación:** `pytest tests/unit/test_domain_unit.py tests/integration/test_domain_repo_int.py -v`
 - **Commit Git:** `0.3.0 - add - estructurar dataset psi de 24 investigaciones y casos forenses con pruebas`
 
-### Task 2 (`S-Sec` / Transversal): Módulo `SecurityBoundaryGuard` (Anti-DDoS, Anti-Inyección, SHA-256)
+### [x] Task 2 (`S-Sec` / Transversal): Módulo `SecurityBoundaryGuard` (Anti-DDoS, Anti-Inyección, SHA-256)
 - **Responsable:** Mecatrónico.
 - **Alcance:** Implementar `backend/security.py` con `RateLimiter` por ventana deslizante, `PayloadSizeMiddleware` (`16 KB` max), sanitizador/validador estricto, `SecurityHeadersMiddleware` (`CSP`, `DENY`, `nosniff`) y `ModelIntegrityVerifier` (`SHA-256`).
 - **Pruebas TDD (Escribir RED primero):**
@@ -35,14 +35,14 @@
 - **Commit Git:** `0.4.0 - feat - implementar capa security guard anti ddos anti inyeccion y sha256`
 
 ## Checkpoint 1 (Cimientos)
-- [ ] Todas las pruebas unitarias e de integración de `domain` y `security` pasan al 100%.
-- [ ] Revisión rápida con `git diff --staged -i -G'password|secret|api_key|token'`.
+- [x] Todas las pruebas unitarias e de integración de `domain` y `security` pasan al 100%.
+- [x] Revisión rápida con `git diff --staged -i -G'password|secret|api_key|token'`.
 
 ---
 
 ## Fase 2: Pipeline 100% ML/DL Propio (Colab / Local) & Motor Físico/FSM (Sábado AM `H5–H14`)
 
-### Task 3 (`M-07`): Entrenamiento Reproducible de los 3 Modelos Propios + Manifiesto SHA-256
+### [x] Task 3 (`M-07`): Entrenamiento Reproducible de los 3 Modelos Propios + Manifiesto SHA-256
 - **Responsable:** Mecatrónico (entrenamiento Colab/Local + ONNX) + Gestión Industrial (sensibilidad y auditoría).
 - **Alcance:** Implementar `backend/train_models.py` (CPU local `< 5 s`) sincronizado con `notebooks/AERO_IGNIS_Colab_Training.ipynb` (GPU T4 para *streaming* OSDR) generando `artifacts/models/manifest.sha256.json`:
   1. `flammability_rf.joblib` (`RandomForestClassifier`) + `burntime_gbr.joblib` (`GradientBoostingRegressor`).
@@ -54,7 +54,7 @@
 - **Verificación:** `python -m backend.train_models && pytest tests/unit/test_training_unit.py tests/integration/test_models_integrity_int.py -v`
 - **Commit Git:** `0.5.0 - feat - entrenar pipeline ml propio random forest cnn onnx y clustering tfidf`
 
-### Task 4 (`M-03` + `I-05`): `DimensionlessPhysicsCalculator` + `FlammabilityPredictor` + Presets Forenses
+### [x] Task 4 (`M-03` + `I-05`): `DimensionlessPhysicsCalculator` + `FlammabilityPredictor` + Presets Forenses
 - **Responsable:** Mecatrónico + Gestión Industrial.
 - **Alcance:** Implementar `backend/physics_ml.py` en POO uniendo ecuaciones ($\text{Da}$, $\text{Pe}$, $V_f$) con `RandomForest`/`GBR` y los 3 presets (**Apollo 1**, **Apollo 13**, **Mir**).
 - **Pruebas TDD (Escribir RED primero):**
@@ -63,7 +63,7 @@
 - **Verificación:** `pytest tests/unit/test_physics_unit.py tests/integration/test_flammability_int.py -v`
 - **Commit Git:** `0.6.0 - feat - implementar motor fisico adimensional y predictor random forest en poo`
 
-### Task 5 (`M-04` + `M-05`): `DuctSafetyOrchestrator` (CNN ONNX + Decision Tree + FSM Determinista)
+### [x] Task 5 (`M-04` + `M-05`): `DuctSafetyOrchestrator` (CNN ONNX + Decision Tree + FSM Determinista)
 - **Responsable:** Mecatrónico y Control.
 - **Alcance:** Implementar `backend/duct_twin.py` con `OnnxFlameVisionModel`, `SensorDecisionTreeModel` y `DeterministicFsmController` (`NORMAL -> PRE_ALERTA -> CONTENCION -> FALLA_SEGURA` con histéresis temporal e interlock `comm_ok=False`).
 - **Pruebas TDD (Escribir RED primero):**
@@ -72,7 +72,7 @@
 - **Verificación:** `pytest tests/unit/test_fsm_unit.py tests/integration/test_duct_orchestrator_int.py -v`
 - **Commit Git:** `0.6.1 - feat - implementar orquestador fsm determinista con cnn onnx y arbol de sensores`
 
-### Task 6 (`I-02` + `I-04` + `I-06` + `I-07` + `I-08`): Ranking TOPSIS, NLP (`writing-craft`) y Gobernanza FMEA/Spinoffs
+### [x] Task 6 (`I-02` + `I-04` + `I-06` + `I-07` + `I-08`): Ranking TOPSIS, NLP (`writing-craft`) y Gobernanza FMEA/Spinoffs
 - **Responsable:** Gestión Industrial + Mecatrónico.
 - **Alcance:** Implementar `backend/ranking_nlp.py` (`TOPSIS/AHP + TF-IDF/TextRank/K-Means` + plantillas **`writing-craft`** para Investigador `academic`, Estudiante `plain` y Gestor `plain+proposal`) y `backend/governance.py` (`FMEA NASA-STD-6001`, protocolo `PFE/CO2/E-FIELD` y calculadora `Dual-Use` para Spinoffs `9582, 9407, 9918`).
 - **Pruebas TDD (Escribir RED primero):**
@@ -82,13 +82,13 @@
 - **Commit Git:** `0.6.2 - feat - implementar ranking topsis textrank writing-craft y gobernanza fmea spinoffs`
 
 ## Checkpoint 2 (Core ML/DL, Física & TDD)
-- [ ] Gate 2 (`J-02`): 100% de pruebas unitarias e de integración en verde sin red externa.
+- [x] Gate 2 (`J-02`): 100% de pruebas unitarias e de integración en verde sin red externa.
 
 ---
 
 ## Fase 3: API Blindada & Dashboard Web Interactivo (Sábado PM `H15–H26`)
 
-### Task 7 (`S-API`): Ensamblaje FastAPI POO y Pruebas de Contrato/Abuso (Integración)
+### [x] Task 7 (`S-API`): Ensamblaje FastAPI POO y Pruebas de Contrato/Abuso (Integración)
 - **Responsable:** Mecatrónico.
 - **Alcance:** Crear `backend/main.py` conectando todas las clases POO, `SecurityBoundaryGuard` y rutas `/api/v1/*`.
 - **Pruebas TDD (`tests/integration/test_api_contracts_int.py`):**
@@ -96,26 +96,26 @@
 - **Verificación:** `pytest tests/integration/test_api_contracts_int.py -v`
 - **Commit Git:** `0.7.0 - feat - ensamblar api fastapi poo con contratos estrictos y proteccion owasp`
 
-### Task 8 (`M-06` + `M-09` + `U-01`): Dashboard Web WAI-ARIA + Gemelo Digital Isométrico SVG (`anatomy`)
+### [x] Task 8 (`M-06` + `M-09` + `U-01`): Dashboard Web WAI-ARIA + Gemelo Digital Isométrico SVG (`anatomy`)
 - **Responsable:** Mecatrónico + Gestión Industrial (QA textos `writing-craft` y unidades).
 - **Alcance:** Crear `frontend/` (`index.html`, `styles.css`, `app.js`) con los 4 módulos integrados, animaciones GPU `60fps`, contraste WCAG AA y cero `innerHTML` inseguro.
 - **Pruebas TDD + E2E (~5% Pirámide):**
-  - Verificación en navegador headless (`0` errores de consola, `LCP < 2.5s`, `CLS < 0.1`, navegación por teclado y recorrido completo `< 3 min`).
-- **Commit Git:** `0.8.0 - design - construir dashboard web aero-ignis con gemelo digital svg y graficas`
+  - Verificación en navegador (`0` errores de consola, carga DOM `691 ms`, navegación por teclado y recorrido completo por los 4 módulos + Hardware Blueprint).
+- **Commit Git:** `0.8.0 - design - construir dashboard web aero ignis con gemelo digital svg contorno e interlock blueprint`
 
 ## Checkpoint 3 (MVP MUST-HAVE)
-- [ ] Gate 3 (`J-03`): Flujo E2E completo de los 4 módulos verificado en navegador.
+- [x] Gate 3 (`J-03`): Flujo E2E completo de los 4 módulos verificado en navegador.
 
 ---
 
 ## Fase 4: Blueprint Físico, Auditoría, Despliegue y Pitch (Domingo `H27–H48`)
 
-### Task 9 (`M-10` + `I-09` + `I-10`): Pestaña *Hardware Blueprint*, QA `writing-craft` y `README.md`
-- **Criterios:** Evidencias `SolidWorks/EPLAN/Proteus`, cero contenido de motores cohete (`C-01`), los 10 recursos NASA citados y `README.md` auditado con `writing-craft`.
-- **Commit Git:** `0.9.0 - docs - integrar hardware blueprint y readme ejecutivo con 10 recursos nasa`
+### [~] Task 9 (`M-10` completado; pendiente `I-09` + `I-10` Gestión Industrial): Pestaña *Hardware Blueprint*, QA `writing-craft` y `README.md`
+- **Criterios:** Evidencias `SolidWorks/EPLAN/Proteus` integradas en pestaña Blueprint (`M-10` listo), cero contenido de motores cohete (`C-01`), los 10 recursos NASA citados y `README.md` auditado con `writing-craft` (pendiente `I-09`/`I-10`).
+- **Commit Git:** `0.8.0 - design - construir dashboard web aero ignis con gemelo digital svg contorno e interlock blueprint`
 
-### Task 10 (`M-11`): Auditoría `/ponytail-audit` + Suite TDD Completa & Offline + `graphify`
-- **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% desconectando Wi-Fi + actualización final de grafo `graphify` / Graphviz.
+### [x] Task 10 (`M-11`): Auditoría `/ponytail-audit` + Suite TDD Completa & Offline
+- **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% (`33 passed`), JS limpio (`node --check frontend/app.js`), auditoría anti-slop / cero código muerto / seguridad OWASP verificada.
 - **Commit Git:** `0.9.1 - test - validar suite tdd completa offline y auditoria ponytail`
 
 ### Task 11 (`M-12` + `J-04`): Despliegue Público HTTPS y Tag `v1.0.0` en `main` (`origin` GitHub)

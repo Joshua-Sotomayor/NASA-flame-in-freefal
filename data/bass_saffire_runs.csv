@@ -1,0 +1,567 @@
+run_id,campaign,facility,material,o2_pct,pressure_psi,flow_cm_s,gravity_g,thickness_mm,flow_dir,damkohler,peclet,extinguished,burn_time_s,flame_spread_mm_s,regime
+RUN-0001,BASS-II,ISS-MSG,PMMA,17.0,10.2,0.5,0.0,3.0,concurrent,0.721,0.833,1,12.5,0.326,Extincion Radiativa (Quenching)
+RUN-0002,BASS-II,ISS-MSG,PMMA,17.0,10.2,1.5,0.0,3.0,concurrent,0.721,2.5,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0003,BASS-II,ISS-MSG,PMMA,17.0,10.2,5.0,0.0,3.0,concurrent,0.631,8.333,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0004,BASS-II,ISS-MSG,PMMA,17.0,10.2,15.0,0.0,3.0,concurrent,0.21,25.0,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0005,BASS-II,ISS-MSG,PMMA,17.0,10.2,30.0,0.0,3.0,concurrent,0.105,50.0,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0006,BASS-II,ISS-MSG,PMMA,17.0,10.2,50.0,0.0,3.0,concurrent,0.063,83.333,1,8.7,0.512,Extincion por Soplado (Blowoff)
+RUN-0007,BASS-II,ISS-MSG,PMMA,17.0,14.7,0.5,0.0,3.0,concurrent,0.949,0.833,1,12.5,0.326,Extincion Radiativa (Quenching)
+RUN-0008,BASS-II,ISS-MSG,PMMA,17.0,14.7,1.5,0.0,3.0,concurrent,0.949,2.5,1,19.5,0.405,Extincion Radiativa (Quenching)
+RUN-0009,BASS-II,ISS-MSG,PMMA,17.0,14.7,5.0,0.0,3.0,concurrent,0.83,8.333,1,19.5,0.405,Extincion Radiativa (Quenching)
+RUN-0010,BASS-II,ISS-MSG,PMMA,17.0,14.7,15.0,0.0,3.0,concurrent,0.277,25.0,1,19.5,0.405,Extincion Radiativa (Quenching)
+RUN-0011,BASS-II,ISS-MSG,PMMA,17.0,14.7,30.0,0.0,3.0,concurrent,0.138,50.0,1,19.5,0.405,Extincion Radiativa (Quenching)
+RUN-0012,BASS-II,ISS-MSG,PMMA,17.0,14.7,50.0,0.0,3.0,concurrent,0.083,83.333,1,8.7,0.512,Extincion por Soplado (Blowoff)
+RUN-0013,BASS-II,ISS-MSG,PMMA,19.0,10.2,0.5,0.0,3.0,concurrent,0.911,0.833,1,12.5,0.364,Extincion Radiativa (Quenching)
+RUN-0014,BASS-II,ISS-MSG,PMMA,19.0,10.2,1.5,0.0,3.0,concurrent,0.911,2.5,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0015,BASS-II,ISS-MSG,PMMA,19.0,10.2,5.0,0.0,3.0,concurrent,0.797,8.333,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0016,BASS-II,ISS-MSG,PMMA,19.0,10.2,15.0,0.0,3.0,concurrent,0.266,25.0,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0017,BASS-II,ISS-MSG,PMMA,19.0,10.2,30.0,0.0,3.0,concurrent,0.133,50.0,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0018,BASS-II,ISS-MSG,PMMA,19.0,10.2,50.0,0.0,3.0,concurrent,0.08,83.333,1,8.7,0.572,Extincion por Soplado (Blowoff)
+RUN-0019,BASS-II,ISS-MSG,PMMA,19.0,14.7,0.5,0.0,3.0,concurrent,1.198,0.833,1,12.5,0.364,Extincion Radiativa (Quenching)
+RUN-0020,BASS-II,ISS-MSG,PMMA,19.0,14.7,1.5,0.0,3.0,concurrent,1.198,2.5,1,19.5,0.494,Extincion Radiativa (Quenching)
+RUN-0021,BASS-II,ISS-MSG,PMMA,19.0,14.7,5.0,0.0,3.0,concurrent,1.049,8.333,1,19.5,0.494,Extincion Radiativa (Quenching)
+RUN-0022,BASS-II,ISS-MSG,PMMA,19.0,14.7,15.0,0.0,3.0,concurrent,0.35,25.0,1,19.5,0.494,Extincion Radiativa (Quenching)
+RUN-0023,BASS-II,ISS-MSG,PMMA,19.0,14.7,30.0,0.0,3.0,concurrent,0.175,50.0,1,19.5,0.494,Extincion Radiativa (Quenching)
+RUN-0024,BASS-II,ISS-MSG,PMMA,19.0,14.7,50.0,0.0,3.0,concurrent,0.105,83.333,1,8.7,0.572,Extincion por Soplado (Blowoff)
+RUN-0025,BASS-II,ISS-MSG,PMMA,21.0,10.2,0.5,0.0,3.0,concurrent,1.124,0.833,1,12.5,0.402,Extincion Radiativa (Quenching)
+RUN-0026,BASS-II,ISS-MSG,PMMA,21.0,10.2,1.5,0.0,3.0,concurrent,1.124,2.5,0,110.58,1.922,Propagacion Estable 0g
+RUN-0027,BASS-II,ISS-MSG,PMMA,21.0,10.2,5.0,0.0,3.0,concurrent,0.984,8.333,0,105.77,2.084,Propagacion Estable 0g
+RUN-0028,BASS-II,ISS-MSG,PMMA,21.0,10.2,15.0,0.0,3.0,concurrent,0.328,25.0,0,94.72,2.547,Propagacion Estable 0g
+RUN-0029,BASS-II,ISS-MSG,PMMA,21.0,10.2,30.0,0.0,3.0,concurrent,0.164,50.0,0,82.96,3.241,Propagacion Estable 0g
+RUN-0030,BASS-II,ISS-MSG,PMMA,21.0,10.2,50.0,0.0,3.0,concurrent,0.098,83.333,1,8.7,0.632,Extincion por Soplado (Blowoff)
+RUN-0031,BASS-II,ISS-MSG,PMMA,21.0,14.7,0.5,0.0,3.0,concurrent,1.479,0.833,1,12.5,0.402,Extincion Radiativa (Quenching)
+RUN-0032,BASS-II,ISS-MSG,PMMA,21.0,14.7,1.5,0.0,3.0,concurrent,1.479,2.5,0,105.16,2.106,Propagacion Estable 0g
+RUN-0033,BASS-II,ISS-MSG,PMMA,21.0,14.7,5.0,0.0,3.0,concurrent,1.294,8.333,0,100.6,2.283,Propagacion Estable 0g
+RUN-0034,BASS-II,ISS-MSG,PMMA,21.0,14.7,15.0,0.0,3.0,concurrent,0.431,25.0,0,90.09,2.79,Propagacion Estable 0g
+RUN-0035,BASS-II,ISS-MSG,PMMA,21.0,14.7,30.0,0.0,3.0,concurrent,0.216,50.0,0,78.9,3.551,Propagacion Estable 0g
+RUN-0036,BASS-II,ISS-MSG,PMMA,21.0,14.7,50.0,0.0,3.0,concurrent,0.129,83.333,1,8.7,0.632,Extincion por Soplado (Blowoff)
+RUN-0037,BASS-II,ISS-MSG,PMMA,24.0,10.2,0.5,0.0,3.0,concurrent,1.488,0.833,1,12.5,0.46,Extincion Radiativa (Quenching)
+RUN-0038,BASS-II,ISS-MSG,PMMA,24.0,10.2,1.5,0.0,3.0,concurrent,1.488,2.5,0,96.89,2.444,Propagacion Estable 0g
+RUN-0039,BASS-II,ISS-MSG,PMMA,24.0,10.2,5.0,0.0,3.0,concurrent,1.302,8.333,0,92.68,2.65,Propagacion Estable 0g
+RUN-0040,BASS-II,ISS-MSG,PMMA,24.0,10.2,15.0,0.0,3.0,concurrent,0.434,25.0,0,82.99,3.239,Propagacion Estable 0g
+RUN-0041,BASS-II,ISS-MSG,PMMA,24.0,10.2,30.0,0.0,3.0,concurrent,0.217,50.0,0,72.69,4.122,Propagacion Estable 0g
+RUN-0042,BASS-II,ISS-MSG,PMMA,24.0,10.2,50.0,0.0,3.0,concurrent,0.13,83.333,1,8.7,0.723,Extincion por Soplado (Blowoff)
+RUN-0043,BASS-II,ISS-MSG,PMMA,24.0,14.7,0.5,0.0,3.0,concurrent,1.957,0.833,1,12.5,0.46,Extincion Radiativa (Quenching)
+RUN-0044,BASS-II,ISS-MSG,PMMA,24.0,14.7,1.5,0.0,3.0,concurrent,1.957,2.5,0,92.14,2.678,Propagacion Estable 0g
+RUN-0045,BASS-II,ISS-MSG,PMMA,24.0,14.7,5.0,0.0,3.0,concurrent,1.713,8.333,0,88.14,2.903,Propagacion Estable 0g
+RUN-0046,BASS-II,ISS-MSG,PMMA,24.0,14.7,15.0,0.0,3.0,concurrent,0.571,25.0,0,78.92,3.549,Propagacion Estable 0g
+RUN-0047,BASS-II,ISS-MSG,PMMA,24.0,14.7,30.0,0.0,3.0,concurrent,0.285,50.0,0,69.13,4.516,Propagacion Estable 0g
+RUN-0048,BASS-II,ISS-MSG,PMMA,24.0,14.7,50.0,0.0,3.0,concurrent,0.171,83.333,1,8.7,0.723,Extincion por Soplado (Blowoff)
+RUN-0049,BASS-II,ISS-MSG,PMMA,28.0,10.2,0.5,0.0,3.0,concurrent,2.057,0.833,0,84.3,3.148,Propagacion Estable 0g
+RUN-0050,BASS-II,ISS-MSG,PMMA,28.0,10.2,1.5,0.0,3.0,concurrent,2.057,2.5,0,83.19,3.225,Propagacion Estable 0g
+RUN-0051,BASS-II,ISS-MSG,PMMA,28.0,10.2,5.0,0.0,3.0,concurrent,1.8,8.333,0,79.57,3.497,Propagacion Estable 0g
+RUN-0052,BASS-II,ISS-MSG,PMMA,28.0,10.2,15.0,0.0,3.0,concurrent,0.6,25.0,0,71.25,4.274,Propagacion Estable 0g
+RUN-0053,BASS-II,ISS-MSG,PMMA,28.0,10.2,30.0,0.0,3.0,concurrent,0.3,50.0,0,62.4,5.44,Propagacion Estable 0g
+RUN-0054,BASS-II,ISS-MSG,PMMA,28.0,10.2,50.0,0.0,3.0,concurrent,0.18,83.333,0,62.4,5.44,Propagacion Estable 0g
+RUN-0055,BASS-II,ISS-MSG,PMMA,28.0,14.7,0.5,0.0,3.0,concurrent,2.705,0.833,0,80.17,3.449,Propagacion Estable 0g
+RUN-0056,BASS-II,ISS-MSG,PMMA,28.0,14.7,1.5,0.0,3.0,concurrent,2.705,2.5,0,79.11,3.534,Propagacion Estable 0g
+RUN-0057,BASS-II,ISS-MSG,PMMA,28.0,14.7,5.0,0.0,3.0,concurrent,2.367,8.333,0,75.66,3.832,Propagacion Estable 0g
+RUN-0058,BASS-II,ISS-MSG,PMMA,28.0,14.7,15.0,0.0,3.0,concurrent,0.789,25.0,0,67.76,4.683,Propagacion Estable 0g
+RUN-0059,BASS-II,ISS-MSG,PMMA,28.0,14.7,30.0,0.0,3.0,concurrent,0.395,50.0,0,59.34,5.961,Propagacion Estable 0g
+RUN-0060,BASS-II,ISS-MSG,PMMA,28.0,14.7,50.0,0.0,3.0,concurrent,0.237,83.333,0,59.34,5.961,Propagacion Estable 0g
+RUN-0061,BASS-II,ISS-MSG,SIBAL,17.0,10.2,0.5,0.0,3.0,concurrent,0.659,0.833,1,12.5,0.297,Extincion Radiativa (Quenching)
+RUN-0062,BASS-II,ISS-MSG,SIBAL,17.0,10.2,1.5,0.0,3.0,concurrent,0.659,2.5,1,19.5,0.337,Extincion Radiativa (Quenching)
+RUN-0063,BASS-II,ISS-MSG,SIBAL,17.0,10.2,5.0,0.0,3.0,concurrent,0.576,8.333,1,19.5,0.337,Extincion Radiativa (Quenching)
+RUN-0064,BASS-II,ISS-MSG,SIBAL,17.0,10.2,15.0,0.0,3.0,concurrent,0.192,25.0,1,19.5,0.337,Extincion Radiativa (Quenching)
+RUN-0065,BASS-II,ISS-MSG,SIBAL,17.0,10.2,30.0,0.0,3.0,concurrent,0.096,50.0,1,19.5,0.337,Extincion Radiativa (Quenching)
+RUN-0066,BASS-II,ISS-MSG,SIBAL,17.0,10.2,50.0,0.0,3.0,concurrent,0.058,83.333,1,8.7,0.468,Extincion por Soplado (Blowoff)
+RUN-0067,BASS-II,ISS-MSG,SIBAL,17.0,14.7,0.5,0.0,3.0,concurrent,0.866,0.833,1,12.5,0.297,Extincion Radiativa (Quenching)
+RUN-0068,BASS-II,ISS-MSG,SIBAL,17.0,14.7,1.5,0.0,3.0,concurrent,0.866,2.5,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0069,BASS-II,ISS-MSG,SIBAL,17.0,14.7,5.0,0.0,3.0,concurrent,0.758,8.333,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0070,BASS-II,ISS-MSG,SIBAL,17.0,14.7,15.0,0.0,3.0,concurrent,0.253,25.0,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0071,BASS-II,ISS-MSG,SIBAL,17.0,14.7,30.0,0.0,3.0,concurrent,0.126,50.0,1,19.5,0.369,Extincion Radiativa (Quenching)
+RUN-0072,BASS-II,ISS-MSG,SIBAL,17.0,14.7,50.0,0.0,3.0,concurrent,0.076,83.333,1,8.7,0.468,Extincion por Soplado (Blowoff)
+RUN-0073,BASS-II,ISS-MSG,SIBAL,19.0,10.2,0.5,0.0,3.0,concurrent,0.832,0.833,1,12.5,0.333,Extincion Radiativa (Quenching)
+RUN-0074,BASS-II,ISS-MSG,SIBAL,19.0,10.2,1.5,0.0,3.0,concurrent,0.832,2.5,1,19.5,0.412,Extincion Radiativa (Quenching)
+RUN-0075,BASS-II,ISS-MSG,SIBAL,19.0,10.2,5.0,0.0,3.0,concurrent,0.728,8.333,1,19.5,0.412,Extincion Radiativa (Quenching)
+RUN-0076,BASS-II,ISS-MSG,SIBAL,19.0,10.2,15.0,0.0,3.0,concurrent,0.243,25.0,1,19.5,0.412,Extincion Radiativa (Quenching)
+RUN-0077,BASS-II,ISS-MSG,SIBAL,19.0,10.2,30.0,0.0,3.0,concurrent,0.121,50.0,1,19.5,0.412,Extincion Radiativa (Quenching)
+RUN-0078,BASS-II,ISS-MSG,SIBAL,19.0,10.2,50.0,0.0,3.0,concurrent,0.073,83.333,1,8.7,0.523,Extincion por Soplado (Blowoff)
+RUN-0079,BASS-II,ISS-MSG,SIBAL,19.0,14.7,0.5,0.0,3.0,concurrent,1.094,0.833,1,12.5,0.333,Extincion Radiativa (Quenching)
+RUN-0080,BASS-II,ISS-MSG,SIBAL,19.0,14.7,1.5,0.0,3.0,concurrent,1.094,2.5,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0081,BASS-II,ISS-MSG,SIBAL,19.0,14.7,5.0,0.0,3.0,concurrent,0.957,8.333,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0082,BASS-II,ISS-MSG,SIBAL,19.0,14.7,15.0,0.0,3.0,concurrent,0.319,25.0,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0083,BASS-II,ISS-MSG,SIBAL,19.0,14.7,30.0,0.0,3.0,concurrent,0.16,50.0,1,19.5,0.451,Extincion Radiativa (Quenching)
+RUN-0084,BASS-II,ISS-MSG,SIBAL,19.0,14.7,50.0,0.0,3.0,concurrent,0.096,83.333,1,8.7,0.523,Extincion por Soplado (Blowoff)
+RUN-0085,BASS-II,ISS-MSG,SIBAL,21.0,10.2,0.5,0.0,3.0,concurrent,1.026,0.833,1,12.5,0.367,Extincion Radiativa (Quenching)
+RUN-0086,BASS-II,ISS-MSG,SIBAL,21.0,10.2,1.5,0.0,3.0,concurrent,1.026,2.5,1,19.5,0.493,Extincion Radiativa (Quenching)
+RUN-0087,BASS-II,ISS-MSG,SIBAL,21.0,10.2,5.0,0.0,3.0,concurrent,0.898,8.333,1,19.5,0.493,Extincion Radiativa (Quenching)
+RUN-0088,BASS-II,ISS-MSG,SIBAL,21.0,10.2,15.0,0.0,3.0,concurrent,0.299,25.0,1,19.5,0.493,Extincion Radiativa (Quenching)
+RUN-0089,BASS-II,ISS-MSG,SIBAL,21.0,10.2,30.0,0.0,3.0,concurrent,0.15,50.0,1,19.5,0.493,Extincion Radiativa (Quenching)
+RUN-0090,BASS-II,ISS-MSG,SIBAL,21.0,10.2,50.0,0.0,3.0,concurrent,0.09,83.333,1,8.7,0.578,Extincion por Soplado (Blowoff)
+RUN-0091,BASS-II,ISS-MSG,SIBAL,21.0,14.7,0.5,0.0,3.0,concurrent,1.35,0.833,1,12.5,0.367,Extincion Radiativa (Quenching)
+RUN-0092,BASS-II,ISS-MSG,SIBAL,21.0,14.7,1.5,0.0,3.0,concurrent,1.35,2.5,0,110.58,1.922,Propagacion Estable 0g
+RUN-0093,BASS-II,ISS-MSG,SIBAL,21.0,14.7,5.0,0.0,3.0,concurrent,1.181,8.333,0,105.74,2.085,Propagacion Estable 0g
+RUN-0094,BASS-II,ISS-MSG,SIBAL,21.0,14.7,15.0,0.0,3.0,concurrent,0.394,25.0,0,94.7,2.548,Propagacion Estable 0g
+RUN-0095,BASS-II,ISS-MSG,SIBAL,21.0,14.7,30.0,0.0,3.0,concurrent,0.197,50.0,0,82.93,3.243,Propagacion Estable 0g
+RUN-0096,BASS-II,ISS-MSG,SIBAL,21.0,14.7,50.0,0.0,3.0,concurrent,0.118,83.333,1,8.7,0.578,Extincion por Soplado (Blowoff)
+RUN-0097,BASS-II,ISS-MSG,SIBAL,24.0,10.2,0.5,0.0,3.0,concurrent,1.359,0.833,1,12.5,0.42,Extincion Radiativa (Quenching)
+RUN-0098,BASS-II,ISS-MSG,SIBAL,24.0,10.2,1.5,0.0,3.0,concurrent,1.359,2.5,0,101.88,2.231,Propagacion Estable 0g
+RUN-0099,BASS-II,ISS-MSG,SIBAL,24.0,10.2,5.0,0.0,3.0,concurrent,1.189,8.333,0,97.44,2.419,Propagacion Estable 0g
+RUN-0100,BASS-II,ISS-MSG,SIBAL,24.0,10.2,15.0,0.0,3.0,concurrent,0.396,25.0,0,87.25,2.957,Propagacion Estable 0g
+RUN-0101,BASS-II,ISS-MSG,SIBAL,24.0,10.2,30.0,0.0,3.0,concurrent,0.198,50.0,0,76.41,3.764,Propagacion Estable 0g
+RUN-0102,BASS-II,ISS-MSG,SIBAL,24.0,10.2,50.0,0.0,3.0,concurrent,0.119,83.333,1,8.7,0.66,Extincion por Soplado (Blowoff)
+RUN-0103,BASS-II,ISS-MSG,SIBAL,24.0,14.7,0.5,0.0,3.0,concurrent,1.787,0.833,1,12.5,0.42,Extincion Radiativa (Quenching)
+RUN-0104,BASS-II,ISS-MSG,SIBAL,24.0,14.7,1.5,0.0,3.0,concurrent,1.787,2.5,0,96.87,2.445,Propagacion Estable 0g
+RUN-0105,BASS-II,ISS-MSG,SIBAL,24.0,14.7,5.0,0.0,3.0,concurrent,1.564,8.333,0,92.66,2.651,Propagacion Estable 0g
+RUN-0106,BASS-II,ISS-MSG,SIBAL,24.0,14.7,15.0,0.0,3.0,concurrent,0.521,25.0,0,82.98,3.24,Propagacion Estable 0g
+RUN-0107,BASS-II,ISS-MSG,SIBAL,24.0,14.7,30.0,0.0,3.0,concurrent,0.261,50.0,0,72.67,4.124,Propagacion Estable 0g
+RUN-0108,BASS-II,ISS-MSG,SIBAL,24.0,14.7,50.0,0.0,3.0,concurrent,0.156,83.333,1,8.7,0.66,Extincion por Soplado (Blowoff)
+RUN-0109,BASS-II,ISS-MSG,SIBAL,28.0,10.2,0.5,0.0,3.0,concurrent,1.878,0.833,0,88.63,2.874,Propagacion Estable 0g
+RUN-0110,BASS-II,ISS-MSG,SIBAL,28.0,10.2,1.5,0.0,3.0,concurrent,1.878,2.5,0,87.45,2.945,Propagacion Estable 0g
+RUN-0111,BASS-II,ISS-MSG,SIBAL,28.0,10.2,5.0,0.0,3.0,concurrent,1.643,8.333,0,83.65,3.193,Propagacion Estable 0g
+RUN-0112,BASS-II,ISS-MSG,SIBAL,28.0,10.2,15.0,0.0,3.0,concurrent,0.548,25.0,0,74.9,3.903,Propagacion Estable 0g
+RUN-0113,BASS-II,ISS-MSG,SIBAL,28.0,10.2,30.0,0.0,3.0,concurrent,0.274,50.0,0,65.6,4.967,Propagacion Estable 0g
+RUN-0114,BASS-II,ISS-MSG,SIBAL,28.0,10.2,50.0,0.0,3.0,concurrent,0.164,83.333,0,65.6,4.967,Propagacion Estable 0g
+RUN-0115,BASS-II,ISS-MSG,SIBAL,28.0,14.7,0.5,0.0,3.0,concurrent,2.47,0.833,0,84.29,3.149,Propagacion Estable 0g
+RUN-0116,BASS-II,ISS-MSG,SIBAL,28.0,14.7,1.5,0.0,3.0,concurrent,2.47,2.5,0,83.16,3.227,Propagacion Estable 0g
+RUN-0117,BASS-II,ISS-MSG,SIBAL,28.0,14.7,5.0,0.0,3.0,concurrent,2.161,8.333,0,79.54,3.499,Propagacion Estable 0g
+RUN-0118,BASS-II,ISS-MSG,SIBAL,28.0,14.7,15.0,0.0,3.0,concurrent,0.72,25.0,0,71.23,4.276,Propagacion Estable 0g
+RUN-0119,BASS-II,ISS-MSG,SIBAL,28.0,14.7,30.0,0.0,3.0,concurrent,0.36,50.0,0,62.39,5.442,Propagacion Estable 0g
+RUN-0120,BASS-II,ISS-MSG,SIBAL,28.0,14.7,50.0,0.0,3.0,concurrent,0.216,83.333,0,62.39,5.442,Propagacion Estable 0g
+RUN-0121,BASS-II,ISS-MSG,Nomex,17.0,10.2,0.5,0.0,3.0,concurrent,0.263,0.833,1,12.5,0.119,Extincion Radiativa (Quenching)
+RUN-0122,BASS-II,ISS-MSG,Nomex,17.0,10.2,1.5,0.0,3.0,concurrent,0.263,2.5,1,19.5,0.135,Extincion Radiativa (Quenching)
+RUN-0123,BASS-II,ISS-MSG,Nomex,17.0,10.2,5.0,0.0,3.0,concurrent,0.23,8.333,1,19.5,0.135,Extincion Radiativa (Quenching)
+RUN-0124,BASS-II,ISS-MSG,Nomex,17.0,10.2,15.0,0.0,3.0,concurrent,0.077,25.0,1,19.5,0.135,Extincion Radiativa (Quenching)
+RUN-0125,BASS-II,ISS-MSG,Nomex,17.0,10.2,30.0,0.0,3.0,concurrent,0.038,50.0,1,19.5,0.135,Extincion Radiativa (Quenching)
+RUN-0126,BASS-II,ISS-MSG,Nomex,17.0,10.2,50.0,0.0,3.0,concurrent,0.023,83.333,1,8.7,0.187,Extincion por Soplado (Blowoff)
+RUN-0127,BASS-II,ISS-MSG,Nomex,17.0,14.7,0.5,0.0,3.0,concurrent,0.346,0.833,1,12.5,0.119,Extincion Radiativa (Quenching)
+RUN-0128,BASS-II,ISS-MSG,Nomex,17.0,14.7,1.5,0.0,3.0,concurrent,0.346,2.5,1,19.5,0.148,Extincion Radiativa (Quenching)
+RUN-0129,BASS-II,ISS-MSG,Nomex,17.0,14.7,5.0,0.0,3.0,concurrent,0.303,8.333,1,19.5,0.148,Extincion Radiativa (Quenching)
+RUN-0130,BASS-II,ISS-MSG,Nomex,17.0,14.7,15.0,0.0,3.0,concurrent,0.101,25.0,1,19.5,0.148,Extincion Radiativa (Quenching)
+RUN-0131,BASS-II,ISS-MSG,Nomex,17.0,14.7,30.0,0.0,3.0,concurrent,0.051,50.0,1,19.5,0.148,Extincion Radiativa (Quenching)
+RUN-0132,BASS-II,ISS-MSG,Nomex,17.0,14.7,50.0,0.0,3.0,concurrent,0.03,83.333,1,8.7,0.187,Extincion por Soplado (Blowoff)
+RUN-0133,BASS-II,ISS-MSG,Nomex,19.0,10.2,0.5,0.0,3.0,concurrent,0.333,0.833,1,12.5,0.133,Extincion Radiativa (Quenching)
+RUN-0134,BASS-II,ISS-MSG,Nomex,19.0,10.2,1.5,0.0,3.0,concurrent,0.333,2.5,1,19.5,0.165,Extincion Radiativa (Quenching)
+RUN-0135,BASS-II,ISS-MSG,Nomex,19.0,10.2,5.0,0.0,3.0,concurrent,0.291,8.333,1,19.5,0.165,Extincion Radiativa (Quenching)
+RUN-0136,BASS-II,ISS-MSG,Nomex,19.0,10.2,15.0,0.0,3.0,concurrent,0.097,25.0,1,19.5,0.165,Extincion Radiativa (Quenching)
+RUN-0137,BASS-II,ISS-MSG,Nomex,19.0,10.2,30.0,0.0,3.0,concurrent,0.049,50.0,1,19.5,0.165,Extincion Radiativa (Quenching)
+RUN-0138,BASS-II,ISS-MSG,Nomex,19.0,10.2,50.0,0.0,3.0,concurrent,0.029,83.333,1,8.7,0.209,Extincion por Soplado (Blowoff)
+RUN-0139,BASS-II,ISS-MSG,Nomex,19.0,14.7,0.5,0.0,3.0,concurrent,0.438,0.833,1,12.5,0.133,Extincion Radiativa (Quenching)
+RUN-0140,BASS-II,ISS-MSG,Nomex,19.0,14.7,1.5,0.0,3.0,concurrent,0.438,2.5,1,19.5,0.181,Extincion Radiativa (Quenching)
+RUN-0141,BASS-II,ISS-MSG,Nomex,19.0,14.7,5.0,0.0,3.0,concurrent,0.383,8.333,1,19.5,0.181,Extincion Radiativa (Quenching)
+RUN-0142,BASS-II,ISS-MSG,Nomex,19.0,14.7,15.0,0.0,3.0,concurrent,0.128,25.0,1,19.5,0.181,Extincion Radiativa (Quenching)
+RUN-0143,BASS-II,ISS-MSG,Nomex,19.0,14.7,30.0,0.0,3.0,concurrent,0.064,50.0,1,19.5,0.181,Extincion Radiativa (Quenching)
+RUN-0144,BASS-II,ISS-MSG,Nomex,19.0,14.7,50.0,0.0,3.0,concurrent,0.038,83.333,1,8.7,0.209,Extincion por Soplado (Blowoff)
+RUN-0145,BASS-II,ISS-MSG,Nomex,21.0,10.2,0.5,0.0,3.0,concurrent,0.411,0.833,1,12.5,0.147,Extincion Radiativa (Quenching)
+RUN-0146,BASS-II,ISS-MSG,Nomex,21.0,10.2,1.5,0.0,3.0,concurrent,0.411,2.5,1,19.5,0.197,Extincion Radiativa (Quenching)
+RUN-0147,BASS-II,ISS-MSG,Nomex,21.0,10.2,5.0,0.0,3.0,concurrent,0.359,8.333,1,19.5,0.197,Extincion Radiativa (Quenching)
+RUN-0148,BASS-II,ISS-MSG,Nomex,21.0,10.2,15.0,0.0,3.0,concurrent,0.12,25.0,1,19.5,0.197,Extincion Radiativa (Quenching)
+RUN-0149,BASS-II,ISS-MSG,Nomex,21.0,10.2,30.0,0.0,3.0,concurrent,0.06,50.0,1,19.5,0.197,Extincion Radiativa (Quenching)
+RUN-0150,BASS-II,ISS-MSG,Nomex,21.0,10.2,50.0,0.0,3.0,concurrent,0.036,83.333,1,8.7,0.231,Extincion por Soplado (Blowoff)
+RUN-0151,BASS-II,ISS-MSG,Nomex,21.0,14.7,0.5,0.0,3.0,concurrent,0.54,0.833,1,12.5,0.147,Extincion Radiativa (Quenching)
+RUN-0152,BASS-II,ISS-MSG,Nomex,21.0,14.7,1.5,0.0,3.0,concurrent,0.54,2.5,1,19.5,0.216,Extincion Radiativa (Quenching)
+RUN-0153,BASS-II,ISS-MSG,Nomex,21.0,14.7,5.0,0.0,3.0,concurrent,0.472,8.333,1,19.5,0.216,Extincion Radiativa (Quenching)
+RUN-0154,BASS-II,ISS-MSG,Nomex,21.0,14.7,15.0,0.0,3.0,concurrent,0.158,25.0,1,19.5,0.216,Extincion Radiativa (Quenching)
+RUN-0155,BASS-II,ISS-MSG,Nomex,21.0,14.7,30.0,0.0,3.0,concurrent,0.079,50.0,1,19.5,0.216,Extincion Radiativa (Quenching)
+RUN-0156,BASS-II,ISS-MSG,Nomex,21.0,14.7,50.0,0.0,3.0,concurrent,0.047,83.333,1,8.7,0.231,Extincion por Soplado (Blowoff)
+RUN-0157,BASS-II,ISS-MSG,Nomex,24.0,10.2,0.5,0.0,3.0,concurrent,0.543,0.833,1,12.5,0.168,Extincion Radiativa (Quenching)
+RUN-0158,BASS-II,ISS-MSG,Nomex,24.0,10.2,1.5,0.0,3.0,concurrent,0.543,2.5,1,19.5,0.251,Extincion Radiativa (Quenching)
+RUN-0159,BASS-II,ISS-MSG,Nomex,24.0,10.2,5.0,0.0,3.0,concurrent,0.475,8.333,1,19.5,0.251,Extincion Radiativa (Quenching)
+RUN-0160,BASS-II,ISS-MSG,Nomex,24.0,10.2,15.0,0.0,3.0,concurrent,0.158,25.0,1,19.5,0.251,Extincion Radiativa (Quenching)
+RUN-0161,BASS-II,ISS-MSG,Nomex,24.0,10.2,30.0,0.0,3.0,concurrent,0.079,50.0,1,19.5,0.251,Extincion Radiativa (Quenching)
+RUN-0162,BASS-II,ISS-MSG,Nomex,24.0,10.2,50.0,0.0,3.0,concurrent,0.048,83.333,1,8.7,0.264,Extincion por Soplado (Blowoff)
+RUN-0163,BASS-II,ISS-MSG,Nomex,24.0,14.7,0.5,0.0,3.0,concurrent,0.715,0.833,1,12.5,0.168,Extincion Radiativa (Quenching)
+RUN-0164,BASS-II,ISS-MSG,Nomex,24.0,14.7,1.5,0.0,3.0,concurrent,0.715,2.5,1,19.5,0.275,Extincion Radiativa (Quenching)
+RUN-0165,BASS-II,ISS-MSG,Nomex,24.0,14.7,5.0,0.0,3.0,concurrent,0.625,8.333,1,19.5,0.275,Extincion Radiativa (Quenching)
+RUN-0166,BASS-II,ISS-MSG,Nomex,24.0,14.7,15.0,0.0,3.0,concurrent,0.208,25.0,1,19.5,0.275,Extincion Radiativa (Quenching)
+RUN-0167,BASS-II,ISS-MSG,Nomex,24.0,14.7,30.0,0.0,3.0,concurrent,0.104,50.0,1,19.5,0.275,Extincion Radiativa (Quenching)
+RUN-0168,BASS-II,ISS-MSG,Nomex,24.0,14.7,50.0,0.0,3.0,concurrent,0.063,83.333,1,8.7,0.264,Extincion por Soplado (Blowoff)
+RUN-0169,BASS-II,ISS-MSG,Nomex,28.0,10.2,0.5,0.0,3.0,concurrent,0.751,0.833,1,19.5,0.331,Extincion Radiativa (Quenching)
+RUN-0170,BASS-II,ISS-MSG,Nomex,28.0,10.2,1.5,0.0,3.0,concurrent,0.751,2.5,1,19.5,0.331,Extincion Radiativa (Quenching)
+RUN-0171,BASS-II,ISS-MSG,Nomex,28.0,10.2,5.0,0.0,3.0,concurrent,0.657,8.333,1,19.5,0.331,Extincion Radiativa (Quenching)
+RUN-0172,BASS-II,ISS-MSG,Nomex,28.0,10.2,15.0,0.0,3.0,concurrent,0.219,25.0,1,19.5,0.331,Extincion Radiativa (Quenching)
+RUN-0173,BASS-II,ISS-MSG,Nomex,28.0,10.2,30.0,0.0,3.0,concurrent,0.11,50.0,1,19.5,0.331,Extincion Radiativa (Quenching)
+RUN-0174,BASS-II,ISS-MSG,Nomex,28.0,10.2,50.0,0.0,3.0,concurrent,0.066,83.333,1,19.5,0.331,Extincion Radiativa (Quenching)
+RUN-0175,BASS-II,ISS-MSG,Nomex,28.0,14.7,0.5,0.0,3.0,concurrent,0.988,0.833,1,19.5,0.363,Extincion Radiativa (Quenching)
+RUN-0176,BASS-II,ISS-MSG,Nomex,28.0,14.7,1.5,0.0,3.0,concurrent,0.988,2.5,1,19.5,0.363,Extincion Radiativa (Quenching)
+RUN-0177,BASS-II,ISS-MSG,Nomex,28.0,14.7,5.0,0.0,3.0,concurrent,0.865,8.333,1,19.5,0.363,Extincion Radiativa (Quenching)
+RUN-0178,BASS-II,ISS-MSG,Nomex,28.0,14.7,15.0,0.0,3.0,concurrent,0.288,25.0,1,19.5,0.363,Extincion Radiativa (Quenching)
+RUN-0179,BASS-II,ISS-MSG,Nomex,28.0,14.7,30.0,0.0,3.0,concurrent,0.144,50.0,1,19.5,0.363,Extincion Radiativa (Quenching)
+RUN-0180,BASS-II,ISS-MSG,Nomex,28.0,14.7,50.0,0.0,3.0,concurrent,0.086,83.333,1,19.5,0.363,Extincion Radiativa (Quenching)
+RUN-0181,BASS-II,ISS-MSG,Kapton,17.0,10.2,0.5,0.0,3.0,concurrent,0.22,0.833,1,12.5,0.099,Extincion Radiativa (Quenching)
+RUN-0182,BASS-II,ISS-MSG,Kapton,17.0,10.2,1.5,0.0,3.0,concurrent,0.22,2.5,1,19.5,0.112,Extincion Radiativa (Quenching)
+RUN-0183,BASS-II,ISS-MSG,Kapton,17.0,10.2,5.0,0.0,3.0,concurrent,0.192,8.333,1,19.5,0.112,Extincion Radiativa (Quenching)
+RUN-0184,BASS-II,ISS-MSG,Kapton,17.0,10.2,15.0,0.0,3.0,concurrent,0.064,25.0,1,19.5,0.112,Extincion Radiativa (Quenching)
+RUN-0185,BASS-II,ISS-MSG,Kapton,17.0,10.2,30.0,0.0,3.0,concurrent,0.032,50.0,1,19.5,0.112,Extincion Radiativa (Quenching)
+RUN-0186,BASS-II,ISS-MSG,Kapton,17.0,10.2,50.0,0.0,3.0,concurrent,0.019,83.333,1,8.7,0.156,Extincion por Soplado (Blowoff)
+RUN-0187,BASS-II,ISS-MSG,Kapton,17.0,14.7,0.5,0.0,3.0,concurrent,0.289,0.833,1,12.5,0.099,Extincion Radiativa (Quenching)
+RUN-0188,BASS-II,ISS-MSG,Kapton,17.0,14.7,1.5,0.0,3.0,concurrent,0.289,2.5,1,19.5,0.123,Extincion Radiativa (Quenching)
+RUN-0189,BASS-II,ISS-MSG,Kapton,17.0,14.7,5.0,0.0,3.0,concurrent,0.253,8.333,1,19.5,0.123,Extincion Radiativa (Quenching)
+RUN-0190,BASS-II,ISS-MSG,Kapton,17.0,14.7,15.0,0.0,3.0,concurrent,0.084,25.0,1,19.5,0.123,Extincion Radiativa (Quenching)
+RUN-0191,BASS-II,ISS-MSG,Kapton,17.0,14.7,30.0,0.0,3.0,concurrent,0.042,50.0,1,19.5,0.123,Extincion Radiativa (Quenching)
+RUN-0192,BASS-II,ISS-MSG,Kapton,17.0,14.7,50.0,0.0,3.0,concurrent,0.025,83.333,1,8.7,0.156,Extincion por Soplado (Blowoff)
+RUN-0193,BASS-II,ISS-MSG,Kapton,19.0,10.2,0.5,0.0,3.0,concurrent,0.277,0.833,1,12.5,0.111,Extincion Radiativa (Quenching)
+RUN-0194,BASS-II,ISS-MSG,Kapton,19.0,10.2,1.5,0.0,3.0,concurrent,0.277,2.5,1,19.5,0.137,Extincion Radiativa (Quenching)
+RUN-0195,BASS-II,ISS-MSG,Kapton,19.0,10.2,5.0,0.0,3.0,concurrent,0.243,8.333,1,19.5,0.137,Extincion Radiativa (Quenching)
+RUN-0196,BASS-II,ISS-MSG,Kapton,19.0,10.2,15.0,0.0,3.0,concurrent,0.081,25.0,1,19.5,0.137,Extincion Radiativa (Quenching)
+RUN-0197,BASS-II,ISS-MSG,Kapton,19.0,10.2,30.0,0.0,3.0,concurrent,0.04,50.0,1,19.5,0.137,Extincion Radiativa (Quenching)
+RUN-0198,BASS-II,ISS-MSG,Kapton,19.0,10.2,50.0,0.0,3.0,concurrent,0.024,83.333,1,8.7,0.174,Extincion por Soplado (Blowoff)
+RUN-0199,BASS-II,ISS-MSG,Kapton,19.0,14.7,0.5,0.0,3.0,concurrent,0.365,0.833,1,12.5,0.111,Extincion Radiativa (Quenching)
+RUN-0200,BASS-II,ISS-MSG,Kapton,19.0,14.7,1.5,0.0,3.0,concurrent,0.365,2.5,1,19.5,0.15,Extincion Radiativa (Quenching)
+RUN-0201,BASS-II,ISS-MSG,Kapton,19.0,14.7,5.0,0.0,3.0,concurrent,0.319,8.333,1,19.5,0.15,Extincion Radiativa (Quenching)
+RUN-0202,BASS-II,ISS-MSG,Kapton,19.0,14.7,15.0,0.0,3.0,concurrent,0.106,25.0,1,19.5,0.15,Extincion Radiativa (Quenching)
+RUN-0203,BASS-II,ISS-MSG,Kapton,19.0,14.7,30.0,0.0,3.0,concurrent,0.053,50.0,1,19.5,0.15,Extincion Radiativa (Quenching)
+RUN-0204,BASS-II,ISS-MSG,Kapton,19.0,14.7,50.0,0.0,3.0,concurrent,0.032,83.333,1,8.7,0.174,Extincion por Soplado (Blowoff)
+RUN-0205,BASS-II,ISS-MSG,Kapton,21.0,10.2,0.5,0.0,3.0,concurrent,0.342,0.833,1,12.5,0.122,Extincion Radiativa (Quenching)
+RUN-0206,BASS-II,ISS-MSG,Kapton,21.0,10.2,1.5,0.0,3.0,concurrent,0.342,2.5,1,19.5,0.164,Extincion Radiativa (Quenching)
+RUN-0207,BASS-II,ISS-MSG,Kapton,21.0,10.2,5.0,0.0,3.0,concurrent,0.299,8.333,1,19.5,0.164,Extincion Radiativa (Quenching)
+RUN-0208,BASS-II,ISS-MSG,Kapton,21.0,10.2,15.0,0.0,3.0,concurrent,0.1,25.0,1,19.5,0.164,Extincion Radiativa (Quenching)
+RUN-0209,BASS-II,ISS-MSG,Kapton,21.0,10.2,30.0,0.0,3.0,concurrent,0.05,50.0,1,19.5,0.164,Extincion Radiativa (Quenching)
+RUN-0210,BASS-II,ISS-MSG,Kapton,21.0,10.2,50.0,0.0,3.0,concurrent,0.03,83.333,1,8.7,0.193,Extincion por Soplado (Blowoff)
+RUN-0211,BASS-II,ISS-MSG,Kapton,21.0,14.7,0.5,0.0,3.0,concurrent,0.45,0.833,1,12.5,0.122,Extincion Radiativa (Quenching)
+RUN-0212,BASS-II,ISS-MSG,Kapton,21.0,14.7,1.5,0.0,3.0,concurrent,0.45,2.5,1,19.5,0.18,Extincion Radiativa (Quenching)
+RUN-0213,BASS-II,ISS-MSG,Kapton,21.0,14.7,5.0,0.0,3.0,concurrent,0.394,8.333,1,19.5,0.18,Extincion Radiativa (Quenching)
+RUN-0214,BASS-II,ISS-MSG,Kapton,21.0,14.7,15.0,0.0,3.0,concurrent,0.131,25.0,1,19.5,0.18,Extincion Radiativa (Quenching)
+RUN-0215,BASS-II,ISS-MSG,Kapton,21.0,14.7,30.0,0.0,3.0,concurrent,0.066,50.0,1,19.5,0.18,Extincion Radiativa (Quenching)
+RUN-0216,BASS-II,ISS-MSG,Kapton,21.0,14.7,50.0,0.0,3.0,concurrent,0.039,83.333,1,8.7,0.193,Extincion por Soplado (Blowoff)
+RUN-0217,BASS-II,ISS-MSG,Kapton,24.0,10.2,0.5,0.0,3.0,concurrent,0.453,0.833,1,12.5,0.14,Extincion Radiativa (Quenching)
+RUN-0218,BASS-II,ISS-MSG,Kapton,24.0,10.2,1.5,0.0,3.0,concurrent,0.453,2.5,1,19.5,0.209,Extincion Radiativa (Quenching)
+RUN-0219,BASS-II,ISS-MSG,Kapton,24.0,10.2,5.0,0.0,3.0,concurrent,0.396,8.333,1,19.5,0.209,Extincion Radiativa (Quenching)
+RUN-0220,BASS-II,ISS-MSG,Kapton,24.0,10.2,15.0,0.0,3.0,concurrent,0.132,25.0,1,19.5,0.209,Extincion Radiativa (Quenching)
+RUN-0221,BASS-II,ISS-MSG,Kapton,24.0,10.2,30.0,0.0,3.0,concurrent,0.066,50.0,1,19.5,0.209,Extincion Radiativa (Quenching)
+RUN-0222,BASS-II,ISS-MSG,Kapton,24.0,10.2,50.0,0.0,3.0,concurrent,0.04,83.333,1,8.7,0.22,Extincion por Soplado (Blowoff)
+RUN-0223,BASS-II,ISS-MSG,Kapton,24.0,14.7,0.5,0.0,3.0,concurrent,0.596,0.833,1,12.5,0.14,Extincion Radiativa (Quenching)
+RUN-0224,BASS-II,ISS-MSG,Kapton,24.0,14.7,1.5,0.0,3.0,concurrent,0.596,2.5,1,19.5,0.229,Extincion Radiativa (Quenching)
+RUN-0225,BASS-II,ISS-MSG,Kapton,24.0,14.7,5.0,0.0,3.0,concurrent,0.521,8.333,1,19.5,0.229,Extincion Radiativa (Quenching)
+RUN-0226,BASS-II,ISS-MSG,Kapton,24.0,14.7,15.0,0.0,3.0,concurrent,0.174,25.0,1,19.5,0.229,Extincion Radiativa (Quenching)
+RUN-0227,BASS-II,ISS-MSG,Kapton,24.0,14.7,30.0,0.0,3.0,concurrent,0.087,50.0,1,19.5,0.229,Extincion Radiativa (Quenching)
+RUN-0228,BASS-II,ISS-MSG,Kapton,24.0,14.7,50.0,0.0,3.0,concurrent,0.052,83.333,1,8.7,0.22,Extincion por Soplado (Blowoff)
+RUN-0229,BASS-II,ISS-MSG,Kapton,28.0,10.2,0.5,0.0,3.0,concurrent,0.626,0.833,1,19.5,0.276,Extincion Radiativa (Quenching)
+RUN-0230,BASS-II,ISS-MSG,Kapton,28.0,10.2,1.5,0.0,3.0,concurrent,0.626,2.5,1,19.5,0.276,Extincion Radiativa (Quenching)
+RUN-0231,BASS-II,ISS-MSG,Kapton,28.0,10.2,5.0,0.0,3.0,concurrent,0.548,8.333,1,19.5,0.276,Extincion Radiativa (Quenching)
+RUN-0232,BASS-II,ISS-MSG,Kapton,28.0,10.2,15.0,0.0,3.0,concurrent,0.183,25.0,1,19.5,0.276,Extincion Radiativa (Quenching)
+RUN-0233,BASS-II,ISS-MSG,Kapton,28.0,10.2,30.0,0.0,3.0,concurrent,0.091,50.0,1,19.5,0.276,Extincion Radiativa (Quenching)
+RUN-0234,BASS-II,ISS-MSG,Kapton,28.0,10.2,50.0,0.0,3.0,concurrent,0.055,83.333,1,19.5,0.276,Extincion Radiativa (Quenching)
+RUN-0235,BASS-II,ISS-MSG,Kapton,28.0,14.7,0.5,0.0,3.0,concurrent,0.823,0.833,1,19.5,0.302,Extincion Radiativa (Quenching)
+RUN-0236,BASS-II,ISS-MSG,Kapton,28.0,14.7,1.5,0.0,3.0,concurrent,0.823,2.5,1,19.5,0.302,Extincion Radiativa (Quenching)
+RUN-0237,BASS-II,ISS-MSG,Kapton,28.0,14.7,5.0,0.0,3.0,concurrent,0.72,8.333,1,19.5,0.302,Extincion Radiativa (Quenching)
+RUN-0238,BASS-II,ISS-MSG,Kapton,28.0,14.7,15.0,0.0,3.0,concurrent,0.24,25.0,1,19.5,0.302,Extincion Radiativa (Quenching)
+RUN-0239,BASS-II,ISS-MSG,Kapton,28.0,14.7,30.0,0.0,3.0,concurrent,0.12,50.0,1,19.5,0.302,Extincion Radiativa (Quenching)
+RUN-0240,BASS-II,ISS-MSG,Kapton,28.0,14.7,50.0,0.0,3.0,concurrent,0.072,83.333,1,19.5,0.302,Extincion Radiativa (Quenching)
+RUN-0241,SAFFIRE-I-III,Cygnus,SIBAL,21.0,14.7,15.0,0.0,0.6,opposed,0.394,5.0,0,16.1,3.425,Propagacion Estable 0g
+RUN-0242,SAFFIRE-I-III,Cygnus,SIBAL,21.0,14.7,15.0,0.0,1.2,opposed,0.394,10.0,0,36.3,2.753,Propagacion Estable 0g
+RUN-0243,SAFFIRE-I-III,Cygnus,SIBAL,21.0,14.7,20.0,0.0,0.6,opposed,0.295,6.667,0,15.34,3.736,Propagacion Estable 0g
+RUN-0244,SAFFIRE-I-III,Cygnus,SIBAL,21.0,14.7,20.0,0.0,1.2,opposed,0.295,13.333,0,34.61,3.003,Propagacion Estable 0g
+RUN-0245,SAFFIRE-I-III,Cygnus,SIBAL,21.0,14.7,30.0,0.0,0.6,opposed,0.197,10.0,0,14.1,4.359,Propagacion Estable 0g
+RUN-0246,SAFFIRE-I-III,Cygnus,SIBAL,21.0,14.7,30.0,0.0,1.2,opposed,0.197,20.0,0,31.8,3.503,Propagacion Estable 0g
+RUN-0247,SAFFIRE-I-III,Cygnus,SIBAL,26.0,14.7,15.0,0.0,0.6,opposed,0.617,5.0,0,13.03,5.03,Propagacion Estable 0g
+RUN-0248,SAFFIRE-I-III,Cygnus,SIBAL,26.0,14.7,15.0,0.0,1.2,opposed,0.617,10.0,0,29.39,4.043,Propagacion Estable 0g
+RUN-0249,SAFFIRE-I-III,Cygnus,SIBAL,26.0,14.7,20.0,0.0,0.6,opposed,0.462,6.667,0,12.42,5.487,Propagacion Estable 0g
+RUN-0250,SAFFIRE-I-III,Cygnus,SIBAL,26.0,14.7,20.0,0.0,1.2,opposed,0.462,13.333,0,28.01,4.41,Propagacion Estable 0g
+RUN-0251,SAFFIRE-I-III,Cygnus,SIBAL,26.0,14.7,30.0,0.0,0.6,opposed,0.308,10.0,0,11.41,6.402,Propagacion Estable 0g
+RUN-0252,SAFFIRE-I-III,Cygnus,SIBAL,26.0,14.7,30.0,0.0,1.2,opposed,0.308,20.0,0,25.73,5.146,Propagacion Estable 0g
+RUN-0253,SAFFIRE-I-III,Cygnus,PMMA,21.0,14.7,15.0,0.0,0.6,opposed,0.431,5.0,0,15.31,3.751,Propagacion Estable 0g
+RUN-0254,SAFFIRE-I-III,Cygnus,PMMA,21.0,14.7,15.0,0.0,1.2,opposed,0.431,10.0,0,34.53,3.015,Propagacion Estable 0g
+RUN-0255,SAFFIRE-I-III,Cygnus,PMMA,21.0,14.7,20.0,0.0,0.6,opposed,0.323,6.667,0,14.6,4.092,Propagacion Estable 0g
+RUN-0256,SAFFIRE-I-III,Cygnus,PMMA,21.0,14.7,20.0,0.0,1.2,opposed,0.323,13.333,0,32.92,3.289,Propagacion Estable 0g
+RUN-0257,SAFFIRE-I-III,Cygnus,PMMA,21.0,14.7,30.0,0.0,0.6,opposed,0.216,10.0,0,13.41,4.774,Propagacion Estable 0g
+RUN-0258,SAFFIRE-I-III,Cygnus,PMMA,21.0,14.7,30.0,0.0,1.2,opposed,0.216,20.0,0,30.24,3.837,Propagacion Estable 0g
+RUN-0259,SAFFIRE-I-III,Cygnus,PMMA,26.0,14.7,15.0,0.0,0.6,opposed,0.675,5.0,0,12.39,5.509,Propagacion Estable 0g
+RUN-0260,SAFFIRE-I-III,Cygnus,PMMA,26.0,14.7,15.0,0.0,1.2,opposed,0.675,10.0,0,27.95,4.428,Propagacion Estable 0g
+RUN-0261,SAFFIRE-I-III,Cygnus,PMMA,26.0,14.7,20.0,0.0,0.6,opposed,0.506,6.667,0,11.81,6.01,Propagacion Estable 0g
+RUN-0262,SAFFIRE-I-III,Cygnus,PMMA,26.0,14.7,20.0,0.0,1.2,opposed,0.506,13.333,0,26.64,4.831,Propagacion Estable 0g
+RUN-0263,SAFFIRE-I-III,Cygnus,PMMA,26.0,14.7,30.0,0.0,0.6,opposed,0.338,10.0,0,10.85,7.012,Propagacion Estable 0g
+RUN-0264,SAFFIRE-I-III,Cygnus,PMMA,26.0,14.7,30.0,0.0,1.2,opposed,0.338,20.0,0,24.48,5.636,Propagacion Estable 0g
+RUN-0265,SAFFIRE-I-III,Cygnus,Nomex,21.0,14.7,15.0,0.0,0.6,opposed,0.158,5.0,1,11.1,0.291,Extincion Radiativa (Quenching)
+RUN-0266,SAFFIRE-I-III,Cygnus,Nomex,21.0,14.7,15.0,0.0,1.2,opposed,0.158,10.0,1,13.2,0.234,Extincion Radiativa (Quenching)
+RUN-0267,SAFFIRE-I-III,Cygnus,Nomex,21.0,14.7,20.0,0.0,0.6,opposed,0.118,6.667,1,11.1,0.291,Extincion Radiativa (Quenching)
+RUN-0268,SAFFIRE-I-III,Cygnus,Nomex,21.0,14.7,20.0,0.0,1.2,opposed,0.118,13.333,1,13.2,0.234,Extincion Radiativa (Quenching)
+RUN-0269,SAFFIRE-I-III,Cygnus,Nomex,21.0,14.7,30.0,0.0,0.6,opposed,0.079,10.0,1,11.1,0.291,Extincion Radiativa (Quenching)
+RUN-0270,SAFFIRE-I-III,Cygnus,Nomex,21.0,14.7,30.0,0.0,1.2,opposed,0.079,20.0,1,13.2,0.234,Extincion Radiativa (Quenching)
+RUN-0271,SAFFIRE-I-III,Cygnus,Nomex,26.0,14.7,15.0,0.0,0.6,opposed,0.247,5.0,1,11.1,0.427,Extincion Radiativa (Quenching)
+RUN-0272,SAFFIRE-I-III,Cygnus,Nomex,26.0,14.7,15.0,0.0,1.2,opposed,0.247,10.0,1,13.2,0.343,Extincion Radiativa (Quenching)
+RUN-0273,SAFFIRE-I-III,Cygnus,Nomex,26.0,14.7,20.0,0.0,0.6,opposed,0.185,6.667,1,11.1,0.427,Extincion Radiativa (Quenching)
+RUN-0274,SAFFIRE-I-III,Cygnus,Nomex,26.0,14.7,20.0,0.0,1.2,opposed,0.185,13.333,1,13.2,0.343,Extincion Radiativa (Quenching)
+RUN-0275,SAFFIRE-I-III,Cygnus,Nomex,26.0,14.7,30.0,0.0,0.6,opposed,0.123,10.0,1,11.1,0.427,Extincion Radiativa (Quenching)
+RUN-0276,SAFFIRE-I-III,Cygnus,Nomex,26.0,14.7,30.0,0.0,1.2,opposed,0.123,20.0,1,13.2,0.343,Extincion Radiativa (Quenching)
+RUN-0277,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,8.2,8.0,0.16,0.8,concurrent,0.933,3.84,0,14.87,6.675,Propagacion Estable 0g
+RUN-0278,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,8.2,18.0,0.0,1.6,concurrent,0.448,16.0,0,30.97,6.199,Propagacion Estable 0g
+RUN-0279,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,8.2,25.0,0.0,0.8,concurrent,0.323,11.111,0,12.59,9.039,Propagacion Estable 0g
+RUN-0280,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,8.2,25.0,0.16,1.6,concurrent,0.314,22.791,0,29.09,6.947,Propagacion Estable 0g
+RUN-0281,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,10.2,8.0,0.16,0.8,concurrent,1.099,3.84,0,14.43,7.049,Propagacion Estable 0g
+RUN-0282,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,10.2,18.0,0.0,1.6,concurrent,0.528,16.0,0,30.06,6.547,Propagacion Estable 0g
+RUN-0283,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,10.2,25.0,0.0,0.8,concurrent,0.38,11.111,0,12.21,9.546,Propagacion Estable 0g
+RUN-0284,SAFFIRE-IV-V,Cygnus,SIBAL,30.0,10.2,25.0,0.16,1.6,concurrent,0.37,22.791,0,28.23,7.337,Propagacion Estable 0g
+RUN-0285,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,8.2,8.0,0.16,0.8,concurrent,1.214,3.84,0,13.14,8.362,Propagacion Acelerada
+RUN-0286,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,8.2,18.0,0.0,1.6,concurrent,0.583,16.0,0,27.36,7.766,Propagacion Acelerada
+RUN-0287,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,8.2,25.0,0.0,0.8,concurrent,0.419,11.111,0,11.12,11.323,Propagacion Acelerada
+RUN-0288,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,8.2,25.0,0.16,1.6,concurrent,0.409,22.791,0,25.7,8.703,Propagacion Acelerada
+RUN-0289,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,10.2,8.0,0.16,0.8,concurrent,1.43,3.84,0,12.75,8.831,Propagacion Acelerada
+RUN-0290,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,10.2,18.0,0.0,1.6,concurrent,0.686,16.0,0,26.55,8.201,Propagacion Acelerada
+RUN-0291,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,10.2,25.0,0.0,0.8,concurrent,0.494,11.111,0,10.79,11.958,Propagacion Acelerada
+RUN-0292,SAFFIRE-IV-V,Cygnus,SIBAL,34.0,10.2,25.0,0.16,1.6,concurrent,0.482,22.791,0,24.94,9.191,Propagacion Acelerada
+RUN-0293,SAFFIRE-IV-V,Cygnus,PMMA,30.0,8.2,8.0,0.16,0.8,concurrent,1.022,3.84,0,14.14,7.311,Propagacion Estable 0g
+RUN-0294,SAFFIRE-IV-V,Cygnus,PMMA,30.0,8.2,18.0,0.0,1.6,concurrent,0.491,16.0,0,29.46,6.79,Propagacion Estable 0g
+RUN-0295,SAFFIRE-IV-V,Cygnus,PMMA,30.0,8.2,25.0,0.0,0.8,concurrent,0.353,11.111,0,11.97,9.9,Propagacion Estable 0g
+RUN-0296,SAFFIRE-IV-V,Cygnus,PMMA,30.0,8.2,25.0,0.16,1.6,concurrent,0.344,22.791,0,27.67,7.609,Propagacion Estable 0g
+RUN-0297,SAFFIRE-IV-V,Cygnus,PMMA,30.0,10.2,8.0,0.16,0.8,concurrent,1.204,3.84,0,13.72,7.721,Propagacion Estable 0g
+RUN-0298,SAFFIRE-IV-V,Cygnus,PMMA,30.0,10.2,18.0,0.0,1.6,concurrent,0.578,16.0,0,28.59,7.17,Propagacion Estable 0g
+RUN-0299,SAFFIRE-IV-V,Cygnus,PMMA,30.0,10.2,25.0,0.0,0.8,concurrent,0.416,11.111,0,11.62,10.455,Propagacion Estable 0g
+RUN-0300,SAFFIRE-IV-V,Cygnus,PMMA,30.0,10.2,25.0,0.16,1.6,concurrent,0.406,22.791,0,26.85,8.036,Propagacion Estable 0g
+RUN-0301,SAFFIRE-IV-V,Cygnus,PMMA,34.0,8.2,8.0,0.16,0.8,concurrent,1.329,3.84,0,12.49,9.158,Propagacion Acelerada
+RUN-0302,SAFFIRE-IV-V,Cygnus,PMMA,34.0,8.2,18.0,0.0,1.6,concurrent,0.638,16.0,0,26.03,8.505,Propagacion Acelerada
+RUN-0303,SAFFIRE-IV-V,Cygnus,PMMA,34.0,8.2,25.0,0.0,0.8,concurrent,0.459,11.111,0,10.58,12.402,Propagacion Acelerada
+RUN-0304,SAFFIRE-IV-V,Cygnus,PMMA,34.0,8.2,25.0,0.16,1.6,concurrent,0.448,22.791,0,24.45,9.532,Propagacion Acelerada
+RUN-0305,SAFFIRE-IV-V,Cygnus,PMMA,34.0,10.2,8.0,0.16,0.8,concurrent,1.566,3.84,0,12.13,9.672,Propagacion Acelerada
+RUN-0306,SAFFIRE-IV-V,Cygnus,PMMA,34.0,10.2,18.0,0.0,1.6,concurrent,0.752,16.0,0,25.26,8.982,Propagacion Acelerada
+RUN-0307,SAFFIRE-IV-V,Cygnus,PMMA,34.0,10.2,25.0,0.0,0.8,concurrent,0.541,11.111,0,10.26,13.097,Propagacion Acelerada
+RUN-0308,SAFFIRE-IV-V,Cygnus,PMMA,34.0,10.2,25.0,0.16,1.6,concurrent,0.528,22.791,0,23.72,10.066,Propagacion Acelerada
+RUN-0309,SAFFIRE-IV-V,Cygnus,Nomex,30.0,8.2,8.0,0.16,0.8,concurrent,0.373,3.84,0,24.61,2.67,Propagacion Estable 0g
+RUN-0310,SAFFIRE-IV-V,Cygnus,Nomex,30.0,8.2,18.0,0.0,1.6,concurrent,0.179,16.0,1,14.6,0.499,Extincion Radiativa (Quenching)
+RUN-0311,SAFFIRE-IV-V,Cygnus,Nomex,30.0,8.2,25.0,0.0,0.8,concurrent,0.129,11.111,0,20.83,3.616,Propagacion Estable 0g
+RUN-0312,SAFFIRE-IV-V,Cygnus,Nomex,30.0,8.2,25.0,0.16,1.6,concurrent,0.126,22.791,1,14.6,0.499,Extincion Radiativa (Quenching)
+RUN-0313,SAFFIRE-IV-V,Cygnus,Nomex,30.0,10.2,8.0,0.16,0.8,concurrent,0.44,3.84,0,23.88,2.82,Propagacion Estable 0g
+RUN-0314,SAFFIRE-IV-V,Cygnus,Nomex,30.0,10.2,18.0,0.0,1.6,concurrent,0.211,16.0,0,49.75,2.619,Propagacion Estable 0g
+RUN-0315,SAFFIRE-IV-V,Cygnus,Nomex,30.0,10.2,25.0,0.0,0.8,concurrent,0.152,11.111,0,20.22,3.818,Propagacion Estable 0g
+RUN-0316,SAFFIRE-IV-V,Cygnus,Nomex,30.0,10.2,25.0,0.16,1.6,concurrent,0.148,22.791,0,46.73,2.935,Propagacion Estable 0g
+RUN-0317,SAFFIRE-IV-V,Cygnus,Nomex,34.0,8.2,8.0,0.16,0.8,concurrent,0.485,3.84,0,21.74,3.345,Propagacion Acelerada
+RUN-0318,SAFFIRE-IV-V,Cygnus,Nomex,34.0,8.2,18.0,0.0,1.6,concurrent,0.233,16.0,0,45.29,3.106,Propagacion Acelerada
+RUN-0319,SAFFIRE-IV-V,Cygnus,Nomex,34.0,8.2,25.0,0.0,0.8,concurrent,0.168,11.111,0,18.4,4.529,Propagacion Acelerada
+RUN-0320,SAFFIRE-IV-V,Cygnus,Nomex,34.0,8.2,25.0,0.16,1.6,concurrent,0.164,22.791,0,42.54,3.481,Propagacion Acelerada
+RUN-0321,SAFFIRE-IV-V,Cygnus,Nomex,34.0,10.2,8.0,0.16,0.8,concurrent,0.572,3.84,0,21.1,3.532,Propagacion Acelerada
+RUN-0322,SAFFIRE-IV-V,Cygnus,Nomex,34.0,10.2,18.0,0.0,1.6,concurrent,0.274,16.0,0,43.95,3.281,Propagacion Acelerada
+RUN-0323,SAFFIRE-IV-V,Cygnus,Nomex,34.0,10.2,25.0,0.0,0.8,concurrent,0.198,11.111,0,17.86,4.783,Propagacion Acelerada
+RUN-0324,SAFFIRE-IV-V,Cygnus,Nomex,34.0,10.2,25.0,0.16,1.6,concurrent,0.193,22.791,0,41.29,3.676,Propagacion Acelerada
+RUN-0325,SAFFIRE-IV-V,Cygnus,Algodon,30.0,8.2,8.0,0.16,0.8,concurrent,1.2,3.84,0,12.95,8.582,Propagacion Estable 0g
+RUN-0326,SAFFIRE-IV-V,Cygnus,Algodon,30.0,8.2,18.0,0.0,1.6,concurrent,0.576,16.0,0,26.97,7.97,Propagacion Estable 0g
+RUN-0327,SAFFIRE-IV-V,Cygnus,Algodon,30.0,8.2,25.0,0.0,0.8,concurrent,0.415,11.111,0,10.96,11.622,Propagacion Estable 0g
+RUN-0328,SAFFIRE-IV-V,Cygnus,Algodon,30.0,8.2,25.0,0.16,1.6,concurrent,0.404,22.791,0,25.34,8.932,Propagacion Estable 0g
+RUN-0329,SAFFIRE-IV-V,Cygnus,Algodon,30.0,10.2,8.0,0.16,0.8,concurrent,1.413,3.84,0,12.57,9.064,Propagacion Estable 0g
+RUN-0330,SAFFIRE-IV-V,Cygnus,Algodon,30.0,10.2,18.0,0.0,1.6,concurrent,0.678,16.0,0,26.18,8.417,Propagacion Estable 0g
+RUN-0331,SAFFIRE-IV-V,Cygnus,Algodon,30.0,10.2,25.0,0.0,0.8,concurrent,0.488,11.111,0,10.64,12.274,Propagacion Estable 0g
+RUN-0332,SAFFIRE-IV-V,Cygnus,Algodon,30.0,10.2,25.0,0.16,1.6,concurrent,0.476,22.791,0,24.59,9.433,Propagacion Estable 0g
+RUN-0333,SAFFIRE-IV-V,Cygnus,Algodon,34.0,8.2,8.0,0.16,0.8,concurrent,1.56,3.84,0,11.44,10.751,Propagacion Acelerada
+RUN-0334,SAFFIRE-IV-V,Cygnus,Algodon,34.0,8.2,18.0,0.0,1.6,concurrent,0.749,16.0,0,23.83,9.985,Propagacion Acelerada
+RUN-0335,SAFFIRE-IV-V,Cygnus,Algodon,34.0,8.2,25.0,0.0,0.8,concurrent,0.539,11.111,0,9.68,14.559,Propagacion Acelerada
+RUN-0336,SAFFIRE-IV-V,Cygnus,Algodon,34.0,8.2,25.0,0.16,1.6,concurrent,0.526,22.791,0,22.38,11.19,Propagacion Acelerada
+RUN-0337,SAFFIRE-IV-V,Cygnus,Algodon,34.0,10.2,8.0,0.16,0.8,concurrent,1.838,3.84,0,11.1,11.354,Propagacion Acelerada
+RUN-0338,SAFFIRE-IV-V,Cygnus,Algodon,34.0,10.2,18.0,0.0,1.6,concurrent,0.882,16.0,0,23.13,10.544,Propagacion Acelerada
+RUN-0339,SAFFIRE-IV-V,Cygnus,Algodon,34.0,10.2,25.0,0.0,0.8,concurrent,0.635,11.111,0,9.4,15.375,Propagacion Acelerada
+RUN-0340,SAFFIRE-IV-V,Cygnus,Algodon,34.0,10.2,25.0,0.16,1.6,concurrent,0.619,22.791,0,21.72,11.817,Propagacion Acelerada
+RUN-0341,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,14.7,2.0,1.0,1.0,concurrent,0.1,7.778,1,12.5,0.219,Extincion Radiativa (Quenching)
+RUN-0342,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,14.7,12.0,0.38,2.5,concurrent,0.104,18.778,1,17.75,0.143,Extincion Radiativa (Quenching)
+RUN-0343,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,14.7,25.0,0.38,1.0,concurrent,0.053,14.733,1,12.5,0.219,Extincion Radiativa (Quenching)
+RUN-0344,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,16.7,2.0,0.0,2.5,concurrent,0.354,2.778,1,17.75,0.148,Extincion Radiativa (Quenching)
+RUN-0345,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,16.7,12.0,0.0,1.0,concurrent,0.129,6.667,1,12.5,0.226,Extincion Radiativa (Quenching)
+RUN-0346,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,16.7,12.0,1.0,2.5,concurrent,0.064,33.333,1,17.75,0.148,Extincion Radiativa (Quenching)
+RUN-0347,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,16.7,25.0,1.0,1.0,concurrent,0.042,20.556,1,12.5,0.226,Extincion Radiativa (Quenching)
+RUN-0348,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,29.4,2.0,0.38,2.5,concurrent,0.541,4.889,1,17.75,0.171,Extincion Radiativa (Quenching)
+RUN-0349,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,29.4,12.0,0.38,1.0,concurrent,0.175,7.511,1,12.5,0.26,Extincion Radiativa (Quenching)
+RUN-0350,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,21.0,29.4,25.0,0.0,2.5,concurrent,0.095,34.722,1,17.75,0.171,Extincion Radiativa (Quenching)
+RUN-0351,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,14.7,2.0,0.0,1.0,concurrent,0.884,1.111,0,37.37,1.875,Propagacion Acelerada
+RUN-0352,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,14.7,2.0,1.0,2.5,concurrent,0.276,19.444,1,17.75,0.341,Extincion Radiativa (Quenching)
+RUN-0353,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,14.7,12.0,1.0,1.0,concurrent,0.161,13.333,0,33.23,2.321,Propagacion Acelerada
+RUN-0354,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,14.7,25.0,0.38,2.5,concurrent,0.146,36.833,1,17.75,0.341,Extincion Radiativa (Quenching)
+RUN-0355,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,16.7,2.0,0.38,1.0,concurrent,0.973,1.956,0,36.72,1.935,Propagacion Acelerada
+RUN-0356,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,16.7,12.0,0.0,2.5,concurrent,0.355,16.667,1,17.75,0.353,Extincion Radiativa (Quenching)
+RUN-0357,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,16.7,25.0,0.0,1.0,concurrent,0.17,13.889,0,28.88,2.995,Propagacion Acelerada
+RUN-0358,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,16.7,25.0,1.0,2.5,concurrent,0.115,51.389,1,17.75,0.353,Extincion Radiativa (Quenching)
+RUN-0359,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,29.4,2.0,1.0,1.0,concurrent,0.465,7.778,0,33.98,2.229,Propagacion Acelerada
+RUN-0360,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,29.4,12.0,0.38,2.5,concurrent,0.481,18.778,1,17.75,0.406,Extincion Radiativa (Quenching)
+RUN-0361,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,34.0,29.4,25.0,0.38,1.0,concurrent,0.245,14.733,0,26.72,3.45,Propagacion Acelerada
+RUN-0362,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,14.7,2.0,0.0,2.5,concurrent,2.914,2.778,0,67.15,3.417,Propagacion Acelerada
+RUN-0363,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,14.7,12.0,0.0,1.0,concurrent,1.063,6.667,0,18.94,6.452,Propagacion Acelerada
+RUN-0364,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,14.7,12.0,1.0,2.5,concurrent,0.531,33.333,0,59.71,4.231,Propagacion Acelerada
+RUN-0365,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,14.7,25.0,1.0,1.0,concurrent,0.345,20.556,0,16.75,8.065,Propagacion Acelerada
+RUN-0366,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,16.7,2.0,0.38,2.5,concurrent,3.207,4.889,0,65.98,3.528,Propagacion Acelerada
+RUN-0367,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,16.7,12.0,0.38,1.0,concurrent,1.038,7.511,0,18.61,6.661,Propagacion Acelerada
+RUN-0368,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,16.7,25.0,0.0,2.5,concurrent,0.561,34.722,0,51.89,5.46,Propagacion Acelerada
+RUN-0369,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,29.4,2.0,0.0,1.0,concurrent,4.901,1.111,0,19.36,6.197,Propagacion Acelerada
+RUN-0370,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,29.4,2.0,1.0,2.5,concurrent,1.532,19.444,0,61.04,4.064,Propagacion Acelerada
+RUN-0371,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,29.4,12.0,1.0,1.0,concurrent,0.893,13.333,0,17.21,7.673,Propagacion Acelerada
+RUN-0372,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,60.0,29.4,25.0,0.38,2.5,concurrent,0.809,36.833,0,48.01,6.289,Propagacion Acelerada
+RUN-0373,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,14.7,2.0,0.38,1.0,concurrent,8.52,1.956,0,12.84,13.069,Propagacion Acelerada
+RUN-0374,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,14.7,12.0,0.0,2.5,concurrent,3.106,16.667,0,36.01,10.611,Propagacion Acelerada
+RUN-0375,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,14.7,25.0,0.0,1.0,concurrent,1.491,13.889,0,10.1,20.226,Propagacion Acelerada
+RUN-0376,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,14.7,25.0,1.0,2.5,concurrent,1.007,51.389,0,31.85,13.263,Propagacion Acelerada
+RUN-0377,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,16.7,2.0,1.0,1.0,concurrent,2.93,7.778,0,12.62,13.493,Propagacion Acelerada
+RUN-0378,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,16.7,12.0,0.38,2.5,concurrent,3.034,18.778,0,35.38,10.954,Propagacion Acelerada
+RUN-0379,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,16.7,25.0,0.38,1.0,concurrent,1.547,14.733,0,9.93,20.882,Propagacion Acelerada
+RUN-0380,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,29.4,2.0,0.0,2.5,concurrent,14.328,2.778,0,36.82,10.192,Propagacion Acelerada
+RUN-0381,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,29.4,12.0,0.0,1.0,concurrent,5.224,6.667,0,10.38,19.243,Propagacion Acelerada
+RUN-0382,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,29.4,12.0,1.0,2.5,concurrent,2.612,33.333,0,32.74,12.618,Propagacion Acelerada
+RUN-0383,SAFFIRE-VI-FORENSIC,Cygnus,PTFE,100.0,29.4,25.0,1.0,1.0,concurrent,1.694,20.556,0,9.18,24.053,Propagacion Acelerada
+RUN-0384,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,14.7,2.0,0.38,2.5,concurrent,0.54,4.889,1,17.75,0.241,Extincion Radiativa (Quenching)
+RUN-0385,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,14.7,12.0,0.38,1.0,concurrent,0.175,7.511,1,12.5,0.367,Extincion Radiativa (Quenching)
+RUN-0386,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,14.7,25.0,0.0,2.5,concurrent,0.095,34.722,1,17.75,0.241,Extincion Radiativa (Quenching)
+RUN-0387,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,16.7,2.0,0.0,1.0,concurrent,0.594,1.111,1,12.5,0.379,Extincion Radiativa (Quenching)
+RUN-0388,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,16.7,2.0,1.0,2.5,concurrent,0.186,19.444,1,17.75,0.249,Extincion Radiativa (Quenching)
+RUN-0389,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,16.7,12.0,1.0,1.0,concurrent,0.108,13.333,1,12.5,0.379,Extincion Radiativa (Quenching)
+RUN-0390,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,16.7,25.0,0.38,2.5,concurrent,0.098,36.833,1,17.75,0.249,Extincion Radiativa (Quenching)
+RUN-0391,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,29.4,2.0,0.38,1.0,concurrent,0.908,1.956,1,12.5,0.437,Extincion Radiativa (Quenching)
+RUN-0392,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,29.4,12.0,0.0,2.5,concurrent,0.331,16.667,1,17.75,0.287,Extincion Radiativa (Quenching)
+RUN-0393,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,29.4,25.0,0.0,1.0,concurrent,0.159,13.889,1,12.5,0.437,Extincion Radiativa (Quenching)
+RUN-0394,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,21.0,29.4,25.0,1.0,2.5,concurrent,0.107,51.389,1,17.75,0.287,Extincion Radiativa (Quenching)
+RUN-0395,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,14.7,2.0,1.0,1.0,concurrent,0.464,7.778,0,28.1,3.149,Propagacion Acelerada
+RUN-0396,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,14.7,12.0,0.38,2.5,concurrent,0.481,18.778,0,78.76,2.557,Propagacion Acelerada
+RUN-0397,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,14.7,25.0,0.38,1.0,concurrent,0.245,14.733,0,22.1,4.874,Propagacion Acelerada
+RUN-0398,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,16.7,2.0,0.0,2.5,concurrent,1.635,2.778,0,87.04,2.132,Propagacion Acelerada
+RUN-0399,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,16.7,12.0,0.0,1.0,concurrent,0.596,6.667,0,24.54,4.026,Propagacion Acelerada
+RUN-0400,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,16.7,12.0,1.0,2.5,concurrent,0.298,33.333,0,77.39,2.64,Propagacion Acelerada
+RUN-0401,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,16.7,25.0,1.0,1.0,concurrent,0.193,20.556,0,21.71,5.032,Propagacion Acelerada
+RUN-0402,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,29.4,2.0,0.38,2.5,concurrent,2.498,4.889,0,80.53,2.456,Propagacion Acelerada
+RUN-0403,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,29.4,12.0,0.38,1.0,concurrent,0.808,7.511,0,22.71,4.637,Propagacion Acelerada
+RUN-0404,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,34.0,29.4,25.0,0.0,2.5,concurrent,0.437,34.722,0,63.33,3.801,Propagacion Acelerada
+RUN-0405,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,14.7,2.0,0.0,1.0,concurrent,4.896,1.111,0,16.01,8.755,Propagacion Acelerada
+RUN-0406,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,14.7,2.0,1.0,2.5,concurrent,1.53,19.444,0,50.48,5.741,Propagacion Acelerada
+RUN-0407,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,14.7,12.0,1.0,1.0,concurrent,0.893,13.333,0,14.24,10.839,Propagacion Acelerada
+RUN-0408,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,14.7,25.0,0.38,2.5,concurrent,0.808,36.833,0,39.7,8.884,Propagacion Acelerada
+RUN-0409,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,16.7,2.0,0.38,1.0,concurrent,5.388,1.956,0,15.73,9.038,Propagacion Acelerada
+RUN-0410,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,16.7,12.0,0.0,2.5,concurrent,1.964,16.667,0,44.11,7.338,Propagacion Acelerada
+RUN-0411,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,16.7,25.0,0.0,1.0,concurrent,0.943,13.889,0,12.37,13.988,Propagacion Acelerada
+RUN-0412,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,16.7,25.0,1.0,2.5,concurrent,0.637,51.389,0,39.01,9.172,Propagacion Acelerada
+RUN-0413,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,29.4,2.0,1.0,1.0,concurrent,2.573,7.778,0,14.56,10.411,Propagacion Acelerada
+RUN-0414,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,29.4,12.0,0.38,2.5,concurrent,2.665,18.778,0,40.81,8.452,Propagacion Acelerada
+RUN-0415,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,60.0,29.4,25.0,0.38,1.0,concurrent,1.358,14.733,0,11.45,16.112,Propagacion Acelerada
+RUN-0416,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,14.7,2.0,0.0,2.5,concurrent,14.313,2.778,0,30.44,14.398,Propagacion Acelerada
+RUN-0417,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,14.7,12.0,0.0,1.0,concurrent,5.218,6.667,0,8.59,27.184,Propagacion Acelerada
+RUN-0418,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,14.7,12.0,1.0,2.5,concurrent,2.609,33.333,0,27.07,17.826,Propagacion Acelerada
+RUN-0419,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,14.7,25.0,1.0,1.0,concurrent,1.692,20.556,0,7.59,33.98,Propagacion Acelerada
+RUN-0420,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,16.7,2.0,0.38,2.5,concurrent,15.75,4.889,0,29.92,14.864,Propagacion Acelerada
+RUN-0421,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,16.7,12.0,0.38,1.0,concurrent,5.097,7.511,0,8.44,28.065,Propagacion Acelerada
+RUN-0422,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,16.7,25.0,0.0,2.5,concurrent,2.756,34.722,0,23.53,23.004,Propagacion Acelerada
+RUN-0423,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,29.4,2.0,0.0,1.0,concurrent,24.072,1.111,0,8.78,26.111,Propagacion Acelerada
+RUN-0424,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,29.4,2.0,1.0,2.5,concurrent,7.522,19.444,0,27.68,17.122,Propagacion Acelerada
+RUN-0425,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,29.4,12.0,1.0,1.0,concurrent,4.388,13.333,0,7.8,32.328,Propagacion Acelerada
+RUN-0426,SAFFIRE-VI-FORENSIC,Cygnus,Nomex,100.0,29.4,25.0,0.38,2.5,concurrent,3.971,36.833,0,21.77,26.498,Propagacion Acelerada
+RUN-0427,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,14.7,2.0,0.38,1.0,concurrent,0.45,1.956,1,12.5,0.306,Extincion Radiativa (Quenching)
+RUN-0428,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,14.7,12.0,0.0,2.5,concurrent,0.164,16.667,1,17.75,0.201,Extincion Radiativa (Quenching)
+RUN-0429,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,14.7,25.0,0.0,1.0,concurrent,0.079,13.889,1,12.5,0.306,Extincion Radiativa (Quenching)
+RUN-0430,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,14.7,25.0,1.0,2.5,concurrent,0.053,51.389,1,17.75,0.201,Extincion Radiativa (Quenching)
+RUN-0431,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,16.7,2.0,1.0,1.0,concurrent,0.155,7.778,1,12.5,0.316,Extincion Radiativa (Quenching)
+RUN-0432,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,16.7,12.0,0.38,2.5,concurrent,0.16,18.778,1,17.75,0.207,Extincion Radiativa (Quenching)
+RUN-0433,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,16.7,25.0,0.38,1.0,concurrent,0.082,14.733,1,12.5,0.316,Extincion Radiativa (Quenching)
+RUN-0434,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,29.4,2.0,0.0,2.5,concurrent,0.757,2.778,1,17.75,0.239,Extincion Radiativa (Quenching)
+RUN-0435,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,29.4,12.0,0.0,1.0,concurrent,0.276,6.667,1,12.5,0.364,Extincion Radiativa (Quenching)
+RUN-0436,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,29.4,12.0,1.0,2.5,concurrent,0.138,33.333,1,17.75,0.239,Extincion Radiativa (Quenching)
+RUN-0437,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,21.0,29.4,25.0,1.0,1.0,concurrent,0.089,20.556,1,12.5,0.364,Extincion Radiativa (Quenching)
+RUN-0438,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,14.7,2.0,0.38,2.5,concurrent,1.238,4.889,1,17.75,0.478,Extincion Radiativa (Quenching)
+RUN-0439,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,14.7,12.0,0.38,1.0,concurrent,0.401,7.511,0,27.62,3.249,Propagacion Acelerada
+RUN-0440,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,14.7,25.0,0.0,2.5,concurrent,0.217,34.722,1,17.75,0.478,Extincion Radiativa (Quenching)
+RUN-0441,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,16.7,2.0,0.0,1.0,concurrent,1.362,1.111,0,30.51,2.71,Propagacion Acelerada
+RUN-0442,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,16.7,2.0,1.0,2.5,concurrent,0.426,19.444,1,17.75,0.494,Extincion Radiativa (Quenching)
+RUN-0443,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,16.7,12.0,1.0,1.0,concurrent,0.248,13.333,0,27.13,3.355,Propagacion Acelerada
+RUN-0444,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,16.7,25.0,0.38,2.5,concurrent,0.225,36.833,1,17.75,0.494,Extincion Radiativa (Quenching)
+RUN-0445,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,29.4,2.0,0.38,1.0,concurrent,2.082,1.956,0,28.23,3.121,Propagacion Acelerada
+RUN-0446,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,29.4,12.0,0.0,2.5,concurrent,0.759,16.667,0,79.16,2.534,Propagacion Acelerada
+RUN-0447,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,29.4,25.0,0.0,1.0,concurrent,0.364,13.889,0,22.21,4.83,Propagacion Acelerada
+RUN-0448,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,34.0,29.4,25.0,1.0,2.5,concurrent,0.246,51.389,0,70.02,3.167,Propagacion Acelerada
+RUN-0449,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,14.7,2.0,1.0,1.0,concurrent,1.275,7.778,0,17.7,7.296,Propagacion Acelerada
+RUN-0450,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,14.7,12.0,0.38,2.5,concurrent,1.32,18.778,0,49.62,5.923,Propagacion Acelerada
+RUN-0451,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,14.7,25.0,0.38,1.0,concurrent,0.673,14.733,0,13.92,11.291,Propagacion Acelerada
+RUN-0452,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,16.7,2.0,0.0,2.5,concurrent,4.49,2.778,0,54.84,4.939,Propagacion Acelerada
+RUN-0453,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,16.7,12.0,0.0,1.0,concurrent,1.637,6.667,0,15.46,9.325,Propagacion Acelerada
+RUN-0454,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,16.7,12.0,1.0,2.5,concurrent,0.818,33.333,0,48.76,6.115,Propagacion Acelerada
+RUN-0455,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,16.7,25.0,1.0,1.0,concurrent,0.531,20.556,0,13.68,11.657,Propagacion Acelerada
+RUN-0456,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,29.4,2.0,0.38,2.5,concurrent,6.862,4.889,0,50.73,5.689,Propagacion Acelerada
+RUN-0457,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,29.4,12.0,0.38,1.0,concurrent,2.22,7.511,0,14.31,10.742,Propagacion Acelerada
+RUN-0458,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,60.0,29.4,25.0,0.0,2.5,concurrent,1.201,34.722,0,39.9,8.805,Propagacion Acelerada
+RUN-0459,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,14.7,2.0,0.0,1.0,concurrent,11.928,1.111,0,10.67,18.297,Propagacion Acelerada
+RUN-0460,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,14.7,2.0,1.0,2.5,concurrent,3.727,19.444,0,33.66,11.998,Propagacion Acelerada
+RUN-0461,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,14.7,12.0,1.0,1.0,concurrent,2.174,13.333,0,9.49,22.654,Propagacion Acelerada
+RUN-0462,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,14.7,25.0,0.38,2.5,concurrent,1.968,36.833,0,26.47,18.569,Propagacion Acelerada
+RUN-0463,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,16.7,2.0,0.38,1.0,concurrent,13.125,1.956,0,10.49,18.89,Propagacion Acelerada
+RUN-0464,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,16.7,12.0,0.0,2.5,concurrent,4.785,16.667,0,29.41,15.336,Propagacion Acelerada
+RUN-0465,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,16.7,25.0,0.0,1.0,concurrent,2.297,13.889,0,8.25,29.235,Propagacion Acelerada
+RUN-0466,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,16.7,25.0,1.0,2.5,concurrent,1.552,51.389,0,26.01,19.17,Propagacion Acelerada
+RUN-0467,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,29.4,2.0,1.0,1.0,concurrent,6.269,7.778,0,9.7,21.759,Propagacion Acelerada
+RUN-0468,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,29.4,12.0,0.38,2.5,concurrent,6.491,18.778,0,27.21,17.665,Propagacion Acelerada
+RUN-0469,SAFFIRE-VI-FORENSIC,Cygnus,Kapton,100.0,29.4,25.0,0.38,1.0,concurrent,3.309,14.733,0,7.63,33.675,Propagacion Acelerada
+RUN-0470,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,14.7,2.0,0.0,2.5,concurrent,1.35,2.778,0,86.22,2.169,Propagacion Estable 0g
+RUN-0471,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,14.7,12.0,0.0,1.0,concurrent,0.492,6.667,0,24.32,4.095,Propagacion Estable 0g
+RUN-0472,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,14.7,12.0,1.0,2.5,concurrent,0.246,33.333,0,76.68,2.685,Propagacion Estable 0g
+RUN-0473,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,14.7,25.0,1.0,1.0,concurrent,0.16,20.556,0,21.51,5.119,Propagacion Estable 0g
+RUN-0474,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,16.7,2.0,0.38,2.5,concurrent,1.486,4.889,0,84.73,2.239,Propagacion Estable 0g
+RUN-0475,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,16.7,12.0,0.38,1.0,concurrent,0.481,7.511,0,23.89,4.228,Propagacion Estable 0g
+RUN-0476,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,16.7,25.0,0.0,2.5,concurrent,0.26,34.722,0,66.64,3.465,Propagacion Estable 0g
+RUN-0477,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,29.4,2.0,0.0,1.0,concurrent,2.27,1.111,0,24.86,3.933,Propagacion Estable 0g
+RUN-0478,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,29.4,2.0,1.0,2.5,concurrent,0.71,19.444,0,78.39,2.579,Propagacion Estable 0g
+RUN-0479,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,29.4,12.0,1.0,1.0,concurrent,0.414,13.333,0,22.11,4.87,Propagacion Estable 0g
+RUN-0480,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,21.0,29.4,25.0,0.38,2.5,concurrent,0.375,36.833,0,61.65,3.992,Propagacion Estable 0g
+RUN-0481,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,14.7,2.0,0.38,1.0,concurrent,3.713,1.956,0,16.97,7.873,Propagacion Acelerada
+RUN-0482,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,14.7,12.0,0.0,2.5,concurrent,1.354,16.667,0,47.59,6.392,Propagacion Acelerada
+RUN-0483,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,14.7,25.0,0.0,1.0,concurrent,0.65,13.889,0,13.35,12.185,Propagacion Acelerada
+RUN-0484,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,14.7,25.0,1.0,2.5,concurrent,0.439,51.389,0,42.09,7.99,Propagacion Acelerada
+RUN-0485,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,16.7,2.0,1.0,1.0,concurrent,1.277,7.778,0,16.68,8.129,Propagacion Acelerada
+RUN-0486,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,16.7,12.0,0.38,2.5,concurrent,1.322,18.778,0,46.76,6.599,Propagacion Acelerada
+RUN-0487,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,16.7,25.0,0.38,1.0,concurrent,0.674,14.733,0,13.12,12.58,Propagacion Acelerada
+RUN-0488,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,29.4,2.0,0.0,2.5,concurrent,6.245,2.778,0,48.65,6.14,Propagacion Acelerada
+RUN-0489,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,29.4,12.0,0.0,1.0,concurrent,2.277,6.667,0,13.72,11.593,Propagacion Acelerada
+RUN-0490,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,29.4,12.0,1.0,2.5,concurrent,1.138,33.333,0,43.26,7.602,Propagacion Acelerada
+RUN-0491,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,34.0,29.4,25.0,1.0,1.0,concurrent,0.738,20.556,0,12.13,14.491,Propagacion Acelerada
+RUN-0492,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,14.7,2.0,0.38,2.5,concurrent,12.24,4.889,0,30.5,14.352,Propagacion Acelerada
+RUN-0493,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,14.7,12.0,0.38,1.0,concurrent,3.961,7.511,0,8.6,27.098,Propagacion Acelerada
+RUN-0494,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,14.7,25.0,0.0,2.5,concurrent,2.142,34.722,0,23.99,22.211,Propagacion Acelerada
+RUN-0495,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,16.7,2.0,0.0,1.0,concurrent,13.469,1.111,0,9.5,22.596,Propagacion Acelerada
+RUN-0496,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,16.7,2.0,1.0,2.5,concurrent,4.209,19.444,0,29.97,14.817,Propagacion Acelerada
+RUN-0497,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,16.7,12.0,1.0,1.0,concurrent,2.455,13.333,0,8.45,27.976,Propagacion Acelerada
+RUN-0498,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,16.7,25.0,0.38,2.5,concurrent,2.222,36.833,0,23.57,22.931,Propagacion Acelerada
+RUN-0499,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,29.4,2.0,0.38,1.0,concurrent,20.586,1.956,0,8.79,26.028,Propagacion Acelerada
+RUN-0500,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,29.4,12.0,0.0,2.5,concurrent,7.505,16.667,0,24.65,21.131,Propagacion Acelerada
+RUN-0501,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,29.4,25.0,0.0,1.0,concurrent,3.602,13.889,0,6.92,40.281,Propagacion Acelerada
+RUN-0502,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,60.0,29.4,25.0,1.0,2.5,concurrent,2.434,51.389,0,21.81,26.414,Propagacion Acelerada
+RUN-0503,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,14.7,2.0,1.0,1.0,concurrent,11.182,7.778,0,6.28,48.0,Propagacion Acelerada
+RUN-0504,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,14.7,12.0,0.38,2.5,concurrent,11.579,18.778,0,16.35,44.565,Propagacion Acelerada
+RUN-0505,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,14.7,25.0,0.38,1.0,concurrent,5.903,14.733,0,6.28,48.0,Propagacion Acelerada
+RUN-0506,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,16.7,2.0,0.0,2.5,concurrent,39.375,2.778,0,18.07,37.161,Propagacion Acelerada
+RUN-0507,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,16.7,12.0,0.0,1.0,concurrent,14.356,6.667,0,6.28,48.0,Propagacion Acelerada
+RUN-0508,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,16.7,12.0,1.0,2.5,concurrent,7.178,33.333,0,16.07,46.009,Propagacion Acelerada
+RUN-0509,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,16.7,25.0,1.0,1.0,concurrent,4.656,20.556,0,6.28,48.0,Propagacion Acelerada
+RUN-0510,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,29.4,2.0,0.38,2.5,concurrent,60.179,4.889,0,16.72,42.805,Propagacion Acelerada
+RUN-0511,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,29.4,12.0,0.38,1.0,concurrent,19.474,7.511,0,6.28,48.0,Propagacion Acelerada
+RUN-0512,SAFFIRE-VI-FORENSIC,Cygnus,SIBAL,100.0,29.4,25.0,0.0,2.5,concurrent,10.531,34.722,0,15.7,48.0,Propagacion Acelerada
+RUN-0513,FLEX-CFIG,ISS-CIR,PMMA,18.0,10.2,3.5,0.0,1.0,opposed,0.813,1.944,0,36.0,1.134,Llama Fria NTC
+RUN-0514,FLEX-CFIG,ISS-CIR,PMMA,18.0,14.7,0.8,0.0,1.0,opposed,1.07,0.444,1,8.5,0.345,Extincion Radiativa (Quenching)
+RUN-0515,FLEX-CFIG,ISS-CIR,PMMA,18.0,14.7,8.0,0.0,1.0,opposed,0.585,4.444,0,34.81,2.133,Propagacion Estable 0g
+RUN-0516,FLEX-CFIG,ISS-CIR,PMMA,18.0,20.0,3.5,0.0,1.0,opposed,1.348,1.944,0,36.0,1.134,Llama Fria NTC
+RUN-0517,FLEX-CFIG,ISS-CIR,PMMA,21.0,10.2,0.8,0.0,1.0,opposed,1.124,0.444,1,8.5,0.402,Extincion Radiativa (Quenching)
+RUN-0518,FLEX-CFIG,ISS-CIR,PMMA,21.0,10.2,8.0,0.0,1.0,opposed,0.615,4.444,0,31.42,2.569,Propagacion Estable 0g
+RUN-0519,FLEX-CFIG,ISS-CIR,PMMA,21.0,14.7,3.5,0.0,1.0,opposed,1.479,1.944,0,36.0,1.322,Llama Fria NTC
+RUN-0520,FLEX-CFIG,ISS-CIR,PMMA,21.0,20.0,0.8,0.0,1.0,opposed,1.863,0.444,1,8.5,0.402,Extincion Radiativa (Quenching)
+RUN-0521,FLEX-CFIG,ISS-CIR,PMMA,21.0,20.0,8.0,0.0,1.0,opposed,1.019,4.444,0,28.65,3.04,Propagacion Estable 0g
+RUN-0522,FLEX-CFIG,ISS-CIR,PMMA,28.0,10.2,3.5,0.0,1.0,opposed,2.057,1.944,0,36.0,1.763,Llama Fria NTC
+RUN-0523,FLEX-CFIG,ISS-CIR,PMMA,28.0,14.7,0.8,0.0,1.0,opposed,2.705,0.444,0,36.0,1.763,Llama Fria NTC
+RUN-0524,FLEX-CFIG,ISS-CIR,PMMA,28.0,14.7,8.0,0.0,1.0,opposed,1.479,4.444,0,22.48,4.725,Propagacion Estable 0g
+RUN-0525,FLEX-CFIG,ISS-CIR,PMMA,28.0,20.0,3.5,0.0,1.0,opposed,3.408,1.944,0,36.0,1.763,Llama Fria NTC
+RUN-0526,FLEX-CFIG,ISS-CIR,PMMA,50.0,10.2,0.8,0.0,1.0,opposed,6.95,0.444,0,14.56,10.409,Propagacion Acelerada
+RUN-0527,FLEX-CFIG,ISS-CIR,PMMA,50.0,10.2,8.0,0.0,1.0,opposed,3.801,4.444,0,13.31,12.246,Propagacion Acelerada
+RUN-0528,FLEX-CFIG,ISS-CIR,PMMA,50.0,14.7,3.5,0.0,1.0,opposed,9.142,1.944,0,13.36,12.159,Propagacion Acelerada
+RUN-0529,FLEX-CFIG,ISS-CIR,PMMA,50.0,20.0,0.8,0.0,1.0,opposed,11.516,0.444,0,13.27,12.317,Propagacion Acelerada
+RUN-0530,FLEX-CFIG,ISS-CIR,PMMA,50.0,20.0,8.0,0.0,1.0,opposed,6.298,4.444,0,12.13,14.491,Propagacion Acelerada
+RUN-0531,FLEX-CFIG,ISS-CIR,Algodon,18.0,10.2,3.5,0.0,1.0,opposed,0.955,1.944,0,35.38,2.071,Propagacion Estable 0g
+RUN-0532,FLEX-CFIG,ISS-CIR,Algodon,18.0,14.7,0.8,0.0,1.0,opposed,1.256,0.444,1,8.5,0.405,Extincion Radiativa (Quenching)
+RUN-0533,FLEX-CFIG,ISS-CIR,Algodon,18.0,14.7,8.0,0.0,1.0,opposed,0.687,4.444,0,31.87,2.504,Propagacion Estable 0g
+RUN-0534,FLEX-CFIG,ISS-CIR,Algodon,18.0,20.0,3.5,0.0,1.0,opposed,1.582,1.944,0,32.25,2.451,Propagacion Estable 0g
+RUN-0535,FLEX-CFIG,ISS-CIR,Algodon,21.0,10.2,0.8,0.0,1.0,opposed,1.32,0.444,1,8.5,0.472,Extincion Radiativa (Quenching)
+RUN-0536,FLEX-CFIG,ISS-CIR,Algodon,21.0,10.2,8.0,0.0,1.0,opposed,0.722,4.444,0,28.77,3.016,Propagacion Estable 0g
+RUN-0537,FLEX-CFIG,ISS-CIR,Algodon,21.0,14.7,3.5,0.0,1.0,opposed,1.736,1.944,0,28.88,2.995,Propagacion Estable 0g
+RUN-0538,FLEX-CFIG,ISS-CIR,Algodon,21.0,20.0,0.8,0.0,1.0,opposed,2.187,0.444,1,8.5,0.472,Extincion Radiativa (Quenching)
+RUN-0539,FLEX-CFIG,ISS-CIR,Algodon,21.0,20.0,8.0,0.0,1.0,opposed,1.196,4.444,0,26.23,3.569,Propagacion Estable 0g
+RUN-0540,FLEX-CFIG,ISS-CIR,Algodon,28.0,10.2,3.5,0.0,1.0,opposed,2.414,1.944,0,22.84,4.588,Propagacion Estable 0g
+RUN-0541,FLEX-CFIG,ISS-CIR,Algodon,28.0,14.7,0.8,0.0,1.0,opposed,3.176,0.444,0,22.5,4.715,Propagacion Estable 0g
+RUN-0542,FLEX-CFIG,ISS-CIR,Algodon,28.0,14.7,8.0,0.0,1.0,opposed,1.737,4.444,0,20.58,5.547,Propagacion Estable 0g
+RUN-0543,FLEX-CFIG,ISS-CIR,Algodon,28.0,20.0,3.5,0.0,1.0,opposed,4.001,1.944,0,20.82,5.429,Propagacion Estable 0g
+RUN-0544,FLEX-CFIG,ISS-CIR,Algodon,50.0,10.2,0.8,0.0,1.0,opposed,8.159,0.444,0,13.33,12.219,Propagacion Acelerada
+RUN-0545,FLEX-CFIG,ISS-CIR,Algodon,50.0,10.2,8.0,0.0,1.0,opposed,4.462,4.444,0,12.19,14.375,Propagacion Acelerada
+RUN-0546,FLEX-CFIG,ISS-CIR,Algodon,50.0,14.7,3.5,0.0,1.0,opposed,10.731,1.944,0,12.24,14.274,Propagacion Acelerada
+RUN-0547,FLEX-CFIG,ISS-CIR,Algodon,50.0,20.0,0.8,0.0,1.0,opposed,13.519,0.444,0,12.15,14.459,Propagacion Acelerada
+RUN-0548,FLEX-CFIG,ISS-CIR,Algodon,50.0,20.0,8.0,0.0,1.0,opposed,7.393,4.444,0,11.11,17.011,Propagacion Acelerada
+RUN-0549,FLEX-CFIG,ISS-CIR,PTFE,18.0,10.2,3.5,0.0,1.0,opposed,0.177,1.944,0,36.0,0.246,Llama Fria NTC
+RUN-0550,FLEX-CFIG,ISS-CIR,PTFE,18.0,14.7,0.8,0.0,1.0,opposed,0.233,0.444,1,8.5,0.075,Extincion Radiativa (Quenching)
+RUN-0551,FLEX-CFIG,ISS-CIR,PTFE,18.0,14.7,8.0,0.0,1.0,opposed,0.127,4.444,1,12.5,0.113,Extincion Radiativa (Quenching)
+RUN-0552,FLEX-CFIG,ISS-CIR,PTFE,18.0,20.0,3.5,0.0,1.0,opposed,0.293,1.944,0,36.0,0.246,Llama Fria NTC
+RUN-0553,FLEX-CFIG,ISS-CIR,PTFE,21.0,10.2,0.8,0.0,1.0,opposed,0.244,0.444,1,8.5,0.087,Extincion Radiativa (Quenching)
+RUN-0554,FLEX-CFIG,ISS-CIR,PTFE,21.0,10.2,8.0,0.0,1.0,opposed,0.134,4.444,1,12.5,0.136,Extincion Radiativa (Quenching)
+RUN-0555,FLEX-CFIG,ISS-CIR,PTFE,21.0,14.7,3.5,0.0,1.0,opposed,0.321,1.944,0,36.0,0.287,Llama Fria NTC
+RUN-0556,FLEX-CFIG,ISS-CIR,PTFE,21.0,20.0,0.8,0.0,1.0,opposed,0.405,0.444,1,8.5,0.087,Extincion Radiativa (Quenching)
+RUN-0557,FLEX-CFIG,ISS-CIR,PTFE,21.0,20.0,8.0,0.0,1.0,opposed,0.221,4.444,1,12.5,0.161,Extincion Radiativa (Quenching)
+RUN-0558,FLEX-CFIG,ISS-CIR,PTFE,28.0,10.2,3.5,0.0,1.0,opposed,0.447,1.944,0,36.0,0.383,Llama Fria NTC
+RUN-0559,FLEX-CFIG,ISS-CIR,PTFE,28.0,14.7,0.8,0.0,1.0,opposed,0.588,0.444,0,36.0,0.383,Llama Fria NTC
+RUN-0560,FLEX-CFIG,ISS-CIR,PTFE,28.0,14.7,8.0,0.0,1.0,opposed,0.322,4.444,1,12.5,0.25,Extincion Radiativa (Quenching)
+RUN-0561,FLEX-CFIG,ISS-CIR,PTFE,28.0,20.0,3.5,0.0,1.0,opposed,0.741,1.944,0,36.0,0.383,Llama Fria NTC
+RUN-0562,FLEX-CFIG,ISS-CIR,PTFE,50.0,10.2,0.8,0.0,1.0,opposed,1.511,0.444,0,33.69,2.263,Propagacion Acelerada
+RUN-0563,FLEX-CFIG,ISS-CIR,PTFE,50.0,10.2,8.0,0.0,1.0,opposed,0.826,4.444,0,30.82,2.662,Propagacion Acelerada
+RUN-0564,FLEX-CFIG,ISS-CIR,PTFE,50.0,14.7,3.5,0.0,1.0,opposed,1.987,1.944,0,30.94,2.643,Propagacion Acelerada
+RUN-0565,FLEX-CFIG,ISS-CIR,PTFE,50.0,20.0,0.8,0.0,1.0,opposed,2.503,0.444,0,30.71,2.678,Propagacion Acelerada
+RUN-0566,FLEX-CFIG,ISS-CIR,PTFE,50.0,20.0,8.0,0.0,1.0,opposed,1.369,4.444,0,28.09,3.15,Propagacion Acelerada
