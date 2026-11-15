@@ -5,12 +5,14 @@
 Desde la raíz del proyecto (`NASA/`):
 
 ```powershell
-# Dependencias de ejecución (servidor web y modelos de predicción)
+# Dependencias ligeras de producción e inferencia (Render 512 MB RAM, sin torch)
 pip install -r requirements.txt
 
-# O entorno completo con suite de pruebas automatizadas
+# O entorno completo para desarrollo, reentrenamiento PyTorch y suite pytest
 pip install -r requirements/dev.txt
 ```
+
+> Nota de despliegue: En producción (`requirements.txt` -> `requirements/base.txt`), el servidor ejecuta inferencia de `flame_cnn.onnx` mediante `onnxruntime` con pesos verificados por `SHA-256`, evitando instalar `torch` para mantenerse holgado dentro de los `512 MB` de RAM gratuitos en Render.
 
 ## 2. Arranque del servidor web
 

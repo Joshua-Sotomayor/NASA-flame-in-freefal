@@ -253,10 +253,20 @@ class PayloadAndRateLimitMiddleware(BaseHTTPMiddleware):
         super().__init__(app)
         self._guard = guard
 
+    @staticmethod
+    def _extract_client_ip(request: Request) -> str:
+        """Extrae la IP cliente real respetando el primer salto de X-Forwarded-For tras proxy."""
+        xff = request.headers.get("x-forwarded-for")
+        if xff:
+            first_hop = xff.split(",")[0].strip()
+            if first_hop:
+                return first_hop
+        return request.client.host if request.client else "unknown"
+
     async def dispatch(self, request: Request, call_next: Callable[..., Any]) -> Response:
         path = request.url.path
         bucket = "ml" if any(path.startswith(prefix) for prefix in _ML_ROUTE_PREFIXES) else "general"
-        client_ip = request.client.host if request.client else "unknown"
+        client_ip = self._extract_client_ip(request)
 
         try:
             content_length_raw = request.headers.get("content-length")

@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.9.11): Consolidación Total (`I-01..I-10` + `M-01..M-14`) en `dev` y `main`</strong><br />
-          <span><strong>Logrado (25/31 tareas · Mecatrónica 12/13 · Gestión Industrial 10/12 · Gate 3 E2E):</strong> <strong><code>M-06, M-09, M-10, M-11, M-13, J-03</code></strong> (UI editorial <code>Geist Pixel</code>, paleta NASA, <code>01 Museo y Glosario</code>, PCA sin solapes, contorno/FMEA reactivos) + <strong><code>I-01..I-10</code></strong> (PSI, TOPSIS, MoSCoW, FMEA, presets forenses, supresión ECLSS, Spinoffs, <code>writing-craft</code>, QA unidades y <code>README.md</code>) verificados con <strong><code>79/79 pytest PASS</code></strong>.<br />
-          <strong>Siguiente en curso:</strong> Mecatrónica <code>M-12</code> (Deploy Render/Netlify) · Gestión Industrial (<code>I-11 Deck 7 slides</code>, <code>I-12 Guion video</code>) · Cierre (<code>J-04..J-06</code>).</span>
+          <strong>Estado de la Iteración Actual (0.9.12): Preparación de Despliegue Todo-en-Uno Render Free + UptimeRobot (`M-12`) Completada</strong><br />
+          <span><strong>Logrado (26/31 tareas · Mecatrónica 13/13 · Gestión Industrial 10/12 · Gate 3 E2E):</strong> <strong><code>M-01..M-13, I-01..I-10, J-01..J-03</code></strong> — <code>M-12</code> listo con <code>render.yaml</code>, <code>Dockerfile</code>, <code>.dockerignore</code>, <code>netlify.toml</code>, <code>requirements/base.txt</code> ligero (&lt;512 MB RAM sin <code>torch</code>), rutas <code>HEAD/GET</code> para UptimeRobot, <code>X-Forwarded-For</code> en <code>RateLimiter</code> y <strong><code>82/82 pytest PASS</code></strong>.<br />
+          <strong>Siguiente en curso:</strong> Gestión Industrial (<code>I-11 Deck 7 slides</code>, <code>I-12 Guion video</code>) · Cierre (<code>J-04 Activar Render + UptimeRobot e incógnito</code>, <code>J-05 Video</code>, <code>J-06 Envío</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.9.11 · 25/31 (81%)</span>
+        <span class="mono badge badge-joint">0.9.12 · 26/31 (84%)</span>
       </div>
 
       <div class="toolbar">
@@ -1180,7 +1180,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "M-10", role: "meca", phase: "D-AM", title: "Crear pestaña Hardware Blueprint (SolidWorks/EPLAN/Proteus)", objective: "Incluir evidencias visuales e interlock cableado como validación física del gemelo web.", scope: "Documentación técnica embebida", deliverable: "Galería Blueprint integrada", done: true },
         { id: "M-11", role: "meca", phase: "D-AM", title: "Ejecutar /ponytail-audit y pruebas Web Vitals / offline", objective: "Eliminar código muerto, verificar LCP < 2.5s y probar desconectando Wi-Fi.", scope: "Auditoría de calidad y rendimiento", deliverable: "Checklist técnico verde", done: true },
         { id: "M-13", role: "meca", phase: "D-AM", title: "Refactor del apartado visual y pulido UX de la plataforma web (0.9.3–0.9.4)", objective: "Paleta azul/rojo del logo NASA con sombras en cabecera, cursivas editoriales, 01 Museo y Glosario al inicio, mapa PCA sin solapamientos, contorno/factores sensibles al escenario y comparador FMEA/supresión.", scope: "Refactor visual + interactividad UX", deliverable: "UI NASA + ENREDADOS + 34/34 pytest verde", modules: "frontend/*, backend/main.py, backend/physics_ml.py, backend/ranking_nlp.py, requirements/*, tests/integration/test_frontend_and_audit_int.py", branch: "feat/meca-m14-ux-nasa-palette", done: true },
-        { id: "M-12", role: "meca", phase: "D-AM", title: "Desplegar plataforma web en URL HTTPS pública", objective: "Publicar FastAPI + frontend en Render (o Netlify proxy + Render) con CORS/CSP seguros y $0 USD.", scope: "Deploy Render / Netlify + Render", deliverable: "URL pública verificada", modules: "Dockerfile, render.yaml, netlify.toml, backend/main.py, backend/security.py, frontend/app.js", branch: "feat/meca-m12-deploy-render-netlify", done: false },
+        { id: "M-12", role: "meca", phase: "D-AM", title: "Preparar despliegue todo-en-uno en Render Free + UptimeRobot", objective: "Publicar FastAPI + frontend + modelos ONNX/sklearn en Render ($0 USD, 512 MB RAM sin torch) con soporte HEAD/GET para UptimeRobot y aislamiento X-Forwarded-For.", scope: "Deploy Render Todo-en-Uno + UptimeRobot", deliverable: "render.yaml + Dockerfile + guía + 82/82 pytest PASS", modules: "Dockerfile, render.yaml, .dockerignore, netlify.toml, requirements/*, docs/deploy_render_uptimerobot.md, backend/main.py, backend/security.py, tests/integration/test_deploy_readiness_int.py", branch: "feat/meca-m12-deploy-render-netlify", done: true },
 
         // Rol B: Gestión Industrial (12)
         { id: "I-01", role: "ind", phase: "V-H0", title: "Taxonomía y mapeo de los 4 objetivos en las 24 PSI", objective: "Clasificar qué investigaciones aportan a Cabinas, Modelado, Sensores y Spinoffs.", scope: "Curación científica de dominio", deliverable: "Matriz de trazabilidad PSI", modules: "docs/industrial/matriz_trazabilidad_psi.md, data/psi_combustion_24.json (solo lectura/validación)", branch: "feat/ind-i01-psi-taxonomy", done: true },
@@ -1757,7 +1757,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
         assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS") && i08.objective.includes("writing-craft"), "I-08 must reference deterministic rules and writing-craft");
         assert(DEFAULT_TASKS.filter(t => !t.done).every(t => Boolean(t.modules) && Boolean(t.branch)), "All pending tasks must declare modules lock and dedicated branch");
-        assert(DEFAULT_TASKS.filter(t => t.done).length === 25, "Expected 25 tasks marked done by default (M-01..M-11, M-13, I-01..I-10, J-01..J-03)");
+        assert(DEFAULT_TASKS.filter(t => t.done).length === 26, "Expected 26 tasks marked done by default (M-01..M-13, I-01..I-10, J-01..J-03)");
 
         // Verify FSM visualizer transitions cleanly
         setFsmState("CONTENCION");
