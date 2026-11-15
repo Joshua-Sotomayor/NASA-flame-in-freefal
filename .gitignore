@@ -36,3 +36,6 @@ artifacts/raw_downloads/
 .DS_Store
 Thumbs.db
 .vscode/settings.json
+graphify-out/
+.engram/
+

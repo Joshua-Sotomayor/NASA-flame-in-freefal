@@ -164,6 +164,8 @@ class GovernanceAndSpinoffService:
     ) -> SuppressionRecommendation:
         """Arbol de decision PFE vs CO2 vs E-FIELD segun toxicidad ECLSS y fisica 0g."""
         kind = fire_type.strip().lower()
+        if not kind:
+            raise ValueError("fire_type no puede estar vacio.")
         if auto_oxidizing or kind in {"auto_oxidizing", "vika", "liclo4", "smoldering"}:
             return SuppressionRecommendation(
                 recommended_agent="PFE",
@@ -195,9 +197,10 @@ class GovernanceAndSpinoffService:
         )
 
     def calculate_dual_use(self, spinoff_id: str | None = None, units: int = 1) -> DualUseImpact:
-        if not (1 <= units <= 10000):
-            raise ValueError("units debe estar entre 1 y 10000.")
-        key = spinoff_id or "9582"
+        if isinstance(units, bool) or not isinstance(units, int) or not (1 <= units <= 10000):
+            raise ValueError("units debe ser un entero entre 1 y 10000.")
+        cleaned = spinoff_id.strip().upper() if spinoff_id is not None else ""
+        key = cleaned or "9582"
         if key not in self._spinoffs:
             raise KeyError(f"Spinoff no encontrado: {key}")
 

@@ -110,9 +110,9 @@
 
 ## Fase 4: Blueprint Físico, Auditoría, Despliegue y Pitch (Domingo `H27–H48`)
 
-### [~] Task 9 (`M-10` completado; pendiente `I-09` + `I-10` Gestión Industrial): Pestaña *Hardware Blueprint*, QA `writing-craft` y `README.md`
-- **Criterios:** Evidencias `SolidWorks/EPLAN/Proteus` integradas en pestaña Blueprint (`M-10` listo), cero contenido de motores cohete (`C-01`), los 10 recursos NASA citados y `README.md` auditado con `writing-craft` (pendiente `I-09`/`I-10`).
-- **Commit Git:** `0.8.0 - design - construir dashboard web aero ignis con gemelo digital svg contorno e interlock blueprint`
+### [x] Task 9 (`M-10` + `I-09` + `I-10`): Pestaña *Hardware Blueprint*, QA `writing-craft` y `README.md`
+- **Criterios:** Evidencias `SolidWorks/EPLAN/Proteus` integradas en pestaña Blueprint (`M-10` listo), cero contenido de motores cohete (`C-01`), QA de unidades (`I-09`), los 10 recursos NASA citados y `README.md` auditado con `writing-craft` (`I-10`).
+- **Commit Git:** `0.9.11 - merge - consolidar ramas industriales i01 a i10 y mecatronica m14 en dev`
 
 ### [x] Task 10 (`M-11`): Auditoría `/ponytail-audit` + Suite TDD Completa & Offline
 - **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% (`33 passed`), JS limpio (`node --check frontend/app.js`), auditoría anti-slop / cero código muerto / seguridad OWASP verificada.
@@ -142,21 +142,21 @@
 
 > Regla: antes de trabajar, todo nuevo chat pregunta el perfil activo (`meca` / `ind` / `joint`) y respeta los archivos bloqueados por cada rama. Los archivos del tablero ([planning/index.html](planning/index.html), [tasks/todo.md](tasks/todo.md)) solo se editan al cerrar una tarea tras `git pull --rebase origin dev`.
 
-| ID | Perfil | Rama Dedicada | Módulos / Archivos Bloqueados (*Lock*) |
-| :--- | :---: | :--- | :--- |
-| **`M-13`** | `meca` | `feat/meca-m13-ui-refactor` | `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` |
-| **`M-12`** | `meca` | `feat/meca-m12-deploy-render-netlify` | `Dockerfile`, `render.yaml`, `netlify.toml`, `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js` |
-| **`I-01`** | `ind` | `feat/ind-i01-psi-taxonomy` | `docs/industrial/matriz_trazabilidad_psi.md`, `data/psi_combustion_24.json` (solo lectura/validación) |
-| **`I-02`** | `ind` | `feat/ind-i02-topsis-spec` | `docs/industrial/especificacion_topsis.md`, `tests/unit/test_ranking_and_writing_unit.py` |
-| **`I-04`** | `ind` | `feat/ind-i04-fmea-matrix` | `docs/industrial/fmea_nasa_std_6001.md`, `data/cases_and_spinoffs.json` (sección FMEA) |
-| **`I-05`** | `ind` | `feat/ind-i05-forensic-presets` | `docs/industrial/fichas_forenses.md`, `data/cases_and_spinoffs.json` (sección `forensic_presets`) |
-| **`I-06`** | `ind` | `feat/ind-i06-suppression-tree` | `docs/industrial/protocolo_supresion_eclss.md`, `backend/governance.py` (reglas supresión) |
-| **`I-07`** | `ind` | `feat/ind-i07-dual-use-spinoffs` | `docs/industrial/impacto_dual_use.md`, `data/cases_and_spinoffs.json` (sección `spinoffs`) |
-| **`I-08`** | `ind` | `feat/ind-i08-writing-craft-templates` | `docs/industrial/plantillas_writing_craft.md`, `backend/ranking_nlp.py` (solo plantillas), `tests/unit/test_ranking_and_writing_unit.py` |
-| **`I-09`** | `ind` | `feat/ind-i09-qa-units-scope` | `docs/industrial/qa_unidades_alcance.md` |
-| **`I-10`** | `ind` | `feat/ind-i10-readme-ejecutivo` | `README.md` |
-| **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md` |
-| **`I-12`** | `ind` | `feat/ind-i12-video-script` | `docs/pitch/guion_video_demo.md` |
-| **`J-04`** | `joint` | `release/v1.0.0` | `planning/index.html`, `tasks/todo.md`, tag `v1.0.0` (después de merge `dev -> main`) |
-| **`J-05`** | `joint` | `docs/joint-j05-video-checklist` | `docs/pitch/checklist_grabacion.md` |
-| **`J-06`** | `joint` | `docs/joint-j06-submission` | `docs/pitch/submission_space_apps.md` |
+| ID | Perfil | Rama Dedicada | Módulos / Archivos Bloqueados (*Lock*) | Estado |
+| :--- | :---: | :--- | :--- | :---: |
+| **`M-13`** | `meca` | `feat/meca-m13-ui-refactor` $\rightarrow$ `feat/meca-m14-ux-nasa-palette` | `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` | **Listo [x]** |
+| **`M-12`** | `meca` | `feat/meca-m12-deploy-render-netlify` | `Dockerfile`, `render.yaml`, `netlify.toml`, `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js` | Pendiente |
+| **`I-01`** | `ind` | `feat/ind-i01-psi-taxonomy` | `docs/industrial/matriz_trazabilidad_psi.md`, `data/psi_combustion_24.json` (solo lectura/validación) | **Listo [x]** |
+| **`I-02`** | `ind` | `feat/ind-i02-topsis-spec` | `docs/industrial/especificacion_topsis.md`, `tests/unit/test_ranking_and_writing_unit.py` | **Listo [x]** |
+| **`I-04`** | `ind` | `feat/ind-i04-fmea-matrix` | `docs/industrial/fmea_nasa_std_6001.md`, `data/cases_and_spinoffs.json` (sección FMEA), `tests/unit/test_fmea_unit.py` | **Listo [x]** |
+| **`I-05`** | `ind` | `feat/ind-i05-forensic-presets` | `docs/industrial/fichas_forenses.md`, `data/cases_and_spinoffs.json` (sección `forensic_presets`), `tests/unit/test_forensic_presets_unit.py` | **Listo [x]** |
+| **`I-06`** | `ind` | `feat/ind-i06-suppression-tree` | `docs/industrial/protocolo_supresion_eclss.md`, `backend/governance.py`, `tests/unit/test_suppression_protocol_unit.py` | **Listo [x]** |
+| **`I-07`** | `ind` | `feat/ind-i07-dual-use-spinoffs` | `docs/industrial/impacto_dual_use.md`, `data/cases_and_spinoffs.json` (sección `spinoffs`), `tests/unit/test_dual_use_spinoffs_unit.py` | **Listo [x]** |
+| **`I-08`** | `ind` | `feat/ind-i08-writing-craft-templates` | `docs/industrial/plantillas_writing_craft.md`, `backend/ranking_nlp.py` (plantillas), `tests/unit/test_ranking_and_writing_unit.py` | **Listo [x]** |
+| **`I-09`** | `ind` | `feat/ind-i09-qa-units-scope` | `docs/industrial/qa_unidades_alcance.md`, `tests/unit/test_qa_units_scope_unit.py` | **Listo [x]** |
+| **`I-10`** | `ind` | `feat/ind-i10-readme-ejecutivo` | `README.md`, `tests/unit/test_readme_and_resources_unit.py` | **Listo [x]** |
+| **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md` | Pendiente |
+| **`I-12`** | `ind` | `feat/ind-i12-video-script` | `docs/pitch/guion_video_demo.md` | Pendiente |
+| **`J-04`** | `joint` | `release/v1.0.0` | `planning/index.html`, `tasks/todo.md`, tag `v1.0.0` (después de merge `dev -> main`) | Pendiente |
+| **`J-05`** | `joint` | `docs/joint-j05-video-checklist` | `docs/pitch/checklist_grabacion.md` | Pendiente |
+| **`J-06`** | `joint` | `docs/joint-j06-submission` | `docs/pitch/submission_space_apps.md` | Pendiente |

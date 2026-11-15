@@ -64,6 +64,20 @@
 2. **Aislamiento de Tareas por Rama y Bloqueo Lógico de Archivos (*File Locks*):**
    - Cada sesión ejecuta **únicamente tareas de su perfil activo** y crea su propia rama temática (`feat/meca-<id>-<slug>`, `feat/ind-<id>-<slug>`, `docs/...`) desde `dev` actualizado (`git fetch origin && git pull --rebase origin dev`).
    - Antes de iniciar una tarea, consultar los **módulos y archivos asignados (`modules` / lock)** en [tasks/todo.md](tasks/todo.md) y [planning/index.html](planning/index.html), además de revisar `git branch -a` para comprobar qué ramas están activas.
-   - **Regla de no colisión:** Mientras una tarea de un perfil esté en curso, sus archivos asignados quedan lógicamente bloqueados para el otro perfil (ej. `frontend/*` bajo `M-13` no debe editarse desde una rama `feat/ind-*`, y `docs/industrial/*` / `README.md` bajo `I-10` no debe editarse desde `feat/meca-*`).
+    - **Regla de no colisión:** Mientras una tarea de un perfil esté en curso, sus archivos asignados quedan lógicamente bloqueados para el otro perfil (ej. `frontend/*` bajo `M-13` no debe editarse desde una rama `feat/ind-*`, y `docs/industrial/*` / `README.md` bajo `I-10` no debe editarse desde `feat/meca-*`).
    - **Archivos de tablero compartidos (`planning/index.html`, `tasks/todo.md`):** Se modifican exclusivamente al cerrar la tarea en curso, haciendo `git fetch origin && git pull --rebase origin dev` justo antes del merge a `dev`.
+
+---
+
+## 5. Memoria Persistente (Engram) y Grafo de Conocimiento (Graphify)
+
+> Al cerrar cada logro, hito o corrección de errores relevante en el proyecto, los agentes deben actualizar tanto la memoria episódica como el grafo estructural del código (100% local a `$0 USD`):
+
+1. **Engram (`engram.exe`, proyecto `nasa_aero_ignis_si`):**
+   - Guardar decisiones de arquitectura, consolidaciones de hitos y lecciones de errores resueltos:
+     - `engram save "<título>" "<qué / por qué / dónde / lección>" --type architecture|lesson|bugfix --project nasa_aero_ignis_si`
+   - Consultar contexto antes de sesiones complejas con `engram context --project nasa_aero_ignis_si` y `engram search "<tema>" --project nasa_aero_ignis_si`.
+2. **Graphify (`graphify.exe`, directorio local `graphify-out/` excluido en `.gitignore`):**
+   - Reindexar estructura sin LLM externos: `graphify extract . --code-only --no-label` (o `graphify update .`) y registrar en el grafo global (`graphify global add graphify-out/graph.json --as nasa_aero_ignis_si`).
+   - Registrar hallazgos y correcciones con `graphify save-result --question "..." --answer "..." --outcome useful|corrected --correction "..."` y compilar `graphify reflect` para mantener actualizado `graphify-out/reflections/LESSONS.md`.
 
