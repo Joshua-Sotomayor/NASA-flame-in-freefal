@@ -21,6 +21,19 @@ from backend.security import SecurityBoundaryGuard
 
 CRITERIA_KEYS: tuple[str, ...] = ("habitat", "modeling", "sensors", "spinoff")
 VALID_PERSONAS: frozenset[str] = frozenset({"Investigador", "Estudiante", "Gestor Industrial"})
+FEATURE_LABELS: dict[str, str] = {
+    "o2_pct": "concentracion de O2",
+    "pressure_psi": "presion de cabina",
+    "flow_cm_s": "flujo de ventilacion",
+    "gravity_g": "nivel de gravedad",
+    "thickness_mm": "espesor de muestra",
+}
+CRITERIA_LABELS: dict[str, str] = {
+    "habitat": "seguridad en cabina habitable",
+    "modeling": "calibracion adimensional",
+    "sensors": "deteccion de llama y humo",
+    "spinoff": "impacto dual-use",
+}
 
 
 @dataclass(frozen=True)
@@ -255,15 +268,34 @@ class ExtractiveNlpEngine:
         )
         return [pair[0] for pair in ordered[:top_k]]
 
+    @staticmethod
+    def _resolve_topsis_and_driver(
+        primary: PsiInvestigation,
+        ranked: Sequence[RankedInvestigation],
+        feature_importance: Mapping[str, float] | None,
+    ) -> tuple[float, str, str]:
+        score_by_id = {item.psi_id: item.topsis_score for item in ranked}
+        topsis_val = float(score_by_id.get(primary.psi_id, ranked[0].topsis_score))
+        if feature_importance:
+            key, raw_val = max(feature_importance.items(), key=lambda kv: (float(kv[1]), kv[0]))
+            pct = float(raw_val) * 100.0 if float(raw_val) <= 1.0 else float(raw_val)
+            label = FEATURE_LABELS.get(key, key)
+            return topsis_val, label, f"{min(100.0, max(0.0, pct)):.0f}%"
+        crit_key, crit_val = max(primary.criteria_dict().items(), key=lambda kv: (float(kv[1]), kv[0]))
+        return topsis_val, CRITERIA_LABELS.get(crit_key, crit_key), f"{float(crit_val) * 100.0:.0f}%"
+
     def summarize_for_persona(
         self,
         investigations: Sequence[PsiInvestigation],
         ranked: Sequence[RankedInvestigation],
         query: str,
         persona: str,
+        feature_importance: Mapping[str, float] | None = None,
     ) -> SynthesisReport:
         if persona not in VALID_PERSONAS:
             raise ValueError(f"Audiencia no soportada: {persona}")
+        if not investigations or not ranked:
+            raise ValueError("Se requieren investigaciones y ranking TOPSIS no vacios para sintetizar.")
 
         by_id = {inv.psi_id: inv for inv in investigations}
         sims = self._query_similarities(query)
@@ -274,6 +306,8 @@ class ExtractiveNlpEngine:
             key=lambda r: (-(0.70 * r.topsis_score + 0.30 * sims.get(r.psi_id, 0.0)), r.psi_id),
         )
         top_pool = [by_id[r.psi_id] for r in combined[:6] if r.psi_id in by_id]
+        if not top_pool:
+            raise ValueError("Ranking TOPSIS sin correspondencia valida en catalogo PSI.")
         key_items = self._textrank_select(top_pool, top_k=3)
         cited_dois = tuple(item.doi for item in key_items)
         evidence_ids = tuple(item.psi_id for item in key_items)
@@ -282,50 +316,54 @@ class ExtractiveNlpEngine:
         secondary = key_items[1] if len(key_items) > 1 else key_items[0]
         tertiary = key_items[2] if len(key_items) > 2 else secondary
         mats_primary = ", ".join(primary.materials[:2]) or "solidos de cabina"
+        sensor_hint = primary.sensors[0] if primary.sensors else "camaras opticas"
+        topsis_val, driver_label, driver_pct = self._resolve_topsis_and_driver(
+            primary, ranked, feature_importance
+        )
 
         if persona == "Investigador":
             bullets = (
                 (
-                    f"La evidencia de {primary.psi_id} ({primary.acronym}, {primary.facility}) indica un rango "
-                    f"operativo de {primary.o2_min:.0f}-{primary.o2_max:.0f}% O2 y flujo hasta {primary.flow_cm_s_max:.0f} cm/s; "
-                    f"su enfoque en {mats_primary} es consistente con limites de Da/Pe en cabina ({primary.doi})."
+                    f"La evidencia de {primary.psi_id} ({primary.acronym}, {primary.facility}) indica un indice "
+                    f"TOPSIS {topsis_val:.2f} en rango {primary.o2_min:.0f}-{primary.o2_max:.0f}% O2 y flujo hasta "
+                    f"{primary.flow_cm_s_max:.0f} cm/s; su enfoque en {mats_primary} es consistente con limites Da/Pe ({primary.doi})."
                 ),
                 (
                     f"El analisis extractivo cruza {secondary.psi_id} ({secondary.acronym}) y {tertiary.psi_id} ({tertiary.acronym}), "
-                    f"sugiriendo correlacion directa entre presion ({primary.pressure_psi_min:.1f}-{primary.pressure_psi_max:.1f} psi) "
-                    f"y dinamica de propagacion ({secondary.doi}, {tertiary.doi})."
+                    f"identificando como predictor dominante {driver_label} ({driver_pct}) bajo presion "
+                    f"{primary.pressure_psi_min:.1f}-{primary.pressure_psi_max:.1f} psi ({secondary.doi}, {tertiary.doi})."
                 ),
                 (
-                    f"Metodologia observada en {primary.psi_id}: {primary.approach} El analisis multifactorial identifica variables "
-                    f"explicables sujetas a validacion frente a tabla experimental ({primary.doi})."
+                    f"Metodologia observada en {primary.psi_id}: {primary.approach} Los resultados sugieren validez "
+                    f"experimental acotada a condiciones analogas de microgravedad ({primary.doi})."
                 ),
             )
         elif persona == "Estudiante":
             bullets = (
                 (
-                    f"{primary.psi_id} ({primary.acronym}) estudia fuego en microgravedad usando {mats_primary}. "
-                    f"Opera entre {primary.o2_min:.0f}% y {primary.o2_max:.0f}% de oxigeno ({primary.doi})."
+                    f"{primary.psi_id} ({primary.acronym}) lidera con TOPSIS {topsis_val:.2f} usando {mats_primary}. "
+                    f"Opera entre {primary.o2_min:.0f}% y {primary.o2_max:.0f}% de O2 ({primary.doi})."
                 ),
                 (
                     f"En {secondary.psi_id} ({secondary.acronym}), la falta de gravedad quita la conveccion caliente. "
-                    f"La llama depende del aire forzado a {primary.flow_cm_s_max:.0f} cm/s ({secondary.doi})."
+                    f"La llama depende del flujo a {primary.flow_cm_s_max:.0f} cm/s ({secondary.doi})."
                 ),
                 (
-                    f"Beneficio en la Tierra con {tertiary.psi_id} ({tertiary.acronym}): {tertiary.earth_benefits} "
-                    f"Puedes revisar sensores como {primary.sensors[0]} ({tertiary.doi})."
+                    f"En Tierra ({tertiary.psi_id}): {tertiary.earth_benefits} "
+                    f"Factor principal: {driver_label} ({driver_pct}); sensor clave: {sensor_hint} ({tertiary.doi})."
                 ),
             )
         else:
             # Gestor Industrial (plain + proposal medible)
             bullets = (
                 (
-                    f"Prioridad normativa ({primary.psi_id} - {primary.acronym}): valida riesgos en "
+                    f"Prioridad operativa {primary.psi_id} ({primary.acronym}, TOPSIS {topsis_val:.2f}): valida riesgos en "
                     f"{primary.o2_min:.0f}-{primary.o2_max:.0f}% O2 y {primary.pressure_psi_min:.1f} psi para reducir "
-                    f"el NPR antes de certificar cabinas ({primary.doi})."
+                    f"NPR antes de certificar cabinas ({primary.doi})."
                 ),
                 (
-                    f"Sinergia operativa con {secondary.psi_id} ({secondary.acronym}) y {tertiary.psi_id}: "
-                    f"el monitoreo temprano respalda protocolos PFE y recorta peso SCBA en 40% ({secondary.doi})."
+                    f"Accion preventiva sobre {driver_label} ({driver_pct}): cruzar {secondary.psi_id} ({secondary.acronym}) "
+                    f"y {tertiary.psi_id} alinea sensores tempranos con el protocolo PFE ({secondary.doi})."
                 ),
                 (
                     f"Retorno terrestre medible: {primary.earth_benefits} Trazabilidad directa con matriz FMEA "
