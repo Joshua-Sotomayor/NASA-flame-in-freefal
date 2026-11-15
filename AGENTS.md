@@ -49,3 +49,21 @@
 - **Ramas:** `topic branch` (`feat/...`, `docs/...`, `fix/...`) $\rightarrow$ `dev` $\rightarrow$ `main`.
 - **Formato de Commit:** `<version> - <verbo> - <descripción>` en minúsculas (`feat|design|refactor|add|fix|test|docs|ship`).
 - **Base de Conocimiento:** Toda la investigación de las 24 PSI y los 10 recursos está disponible de forma portable en `docs/knowledge/`.
+
+---
+
+## 4. Protocolo Multi-Perfil, Bloqueo de Archivos y Ramas Independientes
+
+> El equipo comparte cuenta y repositorio entre dos roles. Para evitar colisiones o sobrescrituras entre sesiones paralelas:
+
+1. **Detección Obligatoria de Perfil al Abrir un Nuevo Chat:**
+   - Si el primer mensaje del usuario no especifica el rol activo, el agente **debe preguntar explícitamente antes de editar código o planes** desde qué perfil opera esa sesión:
+     - **Perfil A — Ingeniero Mecatrónico y de Control (`meca`)**
+     - **Perfil B — Ingeniero de Gestión Industrial (`ind`)**
+     - **Coordinación Conjunta (`joint`)**
+2. **Aislamiento de Tareas por Rama y Bloqueo Lógico de Archivos (*File Locks*):**
+   - Cada sesión ejecuta **únicamente tareas de su perfil activo** y crea su propia rama temática (`feat/meca-<id>-<slug>`, `feat/ind-<id>-<slug>`, `docs/...`) desde `dev` actualizado (`git fetch origin && git pull --rebase origin dev`).
+   - Antes de iniciar una tarea, consultar los **módulos y archivos asignados (`modules` / lock)** en [tasks/todo.md](tasks/todo.md) y [planning/index.html](planning/index.html), además de revisar `git branch -a` para comprobar qué ramas están activas.
+   - **Regla de no colisión:** Mientras una tarea de un perfil esté en curso, sus archivos asignados quedan lógicamente bloqueados para el otro perfil (ej. `frontend/*` bajo `M-13` no debe editarse desde una rama `feat/ind-*`, y `docs/industrial/*` / `README.md` bajo `I-10` no debe editarse desde `feat/meca-*`).
+   - **Archivos de tablero compartidos (`planning/index.html`, `tasks/todo.md`):** Se modifican exclusivamente al cerrar la tarea en curso, haciendo `git fetch origin && git pull --rebase origin dev` justo antes del merge a `dev`.
+

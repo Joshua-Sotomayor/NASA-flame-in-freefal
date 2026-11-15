@@ -118,9 +118,44 @@
 - **Criterios:** Pirámide completa `pytest tests/unit tests/integration -v` al 100% (`33 passed`), JS limpio (`node --check frontend/app.js`), auditoría anti-slop / cero código muerto / seguridad OWASP verificada.
 - **Commit Git:** `0.9.1 - test - validar suite tdd completa offline y auditoria ponytail`
 
-### Task 11 (`M-12` + `J-04`): Despliegue Público HTTPS y Tag `v1.0.0` en `main` (`origin` GitHub)
-- **Criterios:** Merge `dev -> main`, tag `v1.0.0`, push a `origin` y URL HTTPS verificada en modo incógnito.
+### [ ] Task 10B (`M-13` — Siguiente en turno · Mecatrónica): Refactor del Apartado Visual de la Plataforma Web (UI/UX)
+- **Responsable:** Mecatrónico y de Control (`meca`).
+- **Rama dedicada:** `feat/meca-m13-ui-refactor`
+- **Módulos / Archivos bloqueados (Lock):** `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` (cero cambios a `backend/*` o `data/*`).
+- **Alcance:** Pendiente de definición visual detallada por el usuario; conservar todos los IDs DOM contractuales (`ductDigitalTwinSvg`, `flammabilityContourSvg`), contratos `/api/v1/*`, accesibilidad WAI-ARIA y `33/33 pytest`.
+
+### [ ] Task 11 (`M-12` + `J-04`): Despliegue Público HTTPS y Tag `v1.0.0` en `main` (`origin` GitHub)
+- **Responsable:** Mecatrónico (`M-12`) + Conjunta (`J-04`).
+- **Rama dedicada:** `feat/meca-m12-deploy-render-netlify` $\rightarrow$ `release/v1.0.0`
+- **Módulos / Archivos bloqueados (Lock):** `Dockerfile`, `render.yaml`, `netlify.toml` (o `_redirects` proxy `/api/*`), `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js`.
+- **Criterios:** Despliegue en **Render** (todo-en-uno FastAPI + `frontend/`) o **Netlify (CDN `frontend/`) + Render (API FastAPI)** a `$0 USD`, merge `dev -> main`, tag `v1.0.0`, push a `origin` y URL HTTPS verificada en modo incógnito.
 - **Commit Git:** `1.0.0 - ship - liberar plataforma aero-ignis si v1.0.0 en produccion`
 
-### Task 12 (`I-11` + `I-12` + `J-05` + `J-06`): Deck 7 Slides, Video Demo 1080p y Envío Oficial
+### [ ] Task 12 (`I-11` + `I-12` + `J-05` + `J-06`): Deck 7 Slides, Video Demo 1080p y Envío Oficial
+- **Responsable:** Gestión Industrial (`I-11`, `I-12`) + Conjunta (`J-05`, `J-06`).
 - **Criterios:** Video exportado (`30s`/`2min`), envío completado 2h antes del cierre en Space Apps.
+
+---
+
+## Mapa de Propiedad de Módulos, Bloqueos y Ramas (Pendientes Multi-Perfil)
+
+> Regla: antes de trabajar, todo nuevo chat pregunta el perfil activo (`meca` / `ind` / `joint`) y respeta los archivos bloqueados por cada rama. Los archivos del tablero ([planning/index.html](planning/index.html), [tasks/todo.md](tasks/todo.md)) solo se editan al cerrar una tarea tras `git pull --rebase origin dev`.
+
+| ID | Perfil | Rama Dedicada | Módulos / Archivos Bloqueados (*Lock*) |
+| :--- | :---: | :--- | :--- |
+| **`M-13`** | `meca` | `feat/meca-m13-ui-refactor` | `frontend/index.html`, `frontend/styles.css`, `frontend/app.js`, `tests/integration/test_frontend_and_audit_int.py` |
+| **`M-12`** | `meca` | `feat/meca-m12-deploy-render-netlify` | `Dockerfile`, `render.yaml`, `netlify.toml`, `backend/main.py` (CORS), `backend/security.py`, `frontend/app.js` |
+| **`I-01`** | `ind` | `feat/ind-i01-psi-taxonomy` | `docs/industrial/matriz_trazabilidad_psi.md`, `data/psi_combustion_24.json` (solo lectura/validación) |
+| **`I-02`** | `ind` | `feat/ind-i02-topsis-spec` | `docs/industrial/especificacion_topsis.md`, `tests/unit/test_ranking_and_writing_unit.py` |
+| **`I-04`** | `ind` | `feat/ind-i04-fmea-matrix` | `docs/industrial/fmea_nasa_std_6001.md`, `data/cases_and_spinoffs.json` (sección FMEA) |
+| **`I-05`** | `ind` | `feat/ind-i05-forensic-presets` | `docs/industrial/fichas_forenses.md`, `data/cases_and_spinoffs.json` (sección `forensic_presets`) |
+| **`I-06`** | `ind` | `feat/ind-i06-suppression-tree` | `docs/industrial/protocolo_supresion_eclss.md`, `backend/governance.py` (reglas supresión) |
+| **`I-07`** | `ind` | `feat/ind-i07-dual-use-spinoffs` | `docs/industrial/impacto_dual_use.md`, `data/cases_and_spinoffs.json` (sección `spinoffs`) |
+| **`I-08`** | `ind` | `feat/ind-i08-writing-craft-templates` | `docs/industrial/plantillas_writing_craft.md`, `backend/ranking_nlp.py` (solo plantillas), `tests/unit/test_ranking_and_writing_unit.py` |
+| **`I-09`** | `ind` | `feat/ind-i09-qa-units-scope` | `docs/industrial/qa_unidades_alcance.md` |
+| **`I-10`** | `ind` | `feat/ind-i10-readme-ejecutivo` | `README.md` |
+| **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md` |
+| **`I-12`** | `ind` | `feat/ind-i12-video-script` | `docs/pitch/guion_video_demo.md` |
+| **`J-04`** | `joint` | `release/v1.0.0` | `planning/index.html`, `tasks/todo.md`, tag `v1.0.0` (después de merge `dev -> main`) |
+| **`J-05`** | `joint` | `docs/joint-j05-video-checklist` | `docs/pitch/checklist_grabacion.md` |
+| **`J-06`** | `joint` | `docs/joint-j06-submission` | `docs/pitch/submission_space_apps.md` |
