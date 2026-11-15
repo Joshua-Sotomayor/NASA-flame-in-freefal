@@ -1,0 +1,343 @@
+{
+  "nodes": [
+    {
+      "id": "n_moc",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/00_MOC_Indice_Maestro_AERO_IGNIS.md",
+      "x": -120,
+      "y": -320,
+      "width": 360,
+      "height": 140,
+      "color": "6"
+    },
+    {
+      "id": "n_cygnus",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/02_Campanas_Saffire_I_a_VI_Cygnus.md",
+      "x": -780,
+      "y": -260,
+      "width": 340,
+      "height": 150,
+      "color": "2"
+    },
+    {
+      "id": "n_solids",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/03_Solidos_en_Microgravedad_BASS_BRE_MSC_NCA.md",
+      "x": -780,
+      "y": -80,
+      "width": 340,
+      "height": 150,
+      "color": "2"
+    },
+    {
+      "id": "n_flex",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/04_Gotas_y_Llamas_Frias_FLEX_CFIG.md",
+      "x": -780,
+      "y": 100,
+      "width": 340,
+      "height": 150,
+      "color": "5"
+    },
+    {
+      "id": "n_acme",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/05_Llamas_Gaseosas_Hollin_y_Campos_ACME_SLICE_SPICE.md",
+      "x": -780,
+      "y": 280,
+      "width": 340,
+      "height": 150,
+      "color": "5"
+    },
+    {
+      "id": "n_cvb",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/06_Termofluidos_Interfaciales_CVB_y_CVB2.md",
+      "x": -780,
+      "y": 460,
+      "width": 340,
+      "height": 140,
+      "color": "5"
+    },
+    {
+      "id": "n_forense",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/07_Casos_Forenses_Apollo_Mir_y_Spinoffs_Terrestres.md",
+      "x": -780,
+      "y": 630,
+      "width": 340,
+      "height": 150,
+      "color": "1"
+    },
+    {
+      "id": "n_colab",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/08_Plan_Entrenamiento_ML_DL_y_Google_Colab.md",
+      "x": -220,
+      "y": -60,
+      "width": 380,
+      "height": 180,
+      "color": "3"
+    },
+    {
+      "id": "n_m1",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/M1_RandomForest_GBR_Inflamabilidad.md",
+      "x": -220,
+      "y": 160,
+      "width": 380,
+      "height": 150,
+      "color": "3"
+    },
+    {
+      "id": "n_m2",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/M2_CNN_ONNX_DecisionTree_FSM.md",
+      "x": -220,
+      "y": 340,
+      "width": 380,
+      "height": 150,
+      "color": "1"
+    },
+    {
+      "id": "n_m3",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/M3_PCA_KMeans_TFIDF_TOPSIS.md",
+      "x": -220,
+      "y": 520,
+      "width": 380,
+      "height": 150,
+      "color": "4"
+    },
+    {
+      "id": "n_tdd",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/09_Estrategia_TDD_y_Redaccion_Writing_Craft.md",
+      "x": 300,
+      "y": -320,
+      "width": 380,
+      "height": 150,
+      "color": "6"
+    },
+    {
+      "id": "n_o1",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/O1_Resumen_y_Ranking_PSI.md",
+      "x": 300,
+      "y": -100,
+      "width": 340,
+      "height": 140,
+      "color": "4"
+    },
+    {
+      "id": "n_o2",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/O2_Prediccion_Inflamabilidad_Habitats.md",
+      "x": 300,
+      "y": 80,
+      "width": 340,
+      "height": 140,
+      "color": "6"
+    },
+    {
+      "id": "n_o3",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/O3_Deteccion_Supresion_Gemelo_FSM.md",
+      "x": 300,
+      "y": 260,
+      "width": 340,
+      "height": 140,
+      "color": "1"
+    },
+    {
+      "id": "n_o4",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/O4_Spinoffs_Terrestres_y_Forense.md",
+      "x": 300,
+      "y": 440,
+      "width": 340,
+      "height": 140,
+      "color": "4"
+    },
+    {
+      "id": "n_rmeca",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/Rol_Mecatronica_y_Control.md",
+      "x": 780,
+      "y": 240,
+      "width": 320,
+      "height": 150,
+      "color": "2"
+    },
+    {
+      "id": "n_rcomb",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/Rol_Combinado_Sinergia.md",
+      "x": 780,
+      "y": 40,
+      "width": 320,
+      "height": 150,
+      "color": "6"
+    },
+    {
+      "id": "n_rind",
+      "type": "file",
+      "file": "Proyectos/NASA_Flame_In_Freefall/Nodos/Rol_Gestion_Industrial.md",
+      "x": 780,
+      "y": 440,
+      "width": 320,
+      "height": 150,
+      "color": "4"
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "fromNode": "n_cygnus",
+      "fromSide": "right",
+      "toNode": "n_colab",
+      "toSide": "left"
+    },
+    {
+      "id": "e2",
+      "fromNode": "n_solids",
+      "fromSide": "right",
+      "toNode": "n_colab",
+      "toSide": "left"
+    },
+    {
+      "id": "e3",
+      "fromNode": "n_flex",
+      "fromSide": "right",
+      "toNode": "n_colab",
+      "toSide": "left"
+    },
+    {
+      "id": "e4",
+      "fromNode": "n_acme",
+      "fromSide": "right",
+      "toNode": "n_colab",
+      "toSide": "left"
+    },
+    {
+      "id": "e5",
+      "fromNode": "n_cvb",
+      "fromSide": "right",
+      "toNode": "n_colab",
+      "toSide": "left"
+    },
+    {
+      "id": "e6",
+      "fromNode": "n_forense",
+      "fromSide": "right",
+      "toNode": "n_m1",
+      "toSide": "left"
+    },
+    {
+      "id": "e7",
+      "fromNode": "n_forense",
+      "fromSide": "right",
+      "toNode": "n_o4",
+      "toSide": "left"
+    },
+    {
+      "id": "e8",
+      "fromNode": "n_colab",
+      "fromSide": "right",
+      "toNode": "n_m1",
+      "toSide": "left"
+    },
+    {
+      "id": "e9",
+      "fromNode": "n_colab",
+      "fromSide": "right",
+      "toNode": "n_m2",
+      "toSide": "left"
+    },
+    {
+      "id": "e10",
+      "fromNode": "n_colab",
+      "fromSide": "right",
+      "toNode": "n_m3",
+      "toSide": "left"
+    },
+    {
+      "id": "e11",
+      "fromNode": "n_m1",
+      "fromSide": "right",
+      "toNode": "n_o2",
+      "toSide": "left"
+    },
+    {
+      "id": "e12",
+      "fromNode": "n_m2",
+      "fromSide": "right",
+      "toNode": "n_o3",
+      "toSide": "left"
+    },
+    {
+      "id": "e13",
+      "fromNode": "n_m3",
+      "fromSide": "right",
+      "toNode": "n_o1",
+      "toSide": "left"
+    },
+    {
+      "id": "e14",
+      "fromNode": "n_m3",
+      "fromSide": "right",
+      "toNode": "n_o4",
+      "toSide": "left"
+    },
+    {
+      "id": "e15",
+      "fromNode": "n_o1",
+      "fromSide": "right",
+      "toNode": "n_rind",
+      "toSide": "left"
+    },
+    {
+      "id": "e16",
+      "fromNode": "n_o2",
+      "fromSide": "right",
+      "toNode": "n_rcomb",
+      "toSide": "left"
+    },
+    {
+      "id": "e17",
+      "fromNode": "n_o3",
+      "fromSide": "right",
+      "toNode": "n_rmeca",
+      "toSide": "left"
+    },
+    {
+      "id": "e18",
+      "fromNode": "n_o4",
+      "fromSide": "right",
+      "toNode": "n_rind",
+      "toSide": "left"
+    },
+    {
+      "id": "e19",
+      "fromNode": "n_tdd",
+      "fromSide": "right",
+      "toNode": "n_rmeca",
+      "toSide": "left"
+    },
+    {
+      "id": "e20",
+      "fromNode": "n_tdd",
+      "fromSide": "right",
+      "toNode": "n_rind",
+      "toSide": "left"
+    },
+    {
+      "id": "e21",
+      "fromNode": "n_moc",
+      "fromSide": "right",
+      "toNode": "n_colab",
+      "toSide": "left"
+    }
+  ]
+}
