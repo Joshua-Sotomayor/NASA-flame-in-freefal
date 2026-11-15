@@ -4,42 +4,120 @@
   const OFFLINE_PSI = [
     { psi_id: "PSI-98", acronym: "SAFFIRE-I", facility: "Cygnus", doi: "10.60555/psi-98", criteria_scores: { habitat: 0.95, modeling: 0.91, sensors: 0.86, spinoff: 0.84 }, earth_benefits: "Calibrar modelos de incendio en aeronaves y edificios presurizados." },
     { psi_id: "PSI-101", acronym: "SAFFIRE-II", facility: "Cygnus", doi: "10.60555/psi-101", criteria_scores: { habitat: 0.96, modeling: 0.89, sensors: 0.80, spinoff: 0.88 }, earth_benefits: "Seleccionar textiles retardantes seguros para transporte." },
-    { psi_id: "PSI-102", acronym: "SAFFIRE-III", facility: "Cygnus", doi: "10.60555/psi-102", criteria_scores: { habitat: 0.93, modeling: 0.90, sensors: 0.82, spinoff: 0.85 }, earth_benefits: "Definir cortes HVAC en tuneles y centros de datos." },
-    { psi_id: "PSI-103", acronym: "SAFFIRE-IV", facility: "Cygnus", doi: "10.60555/psi-103", criteria_scores: { habitat: 0.98, modeling: 0.88, sensors: 0.92, spinoff: 0.86 }, earth_benefits: "Optimizar detectores de humo en camaras hiperbaricas." },
-    { psi_id: "PSI-104", acronym: "SAFFIRE-V", facility: "Cygnus", doi: "10.60555/psi-104", criteria_scores: { habitat: 0.99, modeling: 0.91, sensors: 0.89, spinoff: 0.87 }, earth_benefits: "Refinar normas NFPA para atmosferas enriquecidas y minas." },
-    { psi_id: "PSI-105", acronym: "SAFFIRE-VI", facility: "Cygnus", doi: "10.60555/psi-105", criteria_scores: { habitat: 0.97, modeling: 0.86, sensors: 0.96, spinoff: 0.92 }, earth_benefits: "Proteger cuadrillas contra gases acidos HF/HCl y CO." },
-    { psi_id: "PSI-25", acronym: "BASS-II", facility: "ISS-MSG", doi: "10.60555/psi-25", criteria_scores: { habitat: 0.94, modeling: 0.99, sensors: 0.81, spinoff: 0.85 }, earth_benefits: "Calibrar simuladores FDS de seguridad en edificios." },
-    { psi_id: "PSI-24", acronym: "FLEX", facility: "ISS-CIR", doi: "10.60555/psi-24", criteria_scores: { habitat: 0.85, modeling: 0.96, sensors: 0.97, spinoff: 0.88 }, earth_benefits: "Prevenir re-igniciones silenciosas por llamas frias NTC." },
-    { psi_id: "PSI-129", acronym: "SPICE", facility: "ISS-MSG", doi: "10.60555/psi-129", criteria_scores: { habitat: 0.92, modeling: 0.84, sensors: 0.99, spinoff: 0.98 }, earth_benefits: "Calibrar detectores tempranos de aerosoles <0.1 um." },
-    { psi_id: "PSI-110", acronym: "MSC", facility: "Otros", doi: "10.60555/psi-110", criteria_scores: { habitat: 0.95, modeling: 0.87, sensors: 0.97, spinoff: 0.95 }, earth_benefits: "Reducir muertes por combustion latente de espumas." }
+    { psi_id: "PSI-102", acronym: "SAFFIRE-III", facility: "Cygnus", doi: "10.60555/psi-102", criteria_scores: { habitat: 0.93, modeling: 0.90, sensors: 0.82, spinoff: 0.85 }, earth_benefits: "Definir cortes de ventilación en túneles y centros de datos." },
+    { psi_id: "PSI-103", acronym: "SAFFIRE-IV", facility: "Cygnus", doi: "10.60555/psi-103", criteria_scores: { habitat: 0.98, modeling: 0.88, sensors: 0.92, spinoff: 0.86 }, earth_benefits: "Optimizar detectores de humo en cámaras hiperbáricas." },
+    { psi_id: "PSI-104", acronym: "SAFFIRE-V", facility: "Cygnus", doi: "10.60555/psi-104", criteria_scores: { habitat: 0.99, modeling: 0.91, sensors: 0.89, spinoff: 0.87 }, earth_benefits: "Refinar normas NFPA para atmósferas enriquecidas y minas." },
+    { psi_id: "PSI-105", acronym: "SAFFIRE-VI", facility: "Cygnus", doi: "10.60555/psi-105", criteria_scores: { habitat: 0.97, modeling: 0.86, sensors: 0.96, spinoff: 0.92 }, earth_benefits: "Proteger cuadrillas contra gases ácidos HF/HCl y monóxido de carbono." },
+    { psi_id: "PSI-25", acronym: "BASS-II", facility: "ISS-MSG", doi: "10.60555/psi-25", criteria_scores: { habitat: 0.94, modeling: 0.99, sensors: 0.81, spinoff: 0.85 }, earth_benefits: "Calibrar simuladores de propagación de fuego en edificios." },
+    { psi_id: "PSI-24", acronym: "FLEX", facility: "ISS-CIR", doi: "10.60555/psi-24", criteria_scores: { habitat: 0.85, modeling: 0.96, sensors: 0.97, spinoff: 0.88 }, earth_benefits: "Prevenir re-igniciones silenciosas por llamas frías." },
+    { psi_id: "PSI-129", acronym: "SPICE", facility: "ISS-MSG", doi: "10.60555/psi-129", criteria_scores: { habitat: 0.92, modeling: 0.84, sensors: 0.99, spinoff: 0.98 }, earth_benefits: "Calibrar detectores tempranos de aerosoles menores a 0.1 micras." },
+    { psi_id: "PSI-110", acronym: "MSC", facility: "Otros", doi: "10.60555/psi-110", criteria_scores: { habitat: 0.95, modeling: 0.87, sensors: 0.97, spinoff: 0.95 }, earth_benefits: "Reducir muertes por combustión latente en espumas domésticas." }
   ];
 
   const FORENSIC_PRESETS = {
-    apollo_1: { o2_pct: 100, pressure_psi: 16.7, flow_cm_s: 5, gravity_g: "1", material: "PTFE", thickness_mm: 2.0, flow_dir: "concurrent", note: "Apollo 1 (1967): 100% O2 a 16.7 psi escalo a 29 psi en 15 s. Origino NASA-STD-6001." },
-    apollo_13: { o2_pct: 100, pressure_psi: 30.0, flow_cm_s: 2, gravity_g: "0", material: "PTFE", thickness_mm: 1.2, flow_dir: "opposed", note: "Apollo 13 (1970): Simulador capado a 30 psi (tanque real a ~1,000 psi con PTFE >500 C)." },
-    mir_1997: { o2_pct: 21, pressure_psi: 14.7, flow_cm_s: 12, gravity_g: "0", material: "SIBAL", thickness_mm: 5.0, flow_dir: "concurrent", note: "Mir Kvant-1 (1997): Cartucho Vika LiClO4 auto-oxidante de 14 min; exige niebla PFE." },
-    lunar_artemis: { o2_pct: 34, pressure_psi: 8.2, flow_cm_s: 12, gravity_g: "0.16", material: "SIBAL", thickness_mm: 0.8, flow_dir: "concurrent", note: "Habitat Lunar Artemis: 34% O2 y 8.2 psi validado en SAFFIRE-IV y SAFFIRE-V." }
+    apollo_1: { o2_pct: 100, pressure_psi: 16.7, flow_cm_s: 5, gravity_g: "1", material: "PTFE", thickness_mm: 2.0, flow_dir: "concurrent", note: "Apollo 1 (1967): 100% de oxígeno a 16.7 psi elevó la presión de cabina hasta 29 psi en 15 segundos. Dio origen a la norma NASA-STD-6001." },
+    apollo_13: { o2_pct: 100, pressure_psi: 30.0, flow_cm_s: 2, gravity_g: "0", material: "PTFE", thickness_mm: 1.2, flow_dir: "opposed", note: "Apollo 13 (1970): El simulador llega hasta 30 psi en cabina; en el tanque criogénico original, el aislamiento PTFE superó 500 grados C." },
+    mir_1997: { o2_pct: 21, pressure_psi: 14.7, flow_cm_s: 12, gravity_g: "0", material: "SIBAL", thickness_mm: 5.0, flow_dir: "concurrent", note: "Mir Kvant-1 (1997): Un cartucho químico Vika ardió 14 minutos liberando su propio oxígeno; exigió extinción directa." },
+    lunar_artemis: { o2_pct: 34, pressure_psi: 8.2, flow_cm_s: 12, gravity_g: "0.16", material: "SIBAL", thickness_mm: 0.8, flow_dir: "concurrent", note: "Hábitat Lunar Artemis: Mezcla de 34% O2 a 8.2 psi evaluada experimentalmente en las campañas SAFFIRE-IV y SAFFIRE-V." }
   };
 
   const OFFICIAL_RESOURCES = [
-    { tag: "Dataset", title: "1. NASA PSI Combustion Repository", url: "https://psi.nasa.gov/physci/repo/search?q=combustion" },
-    { tag: "Ciencia", title: "2. NASA Glenn Combustion Science", url: "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/" },
-    { tag: "Video", title: "3. NASA ScienceCasts: ISS Combustion", url: "https://www.youtube.com/watch?v=W1oXykoz9zg" },
-    { tag: "Guia", title: "4. Researcher's Guide to ISS Combustion", url: "https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/" },
-    { tag: "Forense", title: "5. Apollo 1 Historical Case Study", url: "https://sma.nasa.gov/sma-disciplines/accllp/apollo-1" },
-    { tag: "Forense", title: "6. Apollo 13 Historical Case Study", url: "https://sma.nasa.gov/sma-disciplines/accllp/apollo-13" },
-    { tag: "Forense", title: "7. Fire Aboard Space Station Mir", url: "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/" },
+    { tag: "Repositorio", title: "1. NASA PSI Combustion Repository", url: "https://psi.nasa.gov/physci/repo/search?q=combustion" },
+    { tag: "Divulgación", title: "2. NASA Glenn Combustion Science", url: "https://www.nasa.gov/glenn/glenn-expertise-space-exploration/physical-sciences-program/combustion-science/" },
+    { tag: "Video NASA", title: "3. NASA ScienceCasts: ISS Combustion", url: "https://www.youtube.com/watch?v=W1oXykoz9zg" },
+    { tag: "Guía Técnica", title: "4. Researcher's Guide to ISS Combustion", url: "https://www.nasa.gov/missions/station/a-researchers-guide-to-combustion-science/" },
+    { tag: "Caso Histórico", title: "5. Apollo 1 Historical Case Study", url: "https://sma.nasa.gov/sma-disciplines/accllp/apollo-1" },
+    { tag: "Caso Histórico", title: "6. Apollo 13 Historical Case Study", url: "https://sma.nasa.gov/sma-disciplines/accllp/apollo-13" },
+    { tag: "Caso Histórico", title: "7. Fire Aboard Space Station Mir", url: "https://www.nasa.gov/history/25-years-ago-fire-aboard-space-station-mir/" },
     { tag: "Spinoff 9582", title: "8. Fireman's Air Tanks (COPV)", url: "https://spinoff.nasa.gov/node/9582" },
     { tag: "Spinoff 9407", title: "9. Incipient Fire Detector (Shuttle)", url: "https://spinoff.nasa.gov/node/9407" },
     { tag: "Spinoff 9918", title: "10. Fire Attire PBI & PFE Mist", url: "https://spinoff.nasa.gov/node/9918" }
   ];
 
   const SPINOFF_OFFLINE = {
-    "9582": { name: "Fireman's Air Tanks (COPV)", weight: 13.0, risk: 40, psi: "PSI-104", origin: "Apollo PLSS (1976)", desc: "Cilindros de 4,500 psi reducen el peso del equipo SCBA de 33 lb a 20 lb (-40%)." },
-    "9407": { name: "Incipient Fire Detector", weight: 0.0, risk: 58, psi: "PSI-129", origin: "Space Shuttle (1978)", desc: "Discrimina polvo flotante frente a aerosoles submicronicos <0.1 um antes de llama abierta." },
-    "9918": { name: "Fire Attire PBI / FIRES", weight: 11.5, risk: 35, psi: "PSI-101", origin: "Post-Apollo 1 (1977)", desc: "Trajes estructurales PBI + Nomex con >30% menos peso y alta estabilidad termica." },
-    "PFE": { name: "ISS Fine Water Mist (PFE)", weight: 4.2, risk: 65, psi: "PSI-107", origin: "ISS Supresion Limpia", desc: "Microgotas Sauter 20-100 um seguras para avionica sin residuos corrosivos HF/HBr." }
+    "9582": { name: "Fireman's Air Tanks (COPV)", weight: 13.0, risk: 40, psi: "PSI-104", origin: "Apollo PLSS (1976)", desc: "Cilindros compuestos de 4,500 psi reducen el peso del equipo autónomo de bomberos de 33 lb a 20 lb (-40%)." },
+    "9407": { name: "Incipient Fire Detector", weight: 0.0, risk: 58, psi: "PSI-129", origin: "Transbordador Espacial (1978)", desc: "Distingue polvo ambiental frente a partículas ultrafinas de combustión menores a 0.1 micras antes de la llama abierta." },
+    "9918": { name: "Fire Attire PBI / FIRES", weight: 11.5, risk: 35, psi: "PSI-101", origin: "Post-Apollo 1 (1977)", desc: "Trajes estructurales PBI y Nomex con más de 30% menos peso y alta resistencia térmica directa." },
+    "PFE": { name: "ISS Fine Water Mist (PFE)", weight: 4.2, risk: 65, psi: "PSI-107", origin: "Supresión Limpia ISS", desc: "Microgotas de 20 a 100 micras seguras junto a paneles eléctricos, libres de residuos ácidos HF/HBr." }
   };
+
+  const MUSEUM_EXHIBITS = [
+    {
+      img: "/assets/museum/flame_0g.jpg",
+      badge: "Física Fundamental",
+      title: "Llama Esférica Azul en Microgravedad",
+      summary: "En la Tierra el aire caliente asciende y estira la flama en forma de lágrima. Sin flotabilidad térmica en órbita, los gases se mezclan lentamente por difusión y forman una esfera azul tenue.",
+      atmosphere: "Aire de cabina normal (21% O2 · 14.7 psi · 0g)",
+      phenomenon: "Baja luminosidad y combustión continua alimentada por difusión radial.",
+      legacy: "Demostró que la detección en órbita necesita sensores de partículas y gas, no solo detectores visuales tradicionales.",
+      caption: "Archivo NASA Glenn Research Center · Referencia 9902615"
+    },
+    {
+      img: "/assets/museum/apollo_1_crew.jpg",
+      badge: "Enero 1967 · Lección Histórica",
+      title: "Apollo 1 y la Norma NASA-STD-6001",
+      summary: "Un ensayo en tierra con 100% de oxígeno a 16.7 psi aceleró un incendio fatal dentro de la cápsula. El rediseño posterior prohibió esa atmósfera en plataforma e instauró pruebas estrictas para cada material.",
+      atmosphere: "100% O2 puro · 16.7 psi · gravedad terrestre 1g",
+      phenomenon: "Presurización súbita a 29 psi en 15 segundos sobre polímeros comunes.",
+      legacy: "Fundó el estándar internacional NASA-STD-6001 para calificar plásticos, espumas, cables y telas aeroespaciales.",
+      caption: "Tripulación Apollo 1 · Archivo Histórico NASA S66-30238"
+    },
+    {
+      img: "/assets/museum/mir_station.jpg",
+      badge: "Febrero 1997 · Órbita Terrestre",
+      title: "Incendio en la Estación Espacial Mir",
+      summary: "Un generador sólido de oxígeno en el módulo Kvant-1 entró en reacción térmica y liberó chorros incandescentes durante 14 minutos porque producía su propio oxidante químico.",
+      atmosphere: "21% O2 · 14.7 psi · 0g (Módulo Kvant-1)",
+      phenomenon: "Combustión auto-oxidante de perclorato de litio (LiClO4).",
+      legacy: "Confirmó que apagar la ventilación no basta en reacciones auto-oxidantes y aceleró la adopción de niebla fina de agua en la ISS.",
+      caption: "Estación Mir vista desde Discovery · NASA STS063-708-095"
+    },
+    {
+      img: "/assets/museum/bass_ii_iss.jpg",
+      badge: "2014 · ISS Expedition 40",
+      title: "Campaña BASS-II: Sólidos en Caída Libre",
+      summary: "Astronautas operaron muestras de acrílico PMMA, algodón y telas espaciales dentro de una caja sellada con ventilador regulable para medir velocidades reales de avance de llama.",
+      atmosphere: "15% a 23% O2 · flujo forzado de 0 a 50 cm/s · 0g",
+      phenomenon: "El flujo opuesto y el concurrente cambian drásticamente la longitud de llama.",
+      legacy: "Aportó la base numérica principal para validar simuladores térmicos y reglas de corte rápido de aire.",
+      caption: "Experimento BASS-II en la ISS · NASA ISS040E086481"
+    },
+    {
+      img: "/assets/museum/saffire_cygnus.jpg",
+      badge: "2016–2023 · Naves Cygnus",
+      title: "Serie Saffire I–VI a Escala Real",
+      summary: "Seis módulos instalados en naves de carga automáticas tras abandonar la ISS permitieron observar incendios de gran tamaño sin poner en riesgo a la tripulación.",
+      atmosphere: "Hasta 34% O2 y 8.2 psi (equivalente a hábitat lunar)",
+      phenomenon: "Propagación tridimensional y generación de gases ácidos con tejidos SIBAL.",
+      legacy: "Validó directamente los límites de inflamabilidad para las futuras misiones lunares del programa Artemis.",
+      caption: "Hardware experimental Saffire · NASA GRC-2014-C-02323"
+    },
+    {
+      img: "/assets/museum/cir_rack_iss.jpg",
+      badge: "2009–Actualidad · ISS Rack CIR",
+      title: "Llamas Frías en el Rack CIR (FLEX)",
+      summary: "Al estudiar combustión de gotas en microgravedad, investigadores notaron que varias muestras seguían reaccionando sin flama luminosa visible entre 500 y 800 K tras extinguirse.",
+      atmosphere: "Mezclas nitrógeno-oxígeno y helio-oxígeno en cámara presurizada",
+      phenomenon: "Oxidación en régimen de coeficiente térmico negativo (NTC) sin hollín.",
+      legacy: "Impulsó el monitoreo combinado de aerosoles submicrónicos y monóxido de carbono para detectar fallas latentes.",
+      caption: "Combustion Integrated Rack (CIR) · NASA GRC-2005-C-00892"
+    }
+  ];
+
+  const GLOSSARY_TERMS = [
+    { term: "Microgravedad (0g)", tag: "Física básica", def: "Estado de caída libre continua en órbita. Los objetos no pierden masa, pero desaparece la diferencia de peso entre aire frío denso y aire caliente liviano." },
+    { term: "Convección natural vs. Difusión", tag: "Transporte de calor", def: "En la Tierra, la convección sube el humo y atrae oxígeno fresco desde abajo. En el espacio manda la difusión molecular, un movimiento mucho más lento." },
+    { term: "Llama Esférica Azul", tag: "Régimen visual", def: "Forma característica de una flama tranquila en gravedad cero. Produce muy poco hollín amarillo y emite una luz azul tenue difícil de distinguir a simple vista." },
+    { term: "Llama Fría (Cool Flame / NTC)", tag: "Combustión silenciosa", def: "Reacción química sin llama brillante que ocurre alrededor de 500 a 800 Kelvin. Libera humo invisible ultrafino y gases tóxicos antes de una posible re-ignición." },
+    { term: "Número de Damköhler (Da)", tag: "Parámetro adimensional", def: "Relación entre la velocidad de reacción química del incendio y el tiempo de paso del flujo de aire. Valores altos indican combustión vigorosa difícil de apagar." },
+    { term: "Número de Péclet (Pe)", tag: "Parámetro térmico", def: "Compara el transporte de calor arrastrado por la ventilación frente a la conducción térmica del material. Ayuda a definir cuándo el aire enfría o aviva la brasa." },
+    { term: "Extinción por Radiación (Quenching)", tag: "Límite inferior", def: "Ocurre cuando la ventilación es casi nula en microgravedad: el calor escapa por radiación térmica y el dióxido de carbono propio termina ahogando la llama." },
+    { term: "Extinción por Soplado (Blowoff)", tag: "Límite superior", def: "Si la corriente de aire supera la velocidad química con la que avanza la reacción, el flujo desprende el frente de llama y apaga la combustión local." },
+    { term: "Combustión Latente (Smoldering)", tag: "Fase temprana", def: "Degradación térmica lenta y sin llama abierta en espumas o aislantes de cables. Produce partículas menores a 0.1 micras y monóxido de carbono medible minutos antes del fuego." },
+    { term: "Norma NASA-STD-6001", tag: "Regulación espacial", def: "Estándar técnico que establece las pruebas obligatorias de propagación ascendente, toxicidad y desgasificación para aprobar materiales dentro de naves habitables." },
+    { term: "Niebla Fina de Agua (PFE)", tag: "Supresión limpia", def: "Extintor portátil usado en la Estación Espacial Internacional que rocía gotas diminutas (20 a 100 micras). Enfría el fuego sin dejar residuos corrosivos sobre electrónica." },
+    { term: "Índice NPR y Matriz FMEA", tag: "Gestión de riesgo", def: "Herramienta que multiplica Gravedad, Ocurrencia y Dificultad de Detección de cada falla (NPR) para priorizar barreras mecánicas y electrónicas antes de volar." }
+  ];
 
   let apiOnline = false;
   let fsmLocalTicks = 0;
@@ -55,8 +133,8 @@
   function setRuntimeBadge(online) {
     apiOnline = online;
     const badge = document.getElementById("runtimeModeBadge");
-    badge.textContent = online ? "API FastAPI En Vivo" : "Modo Offline Determinista";
-    badge.className = "badge mono " + (online ? "badge-ok" : "badge-warn");
+    badge.textContent = online ? "Simulador Activo" : "Catálogo Local Autónomo";
+    badge.className = "badge " + (online ? "badge-ok" : "badge-warn");
   }
 
   async function apiJson(url, options) {
@@ -75,16 +153,10 @@
     });
   }
 
-  function toggleTheme() {
-    const root = document.documentElement;
-    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-    root.setAttribute("data-theme", next);
-  }
-
-  // --- MODULO 1: TOPSIS + PCA 2D ---
+  // --- MODULO 1: EXPLORADOR & MAPA DE SIMILITUD ---
   function renderClustersSvg(points) {
     const svg = document.getElementById("clustersSvg");
-    const colors = ["#38bdf8", "#10b981", "#f59e0b", "#818cf8"];
+    const colors = ["#0B3B66", "#065F46", "#B43E18", "#6D28D9"];
     if (!points.length) {
       svg.innerHTML = "";
       return;
@@ -95,13 +167,13 @@
     const minY = Math.min(...ys), maxY = Math.max(...ys) || 1;
 
     const circles = points.map((pt) => {
-      const nx = 45 + ((pt.x - minX) / Math.max(0.01, maxX - minX)) * 390;
-      const ny = 195 - ((pt.y - minY) / Math.max(0.01, maxY - minY)) * 160;
+      const nx = 45 + ((pt.x - minX) / Math.max(0.01, maxX - minX)) * 380;
+      const ny = 195 - ((pt.y - minY) / Math.max(0.01, maxY - minY)) * 155;
       const fill = colors[pt.cluster_id % colors.length];
-      return `<g><circle cx="${nx.toFixed(1)}" cy="${ny.toFixed(1)}" r="6" fill="${fill}" opacity="0.88" /><text x="${(nx + 8).toFixed(1)}" y="${(ny + 3).toFixed(1)}" fill="#cbd5e1" font-size="8.5" font-family="monospace">${escapeHtml(pt.acronym)}</text></g>`;
+      return `<g><circle cx="${nx.toFixed(1)}" cy="${ny.toFixed(1)}" r="5.5" fill="${fill}" opacity="0.92" /><text x="${(nx + 8).toFixed(1)}" y="${(ny + 3).toFixed(1)}" fill="#18181B" font-size="8.5" font-family="monospace">${escapeHtml(pt.acronym)}</text></g>`;
     }).join("");
 
-    svg.innerHTML = `<rect x="25" y="15" width="430" height="195" rx="6" fill="none" stroke="rgba(148,163,184,0.2)" />${circles}`;
+    svg.innerHTML = `<rect x="25" y="15" width="430" height="195" rx="2" fill="#FFFFFF" stroke="#94A3B8" /><line x1="25" y1="112" x2="455" y2="112" stroke="#E2E8F0" stroke-dasharray="4 3" /><line x1="240" y1="15" x2="240" y2="210" stroke="#E2E8F0" stroke-dasharray="4 3" />${circles}`;
   }
 
   async function runExplorerAndTopsis() {
@@ -155,9 +227,9 @@
       renderExplorerOutput(scored, pts, {
         persona,
         bullets: [
-          `${top.psi_id} (${top.acronym}, ${top.facility}) lidera segun ponderacion actual (${top.doi}).`,
+          `${top.psi_id} (${top.acronym}, ${top.facility}) encabeza la prioridad según tus criterios (${top.doi}).`,
           `${top.earth_benefits}`,
-          `Consulta ejecutada en modo offline determinista sobre catalogo local.`
+          `Síntesis generada a partir del catálogo científico local validado.`
         ],
         cited_dois: [top.doi]
       });
@@ -165,7 +237,7 @@
   }
 
   function renderExplorerOutput(ranked, clusters, synthesis) {
-    document.getElementById("synthesisPersonaBadge").textContent = "Síntesis Determinista · " + synthesis.persona;
+    document.getElementById("synthesisPersonaBadge").textContent = "Síntesis de Evidencia · " + synthesis.persona;
     document.getElementById("citedDoisLine").textContent = synthesis.cited_dois.join(" · ");
     document.getElementById("synthesisBullets").innerHTML = synthesis.bullets
       .map((b) => `<li>${escapeHtml(b)}</li>`)
@@ -182,7 +254,7 @@
     `).join("");
   }
 
-  // --- MODULO 2: SIMULADOR & CONTORNO EN VIVO (M-09) ---
+  // --- MODULO 2: INFLAMABILIDAD EN CABINA ---
   function renderFlammabilityContour(currentO2, currentFlow) {
     const svg = document.getElementById("flammabilityContourSvg");
     const oxToX = (o2) => 48 + ((Math.min(60, Math.max(14, o2)) - 14) / 46) * 405;
@@ -192,16 +264,18 @@
     const py = flToY(currentFlow);
 
     svg.innerHTML = `
-      <rect x="48" y="35" width="405" height="205" fill="#0b1220" stroke="#475569" />
-      <rect x="48" y="218" width="140" height="22" fill="rgba(16,185,129,0.22)" />
-      <text x="118" y="232" text-anchor="middle" fill="#34d399" font-size="9" font-family="monospace">Quenching Radiativo</text>
-      <polygon points="48,35 190,35 160,115 48,115" fill="rgba(56,189,248,0.16)" />
-      <text x="108" y="68" text-anchor="middle" fill="#7dd3fc" font-size="9" font-family="monospace">Zona Blowoff</text>
-      <path d="M 188 238 C 195 160, 220 90, 290 42 L 453 42 L 453 240 Z" fill="rgba(239,68,68,0.16)" stroke="#ef4444" stroke-width="1.5" />
-      <text x="348" y="145" text-anchor="middle" fill="#fca5a5" font-size="10" font-family="monospace">Zona Propagacion Sostenida</text>
-      <circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="7" fill="#38bdf8" stroke="#ffffff" stroke-width="2" />
-      <text x="250" y="268" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">% O2 (14% a 60%+)</text>
-      <text x="18" y="138" transform="rotate(-90 18 138)" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Flujo (cm/s)</text>
+      <rect x="48" y="35" width="405" height="205" fill="#FFFFFF" stroke="#94A3B8" />
+      <line x1="48" y1="138" x2="453" y2="138" stroke="#E2E8F0" stroke-dasharray="4 3" />
+      <line x1="250" y1="35" x2="250" y2="240" stroke="#E2E8F0" stroke-dasharray="4 3" />
+      <rect x="48" y="218" width="140" height="22" fill="rgba(6, 95, 70, 0.14)" />
+      <text x="118" y="232" text-anchor="middle" fill="#065F46" font-size="9" font-weight="bold" font-family="monospace">Extinción Radiativa</text>
+      <polygon points="48,35 190,35 160,115 48,115" fill="rgba(11, 59, 102, 0.12)" />
+      <text x="108" y="68" text-anchor="middle" fill="#0B3B66" font-size="9" font-weight="bold" font-family="monospace">Zona Soplado</text>
+      <path d="M 188 238 C 195 160, 220 90, 290 42 L 453 42 L 453 240 Z" fill="rgba(153, 27, 27, 0.12)" stroke="#991B1B" stroke-width="1.6" />
+      <text x="348" y="145" text-anchor="middle" fill="#991B1B" font-size="10" font-weight="bold" font-family="monospace">Propagación Sostenida</text>
+      <circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="7.5" fill="#B43E18" stroke="#18181B" stroke-width="2" />
+      <text x="250" y="268" text-anchor="middle" fill="#3F3F46" font-size="10" font-family="monospace">% O2 (14% a 60%+)</text>
+      <text x="18" y="138" transform="rotate(-90 18 138)" text-anchor="middle" fill="#3F3F46" font-size="10" font-family="monospace">Flujo (cm/s)</text>
     `;
   }
 
@@ -247,7 +321,7 @@
         peclet: pe,
         regime: flamIdx < 0.72 ? "Extinción Radiativa (Quenching)" : (o2 >= 32 ? "Propagación Acelerada" : "Propagación Estable 0g"),
         feature_importance: [
-          { feature: "Concentracion O2 (%)", importance: 0.41 },
+          { feature: "Concentración O2 (%)", importance: 0.41 },
           { feature: "Reactividad del Material", importance: 0.28 },
           { feature: "Velocidad de Flujo (cm/s)", importance: 0.16 },
           { feature: "Espesor de Muestra (cm)", importance: 0.15 }
@@ -263,7 +337,7 @@
     document.getElementById("outPe").textContent = pred.peclet.toFixed(2);
     const badge = document.getElementById("regimeBadge");
     badge.textContent = pred.regime;
-    badge.className = "badge mono " + (pred.regime.includes("Extinción") ? "badge-ok" : "badge-danger");
+    badge.className = "badge " + (pred.regime.includes("Extinción") ? "badge-ok" : "badge-danger");
 
     document.getElementById("featureImportanceBox").innerHTML = pred.feature_importance.slice(0, 5).map((item) => `
       <div class="bar-row">
@@ -274,7 +348,7 @@
     `).join("");
   }
 
-  // --- MODULO 3: GEMELO DIGITAL SVG & FSM (M-06) ---
+  // --- MODULO 3: GEMELO DIGITAL DEL DUCTO ---
   function appendEventLog(msg) {
     const box = document.getElementById("twinEventLog");
     const ts = new Date().toLocaleTimeString();
@@ -317,14 +391,14 @@
       } else {
         fsmLocalTicks = 0;
       }
-      const clsMap = { nominal: "Nominal", spherical_0g: "Llama Esferica Azul 0g", cool_flame_ntc: "Llama Fria NTC", open_propagation: "Propagacion Abierta" };
+      const clsMap = { nominal: "Nominal", spherical_0g: "Llama Esférica Azul 0g", cool_flame_ntc: "Llama Fría NTC", open_propagation: "Propagación Abierta" };
       const idx = ["nominal", "spherical_0g", "cool_flame_ntc", "open_propagation"].indexOf(preset);
       const probs = [0.02, 0.02, 0.02, 0.02];
       probs[Math.max(0, idx)] = 0.94;
       renderTwinSnapshot({
         cnn_class: clsMap[preset] || "Nominal",
         cnn_probs: probs,
-        tree_rule_path: `dT/dt (${dt.toFixed(1)}) & aerosol (${aer}) -> ${state}`,
+        tree_rule_path: `dT/dt (${dt.toFixed(1)} C/s) y partículas (${aer}%) -> ${state}`,
         fsm_state: state,
         fan_on: state === "NORMAL" || state === "PRE_ALERTA",
         damper_closed: state === "CONTENCION" || state === "FALLA_SEGURA",
@@ -335,18 +409,20 @@
 
   function renderTwinSnapshot(snap, preset) {
     document.getElementById("twinCnnOut").textContent = snap.cnn_class;
-    document.getElementById("twinFanOut").textContent = snap.fan_on ? "ON" : "OFF";
+    document.getElementById("twinFanOut").textContent = snap.fan_on ? "ACTIVA" : "APAGADA";
     document.getElementById("twinDamperOut").textContent = snap.damper_closed ? "Cerrada" : "Abierta";
-    document.getElementById("twinPfeOut").textContent = snap.pfe_active ? "ACTIVO (Niebla)" : "Standby";
+    document.getElementById("twinPfeOut").textContent = snap.pfe_active ? "ACTIVO (Niebla)" : "En espera";
     document.getElementById("twinTreeRuleBox").textContent = snap.tree_rule_path;
 
     const fsmBadge = document.getElementById("fsmStateBadge");
     const svgLabel = document.getElementById("twinSvgFsmLabel");
-    fsmBadge.textContent = "FSM: " + snap.fsm_state;
+    fsmBadge.textContent = "ESTADO: " + snap.fsm_state;
     svgLabel.textContent = snap.fsm_state;
 
     const clsColor = snap.fsm_state === "NORMAL" ? "badge-ok" : snap.fsm_state === "PRE_ALERTA" ? "badge-warn" : snap.fsm_state === "CONTENCION" ? "badge-danger" : "badge-cool";
-    fsmBadge.className = "badge mono " + clsColor;
+    const svgInk = snap.fsm_state === "NORMAL" ? "#065F46" : snap.fsm_state === "PRE_ALERTA" ? "#78350F" : snap.fsm_state === "CONTENCION" ? "#991B1B" : "#7C280C";
+    fsmBadge.className = "badge " + clsColor;
+    svgLabel.setAttribute("fill", svgInk);
 
     document.getElementById("twinFanRotor").setAttribute("class", snap.fan_on ? "fan-active" : "fan-stopped");
     document.getElementById("twinFlowGroup").setAttribute("class", snap.fan_on ? "flow-active" : "flow-stopped");
@@ -366,10 +442,10 @@
       </div>
     `).join("");
 
-    appendEventLog(`FSM=${snap.fsm_state} | CNN=${snap.cnn_class} | Fan=${snap.fan_on} | PFE=${snap.pfe_active}`);
+    appendEventLog(`Estado=${snap.fsm_state} | Régimen=${snap.cnn_class} | Ventilación=${snap.fan_on ? "ON" : "OFF"} | Niebla=${snap.pfe_active ? "SI" : "NO"}`);
   }
 
-  // --- MODULO 4: FMEA & SPINOFFS ---
+  // --- MODULO 4: RIESGO FMEA Y TRANSFERENCIA TERRESTRE ---
   async function updateGovernance() {
     const mitigated = document.getElementById("fmeaMitigatedToggle").checked;
     const spinoffId = document.getElementById("spinoffSelect").value;
@@ -378,15 +454,15 @@
 
     const suppKind = document.getElementById("suppScenarioSelect").value;
     const suppText = suppKind === "auto_oxidizing"
-      ? "Protocolo Recomendado: PFE (Niebla 20-100 um). Cortar HVAC no apaga reacciones LiClO4."
+      ? "Protocolo recomendado: niebla fina PFE (20–100 micras). Cortar el aire no apaga reactivos LiClO4 auto-oxidantes."
       : suppKind === "laminar_diffusion"
-      ? "Protocolo Recomendado: E-FIELD (+/-10 kV ACME PSI-154) sin consumir fluidos ECLSS."
-      : "Protocolo Recomendado: PFE estandar ISS seguro para avionica y libre de HF.";
+      ? "Protocolo recomendado: supresión asistida por campo eléctrico (+/-10 kV ACME) sin consumir agente extintor."
+      : "Protocolo recomendado: niebla fina PFE estándar de la Estación Espacial, segura cerca de paneles electrónicos.";
     document.getElementById("suppOutputBox").textContent = suppText;
 
     try {
       const data = await apiJson(`/api/v1/governance/fmea-and-spinoffs?mitigated=${mitigated}&spinoff_id=${encodeURIComponent(spinoffId)}&units=${units}`);
-      document.getElementById("fmeaSummaryLine").textContent = `NPR Total: ${data.fmea_summary.total_active_npr} / ${data.fmea_summary.total_baseline_npr} (Reduccion ${data.fmea_summary.average_npr_reduction_pct}%)`;
+      document.getElementById("fmeaSummaryLine").textContent = `NPR Total: ${data.fmea_summary.total_active_npr} / ${data.fmea_summary.total_baseline_npr} (Reducción ${data.fmea_summary.average_npr_reduction_pct}%)`;
       document.getElementById("fmeaTableBody").innerHTML = data.fmea_rows.map((r) => `
         <tr>
           <td class="mono"><strong>${escapeHtml(r.mode_id)}</strong></td>
@@ -411,12 +487,61 @@
     }
   }
 
+  // --- MODULO 5 Y 6: REFERENCIAS, MINI MUSEO VIRTUAL & GLOSARIO ---
   function renderOfficialResources() {
     document.getElementById("officialResourcesGrid").innerHTML = OFFICIAL_RESOURCES.map((r) => `
-      <div class="panel" style="background:var(--bg-elevated); padding:10px 12px;">
+      <div class="resource-item">
+        <a href="${escapeHtml(r.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(r.title)}</a>
         <span class="badge badge-info">${escapeHtml(r.tag)}</span>
-        <div style="margin-top:6px; font-weight:600;"><a href="${escapeHtml(r.url)}" target="_blank" rel="noopener noreferrer" style="color:var(--text-primary);">${escapeHtml(r.title)}</a></div>
       </div>
+    `).join("");
+  }
+
+  function renderMuseum() {
+    const gallery = document.getElementById("museumGallery");
+    if (!gallery) return;
+    gallery.innerHTML = MUSEUM_EXHIBITS.map((ex) => `
+      <article class="museum-exhibit">
+        <img class="museum-photo" src="${escapeHtml(ex.img)}" alt="${escapeHtml(ex.title)}" loading="lazy" />
+        <div class="museum-head">
+          <h3>${escapeHtml(ex.title)}</h3>
+          <span class="badge badge-info">${escapeHtml(ex.badge)}</span>
+        </div>
+        <p class="museum-summary">${escapeHtml(ex.summary)}</p>
+        <ul class="museum-facts">
+          <li><strong>Atmósfera:</strong> ${escapeHtml(ex.atmosphere)}</li>
+          <li><strong>Fenómeno:</strong> ${escapeHtml(ex.phenomenon)}</li>
+          <li><strong>Legado:</strong> ${escapeHtml(ex.legacy)}</li>
+        </ul>
+        <span class="museum-caption">${escapeHtml(ex.caption)}</span>
+      </article>
+    `).join("");
+  }
+
+  function renderGlossary(filterText) {
+    const grid = document.getElementById("glossaryGrid");
+    if (!grid) return;
+    const q = (filterText || "").trim().toLowerCase();
+    const items = GLOSSARY_TERMS.filter((item) => {
+      if (!q) return true;
+      return (
+        item.term.toLowerCase().includes(q) ||
+        item.tag.toLowerCase().includes(q) ||
+        item.def.toLowerCase().includes(q)
+      );
+    });
+    if (!items.length) {
+      grid.innerHTML = `<div class="glossary-entry"><p>No hay coincidencias para "${escapeHtml(q)}" en el glosario.</p></div>`;
+      return;
+    }
+    grid.innerHTML = items.map((item) => `
+      <article class="glossary-entry">
+        <div class="glossary-term">
+          <h4>${escapeHtml(item.term)}</h4>
+          <span class="badge badge-cool">${escapeHtml(item.tag)}</span>
+        </div>
+        <p>${escapeHtml(item.def)}</p>
+      </article>
     `).join("");
   }
 
@@ -424,7 +549,6 @@
     document.querySelectorAll('[role="tab"]').forEach((btn) => {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
     });
-    document.getElementById("themeBtn").addEventListener("click", toggleTheme);
 
     document.getElementById("runRankingBtn").addEventListener("click", runExplorerAndTopsis);
     ["psiFacilitySelect", "personaSelect", "wHabSlider", "wModSlider", "wSenSlider"].forEach((id) => {
@@ -481,17 +605,23 @@
       document.getElementById(id).addEventListener("input", updateGovernance);
     });
 
+    const glossaryInput = document.getElementById("glossarySearchInput");
+    if (glossaryInput) {
+      glossaryInput.addEventListener("input", () => renderGlossary(glossaryInput.value));
+    }
+
     document.addEventListener("keydown", (e) => {
       const tag = document.activeElement && document.activeElement.tagName;
       if (tag === "INPUT" || tag === "SELECT") return;
-      const map = { "1": "explorer", "2": "sandbox", "3": "twin", "4": "governance", "5": "blueprint" };
+      const map = { "1": "explorer", "2": "sandbox", "3": "twin", "4": "governance", "5": "blueprint", "6": "museum" };
       if (map[e.key]) switchTab(map[e.key]);
-      else if (e.key.toLowerCase() === "t") toggleTheme();
     });
   }
 
   wireEvents();
   renderOfficialResources();
+  renderMuseum();
+  renderGlossary("");
   runExplorerAndTopsis();
   runFlammabilitySandbox();
   stepDigitalTwin();

@@ -1,7 +1,10 @@
-"""Pruebas de integracion Web, accesibilidad WAI-ARIA, Gemelo SVG, Hardware Blueprint y /ponytail-audit."""
+"""Pruebas de integracion Web, arranque directo, requisitos, Mini Museo, Glosario y auditoria de redaccion."""
 
 import ast
 from pathlib import Path
+import subprocess
+import sys
+
 from fastapi.testclient import TestClient
 
 from backend.main import create_app
@@ -9,6 +12,7 @@ from backend.main import create_app
 ROOT_DIR = Path(__file__).resolve().parents[2]
 FRONTEND_DIR = ROOT_DIR / "frontend"
 BACKEND_DIR = ROOT_DIR / "backend"
+REQUIREMENTS_DIR = ROOT_DIR / "requirements"
 
 BANNED_AI_SLOP = (
     "en el panorama actual",
@@ -20,6 +24,58 @@ BANNED_AI_SLOP = (
     "demuestra universalmente",
 )
 
+BANNED_PUBLIC_DEV_JARGON = (
+    "fastapi",
+    "cero llm",
+    "cero apis",
+    "costo $0",
+    "sha-256",
+    "randomforest",
+    "decisiontree",
+    "tf-idf",
+    "flame_cnn.onnx",
+    "writing-craft",
+)
+
+
+def test_backend_direct_execution_from_backend_dir_and_requirements() -> None:
+    # Verifica que main.py registra la raiz del repo en sys.path (evita ModuleNotFoundError en `cd backend && py main.py`)
+    main_src = (BACKEND_DIR / "main.py").read_text(encoding="utf-8")
+    assert "sys.path.insert(0, str(DEFAULT_ROOT_DIR))" in main_src
+    assert 'if __name__ == "__main__":' in main_src
+
+    train_src = (BACKEND_DIR / "train_models.py").read_text(encoding="utf-8")
+    assert "sys.path.insert(0, str(ROOT_DIR))" in train_src
+
+    # Subproceso liviano desde backend/ validando resolucion de paquetes backend.* sin recargar PyTorch/SciPy en pytest
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "import pathlib, sys; "
+                "root = pathlib.Path('main.py').resolve().parents[1]; "
+                "sys.path = [p for p in sys.path if pathlib.Path(p or '.').resolve() != root]; "
+                "sys.path.insert(0, str(root)); "
+                "from backend.domain import PsiRepository; "
+                "from backend.security import SecurityBoundaryGuard; "
+                "assert PsiRepository is not None and SecurityBoundaryGuard is not None"
+            ),
+        ],
+        cwd=str(BACKEND_DIR),
+        capture_output=True,
+        text=True,
+        timeout=20,
+    )
+    assert proc.returncode == 0, f"Fallo al resolver paquete backend desde backend/: {proc.stderr}"
+
+    assert (ROOT_DIR / "requirements.txt").is_file()
+    base_req = (REQUIREMENTS_DIR / "base.txt").read_text(encoding="utf-8")
+    dev_req = (REQUIREMENTS_DIR / "dev.txt").read_text(encoding="utf-8")
+    assert "fastapi" in base_req.lower()
+    assert "uvicorn" in base_req.lower()
+    assert "pytest" in dev_req.lower()
+
 
 def test_frontend_served_and_structural_requirements() -> None:
     app = create_app(data_dir=ROOT_DIR / "data", artifacts_dir=ROOT_DIR / "artifacts" / "models")
@@ -28,32 +84,56 @@ def test_frontend_served_and_structural_requirements() -> None:
     r_root = client.get("/")
     assert r_root.status_code == 200
     assert "AERO-IGNIS SI" in r_root.text
+    assert "NASA" in r_root.text
+    assert "ENREDADOS" in r_root.text
     assert 'role="tablist"' in r_root.text
     assert 'role="tab"' in r_root.text
     assert 'role="tabpanel"' in r_root.text
 
-    # M-06: Gemelo Digital Isométrico SVG
+    # M-06 / M-09 / M-10 / Mini Museo & Glosario
     assert 'id="ductDigitalTwinSvg"' in r_root.text
-
-    # M-09: Grafica de contorno de inflamabilidad en tiempo real
     assert 'id="flammabilityContourSvg"' in r_root.text
-
-    # M-10: Galeria Hardware Blueprint (SolidWorks, EPLAN, Proteus)
+    assert 'id="panel-museum"' in r_root.text
+    assert 'id="museumGallery"' in r_root.text
+    assert 'id="glossaryGrid"' in r_root.text
+    assert "/assets/museum/flame_0g.jpg" in r_root.text
     for tech in ("SolidWorks", "EPLAN", "Proteus"):
         assert tech in r_root.text
 
-    # Servido de assets estaticos locales con cabeceras seguras
+    # M-13: Tema claro permanente (sin #themeBtn) y fuente auto-alojada Geist Pixel
+    assert 'id="themeBtn"' not in r_root.text
+    assert 'data-theme="dark"' not in r_root.text
+
+    # Cero jerga interna de programacion o LLM en textos visibles de HTML
+    lowered_html = r_root.text.lower()
+    for term in BANNED_PUBLIC_DEV_JARGON:
+        assert term not in lowered_html, f"Termino tecnico interno visible en UI: {term}"
+
+    # Servido de assets estaticos locales y fotografia real NASA
     r_css = client.get("/frontend/styles.css")
     assert r_css.status_code == 200
     assert "prefers-reduced-motion" in r_css.text
+    assert "Geist Pixel" in r_css.text
+
+    r_font = client.get("/GeistPixel-Square.woff2")
+    assert r_font.status_code == 200
+    assert r_font.content[:4] == b"wOF2"
+
+    r_img = client.get("/assets/museum/flame_0g.jpg")
+    assert r_img.status_code == 200
+    assert r_img.content[:3] == b"\xff\xd8\xff"
 
     r_js = client.get("/frontend/app.js")
     assert r_js.status_code == 200
     assert "escapeHtml" in r_js.text
+    assert "toggleTheme" not in r_js.text
+    lowered_js = r_js.text.lower()
+    for term in BANNED_PUBLIC_DEV_JARGON:
+        assert term not in lowered_js, f"Termino tecnico interno visible en app.js: {term}"
 
 
 def test_ponytail_security_and_anti_slop_audit() -> None:
-    # Cero API keys, cero eval/exec/shell=True, cero frases AI slop, cero innerHTML directo con input sin escapar
+    # Cero API keys, cero eval/exec/shell=True, cero frases AI slop
     for py_file in BACKEND_DIR.glob("*.py"):
         text = py_file.read_text(encoding="utf-8")
         tree = ast.parse(text, filename=str(py_file))
