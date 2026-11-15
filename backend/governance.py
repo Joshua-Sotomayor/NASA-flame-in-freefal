@@ -197,9 +197,10 @@ class GovernanceAndSpinoffService:
         )
 
     def calculate_dual_use(self, spinoff_id: str | None = None, units: int = 1) -> DualUseImpact:
-        if not (1 <= units <= 10000):
-            raise ValueError("units debe estar entre 1 y 10000.")
-        key = spinoff_id or "9582"
+        if isinstance(units, bool) or not isinstance(units, int) or not (1 <= units <= 10000):
+            raise ValueError("units debe ser un entero entre 1 y 10000.")
+        cleaned = spinoff_id.strip().upper() if spinoff_id is not None else ""
+        key = cleaned or "9582"
         if key not in self._spinoffs:
             raise KeyError(f"Spinoff no encontrado: {key}")
 
