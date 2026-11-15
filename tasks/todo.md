@@ -42,7 +42,7 @@
 
 ## Fase 2: Pipeline 100% ML/DL Propio (Colab / Local) & Motor Físico/FSM (Sábado AM `H5–H14`)
 
-### Task 3 (`M-07`): Entrenamiento Reproducible de los 3 Modelos Propios + Manifiesto SHA-256
+### [x] Task 3 (`M-07`): Entrenamiento Reproducible de los 3 Modelos Propios + Manifiesto SHA-256
 - **Responsable:** Mecatrónico (entrenamiento Colab/Local + ONNX) + Gestión Industrial (sensibilidad y auditoría).
 - **Alcance:** Implementar `backend/train_models.py` (CPU local `< 5 s`) sincronizado con `notebooks/AERO_IGNIS_Colab_Training.ipynb` (GPU T4 para *streaming* OSDR) generando `artifacts/models/manifest.sha256.json`:
   1. `flammability_rf.joblib` (`RandomForestClassifier`) + `burntime_gbr.joblib` (`GradientBoostingRegressor`).

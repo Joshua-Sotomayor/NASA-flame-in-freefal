@@ -1,0 +1,33 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at_utc": "2026-11-15T01:55:11.687944+00:00",
+  "metrics": {
+    "rf_cv_accuracy": 0.7849,
+    "cnn_train_accuracy": 1.0,
+    "sensor_tree_accuracy": 1.0,
+    "psi_clustered": 24,
+    "clusters": 4
+  },
+  "models": {
+    "flammability_rf.joblib": {
+      "sha256": "5186ba1c002b3045b329c80b7d6e3db6937950ec286250cc70d9cae6a13ef565",
+      "size_bytes": 169790
+    },
+    "burntime_gbr.joblib": {
+      "sha256": "4b9842a5962dd5e925fd4dfd3efba3e26ae99e48ced72b9cb0cdacdab0ca37c5",
+      "size_bytes": 167202
+    },
+    "flame_cnn.onnx": {
+      "sha256": "5806f99709a026fa1d7eb1e3e706d0f935899aca13af897ab848f247e3c09e4c",
+      "size_bytes": 10512
+    },
+    "sensor_tree.joblib": {
+      "sha256": "6e84c0f010fef2e1ccc711367f5e6eda9fd2fbf86437c19de2415577692b22af",
+      "size_bytes": 1180
+    },
+    "psi_tfidf_kmeans.joblib": {
+      "sha256": "21fc08d7053f5bf791e276a3edb5dd62d954db597ed6c902a7cca3e66a7f1d5f",
+      "size_bytes": 20242
+    }
+  }
+}
