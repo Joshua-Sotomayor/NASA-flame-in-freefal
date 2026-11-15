@@ -8,11 +8,16 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
+import sys
 from typing import Any, Literal
 
 from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import FileResponse
 from pydantic import BaseModel, ConfigDict, Field
+
+DEFAULT_ROOT_DIR = Path(__file__).resolve().parents[1]
+if str(DEFAULT_ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(DEFAULT_ROOT_DIR))
 
 from backend.domain import PsiRepository
 from backend.duct_twin import (
@@ -28,9 +33,6 @@ from backend.security import (
     SlidingWindowRateLimiter,
     install_security_handlers,
 )
-
-
-DEFAULT_ROOT_DIR = Path(__file__).resolve().parents[1]
 
 
 class CriteriaWeightsDto(BaseModel):
@@ -228,7 +230,7 @@ def create_app(
         }
 
     def _serve_frontend_asset(asset_name: str) -> FileResponse:
-        allowed_assets = {"index.html", "styles.css", "app.js"}
+        allowed_assets = {"index.html", "styles.css", "app.js", "GeistPixel-Square.woff2"}
         if asset_name not in allowed_assets:
             raise HTTPException(status_code=404, detail="Recurso no encontrado.")
         safe_path = guard.resolve_within_root(resolved_frontend / asset_name, resolved_frontend)
@@ -248,6 +250,28 @@ def create_app(
     def serve_dashboard_js_root() -> FileResponse:
         return _serve_frontend_asset("app.js")
 
+    @app.get("/GeistPixel-Square.woff2", include_in_schema=False)
+    def serve_dashboard_font_root() -> FileResponse:
+        return _serve_frontend_asset("GeistPixel-Square.woff2")
+
+    @app.get("/assets/museum/{image_name}", include_in_schema=False)
+    def serve_museum_image(image_name: str) -> FileResponse:
+        allowed_images = {
+            "flame_0g.jpg",
+            "bass_ii_iss.jpg",
+            "saffire_cygnus.jpg",
+            "cir_rack_iss.jpg",
+            "apollo_1_crew.jpg",
+            "mir_station.jpg",
+        }
+        if image_name not in allowed_images:
+            raise HTTPException(status_code=404, detail="Fotografia de museo no encontrada.")
+        museum_root = resolved_frontend / "assets" / "museum"
+        safe_path = guard.resolve_within_root(museum_root / image_name, museum_root)
+        if not safe_path.is_file():
+            raise HTTPException(status_code=404, detail="Archivo de fotografia aun no disponible.")
+        return FileResponse(path=safe_path)
+
     @app.get("/frontend/{asset_name}", include_in_schema=False)
     def serve_dashboard_asset(asset_name: str) -> FileResponse:
         return _serve_frontend_asset(asset_name)
@@ -256,3 +280,9 @@ def create_app(
 
 
 app = create_app()
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="127.0.0.1", port=8000)

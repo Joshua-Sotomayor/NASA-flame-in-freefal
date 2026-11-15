@@ -1,481 +1,691 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AERO-IGNIS SI · Seguridad contra Incendios en Microgravedad (NASA PSI)</title>
+  <title>NASA + ENREDADOS · Observatorio AERO-IGNIS SI</title>
+  <link rel="preload" href="GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="shell">
-    <header class="topbar">
-      <div class="brand">
-        <h1>AERO-IGNIS SI · Seguridad en Cabinas Habitables (0g &rarr; 1g)</h1>
-        <p>
-          Inteligencia propia sobre <strong>24 investigaciones NASA PSI</strong> (BASS-II, Saffire I–VI, FLEX, ACME, SPICE, MSC) · Costo $0 · Cero LLM externo.
-        </p>
+    <header class="masthead-hero">
+      <div class="masthead-lockup">
+        <h1 class="masthead-wordmark">
+          <span>NASA</span>
+          <svg class="nasa-emblem" viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="54" fill="#0B3D91" />
+            <circle cx="38" cy="36" r="1.8" fill="#FFFFFF" />
+            <circle cx="48" cy="24" r="1.4" fill="#FFFFFF" />
+            <circle cx="76" cy="26" r="2.0" fill="#FFFFFF" />
+            <circle cx="92" cy="44" r="1.6" fill="#FFFFFF" />
+            <circle cx="29" cy="68" r="1.5" fill="#FFFFFF" />
+            <circle cx="88" cy="82" r="1.7" fill="#FFFFFF" />
+            <ellipse cx="60" cy="62" rx="46" ry="18" transform="rotate(-24 60 62)" fill="none" stroke="#FFFFFF" stroke-width="2.4" />
+            <path d="M22 90 L62 24 L98 92 L62 66 Z" fill="#FC3D21" />
+            <path d="M52 28 L68 28 L62 18 Z" fill="#FFFFFF" />
+            <path d="M22 90 Q60 54 102 44" fill="none" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" />
+          </svg>
+          <span class="masthead-plus">+</span>
+          <span class="masthead-team">ENREDADOS</span>
+        </h1>
       </div>
-      <div class="topbar-meta">
-        <span id="runtimeModeBadge" class="badge badge-info mono">Verificando API...</span>
-        <span id="shaBadge" class="badge badge-ok mono">SHA-256: Verificado</span>
-        <button id="themeBtn" class="btn" type="button" aria-label="Alternar tema oscuro y claro">Tema (T)</button>
+      <p class="masthead-subtitle">
+        Observatorio AERO-IGNIS SI · Ciencia de Combustión en Microgravedad y Seguridad en Cabinas Habitables
+      </p>
+      <div class="masthead-status">
+        <span id="runtimeModeBadge" class="badge badge-info">Iniciando observatorio...</span>
+        <span id="shaBadge" class="badge badge-ok">Registros NASA Verificados</span>
       </div>
     </header>
 
-    <nav class="tablist" role="tablist" aria-label="Modulos de AERO-IGNIS SI">
-      <button id="tab-explorer" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-explorer" data-tab="explorer">1. Explorador PSI &amp; TOPSIS</button>
-      <button id="tab-sandbox" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-sandbox" data-tab="sandbox">2. Simulador Inflamabilidad &amp; Forense</button>
-      <button id="tab-twin" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-twin" data-tab="twin">3. Gemelo Digital Ducto &amp; FSM</button>
-      <button id="tab-governance" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-governance" data-tab="governance">4. Gobernanza FMEA &amp; Spinoffs</button>
-      <button id="tab-blueprint" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-blueprint" data-tab="blueprint">5. Hardware Blueprint (Físico)</button>
+    <nav class="tablist" role="tablist" aria-label="Secciones del observatorio espacial">
+      <button id="tab-explorer" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-explorer" data-tab="explorer">
+        <span class="tab-step">01</span>
+        <span>Explorador de Estudios</span>
+      </button>
+      <button id="tab-sandbox" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-sandbox" data-tab="sandbox">
+        <span class="tab-step">02</span>
+        <span>Inflamabilidad en Cabina</span>
+      </button>
+      <button id="tab-twin" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-twin" data-tab="twin">
+        <span class="tab-step">03</span>
+        <span>Gemelo del Ducto</span>
+      </button>
+      <button id="tab-governance" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-governance" data-tab="governance">
+        <span class="tab-step">04</span>
+        <span>Riesgo y Transferencia</span>
+      </button>
+      <button id="tab-blueprint" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-blueprint" data-tab="blueprint">
+        <span class="tab-step">05</span>
+        <span>Planos de Ingeniería</span>
+      </button>
+      <button id="tab-museum" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-museum" data-tab="museum">
+        <span class="tab-step">06</span>
+        <span>Museo y Glosario</span>
+      </button>
     </nav>
 
-    <!-- MODULO 1: EXPLORADOR PSI & TOPSIS -->
+    <!-- MODULO 1: EXPLORADOR DE ESTUDIOS NASA PSI -->
     <section id="panel-explorer" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-explorer">
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Ranking Multicriterio TOPSIS &amp; Consulta Extractiva</h2>
-            <span class="badge badge-cool mono">TF-IDF + PCA + K-Means + TextRank</span>
-          </div>
-          <div class="form-grid">
-            <label class="field">Instalación
-              <select id="psiFacilitySelect">
-                <option value="">Todas (24 PSI)</option>
-                <option value="Cygnus">Cygnus (Saffire I–VI)</option>
-                <option value="ISS-MSG">ISS-MSG (BASS/SLICE/SPICE/CVB)</option>
-                <option value="ISS-CIR">ISS-CIR (FLEX/ACME/BRE/CFI-G)</option>
-                <option value="Otros">Otros (NCA / MSC)</option>
-              </select>
-            </label>
-            <label class="field">Audiencia (`writing-craft`)
-              <select id="personaSelect">
-                <option value="Investigador">Investigador (Academic)</option>
-                <option value="Estudiante">Estudiante (Plain &lt;25w)</option>
-                <option value="Gestor Industrial">Gestor Industrial (Dual-Use)</option>
-              </select>
-            </label>
-            <label class="field">Búsqueda por material, campaña o variable
-              <input id="psiQueryInput" type="text" maxlength="120" placeholder="Ej. SIBAL 34% O2 quenching" />
-            </label>
-            <label class="field">Peso Hábitat Lunar (<span id="wHabVal">40</span>%)
-              <input id="wHabSlider" type="range" min="0" max="100" value="40" />
-            </label>
-            <label class="field">Peso Modelado Da/Pe (<span id="wModVal">25</span>%)
-              <input id="wModSlider" type="range" min="0" max="100" value="25" />
-            </label>
-            <label class="field">Peso Sensores &amp; Spinoff (<span id="wSenVal">35</span>%)
-              <input id="wSenSlider" type="range" min="0" max="100" value="35" />
-            </label>
-          </div>
-          <div style="margin-top:10px; display:flex; gap:8px;">
-            <button id="runRankingBtn" class="btn btn-primary" type="button">Calcular TOPSIS + Síntesis</button>
-          </div>
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Cómo se investiga el fuego en el espacio</h2>
+          <p>
+            En caída libre no asciende el aire caliente. Una llama en órbita adopta forma esférica y depende del oxígeno que transporta la ventilación de la cabina. Esta sección organiza veinticuatro campañas experimentales de la NASA según tus prioridades de búsqueda y adapta la lectura para público estudiantil, investigador o gestor industrial.
+          </p>
+        </div>
 
-          <div class="panel" style="margin-top:12px; background:var(--bg-elevated);" aria-live="polite">
-            <div class="panel-head" style="margin-bottom:4px;">
-              <strong id="synthesisPersonaBadge">Síntesis Determinista · Investigador</strong>
-              <span id="citedDoisLine" class="mono" style="font-size:0.75rem; color:var(--accent-blue);">--</span>
+        <div class="workbench-split">
+          <div class="workbench-pane">
+            <div class="pane-head">
+              <h2 class="pane-title">Priorización Multicriterio de Campañas</h2>
+              <span class="badge badge-cool">24 Investigaciones PSI</span>
             </div>
-            <ul id="synthesisBullets" class="bullet-list"></ul>
+
+            <div class="form-grid">
+              <label class="field">Instalación de prueba
+                <select id="psiFacilitySelect">
+                  <option value="">Todas (24 campañas)</option>
+                  <option value="Cygnus">Cygnus (Saffire I–VI)</option>
+                  <option value="ISS-MSG">ISS-MSG (BASS / SLICE / SPICE / CVB)</option>
+                  <option value="ISS-CIR">ISS-CIR (FLEX / ACME / BRE / CFI-G)</option>
+                  <option value="Otros">Otros (NCA / MSC)</option>
+                </select>
+              </label>
+              <label class="field">Perfil de lectura
+                <select id="personaSelect">
+                  <option value="Investigador">Investigador (Académico)</option>
+                  <option value="Estudiante">Estudiante (Divulgación clara)</option>
+                  <option value="Gestor Industrial">Gestor Industrial (Impacto terrestre)</option>
+                </select>
+              </label>
+              <label class="field">Tema, material o campaña
+                <input id="psiQueryInput" type="text" maxlength="120" placeholder="Ej. SIBAL 34% O2 extinción" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Relevancia Hábitat Lunar</span><span><strong id="wHabVal">40</strong>%</span></span>
+                <input id="wHabSlider" type="range" min="0" max="100" value="40" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Modelado Físico (Da/Pe)</span><span><strong id="wModVal">25</strong>%</span></span>
+                <input id="wModSlider" type="range" min="0" max="100" value="25" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Sensores y Beneficio Terrestre</span><span><strong id="wSenVal">35</strong>%</span></span>
+                <input id="wSenSlider" type="range" min="0" max="100" value="35" />
+              </label>
+            </div>
+
+            <div style="margin-top:14px;">
+              <button id="runRankingBtn" class="btn btn-primary" type="button">Actualizar Priorización y Síntesis</button>
+            </div>
+
+            <div class="section-block" aria-live="polite">
+              <div class="pane-head" style="margin-bottom:6px;">
+                <h3 id="synthesisPersonaBadge" class="sub-heading" style="margin:0;">Síntesis de Evidencia · Investigador</h3>
+                <span id="citedDoisLine" class="inline-readout">--</span>
+              </div>
+              <ul id="synthesisBullets" class="bullet-list"></ul>
+            </div>
+          </div>
+
+          <div class="workbench-stage">
+            <div class="pane-head">
+              <h2 class="pane-title">Mapa de Similitud Científica (24 Estudios)</h2>
+              <span class="badge badge-info">4 familias experimentales</span>
+            </div>
+
+            <figure class="figure-frame">
+              <svg id="clustersSvg" viewBox="0 0 480 230" role="img" aria-label="Mapa bidimensional de similitud entre las veinticuatro investigaciones NASA PSI"></svg>
+            </figure>
+
+            <div class="section-block" style="margin-top:18px;">
+              <h3 class="sub-heading">Orden de Prioridad según tus Criterios</h3>
+              <div class="table-scroll">
+                <table>
+                  <thead>
+                    <tr><th>Orden</th><th>Código / Acrónimo</th><th>Instalación</th><th>Índice</th><th>DOI</th></tr>
+                  </thead>
+                  <tbody id="psiRankBody"></tbody>
+                </table>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Mapa PCA 2D &amp; Clusters K-Means (24 Investigaciones)</h2>
-            <span class="badge badge-info mono">k = 4 grupos temáticos</span>
-          </div>
-          <div class="stage-box">
-            <svg id="clustersSvg" viewBox="0 0 480 230" role="img" aria-label="Mapa bidimensional PCA de las 24 investigaciones NASA PSI"></svg>
-          </div>
-          <div class="table-wrap" style="max-height:240px; overflow-y:auto;">
-            <table>
-              <thead>
-                <tr><th>Rank</th><th>ID / Acrónimo</th><th>Instalación</th><th>TOPSIS</th><th>DOI</th></tr>
-              </thead>
-              <tbody id="psiRankBody"></tbody>
-            </table>
-          </div>
+        <div class="history-strip">
+          <article class="history-entry">
+            <img class="history-thumb" src="/assets/museum/bass_ii_iss.jpg" alt="Prueba de combustión BASS-II dentro de la Estación Espacial Internacional" loading="lazy" />
+            <div class="history-copy">
+              <h3>BASS-II en la Estación Espacial</h3>
+              <p>
+                Los experimentos Burning and Suppression of Solids midieron cómo arden algodón, acrílico PMMA y telas resistentes en la caja sellada de la Estación Espacial Internacional. Confirmaron que flujos de aire suaves pueden acelerar o apagar una llama según la fracción de oxígeno.
+              </p>
+              <span class="history-meta">Archivo ISS Expedition 40 · Datos base BASS-II</span>
+            </div>
+          </article>
+          <article class="history-entry">
+            <img class="history-thumb" src="/assets/museum/saffire_cygnus.jpg" alt="Unidad experimental Saffire de la NASA para incendios a escala real en naves Cygnus" loading="lazy" />
+            <div class="history-copy">
+              <h3>Campañas Saffire I–VI en naves Cygnus</h3>
+              <p>
+                Antes de reentrar en la atmósfera terrestre, seis naves de carga Cygnus albergaron incendios controlados a gran escala sobre tela SIBAL y compuestos espaciales. Sus mediciones definieron los márgenes seguros de ventilación para futuros hábitats en la Luna.
+              </p>
+              <span class="history-meta">NASA Glenn Research Center · Naves de carga Cygnus</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- MODULO 2: SIMULADOR INFLAMABILIDAD & FORENSE (M-09) -->
+    <!-- MODULO 2: INFLAMABILIDAD EN CABINA & CASOS HISTORICOS -->
     <section id="panel-sandbox" class="tabpanel" role="tabpanel" aria-labelledby="tab-sandbox">
-      <div class="panel" style="margin-bottom:14px;">
-        <div class="panel-head">
-          <h2 class="panel-title">Presets Forenses Históricos &amp; Atmósfera Objetivo (1 Clic)</h2>
-          <span class="badge badge-warn mono">NASA-STD-6001 · Entornos Habitables Únicamente (C-01)</span>
-        </div>
-        <div class="preset-row">
-          <button class="btn btn-danger" type="button" data-forensic="apollo_1">Apollo 1 (100% O2 · 16.7 psi · PTFE)</button>
-          <button class="btn btn-danger" type="button" data-forensic="apollo_13">Apollo 13 (100% O2 · PTFE &gt;500 &deg;C)</button>
-          <button class="btn" type="button" data-forensic="mir_1997">Mir Kvant-1 (21% O2 · Vika LiClO4)</button>
-          <button class="btn btn-primary" type="button" data-forensic="lunar_artemis">Hábitat Lunar Artemis (34% O2 · 8.2 psi · SIBAL)</button>
-        </div>
-        <p id="forensicNoteBox" style="margin:0; font-size:0.82rem; color:var(--text-secondary);" aria-live="polite">
-          Selecciona un preset o ajusta los parámetros termofísicos para evaluar Da, Pe y el modelo RandomForest/GBR.
-        </p>
-      </div>
-
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Parámetros Atmosféricos + Predicción Random Forest</h2>
-            <span id="regimeBadge" class="badge badge-info mono">--</span>
-          </div>
-          <div class="form-grid">
-            <label class="field">Oxígeno (% O2): <strong id="o2Val">34</strong>%
-              <input id="o2Slider" type="range" min="14" max="100" step="1" value="34" />
-            </label>
-            <label class="field">Presión Cabina (psi): <strong id="pressVal">8.2</strong> psi
-              <input id="pressSlider" type="range" min="5" max="30" step="0.1" value="8.2" />
-            </label>
-            <label class="field">Flujo HVAC (cm/s): <strong id="flowVal">12.0</strong> cm/s
-              <input id="flowSlider" type="range" min="0" max="60" step="0.5" value="12" />
-            </label>
-            <label class="field">Espesor (mm): <strong id="thickVal">0.8</strong> mm
-              <input id="thickSlider" type="range" min="0.2" max="10" step="0.1" value="0.8" />
-            </label>
-            <label class="field">Gravedad (g)
-              <select id="gravSelect">
-                <option value="0">0g (ISS / Orbital)</option>
-                <option value="0.16" selected>0.16g (Superficie Lunar)</option>
-                <option value="0.38">0.38g (Superficie Marciana)</option>
-                <option value="1">1.0g (Referencia Terrestre)</option>
-              </select>
-            </label>
-            <label class="field">Material de Cabina
-              <select id="matSelect">
-                <option value="SIBAL" selected>SIBAL (Tejido Referencia)</option>
-                <option value="PMMA">PMMA (Acrílico BASS-II)</option>
-                <option value="Algodon">Algodón</option>
-                <option value="Nomex">Nomex (Retardante)</option>
-                <option value="Kapton">Kapton (Aislamiento)</option>
-                <option value="PTFE">PTFE (Teflón cableado)</option>
-              </select>
-            </label>
-            <label class="field">Dirección de Flujo
-              <select id="dirSelect">
-                <option value="concurrent" selected>Concurrente (mismo sentido)</option>
-                <option value="opposed">Opuesto</option>
-              </select>
-            </label>
-          </div>
-
-          <div class="kpi-strip tabular">
-            <div class="kpi-box"><span class="kpi-label">Prob. Auto-Extinción</span><span id="outExtProb" class="kpi-val mono">--</span></div>
-            <div class="kpi-box"><span class="kpi-label">Propagación Vf</span><span id="outSpread" class="kpi-val mono">--</span></div>
-            <div class="kpi-box"><span class="kpi-label">Damköhler (Da)</span><span id="outDa" class="kpi-val mono">--</span></div>
-            <div class="kpi-box"><span class="kpi-label">Peclet (Pe)</span><span id="outPe" class="kpi-val mono">--</span></div>
-          </div>
-
-          <h3 class="panel-title" style="font-size:0.86rem; margin:10px 0 8px;">Importancia de Variables Auditables (`RandomForestClassifier`)</h3>
-          <div id="featureImportanceBox"></div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Mapa de Contorno de Inflamabilidad (Flujo vs %O2)</h2>
-            <span class="badge badge-ok mono">Quenching vs Estable vs Blowoff</span>
-          </div>
-          <div class="stage-box">
-            <svg id="flammabilityContourSvg" viewBox="0 0 480 280" role="img" aria-label="Curva de contorno de inflamabilidad en microgravedad"></svg>
-          </div>
-          <p class="field" style="margin-top:8px;">
-            El punto luminoso indica la condición operativa actual (%O2 vs velocidad de flujo HVAC). Debajo de 2 cm/s en 0g domina la extinción radiativa; sobre 40 cm/s a O2 moderado aparece el soplado (blowoff); sobre 30% O2 en hábitat lunar el peligro crece exponencialmente.
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Por qué cambian los límites de incendio entre la Tierra, la ISS y la Luna</h2>
+          <p>
+            Las naves modernas operan con atmósferas pensadas para proteger a la tripulación durante caminatas espaciales, elevando a veces el oxígeno hasta 34% con menor presión total. Selecciona un episodio histórico real o mueve los controles de atmósfera para observar cuándo una flama se extingue sola y cuándo se vuelve sostenida.
           </p>
+        </div>
+
+        <div class="preset-band">
+          <div class="pane-head" style="margin-bottom:10px;">
+            <h2 class="pane-title">Casos Históricos y Atmósfera de Referencia Lunar</h2>
+            <span class="badge badge-warn">Norma NASA-STD-6001 · Entornos Habitables</span>
+          </div>
+          <div class="preset-row">
+            <button class="btn btn-danger" type="button" data-forensic="apollo_1">Apollo 1 (100% O2 · 16.7 psi · PTFE)</button>
+            <button class="btn btn-danger" type="button" data-forensic="apollo_13">Apollo 13 (100% O2 · PTFE &gt;500 &deg;C)</button>
+            <button class="btn" type="button" data-forensic="mir_1997">Mir Kvant-1 (21% O2 · Generador LiClO4)</button>
+            <button class="btn btn-primary" type="button" data-forensic="lunar_artemis">Hábitat Lunar Artemis (34% O2 · 8.2 psi · SIBAL)</button>
+          </div>
+          <p id="forensicNoteBox" class="prose-note" style="margin-top:4px;" aria-live="polite">
+            Elige un caso histórico o ajusta los parámetros de cabina para evaluar el riesgo de propagación y los números adimensionales Da y Pe.
+          </p>
+        </div>
+
+        <div class="workbench-split">
+          <div class="workbench-pane">
+            <div class="pane-head">
+              <h2 class="pane-title">Condiciones Atmosféricas y Material</h2>
+              <span id="regimeBadge" class="badge badge-info">--</span>
+            </div>
+
+            <div class="form-grid">
+              <label class="field">
+                <span class="field-head"><span>Oxígeno (% O2)</span><span><strong id="o2Val">34</strong>%</span></span>
+                <input id="o2Slider" type="range" min="14" max="100" step="1" value="34" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Presión Cabina</span><span><strong id="pressVal">8.2</strong> psi</span></span>
+                <input id="pressSlider" type="range" min="5" max="30" step="0.1" value="8.2" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Flujo Ventilación</span><span><strong id="flowVal">12.0</strong> cm/s</span></span>
+                <input id="flowSlider" type="range" min="0" max="60" step="0.5" value="12" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Espesor Muestra</span><span><strong id="thickVal">0.8</strong> mm</span></span>
+                <input id="thickSlider" type="range" min="0.2" max="10" step="0.1" value="0.8" />
+              </label>
+              <label class="field">Gravedad (g)
+                <select id="gravSelect">
+                  <option value="0">0g (ISS / Orbital)</option>
+                  <option value="0.16" selected>0.16g (Superficie Lunar)</option>
+                  <option value="0.38">0.38g (Superficie Marciana)</option>
+                  <option value="1">1.0g (Referencia Terrestre)</option>
+                </select>
+              </label>
+              <label class="field">Material de Cabina
+                <select id="matSelect">
+                  <option value="SIBAL" selected>SIBAL (Tejido Referencia)</option>
+                  <option value="PMMA">PMMA (Acrílico BASS-II)</option>
+                  <option value="Algodon">Algodón</option>
+                  <option value="Nomex">Nomex (Retardante)</option>
+                  <option value="Kapton">Kapton (Aislamiento)</option>
+                  <option value="PTFE">PTFE (Teflón cableado)</option>
+                </select>
+              </label>
+              <label class="field">Dirección del Aire
+                <select id="dirSelect">
+                  <option value="concurrent" selected>Concurrente (mismo sentido)</option>
+                  <option value="opposed">Opuesto</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="metric-ledger tabular">
+              <div class="metric-cell"><span class="metric-label">Auto-Extinción</span><span id="outExtProb" class="metric-val">--</span></div>
+              <div class="metric-cell"><span class="metric-label">Propagación Vf</span><span id="outSpread" class="metric-val">--</span></div>
+              <div class="metric-cell"><span class="metric-label">Damköhler (Da)</span><span id="outDa" class="metric-val">--</span></div>
+              <div class="metric-cell"><span class="metric-label">Péclet (Pe)</span><span id="outPe" class="metric-val">--</span></div>
+            </div>
+
+            <div class="section-block" style="margin-top:14px;">
+              <h3 class="sub-heading">Factores de Mayor Influencia en Cabina</h3>
+              <div id="featureImportanceBox"></div>
+            </div>
+          </div>
+
+          <div class="workbench-stage">
+            <div class="pane-head">
+              <h2 class="pane-title">Mapa de Contorno de Inflamabilidad (Flujo vs %O2)</h2>
+              <span class="badge badge-ok">Extinción vs Estable vs Soplado</span>
+            </div>
+            <figure class="figure-frame">
+              <svg id="flammabilityContourSvg" viewBox="0 0 480 280" role="img" aria-label="Curva de contorno de inflamabilidad en microgravedad"></svg>
+            </figure>
+            <p class="prose-note">
+              El punto marca la condición actual (% de oxígeno frente a velocidad de ventilación). Por debajo de 2 cm/s en microgravedad la llama pierde calor por radiación y se apaga; por encima de 40 cm/s a oxígeno moderado el aire excesivo desprende la llama; con más de 30% de oxígeno el riesgo crece rápidamente.
+            </p>
+          </div>
+        </div>
+
+        <div class="history-strip">
+          <article class="history-entry">
+            <img class="history-thumb" src="/assets/museum/apollo_1_crew.jpg" alt="Tripulación del programa Apollo 1 en fotografía oficial de la NASA" loading="lazy" />
+            <div class="history-copy">
+              <h3>Apollo 1 (1967): prohibición de 100% O2 en tierra</h3>
+              <p>
+                Durante una prueba en plataforma con atmósfera de oxígeno puro a 16.7 psi, un arco eléctrico propagó el fuego en 15 segundos. A partir de esta tragedia nació el código NASA-STD-6001 para ensayar y certificar cada textil, polímero y aislante en cabinas tripuladas.
+              </p>
+              <span class="history-meta">Archivo Histórico NASA · S66-30238</span>
+            </div>
+          </article>
+          <article class="history-entry">
+            <img class="history-thumb" src="/assets/museum/mir_station.jpg" alt="Estación Espacial Mir fotografiada desde el transbordador Discovery" loading="lazy" />
+            <div class="history-copy">
+              <h3>Estación Mir (1997): incendio auto-oxidante</h3>
+              <p>
+                Un generador químico de oxígeno en el módulo Kvant-1 sufrió una combustión intensa durante 14 minutos al liberar su propio oxígeno. El incidente demostró que detener la ventilación no basta contra reactivos auto-oxidantes y exige extinción limpia mediante niebla fina.
+              </p>
+              <span class="history-meta">Archivo NASA STS-63 · STS063-708-095</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- MODULO 3: GEMELO DIGITAL ISOMETRICO SVG & FSM (M-06) -->
+    <!-- MODULO 3: GEMELO DIGITAL DEL DUCTO & CONTROL DE SEGURIDAD -->
     <section id="panel-twin" class="tabpanel" role="tabpanel" aria-labelledby="tab-twin">
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Gemelo Digital Isométrico del Ducto Habitable (SVG Isométrico)</h2>
-            <span id="fsmStateBadge" class="badge badge-ok mono">FSM: NORMAL</span>
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Vigilancia silenciosa en ductos de ventilación espacial</h2>
+          <p>
+            Muchos conatos de incendio en gravedad cero inician sin flama brillante, ocultos detrás de paneles de equipos eléctricos donde solo circula la corriente de aire forzado. Este esquema interactivo muestra cómo un ducto instrumentado combina cámara óptica, sensores de partículas ultrafinas y monóxido de carbono para aislar un sector a tiempo.
+          </p>
+        </div>
+
+        <div class="workbench-split workbench-split--stage-first">
+          <div class="workbench-stage">
+            <div class="pane-head">
+              <h2 class="pane-title">Gemelo Isométrico del Ducto de Cabina</h2>
+              <span id="fsmStateBadge" class="badge badge-ok">ESTADO: NORMAL</span>
+            </div>
+
+            <figure class="figure-frame">
+              <svg id="ductDigitalTwinSvg" viewBox="0 0 600 300" role="img" aria-label="Esquema isométrico animado de ducto de ventilación con ventilador, sensores y compuerta cortafuego">
+                <defs>
+                  <linearGradient id="isoTopLight" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0%" stop-color="#FFFFFF" />
+                    <stop offset="100%" stop-color="#E2E8F0" />
+                  </linearGradient>
+                  <radialGradient id="isoFlame0g" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#E0F2FE" />
+                    <stop offset="48%" stop-color="#0284C7" stop-opacity="0.72" />
+                    <stop offset="100%" stop-color="#0B3B66" stop-opacity="0" />
+                  </radialGradient>
+                  <radialGradient id="isoFlameCool" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#EEF2FF" stop-opacity="0.72" />
+                    <stop offset="60%" stop-color="#4338CA" stop-opacity="0.48" />
+                    <stop offset="100%" stop-color="#312E81" stop-opacity="0" />
+                  </radialGradient>
+                  <radialGradient id="isoFlameOpen" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#FEF08A" />
+                    <stop offset="45%" stop-color="#EA580C" stop-opacity="0.88" />
+                    <stop offset="100%" stop-color="#991B1B" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+
+                <polygon points="75,90 485,60 545,105 135,135" fill="url(#isoTopLight)" stroke="#18181B" stroke-width="1.4" />
+                <polygon points="75,90 135,135 135,235 75,190" fill="#CBD5E1" stroke="#18181B" stroke-width="1.4" />
+                <polygon points="135,135 545,105 545,205 135,235" fill="#F1F5F9" fill-opacity="0.82" stroke="#3F3F46" stroke-width="1.4" />
+
+                <line x1="212" y1="80" x2="272" y2="125" stroke="#94A3B8" stroke-width="1" />
+                <line x1="365" y1="69" x2="425" y2="114" stroke="#94A3B8" stroke-width="1" />
+
+                <ellipse cx="105" cy="162" rx="22" ry="34" fill="#FFFFFF" stroke="#0B3B66" stroke-width="1.6" />
+                <g id="twinFanRotor" class="fan-active" style="transform-origin:105px 162px;">
+                  <line x1="105" y1="136" x2="105" y2="188" stroke="#18181B" stroke-width="3.6" stroke-linecap="round" />
+                  <line x1="87" y1="150" x2="123" y2="174" stroke="#18181B" stroke-width="3.6" stroke-linecap="round" />
+                  <line x1="87" y1="174" x2="123" y2="150" stroke="#18181B" stroke-width="3.6" stroke-linecap="round" />
+                </g>
+                <circle cx="105" cy="162" r="4" fill="#B43E18" />
+                <text x="105" y="256" text-anchor="middle" fill="#18181B" font-size="10" font-family="monospace">Ventilador Cabina</text>
+
+                <g id="twinFlowGroup" class="flow-active" stroke="#0B3B66" stroke-width="1.6" stroke-dasharray="7 5" fill="none">
+                  <line x1="145" y1="158" x2="225" y2="152" />
+                  <line x1="145" y1="176" x2="225" y2="170" />
+                  <line x1="305" y1="154" x2="365" y2="149" />
+                </g>
+
+                <rect x="242" y="64" width="44" height="22" rx="3" fill="#E6F0FA" stroke="#0B3B66" stroke-width="1.4" />
+                <circle cx="264" cy="75" r="5" fill="#0B3B66" />
+                <circle cx="247" cy="69" r="1.4" fill="#52525B" />
+                <circle cx="281" cy="69" r="1.4" fill="#52525B" />
+                <line x1="252" y1="44" x2="252" y2="64" stroke="#0B3B66" stroke-width="1" />
+                <circle cx="252" cy="64" r="2" fill="#0B3B66" />
+                <text x="205" y="40" text-anchor="middle" fill="#0B3B66" font-size="9.5" font-weight="bold" font-family="monospace">Sensor Óptico</text>
+
+                <polygon points="240,210 295,206 312,217 257,221" fill="#71717A" stroke="#18181B" stroke-width="1" />
+                <text x="275" y="256" text-anchor="middle" fill="#18181B" font-size="10" font-family="monospace">Zona de Muestra</text>
+
+                <g id="twinFlame0g" style="display:none;"><circle class="aura-pulse" style="transform-origin:270px 180px;" cx="270" cy="180" r="32" fill="url(#isoFlame0g)" /><circle cx="270" cy="180" r="12" fill="none" stroke="#0B3B66" stroke-width="2" /></g>
+                <g id="twinFlameCool" style="display:none;"><circle class="aura-pulse" style="transform-origin:270px 180px;" cx="270" cy="180" r="36" fill="url(#isoFlameCool)" /><circle cx="270" cy="180" r="16" fill="none" stroke="#4338CA" stroke-width="1.8" stroke-dasharray="4 3" /></g>
+                <g id="twinFlameOpen" style="display:none;"><ellipse class="aura-pulse" style="transform-origin:282px 175px;" cx="282" cy="175" rx="44" ry="26" fill="url(#isoFlameOpen)" /></g>
+
+                <rect x="332" y="106" width="38" height="18" rx="2" fill="#E6F6F0" stroke="#065F46" stroke-width="1.4" />
+                <line x1="351" y1="27" x2="351" y2="106" stroke="#065F46" stroke-width="1" stroke-dasharray="3 2" />
+                <circle cx="351" cy="106" r="2" fill="#065F46" />
+                <text x="351" y="21" text-anchor="middle" fill="#065F46" font-size="9.5" font-weight="bold" font-family="monospace">Sensor &lt;0.1um + CO</text>
+
+                <rect x="392" y="114" width="12" height="96" fill="#FEE2E2" stroke="#52525B" stroke-width="1" />
+                <rect id="twinDamperRect" class="damper-gate" x="393" y="115" width="10" height="94" rx="1" fill="#991B1B" style="transform: scaleY(0.14);" />
+                <text x="398" y="256" text-anchor="middle" fill="#18181B" font-size="10" font-family="monospace">Compuerta Cortafuego</text>
+
+                <rect x="444" y="102" width="18" height="20" rx="2" fill="#E6F0FA" stroke="#0B3B66" stroke-width="1.3" />
+                <g id="twinMistGroup" style="display:none;" fill="#0B3B66">
+                  <circle cx="430" cy="136" r="2.2" /><circle cx="445" cy="146" r="2.4" /><circle cx="422" cy="156" r="2.1" />
+                  <circle cx="456" cy="158" r="2.2" /><circle cx="438" cy="172" r="2.3" /><circle cx="462" cy="176" r="2.0" />
+                </g>
+                <line x1="453" y1="53" x2="453" y2="102" stroke="#0B3B66" stroke-width="1" stroke-dasharray="3 2" />
+                <circle cx="453" cy="102" r="2" fill="#0B3B66" />
+                <text x="488" y="48" text-anchor="middle" fill="#0B3B66" font-size="9.5" font-weight="bold" font-family="monospace">Boquilla Niebla PFE</text>
+
+                <rect x="478" y="132" width="60" height="58" rx="3" fill="#FFFFFF" stroke="#18181B" stroke-width="1.3" />
+                <text x="508" y="150" text-anchor="middle" fill="#3F3F46" font-size="8.5" font-family="monospace">BLOQUEO</text>
+                <text id="twinSvgFsmLabel" x="508" y="168" text-anchor="middle" fill="#065F46" font-size="9.5" font-weight="bold" font-family="monospace">NORMAL</text>
+              </svg>
+            </figure>
+
+            <div class="metric-ledger tabular">
+              <div class="metric-cell"><span class="metric-label">Firma Óptica</span><span id="twinCnnOut" class="metric-val">Nominal</span></div>
+              <div class="metric-cell"><span class="metric-label">Ventilación</span><span id="twinFanOut" class="metric-val">ACTIVA</span></div>
+              <div class="metric-cell"><span class="metric-label">Compuerta</span><span id="twinDamperOut" class="metric-val">Abierta</span></div>
+              <div class="metric-cell"><span class="metric-label">Extintor PFE</span><span id="twinPfeOut" class="metric-val">En espera</span></div>
+            </div>
+
+            <div class="section-block" style="margin-top:12px;">
+              <strong style="font-size:0.86rem;">Diagnóstico de Reglas Físicas:</strong>
+              <div id="twinTreeRuleBox" class="inline-readout" style="margin-top:4px;">--</div>
+            </div>
           </div>
-          <div class="stage-box">
-            <svg id="ductDigitalTwinSvg" viewBox="0 0 600 300" role="img" aria-label="Esquema isometrico animado de ducto de ventilacion con ventilador, sensores y compuerta cortafuego">
-              <defs>
-                <linearGradient id="isoTop" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0%" stop-color="#1e293b" stop-opacity="0.88" />
-                  <stop offset="100%" stop-color="#0f172a" stop-opacity="0.92" />
-                </linearGradient>
-                <radialGradient id="isoFlame0g" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#e0f2fe" />
-                  <stop offset="45%" stop-color="#38bdf8" stop-opacity="0.75" />
-                  <stop offset="100%" stop-color="#0284c7" stop-opacity="0" />
-                </radialGradient>
-                <radialGradient id="isoFlameCool" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#e0e7ff" stop-opacity="0.65" />
-                  <stop offset="60%" stop-color="#818cf8" stop-opacity="0.45" />
-                  <stop offset="100%" stop-color="#4338ca" stop-opacity="0" />
-                </radialGradient>
-                <radialGradient id="isoFlameOpen" cx="50%" cy="50%" r="50%">
-                  <stop offset="0%" stop-color="#fef08a" />
-                  <stop offset="50%" stop-color="#f97316" stop-opacity="0.85" />
-                  <stop offset="100%" stop-color="#dc2626" stop-opacity="0" />
-                </radialGradient>
-              </defs>
 
-              <!-- Duct Isometric Body (anatomy blueprint lines) -->
-              <polygon points="75,90 485,60 545,105 135,135" fill="url(#isoTop)" stroke="#475569" stroke-width="1.5" />
-              <polygon points="75,90 135,135 135,235 75,190" fill="#0b1220" stroke="#475569" stroke-width="1.5" />
-              <polygon points="135,135 545,105 545,205 135,235" fill="rgba(15,23,42,0.72)" stroke="#64748b" stroke-width="1.5" />
+          <div class="workbench-pane workbench-pane--right">
+            <div class="pane-head">
+              <h2 class="pane-title">Telemetría Ambiental y Escenarios de Alerta</h2>
+              <span class="badge badge-cool">Control por Estados</span>
+            </div>
 
-              <!-- HVAC Fan Assembly (Left Intake) -->
-              <ellipse cx="105" cy="162" rx="22" ry="34" fill="#0f172a" stroke="#38bdf8" stroke-width="1.6" />
-              <g id="twinFanRotor" class="fan-active" style="transform-origin:105px 162px;">
-                <line x1="105" y1="136" x2="105" y2="188" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
-                <line x1="87" y1="150" x2="123" y2="174" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
-                <line x1="87" y1="174" x2="123" y2="150" stroke="#94a3b8" stroke-width="4" stroke-linecap="round" />
-              </g>
-              <text x="105" y="254" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Ventilador HVAC</text>
+            <div class="form-grid">
+              <label class="field">Condición Visual en Cámara
+                <select id="twinPresetSelect">
+                  <option value="nominal">Nominal (sin llama)</option>
+                  <option value="spherical_0g">Llama Esférica Azul 0g</option>
+                  <option value="cool_flame_ntc">Llama Fría Invisible (500–800 K)</option>
+                  <option value="open_propagation">Propagación Abierta en Ducto</option>
+                </select>
+              </label>
+              <label class="field">Enlace de Telemetría Serial
+                <select id="twinCommSelect">
+                  <option value="true" selected>Enlace Activo (Vigilancia OK)</option>
+                  <option value="false">Pérdida de Señal (Bloqueo Seguro)</option>
+                </select>
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Gradiente Térmico dT/dt</span><span><strong id="dtVal">0.2</strong> &deg;C/s</span></span>
+                <input id="dtSlider" type="range" min="-2" max="40" step="0.5" value="0.2" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Monóxido CO</span><span><strong id="coVal">4</strong> ppm</span></span>
+                <input id="coSlider" type="range" min="0" max="400" step="2" value="4" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Partículas &lt;0.1 um</span><span><strong id="aerVal">2</strong> %</span></span>
+                <input id="aerSlider" type="range" min="0" max="90" step="1" value="2" />
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Velocidad Aire</span><span><strong id="ductFlowVal">20</strong> cm/s</span></span>
+                <input id="ductFlowSlider" type="range" min="0" max="60" step="1" value="20" />
+              </label>
+            </div>
 
-              <!-- Laminar Flow Streamlines -->
-              <g id="twinFlowGroup" class="flow-active" stroke="#38bdf8" stroke-width="1.6" stroke-dasharray="7 5" fill="none">
-                <line x1="145" y1="158" x2="225" y2="152" />
-                <line x1="145" y1="176" x2="225" y2="170" />
-                <line x1="305" y1="154" x2="365" y2="149" />
-              </g>
+            <div class="preset-row" style="margin-top:14px;">
+              <button id="stepFsmBtn" class="btn btn-primary" type="button">Evaluar Estado de Seguridad</button>
+              <button id="simCoolFlameBtn" class="btn" type="button">Simular Llama Fría (FLEX)</button>
+              <button id="simFireBtn" class="btn btn-danger" type="button">Simular Fuego + Contención</button>
+              <button id="simNominalBtn" class="btn" type="button">Restablecer Nominal</button>
+            </div>
 
-              <!-- Optical CNN Camera Mount -->
-              <rect x="242" y="64" width="44" height="22" rx="4" fill="#1e293b" stroke="#38bdf8" stroke-width="1.5" />
-              <circle cx="264" cy="75" r="5" fill="#38bdf8" />
-              <text x="264" y="54" text-anchor="middle" fill="#7dd3fc" font-size="10" font-family="monospace">Cámara CNN (.onnx)</text>
+            <div class="section-block" style="margin-top:14px;">
+              <h3 class="sub-heading">Clasificación Visual del Régimen de Llama</h3>
+              <div id="cnnProbsBox"></div>
+            </div>
 
-              <!-- Combustion Sample + Dynamic Flame Regimes -->
-              <polygon points="240,210 295,206 312,217 257,221" fill="#475569" />
-              <text x="275" y="254" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Muestra SIBAL/PMMA</text>
-
-              <g id="twinFlame0g" style="display:none;"><circle class="aura-pulse" style="transform-origin:270px 180px;" cx="270" cy="180" r="32" fill="url(#isoFlame0g)" /><circle cx="270" cy="180" r="12" fill="none" stroke="#7dd3fc" stroke-width="2" /></g>
-              <g id="twinFlameCool" style="display:none;"><circle class="aura-pulse" style="transform-origin:270px 180px;" cx="270" cy="180" r="36" fill="url(#isoFlameCool)" /><circle cx="270" cy="180" r="16" fill="none" stroke="#818cf8" stroke-width="1.8" stroke-dasharray="4 3" /></g>
-              <g id="twinFlameOpen" style="display:none;"><ellipse class="aura-pulse" style="transform-origin:282px 175px;" cx="282" cy="175" rx="44" ry="26" fill="url(#isoFlameOpen)" /></g>
-
-              <!-- Submicron & CO Sensor (Spinoff 9407 / SPICE) -->
-              <rect x="332" y="106" width="38" height="18" rx="3" fill="#0f172a" stroke="#10b981" stroke-width="1.4" />
-              <text x="351" y="45" text-anchor="middle" fill="#34d399" font-size="10" font-family="monospace">Sensor &lt;0.1um + CO</text>
-
-              <!-- Fire Damper Gate -->
-              <rect x="392" y="114" width="12" height="96" fill="rgba(239,68,68,0.12)" stroke="#475569" stroke-width="1" />
-              <rect id="twinDamperRect" class="damper-gate" x="393" y="115" width="10" height="94" rx="2" fill="#ef4444" style="transform: scaleY(0.14);" />
-              <text x="398" y="254" text-anchor="middle" fill="#94a3b8" font-size="10" font-family="monospace">Compuerta FSM</text>
-
-              <!-- PFE Fine Mist Nozzle -->
-              <rect x="444" y="102" width="18" height="20" rx="2" fill="#334155" stroke="#38bdf8" stroke-width="1.2" />
-              <g id="twinMistGroup" style="display:none;" fill="#7dd3fc">
-                <circle cx="430" cy="136" r="2.2" /><circle cx="445" cy="146" r="2.4" /><circle cx="422" cy="156" r="2.1" />
-                <circle cx="456" cy="158" r="2.2" /><circle cx="438" cy="172" r="2.3" /><circle cx="462" cy="176" r="2.0" />
-              </g>
-              <text x="453" y="45" text-anchor="middle" fill="#7dd3fc" font-size="10" font-family="monospace">Boquilla PFE Mist</text>
-
-              <!-- EPLAN Interlock Box -->
-              <rect x="478" y="132" width="60" height="58" rx="6" fill="#0b1220" stroke="#64748b" />
-              <text x="508" y="150" text-anchor="middle" fill="#94a3b8" font-size="8.5" font-family="monospace">INTERLOCK</text>
-              <text id="twinSvgFsmLabel" x="508" y="168" text-anchor="middle" fill="#10b981" font-size="9.5" font-weight="bold" font-family="monospace">NORMAL</text>
-            </svg>
-          </div>
-
-          <div class="kpi-strip tabular">
-            <div class="kpi-box"><span class="kpi-label">Clase CNN ONNX</span><span id="twinCnnOut" class="kpi-val mono">Nominal</span></div>
-            <div class="kpi-box"><span class="kpi-label">Ventilador HVAC</span><span id="twinFanOut" class="kpi-val mono">ON</span></div>
-            <div class="kpi-box"><span class="kpi-label">Compuerta</span><span id="twinDamperOut" class="kpi-val mono">Abierta</span></div>
-            <div class="kpi-box"><span class="kpi-label">Supresión PFE</span><span id="twinPfeOut" class="kpi-val mono">Standby</span></div>
-          </div>
-
-          <div class="panel" style="background:var(--bg-elevated); padding:10px 12px;">
-            <strong style="font-size:0.8rem;">Traza Explicable (`DecisionTreeClassifier`):</strong>
-            <div id="twinTreeRuleBox" class="mono" style="font-size:0.78rem; color:var(--accent-blue); margin-top:4px;">--</div>
+            <div class="section-block" style="margin-top:16px;">
+              <h3 class="sub-heading">Registro de Eventos del Ducto</h3>
+              <div id="twinEventLog" class="event-log" aria-live="polite">Sistema inicializado en condición NORMAL.</div>
+            </div>
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Inyección de Telemetría &amp; Escenarios de Falla</h2>
-            <span class="badge badge-cool mono">Histéresis Determinista</span>
-          </div>
-          <div class="form-grid">
-            <label class="field">Entrada Óptica Cámara
-              <select id="twinPresetSelect">
-                <option value="nominal">Nominal (sin llama)</option>
-                <option value="spherical_0g">Llama Esférica Azul 0g (ACME)</option>
-                <option value="cool_flame_ntc">Llama Fría NTC (FLEX 500–800 K)</option>
-                <option value="open_propagation">Propagación Abierta (Saffire)</option>
-              </select>
-            </label>
-            <label class="field">Enlace Serial UART (`comm_ok`)
-              <select id="twinCommSelect">
-                <option value="true" selected>Enlace OK (Watchdog activo)</option>
-                <option value="false">Pérdida UART (Interlock EPLAN)</option>
-              </select>
-            </label>
-            <label class="field">Gradiente Térmico dT/dt (&deg;C/s): <strong id="dtVal">0.2</strong>
-              <input id="dtSlider" type="range" min="-2" max="40" step="0.5" value="0.2" />
-            </label>
-            <label class="field">Monóxido de Carbono (CO ppm): <strong id="coVal">4</strong>
-              <input id="coSlider" type="range" min="0" max="400" step="2" value="4" />
-            </label>
-            <label class="field">Aerosol Submicrónico &lt;0.1um: <strong id="aerVal">2</strong>
-              <input id="aerSlider" type="range" min="0" max="90" step="1" value="2" />
-            </label>
-            <label class="field">Flujo en Ducto (cm/s): <strong id="ductFlowVal">20</strong>
-              <input id="ductFlowSlider" type="range" min="0" max="60" step="1" value="20" />
-            </label>
-          </div>
-
-          <div class="preset-row" style="margin-top:12px;">
-            <button id="stepFsmBtn" class="btn btn-primary" type="button">Ejecutar Tick FSM</button>
-            <button id="simCoolFlameBtn" class="btn" type="button">Simular Llama Fría (FLEX)</button>
-            <button id="simFireBtn" class="btn btn-danger" type="button">Simular Fuego + Contención</button>
-            <button id="simNominalBtn" class="btn" type="button">Restablecer Nominal</button>
-          </div>
-
-          <h3 class="panel-title" style="font-size:0.86rem; margin-bottom:6px;">Probabilidades CNN (`flame_cnn.onnx`)</h3>
-          <div id="cnnProbsBox"></div>
-
-          <h3 class="panel-title" style="font-size:0.86rem; margin:10px 0 6px;">Bitácora Auditable de Eventos</h3>
-          <div id="twinEventLog" class="event-log" aria-live="polite">Sistema inicializado en estado NORMAL.</div>
+        <div class="history-strip">
+          <article class="history-entry">
+            <img class="history-thumb" src="/assets/museum/flame_0g.jpg" alt="Comparación entre llama de vela en 1g y llama esférica azul en microgravedad" loading="lazy" />
+            <div class="history-copy">
+              <h3>Por qué una llama en 0g se vuelve una esfera azul</h3>
+              <p>
+                Sin gravedad, el aire caliente deja de subir en forma de penacho alargado. El oxígeno llega lentamente desde todas direcciones por difusión molecular, produciendo una llama esférica tenue casi invisible a simple vista que requiere sensores ópticos y de CO para su detección temprana.
+              </p>
+              <span class="history-meta">NASA Glenn Microgravity · Archivo 9902615</span>
+            </div>
+          </article>
+          <article class="history-entry">
+            <img class="history-thumb" src="/assets/museum/cir_rack_iss.jpg" alt="Combustion Integrated Rack utilizado en la Estación Espacial Internacional" loading="lazy" />
+            <div class="history-copy">
+              <h3>Descubrimiento de las llamas frías (FLEX / CIR)</h3>
+              <p>
+                Durante experimentos en el Combustion Integrated Rack de la Estación Espacial, gotas de combustible continuaron oxidándose sin hollín ni luz visible entre 500 y 800 K tras apagarse la flama caliente. Por eso el sistema vigila aerosoles submicrónicos junto con el sensor óptico.
+              </p>
+              <span class="history-meta">NASA Fluids &amp; Combustion Facility · GRC-2005-C-00892</span>
+            </div>
+          </article>
         </div>
       </div>
     </section>
 
-    <!-- MODULO 4: GOBERNANZA FMEA & SPINOFFS -->
+    <!-- MODULO 4: RIESGO FMEA Y TRANSFERENCIA TERRESTRE -->
     <section id="panel-governance" class="tabpanel" role="tabpanel" aria-labelledby="tab-governance">
-      <div class="grid-2">
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Matriz FMEA / AMFE (`NASA-STD-6001`)</h2>
-            <label style="display:flex; align-items:center; gap:6px; font-size:0.82rem; cursor:pointer;">
-              <input id="fmeaMitigatedToggle" type="checkbox" checked />
-              Aplicar Mitigación AERO-IGNIS SI
-            </label>
-          </div>
-          <div id="fmeaSummaryLine" class="mono" style="font-size:0.8rem; color:var(--accent-emerald); margin-bottom:6px;">--</div>
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr><th>ID</th><th>Subsistema &amp; Modo de Fallo</th><th>NPR Activo</th><th>Mitigación</th><th>PSI</th></tr>
-              </thead>
-              <tbody id="fmeaTableBody"></tbody>
-            </table>
-          </div>
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">De la prevención en órbita al beneficio directo en la Tierra</h2>
+          <p>
+            Cada barrera diseñada para salvar vidas en naves espaciales ha transformado la seguridad civil terrestre. Explora el análisis modal de fallos FMEA antes y después de aplicar las protecciones del sistema y calcula el impacto de cuatro tecnologías transferidas por la NASA a cuerpos de bomberos y centros industriales.
+          </p>
         </div>
 
-        <div class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Calculadora Dual-Use de Spinoffs Terrestres</h2>
-            <span class="badge badge-ok mono">Nodos 9582 · 9407 · 9918 · PFE</span>
-          </div>
-          <div class="form-grid">
-            <label class="field">Tecnología Spinoff
-              <select id="spinoffSelect">
-                <option value="9582">9582 · Tanques COPV Bomberos (-40% peso SCBA)</option>
-                <option value="9407">9407 · Detector Aerosoles &lt;0.1um (Shuttle/SPICE)</option>
-                <option value="9918">9918 · Textiles PBI Project FIRES (-30% peso)</option>
-                <option value="PFE">PFE · Extintor Niebla Fina 20–100um</option>
-              </select>
-            </label>
-            <label class="field">Unidades / Cuadrillas Desplegadas (<span id="unitsVal">100</span>)
-              <input id="unitsSlider" type="range" min="1" max="2000" step="10" value="100" />
-            </label>
+        <div class="workbench-split workbench-split--stage-first">
+          <div class="workbench-stage">
+            <div class="pane-head">
+              <h2 class="pane-title">Análisis de Modos de Fallo FMEA (NASA-STD-6001)</h2>
+              <label class="toggle-inline">
+                <input id="fmeaMitigatedToggle" type="checkbox" checked />
+                Aplicar Mitigación de Diseño
+              </label>
+            </div>
+            <div id="fmeaSummaryLine" class="inline-readout" style="color:var(--accent-emerald); font-weight:600; margin-bottom:8px;">--</div>
+            <div class="table-scroll" style="max-height:420px;">
+              <table>
+                <thead>
+                  <tr><th>Código</th><th>Subsistema y Modo de Fallo</th><th>Índice NPR</th><th>Barrera de Mitigación</th><th>Estudio NASA</th></tr>
+                </thead>
+                <tbody id="fmeaTableBody"></tbody>
+              </table>
+            </div>
           </div>
 
-          <div class="kpi-strip tabular" style="margin-top:12px;">
-            <div class="kpi-box"><span class="kpi-label">Ahorro de Peso Total</span><span id="spinWeightOut" class="kpi-val mono">--</span></div>
-            <div class="kpi-box"><span class="kpi-label">Reducción de Riesgo</span><span id="spinRiskOut" class="kpi-val mono">--</span></div>
-            <div class="kpi-box"><span class="kpi-label">PSI Vinculada</span><span id="spinPsiOut" class="kpi-val mono">--</span></div>
-            <div class="kpi-box"><span class="kpi-label">Origen NASA</span><span id="spinYearOut" class="kpi-val mono">Verificado</span></div>
-          </div>
-          <p id="spinoffDescBox" style="font-size:0.84rem; color:var(--text-secondary); margin-bottom:14px;"></p>
+          <div class="workbench-pane workbench-pane--right">
+            <div class="pane-head">
+              <h2 class="pane-title">Calculadora de Impacto en Tierra (Spinoffs NASA)</h2>
+              <span class="badge badge-ok">Registros 9582 · 9407 · 9918 · PFE</span>
+            </div>
+            <div class="form-grid">
+              <label class="field">Tecnología Transferida
+                <select id="spinoffSelect">
+                  <option value="9582">9582 · Tanques ligeros para bomberos (-40% peso)</option>
+                  <option value="9407">9407 · Detector de partículas ultrafinas &lt;0.1 um</option>
+                  <option value="9918">9918 · Trajes ignífugos PBI (-30% peso)</option>
+                  <option value="PFE">PFE · Extintor limpio de niebla fina</option>
+                </select>
+              </label>
+              <label class="field">
+                <span class="field-head"><span>Equipos o Cuadrillas</span><strong id="unitsVal">100</strong></span>
+                <input id="unitsSlider" type="range" min="1" max="2000" step="10" value="100" />
+              </label>
+            </div>
 
-          <div class="panel" style="background:var(--bg-elevated);">
-            <h3 class="panel-title" style="font-size:0.88rem; margin-bottom:6px;">Selector de Supresión ECLSS (PFE vs CO2 vs E-FIELD)</h3>
-            <label class="field">Escenario de Fuego
-              <select id="suppScenarioSelect">
-                <option value="auto_oxidizing">Fuego auto-oxidante / LiClO4 (tipo Mir)</option>
-                <option value="laminar_diffusion">Llama laminar en bahía eléctrica limpia</option>
-                <option value="habitable_general">Incendio de sólido en cabina habitable</option>
-              </select>
-            </label>
-            <p id="suppOutputBox" style="margin:8px 0 0; font-size:0.82rem; color:var(--accent-blue);"></p>
+            <div class="metric-ledger tabular">
+              <div class="metric-cell"><span class="metric-label">Peso Reducido</span><span id="spinWeightOut" class="metric-val">--</span></div>
+              <div class="metric-cell"><span class="metric-label">Reducción Riesgo</span><span id="spinRiskOut" class="metric-val">--</span></div>
+              <div class="metric-cell"><span class="metric-label">Campaña Base</span><span id="spinPsiOut" class="metric-val">--</span></div>
+              <div class="metric-cell"><span class="metric-label">Trazabilidad</span><span id="spinYearOut" class="metric-val">Verificada</span></div>
+            </div>
+            <p id="spinoffDescBox" class="prose-note"></p>
+
+            <div class="section-block">
+              <h3 class="sub-heading">Selección de Agente Extintor en Cabina</h3>
+              <label class="field">Tipo de Incidente
+                <select id="suppScenarioSelect">
+                  <option value="auto_oxidizing">Fuego auto-oxidante tipo generador Mir (LiClO4)</option>
+                  <option value="laminar_diffusion">Llama laminar en bahía eléctrica cerrada</option>
+                  <option value="habitable_general">Incendio de sólido en cabina habitable</option>
+                </select>
+              </label>
+              <p id="suppOutputBox" class="prose-note" style="color:var(--accent-cobalt); font-weight:600;"></p>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- MODULO 5: HARDWARE BLUEPRINT & 10 RECURSOS (M-10) -->
+    <!-- MODULO 5: PLANOS DE INGENIERIA Y ARCHIVO NASA -->
     <section id="panel-blueprint" class="tabpanel" role="tabpanel" aria-labelledby="tab-blueprint">
-      <div class="grid-3">
-        <article class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">CAD SolidWorks · Geometría Ducto &amp; Compuerta</h2>
-            <span class="badge badge-info mono">Mecánica 0g</span>
-          </div>
-          <div class="stage-box" style="margin-bottom:10px;">
-            <svg viewBox="0 0 280 120" role="img" aria-label="Esquema CAD SolidWorks de ducto de ventilacion">
-              <rect x="20" y="25" width="240" height="70" rx="6" fill="none" stroke="#38bdf8" stroke-width="1.6" />
-              <line x1="185" y1="25" x2="185" y2="95" stroke="#ef4444" stroke-width="3" />
-              <circle cx="115" cy="60" r="14" fill="none" stroke="#818cf8" stroke-dasharray="3 2" />
-              <text x="140" y="112" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Seccion 250x250mm · Brida Compuerta</text>
-            </svg>
-          </div>
-          <p style="font-size:0.82rem; color:var(--text-secondary); margin:0;">
-            Modelado paramétrico del ducto habitable basado en dimensiones `SAFFIRE/CIR`: sello hermético en brida de compuerta cortafuego, puerto superior para cámara óptica y tobera inclinada 30&deg; para dispersión PFE.
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Arquitectura física del prototipo y fuentes primarias de la NASA</h2>
+          <p>
+            Un sistema seguro en órbita no depende solo de cálculos numéricos; exige respaldo mecánico y eléctrico independiente. Aquí se detallan los planos conceptuales de ducto, el enclavamiento cableado de falla segura, la adquisición en microcontrolador y el índice directo de los diez documentos oficiales de la NASA utilizados.
           </p>
-        </article>
-
-        <article class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">EPLAN Electric · Hardwired Interlock 24 VDC</h2>
-            <span class="badge badge-danger mono">FALLA_SEGURA</span>
-          </div>
-          <div class="stage-box" style="margin-bottom:10px;">
-            <svg viewBox="0 0 280 120" role="img" aria-label="Diagrama unifilar EPLAN de enclavamiento cableado">
-              <line x1="25" y1="30" x2="255" y2="30" stroke="#f59e0b" stroke-width="1.5" />
-              <line x1="25" y1="90" x2="255" y2="90" stroke="#64748b" stroke-width="1.5" />
-              <rect x="75" y="42" width="46" height="32" fill="#0f172a" stroke="#ef4444" />
-              <text x="98" y="62" text-anchor="middle" fill="#ef4444" font-size="9" font-family="monospace">K1-WD</text>
-              <rect x="165" y="42" width="54" height="32" fill="#0f172a" stroke="#10b981" />
-              <text x="192" y="62" text-anchor="middle" fill="#10b981" font-size="9" font-family="monospace">SOL-PFE</text>
-              <text x="140" y="112" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Contacto NC abre HVAC ante corte UART</text>
-            </svg>
-          </div>
-          <p style="font-size:0.82rem; color:var(--text-secondary); margin:0;">
-            Relevador de seguridad cableado (`K1-Watchdog`) en serie con la bobina de potencia del ventilador y el solenoide de compuerta. Garantiza corte físico aunque falle el supervisor Python.
-          </p>
-        </article>
-
-        <article class="panel">
-          <div class="panel-head">
-            <h2 class="panel-title">Proteus VSM · Firmware ADC &amp; Trama CRC-8</h2>
-            <span class="badge badge-ok mono">UART Determinista</span>
-          </div>
-          <div class="stage-box" style="margin-bottom:10px;">
-            <svg viewBox="0 0 280 120" role="img" aria-label="Esquema Proteus de microcontrolador ADC y puente serial">
-              <rect x="95" y="24" width="90" height="66" rx="4" fill="#0f172a" stroke="#38bdf8" />
-              <text x="140" y="55" text-anchor="middle" fill="#e2e8f0" font-size="9.5" font-family="monospace">MCU ADC + WD</text>
-              <text x="140" y="70" text-anchor="middle" fill="#38bdf8" font-size="8.5" font-family="monospace">CRC-8 115200bps</text>
-              <line x1="30" y1="45" x2="95" y2="45" stroke="#10b981" stroke-width="1.4" />
-              <line x1="185" y1="60" x2="255" y2="60" stroke="#818cf8" stroke-width="1.4" />
-              <text x="140" y="112" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">Muestreo CO / &lt;0.1um / dT/dt cada 100ms</text>
-            </svg>
-          </div>
-          <p style="font-size:0.82rem; color:var(--text-secondary); margin:0;">
-            Firmware en C con filtrado digital de lecturas analógicas (`CO`, aerosol submicrónico y termopar), temporizador watchdog y verificación por suma de comprobación CRC-8 antes de actuar relés.
-          </p>
-        </article>
-      </div>
-
-      <div class="panel" style="margin-top:16px;">
-        <div class="panel-head">
-          <h2 class="panel-title">Los 10 Recursos Oficiales NASA Integrados (`CC0-1.0` / Alcance C-01)</h2>
-          <span class="badge badge-info mono">Trazabilidad Directa</span>
         </div>
-        <div id="officialResourcesGrid" class="grid-3"></div>
+
+        <div class="blueprint-triptych">
+          <article class="blueprint-col">
+            <div class="pane-head">
+              <h2 class="pane-title">CAD SolidWorks · Ducto y Compuerta</h2>
+              <span class="badge badge-info">Mecánica 0g</span>
+            </div>
+            <figure class="figure-frame">
+              <svg viewBox="0 0 280 120" role="img" aria-label="Esquema CAD SolidWorks de ducto de ventilación">
+                <rect x="20" y="25" width="240" height="70" rx="4" fill="#FFFFFF" stroke="#0B3B66" stroke-width="1.6" />
+                <line x1="185" y1="25" x2="185" y2="95" stroke="#991B1B" stroke-width="3" />
+                <circle cx="115" cy="60" r="14" fill="none" stroke="#B43E18" stroke-dasharray="3 2" stroke-width="1.5" />
+                <text x="140" y="112" text-anchor="middle" fill="#3F3F46" font-size="9" font-family="monospace">Sección 250x250mm · Brida Compuerta</text>
+              </svg>
+            </figure>
+            <p class="prose-note">
+              Diseño paramétrico basado en dimensiones de los módulos experimentales de la Estación Espacial: sello hermético en la compuerta cortafuego, mirilla superior para cámara óptica y boquilla inclinada a 30 grados para dispersar niebla fina PFE.
+            </p>
+          </article>
+
+          <article class="blueprint-col">
+            <div class="pane-head">
+              <h2 class="pane-title">Esquema EPLAN · Enclavamiento 24 VDC</h2>
+              <span class="badge badge-danger">FALLA SEGURA</span>
+            </div>
+            <figure class="figure-frame">
+              <svg viewBox="0 0 280 120" role="img" aria-label="Diagrama unifilar EPLAN de enclavamiento cableado">
+                <line x1="25" y1="30" x2="255" y2="30" stroke="#78350F" stroke-width="1.6" />
+                <line x1="25" y1="90" x2="255" y2="90" stroke="#52525B" stroke-width="1.6" />
+                <rect x="75" y="42" width="46" height="32" fill="#FEE2E2" stroke="#991B1B" stroke-width="1.4" />
+                <text x="98" y="62" text-anchor="middle" fill="#991B1B" font-size="9" font-weight="bold" font-family="monospace">K1-WD</text>
+                <rect x="165" y="42" width="54" height="32" fill="#E6F6F0" stroke="#065F46" stroke-width="1.4" />
+                <text x="192" y="62" text-anchor="middle" fill="#065F46" font-size="9" font-weight="bold" font-family="monospace">SOL-PFE</text>
+                <text x="140" y="112" text-anchor="middle" fill="#3F3F46" font-size="9" font-family="monospace">Contacto NC abre ventilación ante pérdida de enlace</text>
+              </svg>
+            </figure>
+            <p class="prose-note">
+              Relevador de seguridad cableado en serie con el ventilador y el solenoide de la compuerta. Garantiza el aislamiento físico del ducto ante cualquier interrupción eléctrica o pérdida de comunicación del módulo controlador.
+            </p>
+          </article>
+
+          <article class="blueprint-col">
+            <div class="pane-head">
+              <h2 class="pane-title">Proteus · Adquisición y Verificación Serial</h2>
+              <span class="badge badge-ok">Muestreo 100 ms</span>
+            </div>
+            <figure class="figure-frame">
+              <svg viewBox="0 0 280 120" role="img" aria-label="Esquema Proteus de microcontrolador de sensores">
+                <rect x="95" y="24" width="90" height="66" rx="3" fill="#FFFFFF" stroke="#0B3B66" stroke-width="1.5" />
+                <text x="140" y="55" text-anchor="middle" fill="#18181B" font-size="9.5" font-weight="bold" font-family="monospace">MCU ADC + WD</text>
+                <text x="140" y="70" text-anchor="middle" fill="#0B3B66" font-size="8.5" font-family="monospace">CRC-8 115200bps</text>
+                <line x1="30" y1="45" x2="95" y2="45" stroke="#065F46" stroke-width="1.5" />
+                <line x1="185" y1="60" x2="255" y2="60" stroke="#B43E18" stroke-width="1.5" />
+                <text x="140" y="112" text-anchor="middle" fill="#3F3F46" font-size="9" font-family="monospace">Lectura CO / &lt;0.1um / dT/dt cada 100 ms</text>
+              </svg>
+            </figure>
+            <p class="prose-note">
+              Programa embebido con filtrado digital de termopares, sensor de monóxido de carbono y detector de partículas ultrafinas. Incluye temporizador de vigilancia y suma de comprobación CRC-8 antes de accionar los actuadores.
+            </p>
+          </article>
+        </div>
+
+        <div class="workbench-stage" style="border-top: 1px solid var(--border-hairline);">
+          <div class="pane-head">
+            <h2 class="pane-title">Archivo de Referencias Oficiales de la NASA (10 Fuentes Primarias)</h2>
+            <span class="badge badge-info">Acceso Público Verificado</span>
+          </div>
+          <div id="officialResourcesGrid" class="resource-index"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULO 6: MINI MUSEO VIRTUAL & GLOSARIO ACCESIBLE -->
+    <section id="panel-museum" class="tabpanel" role="tabpanel" aria-labelledby="tab-museum">
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Mini museo virtual y glosario de términos científicos</h2>
+          <p>
+            Esta sala reúne fotografías reales del archivo histórico de la NASA para ilustrar cómo evolucionó nuestra comprensión del fuego en el espacio desde 1967 hasta la Estación Espacial Internacional. Debajo encontrarás un glosario con explicaciones sencillas para cualquier estudiante o visitante.
+          </p>
+        </div>
+
+        <div id="museumGallery" class="museum-gallery"></div>
+
+        <div class="glossary-band">
+          <div class="glossary-toolbar">
+            <div>
+              <h2 class="pane-title">Glosario Científico y de Seguridad Espacial</h2>
+              <p class="prose-note" style="margin-top:4px;">
+                Busca cualquier término técnico empleado en las gráficas para leer su significado en lenguaje claro.
+              </p>
+            </div>
+            <label class="field glossary-search">Filtrar término del glosario
+              <input id="glossarySearchInput" type="search" maxlength="80" placeholder="Ej. llama fría, Damköhler, PFE..." />
+            </label>
+          </div>
+          <div id="glossaryGrid" class="glossary-ledger"></div>
+        </div>
       </div>
     </section>
   </div>
