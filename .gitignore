@@ -37,4 +37,5 @@ artifacts/raw_downloads/
 Thumbs.db
 .vscode/settings.json
 graphify-out/
+.engram/
 

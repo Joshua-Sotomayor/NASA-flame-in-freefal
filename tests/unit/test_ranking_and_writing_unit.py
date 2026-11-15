@@ -176,3 +176,41 @@ def test_topsis_ahp_profiles_sensitivity_and_consistency() -> None:
     assert r_spi[0].psi_id == "PSI-129"
     assert r_spi[1].psi_id == "PSI-110"
 
+
+def test_writing_craft_injects_topsis_and_feature_importance_deterministically() -> None:
+    repo = PsiRepository(PSI_JSON)
+    investigations = repo.all_investigations()
+    ranker = TopsisMultiCriteriaRanker()
+    ranked = ranker.rank(
+        investigations,
+        weights={"habitat": 0.5, "modeling": 0.2, "sensors": 0.2, "spinoff": 0.1},
+    )
+    nlp = ExtractiveNlpEngine.from_artifacts(ROOT_DIR / "artifacts" / "models")
+    fi = {"o2_pct": 0.48, "pressure_psi": 0.31, "flow_cm_s": 0.21}
+
+    for persona in ("Investigador", "Estudiante", "Gestor Industrial"):
+        report = nlp.summarize_for_persona(
+            investigations=investigations,
+            ranked=ranked,
+            query="lunar 34% O2 quenching",
+            persona=persona,
+            feature_importance=fi,
+        )
+        full_text = " ".join(report.bullets)
+        assert "TOPSIS" in full_text
+        assert "O2" in full_text or "o2" in full_text.lower()
+        assert "48" in full_text
+        if persona == "Investigador":
+            assert any(v in full_text.lower() for v in ("indica", "sugiere", "identifica"))
+        if persona == "Estudiante":
+            for bullet in report.bullets:
+                for sent in re.split(r"[.!?]+", bullet):
+                    words = [w for w in sent.strip().split() if w]
+                    assert len(words) < 25, f"Oracion >24 palabras para Estudiante: {sent}"
+
+    with pytest.raises(ValueError, match="no vacios"):
+        nlp.summarize_for_persona(investigations=investigations, ranked=[], query="lunar", persona="Investigador")
+    with pytest.raises(ValueError, match="Audiencia"):
+        nlp.summarize_for_persona(investigations=investigations, ranked=ranked, query="lunar", persona="Robot")
+
+
