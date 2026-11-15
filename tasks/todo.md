@@ -153,7 +153,7 @@
 | **`I-06`** | `ind` | `feat/ind-i06-suppression-tree` | `docs/industrial/protocolo_supresion_eclss.md`, `backend/governance.py` (reglas supresión) |
 | **`I-07`** | `ind` | `feat/ind-i07-dual-use-spinoffs` | `docs/industrial/impacto_dual_use.md`, `data/cases_and_spinoffs.json` (sección `spinoffs`) |
 | **`I-08`** | `ind` | `feat/ind-i08-writing-craft-templates` | `docs/industrial/plantillas_writing_craft.md`, `backend/ranking_nlp.py` (solo plantillas), `tests/unit/test_ranking_and_writing_unit.py` |
-| **`I-09`** | `ind` | `feat/ind-i09-qa-units-scope` | `docs/industrial/qa_unidades_alcance.md` |
+| **`I-09`** | `ind` | `feat/ind-i09-qa-units-scope` | `docs/industrial/qa_unidades_alcance.md`, `tests/unit/test_qa_units_scope_unit.py` *(Completada · 4 TDD)* |
 | **`I-10`** | `ind` | `feat/ind-i10-readme-ejecutivo` | `README.md` |
 | **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md` |
 | **`I-12`** | `ind` | `feat/ind-i12-video-script` | `docs/pitch/guion_video_demo.md` |
