@@ -904,11 +904,11 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.6.1): Slice 5 Completado — Orquestador Ducto (CNN ONNX + Árbol Físico + FSM Determinista)</strong><br />
-          <span><strong>Logrado (9/30 tareas + F-04 verificado):</strong> <strong><code>M-04</code></strong> y <strong><code>M-05</code></strong> (<code>backend/duct_twin.py</code> con <code>flame_cnn.onnx</code>, traza de decisión en <code>sensor_tree.joblib</code>, FSM con histéresis, latch Llama Fría NTC e interlock <code>FALLA_SEGURA</code>, <code>5/5 pytest PASS</code>).<br />
-          <strong>Siguiente en curso:</strong> <code>Task 6 &amp; 7 (0.7.0)</code> — Ranking TOPSIS, NLP (<code>writing-craft</code>), Gobernanza FMEA/Spinoffs y ensamblaje FastAPI POO (6 endpoints).</span>
+          <strong>Estado de la Iteración Actual (0.7.0): Slice 6 Completado — API FastAPI POO (6 Contratos REST), TOPSIS, writing-craft &amp; FMEA</strong><br />
+          <span><strong>Logrado (10/30 tareas + Gate 2 + R-03/F-02/F-05/F-06/U-02 verificados):</strong> <strong><code>J-02</code></strong> (<code>backend/ranking_nlp.py</code> TOPSIS+PCA+KMeans+TextRank anti-slop, <code>backend/governance.py</code> FMEA/Spinoffs, y <code>backend/main.py</code> ensamblando los 6 endpoints con Pydantic <code>extra="forbid"</code>, <code>5/5 pytest API PASS</code>).<br />
+          <strong>Siguiente en curso:</strong> <code>Task 8–10 (0.8.0 / 0.9.1)</code> — Dashboard Web WAI-ARIA + Gemelo Digital Isométrico SVG (<code>M-06</code>) + Gráfica Contorno (<code>M-09</code>) + Hardware Blueprint (<code>M-10</code>) + Auditoría <code>/ponytail-audit</code> (<code>M-11</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.6.1 · 9/30 (30%)</span>
+        <span class="mono badge badge-joint">0.7.0 · 10/30 (33%)</span>
       </div>
 
       <div class="toolbar">
@@ -1197,7 +1197,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
 
         // Tareas Conjuntas (6)
         { id: "J-01", role: "joint", phase: "V-H0", title: "Revisión de Gate 1: Aprobar SPEC.md y congelar alcance MVP", objective: "Alinear arquitectura POO, pipeline ML/DL propio, seguridad OWASP y flujo Git antes de codificar.", scope: "Sincronización de arquitectura", deliverable: "SPEC.md + tasks/todo.md listos para aprobación", done: true },
-        { id: "J-02", role: "joint", phase: "S-AM", title: "Revisión de Gate 2: Validar consistencia Física + FMEA", objective: "Probar que los escenarios Apollo/Lunar disparan las alarmas correctas en FSM y FMEA.", scope: "Integración de dominio", deliverable: "Pruebas cruzadas OK", done: false },
+        { id: "J-02", role: "joint", phase: "S-AM", title: "Revisión de Gate 2: Validar consistencia Física + FMEA", objective: "Probar que los escenarios Apollo/Lunar disparan las alarmas correctas en FSM y FMEA.", scope: "Integración de dominio", deliverable: "Pruebas cruzadas OK", done: true },
         { id: "J-03", role: "joint", phase: "S-PM", title: "Revisión de Gate 3: Demo end-to-end de los 4 módulos en web", objective: "Recorrer el flujo completo en navegador como lo hará un juez en 3 minutos.", scope: "Prueba de usabilidad real", deliverable: "MVP MUST-HAVE funcional", done: false },
         { id: "J-04", role: "joint", phase: "D-AM", title: "Revisión de Gate 4: Code Freeze y verificación en incógnito", objective: "Congelar código, validar URL desplegada y comprobar cero errores de consola.", scope: "Estabilidad pre-entrega", deliverable: "Release v1.0.0", done: false },
         { id: "J-05", role: "joint", phase: "D-PM", title: "Grabar y editar video demo en 1080p con subtítulos", objective: "Mostrar app real operando en vivo (simulaciones + ranking + gemelo digital).", scope: "Producción audiovisual", deliverable: "Video final exportado", done: false },
@@ -1285,7 +1285,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { name: "faceless-channel + narrator + subtitles", cat: "Media / Pitch", when: "Domingo PM", role: "Apoyo opcional para locución cronometrada y subtítulos limpios en el video de 30s." }
       ];
 
-      const DEFAULT_FURPS_DONE = { "C-01": true, "C-02": true, "S-01": true, "F-01": true, "F-03": true, "F-04": true, "F-07": true, "R-01": true, "R-02": true };
+      const DEFAULT_FURPS_DONE = { "C-01": true, "C-02": true, "S-01": true, "F-01": true, "F-02": true, "F-03": true, "F-04": true, "F-05": true, "F-06": true, "F-07": true, "U-02": true, "R-01": true, "R-02": true, "R-03": true };
 
       // --- 2. STATE MANAGEMENT ---
       function loadState() {
@@ -1749,7 +1749,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         assert(m07 && m07.title.includes(".onnx") && m07.objective.includes("Colab") && m07.objective.includes(".joblib"), "M-07 must reference Colab and local ML/DL weights");
         const i08 = DEFAULT_TASKS.find(t => t.id === "I-08");
         assert(i08 && i08.title.includes("Feature Importance") && i08.title.includes("TOPSIS") && i08.objective.includes("writing-craft"), "I-08 must reference deterministic rules and writing-craft");
-        assert(DEFAULT_TASKS.filter(t => t.done).length === 9, "Expected 9 baseline + Slice 5 tasks marked done by default");
+        assert(DEFAULT_TASKS.filter(t => t.done).length === 10, "Expected 10 baseline + Slice 6 tasks marked done by default");
 
         // Verify FSM visualizer transitions cleanly
         setFsmState("CONTENCION");
