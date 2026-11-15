@@ -110,6 +110,8 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert '<select id="psiQueryInput">' in r_root.text
     assert 'id="fmeaCompareBanner"' in r_root.text
     assert 'id="suppAgentOut"' in r_root.text
+    assert "table-scroll--fmea" in r_root.text
+    assert 'class="table-scroll" style="max-height:420px;"' not in r_root.text
     assert 'id="tab-museum" class="tab-btn" role="tab" aria-selected="true"' in r_root.text
     assert '<section id="panel-museum" class="tabpanel is-active"' in r_root.text
     assert r_root.text.index('id="tab-museum"') < r_root.text.index('id="tab-explorer"')
