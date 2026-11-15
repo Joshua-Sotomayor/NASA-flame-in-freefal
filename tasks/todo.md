@@ -138,6 +138,19 @@
 
 ---
 
+## Subclase de Tareas Externas (Fuera del Agente — CAD / ECAD / Cierre Humano)
+
+> Referencia técnica detallada paso a paso, cotas, requisitos, alcance y recursos gratuitos: [`docs/industrial/especificacion_externas_cad_ecad.md`](file:///C:/Users/hp/OneDrive/Documentos/NASA/docs/industrial/especificacion_externas_cad_ecad.md).
+
+- [ ] **`EXT-01` (`ind` · `COULD HAVE` — SolidWorks CAD 3D):** Modelado paramétrico del ducto `250 × 250 × 600 mm` en `Al 6061-T6`, ventilador `24 VDC` + *honeycomb*, portamuestras `PMMA/SIBAL`, mirilla de cuarzo `Ø 60 mm` + 3 puertos sensores (`+120 mm`), compuerta *spring-return* con fin de carrera `SQ-DMP-CLOSED` y boquilla atomizadora `PFE` a `30°`. Entregables: `.SLDASM`/`.STEP` + 3 capturas (`1920×1080`: corte de sección, vista explosionada con BOM, plano 2D).
+- [ ] **`EXT-02` (`meca` · `SHOULD HAVE` — EPLAN Electric P8):** Esquema eléctrico `IEC 60617` (`24 VDC`) en 4 hojas con bus `+24V_ESS`, protecciones `QF1 (4 A)` / `F1 (1 A)`, relé Watchdog `K1-WD` ligado a `WD_HEARTBEAT`, paro `S1-EMO`, corte de ventilador `KM-FAN`, retención `SOL-DMP` y enclavamiento en serie `SQ-DMP-CLOSED` $\rightarrow$ `SOL-PFE`. Entregables: `.zw1`, PDF vectorial y capturas para pestaña `Blueprint`.
+- [ ] **`EXT-03` (`meca` · `COULD HAVE` — Proteus ISIS):** Esquemático de acondicionamiento para los 4 sensores del Árbol de Decisión ($\Delta T/\Delta t$, $\text{CO}$, `< 0.1 µm`, flujo `0–60 cm/s`) hacia MCU (`100 ms` / `10 Hz`), optoacopladores `PC817`, pulso `WD_HEARTBEAT` y trama UART `115200 bps` con `CRC-8` verificada en `VIRTUAL TERMINAL` + `OSCILLOSCOPE` (sin enlace `COMPIM` en vivo `F-09 WON'T HAVE`).
+- [ ] **`J-04` (`joint` · `MUST HAVE` — Externo Cloud):** Activación del despliegue en Render Free + monitor UptimeRobot cada `5 min` + validación en incógnito (`C-03`).
+- [ ] **`J-05` (`joint` · `MUST HAVE` — Externo Media):** Grabación y edición de video demo `1080p` con subtítulos (`30s` / `2min`).
+- [ ] **`J-06` (`joint` · `MUST HAVE` — Externo Plataforma):** Carga de entregables y confirmación oficial en NASA Space Apps (`2h` antes del cierre).
+
+---
+
 ## Mapa de Propiedad de Módulos, Bloqueos y Ramas (Pendientes Multi-Perfil)
 
 > Regla: antes de trabajar, todo nuevo chat pregunta el perfil activo (`meca` / `ind` / `joint`) y respeta los archivos bloqueados por cada rama. Los archivos del tablero ([planning/index.html](planning/index.html), [tasks/todo.md](tasks/todo.md)) solo se editan al cerrar una tarea tras `git pull --rebase origin dev`.
@@ -155,8 +168,11 @@
 | **`I-08`** | `ind` | `feat/ind-i08-writing-craft-templates` | `docs/industrial/plantillas_writing_craft.md`, `backend/ranking_nlp.py` (plantillas), `tests/unit/test_ranking_and_writing_unit.py` | **Listo [x]** |
 | **`I-09`** | `ind` | `feat/ind-i09-qa-units-scope` | `docs/industrial/qa_unidades_alcance.md`, `tests/unit/test_qa_units_scope_unit.py` | **Listo [x]** |
 | **`I-10`** | `ind` | `feat/ind-i10-readme-ejecutivo` | `README.md`, `tests/unit/test_readme_and_resources_unit.py` | **Listo [x]** |
-| **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md` | Pendiente |
+| **`I-11`** | `ind` | `feat/ind-i11-pitch-deck` | `docs/pitch/deck_7_slides.md`, `tests/unit/test_pitch_deck_unit.py` | **Listo [x]** |
 | **`I-12`** | `ind` | `feat/ind-i12-video-script` | `docs/pitch/guion_video_demo.md` | Pendiente |
-| **`J-04`** | `joint` | `release/v1.0.0` | `planning/index.html`, `tasks/todo.md`, tag `v1.0.0` (después de merge `dev -> main`) | Pendiente |
-| **`J-05`** | `joint` | `docs/joint-j05-video-checklist` | `docs/pitch/checklist_grabacion.md` | Pendiente |
-| **`J-06`** | `joint` | `docs/joint-j06-submission` | `docs/pitch/submission_space_apps.md` | Pendiente |
+| **`EXT-01`** | `ind` (`externas`) | `feat/ind-ext01-solidworks-cad` | `docs/industrial/especificacion_externas_cad_ecad.md` + archivos externos `.SLDASM`/`.STEP`/renders para pestaña `Blueprint` | Pendiente (`COULD`) |
+| **`EXT-02`** | `meca` (`externas`) | `feat/meca-ext02-eplan-interlock` | `docs/industrial/especificacion_externas_cad_ecad.md` + archivos externos `.zw1`/PDF/capturas para pestaña `Blueprint` | Pendiente (`SHOULD`) |
+| **`EXT-03`** | `meca` (`externas`) | `feat/meca-ext03-proteus-sim` | `docs/industrial/especificacion_externas_cad_ecad.md` + archivos externos `.pdsprj`/`.c`/`.hex`/capturas para pestaña `Blueprint` | Pendiente (`COULD`) |
+| **`J-04`** | `joint` (`externas`) | `release/v1.0.0` | `planning/index.html`, `tasks/todo.md`, tag `v1.0.0` (después de merge `dev -> main`) | Pendiente (`MUST`) |
+| **`J-05`** | `joint` (`externas`) | `docs/joint-j05-video-checklist` | `docs/pitch/checklist_grabacion.md` | Pendiente (`MUST`) |
+| **`J-06`** | `joint` (`externas`) | `docs/joint-j06-submission` | `docs/pitch/submission_space_apps.md` | Pendiente (`MUST`) |

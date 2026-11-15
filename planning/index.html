@@ -472,6 +472,8 @@
     .badge-meca { background: var(--accent-amber-dim); color: var(--accent-soot-amber); }
     .badge-ind { background: var(--accent-emerald-dim); color: var(--accent-industrial-emerald); }
     .badge-joint { background: var(--accent-cyan-dim); color: var(--accent-flame-blue); }
+    .badge-ext { background: rgba(236, 72, 153, 0.16); color: #F472B6; }
+    [data-theme="light"] .badge-ext { background: rgba(219, 39, 119, 0.12); color: #BE185D; }
     .badge-must { background: var(--accent-red-dim); color: var(--accent-pyro-red); }
     .badge-should { background: var(--accent-amber-dim); color: var(--accent-soot-amber); }
     .badge-could { background: var(--accent-cyan-dim); color: var(--accent-flame-blue); }
@@ -871,8 +873,18 @@
 
         <div class="progress-row">
           <div class="progress-head">
+            <span><span class="badge badge-ext">Subclase: Externas (CAD / ECAD / Cierre)</span></span>
+            <span id="kpiExtText" class="mono tabular">0 / 6 (0%)</span>
+          </div>
+          <div class="progress-track">
+            <div id="kpiExtBar" class="progress-fill" style="background: #EC4899; --ratio: 0;"></div>
+          </div>
+        </div>
+
+        <div class="progress-row">
+          <div class="progress-head">
             <span><span class="badge badge-must">Cumplimiento MUST HAVE (FURPS+)</span></span>
-            <span id="kpiMustText" class="mono tabular">0 / 13 (0%)</span>
+            <span id="kpiMustText" class="mono tabular">0 / 14 (0%)</span>
           </div>
           <div class="progress-track">
             <div id="kpiMustBar" class="progress-fill" style="background: var(--accent-pyro-red); --ratio: 0;"></div>
@@ -904,19 +916,20 @@
     <section id="panel-tasks" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-tasks">
       <div class="status-banner" id="iterationBanner">
         <div>
-          <strong>Estado de la Iteración Actual (0.9.12): Preparación de Despliegue Todo-en-Uno Render Free + UptimeRobot (`M-12`) Completada</strong><br />
-          <span><strong>Logrado (26/31 tareas · Mecatrónica 13/13 · Gestión Industrial 10/12 · Gate 3 E2E):</strong> <strong><code>M-01..M-13, I-01..I-10, J-01..J-03</code></strong> — <code>M-12</code> listo con <code>render.yaml</code>, <code>Dockerfile</code>, <code>.dockerignore</code>, <code>netlify.toml</code>, <code>requirements/base.txt</code> ligero (&lt;512 MB RAM sin <code>torch</code>), rutas <code>HEAD/GET</code> para UptimeRobot, <code>X-Forwarded-For</code> en <code>RateLimiter</code> y <strong><code>82/82 pytest PASS</code></strong>.<br />
-          <strong>Siguiente en curso:</strong> Gestión Industrial (<code>I-11 Deck 7 slides</code>, <code>I-12 Guion video</code>) · Cierre (<code>J-04 Activar Render + UptimeRobot e incógnito</code>, <code>J-05 Video</code>, <code>J-06 Envío</code>).</span>
+          <strong>Estado de la Iteración Actual (0.9.14): Integración de Deck 7 Slides (`I-11`), Despliegue Render (`M-12`) y Subclase Externa (`EXT-01..03`)</strong><br />
+          <span><strong>Logrado (27/34 tareas · Mecatrónica 13/15 · Gestión Industrial 11/13 · Externas 0/6 · Gate 3 E2E):</strong> <strong><code>M-01..M-13, I-01..I-11, J-01..J-03</code></strong> — Plataforma web, modelos ML/DL propios, despliegue Render Free/UptimeRobot (<code>M-12</code>) y deck 7 slides (<code>I-11</code>).<br />
+          <strong>Pendientes en curso:</strong> Interna (<code>I-12 Guion video 30s/2min</code>) · <strong>Subclase Externas:</strong> Perfil B <code>ind</code> (<code>EXT-01 SolidWorks</code>), Perfil A <code>meca</code> (<code>EXT-02 EPLAN</code>, <code>EXT-03 Proteus</code>) y Conjuntas (<code>J-04 Render/Incógnito</code>, <code>J-05 Video</code>, <code>J-06 Envío</code>).</span>
         </div>
-        <span class="mono badge badge-joint">0.9.12 · 26/31 (84%)</span>
+        <span class="mono badge badge-joint">0.9.14 · 27/34 (79%)</span>
       </div>
 
       <div class="toolbar">
-        <div class="filter-group" aria-label="Filtrar por rol">
+        <div class="filter-group" aria-label="Filtrar por rol o subclase">
           <button class="pill-btn" type="button" data-role-filter="ALL" aria-pressed="true">Todos los Roles</button>
           <button class="pill-btn" type="button" data-role-filter="meca" aria-pressed="false">Mecatrónica & Control</button>
           <button class="pill-btn" type="button" data-role-filter="ind" aria-pressed="false">Gestión Industrial</button>
           <button class="pill-btn" type="button" data-role-filter="joint" aria-pressed="false">Conjuntas / Pitch</button>
+          <button class="pill-btn" type="button" data-role-filter="externas" aria-pressed="false">Subclase: Externas (6)</button>
         </div>
         <div class="filter-group">
           <select id="phaseFilter" class="form-field" style="width:auto;" aria-label="Filtrar por fase">
@@ -1163,7 +1176,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
     (function () {
       "use strict";
 
-      const STORAGE_KEY = "nasa_flame_freefall_plan_v3";
+      const STORAGE_KEY = "nasa_flame_freefall_plan_v4";
 
       // --- 1. VERIFIED DATA SOURCES ---
       const DEFAULT_TASKS = [
@@ -1193,16 +1206,21 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         { id: "I-08", role: "ind", phase: "S-PM", title: "Definir reglas de interpretación determinista y plantillas dinámicas basadas en Feature Importance y salida TOPSIS", objective: "Aplicar skill writing-craft (academic/plain) por audiencia (Investigador, Estudiante, Gestor) con citas PSI válidas y cero AI slop.", scope: "writing-craft + reglas explicables", deliverable: "3 plantillas deterministas auditadas", modules: "docs/industrial/plantillas_writing_craft.md, backend/ranking_nlp.py (solo plantillas), tests/unit/test_ranking_and_writing_unit.py", branch: "feat/ind-i08-writing-craft-templates", done: true },
         { id: "I-09", role: "ind", phase: "S-PM", title: "Auditar consistencia de unidades y alcance (Excluir cohetes)", objective: "Verificar psi/kPa/cm/s y asegurar cero contenido fuera de alcance.", scope: "QA de dominio científico", deliverable: "Reporte QA limpio", modules: "docs/industrial/qa_unidades_alcance.md", branch: "feat/ind-i09-qa-units-scope", done: true },
         { id: "I-10", role: "ind", phase: "D-AM", title: "Redactar README.md ejecutivo y citas a los 10 recursos NASA", objective: "Documentar impacto, licencia CC0/MIT y referencias exactas para jueces.", scope: "Documentación de entrega", deliverable: "README.md completo", modules: "README.md", branch: "feat/ind-i10-readme-ejecutivo", done: true },
-        { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", modules: "docs/pitch/deck_7_slides.md", branch: "feat/ind-i11-pitch-deck", done: false },
+        { id: "I-11", role: "ind", phase: "D-AM", title: "Diseñar deck visual de 7 diapositivas (Storytelling)", objective: "Estructurar narrativa Problema -> Ciencia PSI -> Demo SI -> Impacto Dual.", scope: "Presentación ejecutiva", deliverable: "Deck de 7 slides", modules: "docs/pitch/deck_7_slides.md", branch: "feat/ind-i11-pitch-deck", done: true },
         { id: "I-12", role: "ind", phase: "D-PM", title: "Redactar guion cronometrado del video (30s / 2min)", objective: "Asegurar que cada segundo cubra los 5 criterios de evaluación NASA (20% c/u).", scope: "Guion de pitch ganador", deliverable: "Script cronometrado final", modules: "docs/pitch/guion_video_demo.md", branch: "feat/ind-i12-video-script", done: false },
 
         // Tareas Conjuntas (6)
         { id: "J-01", role: "joint", phase: "V-H0", title: "Revisión de Gate 1: Aprobar SPEC.md y congelar alcance MVP", objective: "Alinear arquitectura POO, pipeline ML/DL propio, seguridad OWASP y flujo Git antes de codificar.", scope: "Sincronización de arquitectura", deliverable: "SPEC.md + tasks/todo.md listos para aprobación", done: true },
         { id: "J-02", role: "joint", phase: "S-AM", title: "Revisión de Gate 2: Validar consistencia Física + FMEA", objective: "Probar que los escenarios Apollo/Lunar disparan las alarmas correctas en FSM y FMEA.", scope: "Integración de dominio", deliverable: "Pruebas cruzadas OK", done: true },
         { id: "J-03", role: "joint", phase: "S-PM", title: "Revisión de Gate 3: Demo end-to-end de los 4 módulos en web", objective: "Recorrer el flujo completo en navegador como lo hará un juez en 3 minutos.", scope: "Prueba de usabilidad real", deliverable: "MVP MUST-HAVE funcional", done: true },
-        { id: "J-04", role: "joint", phase: "D-AM", title: "Revisión de Gate 4: Code Freeze y verificación en incógnito", objective: "Congelar código, validar URL desplegada y comprobar cero errores de consola.", scope: "Estabilidad pre-entrega", deliverable: "Release v1.0.0", modules: "planning/index.html, tasks/todo.md, tag Git v1.0.0 (solo tras merge dev -> main)", branch: "release/v1.0.0", done: false },
-        { id: "J-05", role: "joint", phase: "D-PM", title: "Grabar y editar video demo en 1080p con subtítulos", objective: "Mostrar app real operando en vivo (simulaciones + ranking + gemelo digital).", scope: "Producción audiovisual", deliverable: "Video final exportado", modules: "docs/pitch/checklist_grabacion.md (archivo de video externo)", branch: "docs/joint-j05-video-checklist", done: false },
-        { id: "J-06", role: "joint", phase: "D-PM", title: "Envío oficial en plataforma Space Apps (2h antes del cierre)", objective: "Subir links, repo GitHub, video y resumen verificando formulario completo.", scope: "Cierre sin contratiempos", deliverable: "Confirmación de envío NASA", modules: "docs/pitch/submission_space_apps.md", branch: "docs/joint-j06-submission", done: false }
+        { id: "J-04", role: "joint", subclass: "externas", moscow: "MUST", phase: "D-AM", title: "Revisión de Gate 4: Activar Render + UptimeRobot y verificación en incógnito", objective: "Conectar repositorio en Render Free, configurar ping UptimeRobot cada 5 min y validar URL HTTPS pública sin errores de consola.", scope: "Estabilidad pre-entrega (Acción externa en cuenta cloud)", deliverable: "Release v1.0.0 en vivo", modules: "planning/index.html, tasks/todo.md, tag Git v1.0.0 (solo tras merge dev -> main)", branch: "release/v1.0.0", done: false },
+        { id: "J-05", role: "joint", subclass: "externas", moscow: "MUST", phase: "D-PM", title: "Grabar y editar video demo en 1080p con subtítulos", objective: "Mostrar app real operando en vivo (simulaciones + ranking + gemelo digital + respaldos CAD/ECAD).", scope: "Producción audiovisual externa (OBS / editor)", deliverable: "Video final exportado (30s / 2min)", modules: "docs/pitch/checklist_grabacion.md (archivo de video externo)", branch: "docs/joint-j05-video-checklist", done: false },
+        { id: "J-06", role: "joint", subclass: "externas", moscow: "MUST", phase: "D-PM", title: "Envío oficial en plataforma Space Apps (2h antes del cierre)", objective: "Subir links, repo GitHub, video y resumen verificando formulario completo en la web oficial.", scope: "Cierre sin contratiempos (Acción externa navegador)", deliverable: "Confirmación de envío NASA", modules: "docs/pitch/submission_space_apps.md", branch: "docs/joint-j06-submission", done: false },
+
+        // Subclase: Tareas Externas CAD / ECAD / Simulación Electrónica (3)
+        { id: "EXT-01", role: "ind", subclass: "externas", moscow: "COULD", phase: "D-AM", title: "Modelado CAD 3D en SolidWorks: Ducto 250x250 mm, Compuerta Cortafuego y Boquilla PFE 30°", objective: "Construir ensamblaje paramétrico en Aluminio 6061-T6 e Inox 304/316 con ventilador 24 VDC, enderezador honeycomb, portamuestras PMMA/SIBAL, mirilla de cuarzo, 3 puertos sensores (+120 mm), compuerta spring-return y boquilla PFE a 30°.", scope: "Subclase Externa · CAD 3D + BOM + Plano 2D (F-08)", deliverable: ".SLDASM/.STEP + 3 capturas 1080p (corte, explosión BOM, plano)", modules: "docs/industrial/especificacion_externas_cad_ecad.md (evidencia externa para pestaña Blueprint)", branch: "feat/ind-ext01-solidworks-cad", done: false },
+        { id: "EXT-02", role: "meca", subclass: "externas", moscow: "SHOULD", phase: "D-AM", title: "Diagrama Eléctrico EPLAN Electric P8: Enclavamiento Fail-Safe 24 VDC (K1-WD / SOL-PFE)", objective: "Elaborar esquema IEC 60617 en 4 hojas: bus +24V_ESS, protecciones QF1/F1, relé Watchdog K1-WD ligado a WD_HEARTBEAT, corte KM-FAN, retención SOL-DMP con retorno por resorte y enclavamiento en serie SQ-DMP-CLOSED -> SOL-PFE.", scope: "Subclase Externa · ECAD Cableado Hardwired (F-04/F-08)", deliverable: "Proyecto .zw1 + PDF vectorial + capturas para Blueprint", modules: "docs/industrial/especificacion_externas_cad_ecad.md (evidencia externa para pestaña Blueprint)", branch: "feat/meca-ext02-eplan-interlock", done: false },
+        { id: "EXT-03", role: "meca", subclass: "externas", moscow: "COULD", phase: "D-AM", title: "Simulación Electrónica Proteus ISIS: Adquisición 4 Sensores (100 ms), Watchdog y UART CRC-8", objective: "Simular acondicionamiento analógico (Termopar K dT/dt, CO 0-5000 ppm, aerosol <0.1um Spinoff 9407, flujo 0-60 cm/s) hacia MCU a 10 Hz, optoacopladores PC817, señal WD_HEARTBEAT y tramas 115200 bps CRC-8 en Virtual Terminal (sin COMPIM live F-09).", scope: "Subclase Externa · Simulación Electrónica Local (F-08)", deliverable: ".pdsprj + firmware .c/.hex + captura Virtual Terminal & Osciloscopio", modules: "docs/industrial/especificacion_externas_cad_ecad.md (evidencia externa para pestaña Blueprint)", branch: "feat/meca-ext03-proteus-sim", done: false }
       ];
 
       const FURPS_DATA = [
@@ -1427,10 +1445,12 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         const meca = byRole("meca");
         const ind = byRole("ind");
         const joint = byRole("joint");
+        const ext = state.tasks.filter(t => t.subclass === "externas");
 
         const mecaDone = meca.filter(t => t.done).length;
         const indDone = ind.filter(t => t.done).length;
         const jointDone = joint.filter(t => t.done).length;
+        const extDone = ext.filter(t => t.done).length;
 
         const mustItems = FURPS_DATA.filter(f => f.moscow === "MUST");
         const mustDone = mustItems.filter(f => Boolean(state.furpsDone[f.id])).length;
@@ -1445,6 +1465,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         setBar("kpiMeca", mecaDone, meca.length);
         setBar("kpiInd", indDone, ind.length);
         setBar("kpiJoint", jointDone, joint.length);
+        setBar("kpiExt", extDone, ext.length);
         setBar("kpiMust", mustDone, mustItems.length);
       }
 
@@ -1453,10 +1474,14 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         const grid = document.getElementById("taskGrid");
 
         const filtered = state.tasks.filter(t => {
-          if (state.roleFilter !== "ALL" && t.role !== state.roleFilter) return false;
+          if (state.roleFilter === "externas") {
+            if (t.subclass !== "externas") return false;
+          } else if (state.roleFilter !== "ALL" && t.role !== state.roleFilter) {
+            return false;
+          }
           if (state.phaseFilter !== "ALL" && t.phase !== state.phaseFilter) return false;
           if (query) {
-            const hay = `${t.id} ${t.title} ${t.objective} ${t.scope} ${t.deliverable} ${t.modules || ""} ${t.branch || ""}`.toLowerCase();
+            const hay = `${t.id} ${t.title} ${t.objective} ${t.scope} ${t.deliverable} ${t.modules || ""} ${t.branch || ""} ${t.subclass || ""} ${t.moscow || ""}`.toLowerCase();
             if (!hay.includes(query)) return false;
           }
           return true;
@@ -1467,9 +1492,21 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
           ind: { label: "Gestión Industrial", cls: "badge-ind" },
           joint: { label: "Conjunta", cls: "badge-joint" }
         };
+        const moscowBadgeMap = {
+          MUST: "badge-must",
+          SHOULD: "badge-should",
+          COULD: "badge-could",
+          WONT: "badge-wont"
+        };
 
         grid.innerHTML = filtered.map(t => {
           const r = roleMap[t.role] || roleMap.joint;
+          const extBadge = t.subclass === "externas"
+            ? `<span class="badge badge-ext">Subclase: Externa</span>`
+            : "";
+          const moscowBadge = t.moscow
+            ? `<span class="badge ${moscowBadgeMap[t.moscow] || "badge-violet"}">MoSCoW: ${escapeHtml(t.moscow)}</span>`
+            : "";
           const lockHtml = (t.modules || t.branch)
             ? `<p class="task-detail"><strong>Módulos / Lock:</strong> <code class="mono">${escapeHtml(t.modules || "N/A")}</code>${t.branch ? ` · <strong>Rama:</strong> <code class="mono">${escapeHtml(t.branch)}</code>` : ""}</p>`
             : "";
@@ -1480,6 +1517,8 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
                 <div class="task-meta">
                   <span class="badge ${r.cls}">${r.label}</span>
                   <span class="badge badge-violet mono">${t.id} · ${t.phase}</span>
+                  ${extBadge}
+                  ${moscowBadge}
                 </div>
                 <h3 class="task-title">${escapeHtml(t.title)}</h3>
                 <p class="task-detail"><strong>Objetivo:</strong> ${escapeHtml(t.objective)}</p>
@@ -1714,7 +1753,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
       });
 
       document.getElementById("resetBtn").addEventListener("click", () => {
-        if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 31 tareas base?")) return;
+        if (!confirm("¿Reiniciar todos los checkboxes y restaurar las 34 tareas base?")) return;
         state.tasks = DEFAULT_TASKS.map(t => ({ ...t }));
         state.furpsDone = { ...DEFAULT_FURPS_DONE };
         saveState();
@@ -1743,12 +1782,21 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         const assert = (cond, msg) => { if (!cond) throw new Error("Self-check failed: " + msg); };
         assert(PSI_24_DATA.length === 24, "Expected exactly 24 PSI investigations");
         assert(OFFICIAL_RESOURCES.length === 10, "Expected 10 official challenge resources");
-        assert(DEFAULT_TASKS.length === 31, "Expected 31 role-divided default tasks");
+        assert(DEFAULT_TASKS.length === 34, "Expected 34 role-divided default tasks");
         assert(FURPS_DATA.length === 22, "Expected 22 FURPS+ MoSCoW items");
         assert(FURPS_DATA.filter(f => f.moscow === "MUST").length === 14, "Expected 14 MUST HAVE items");
         assert(SKILLS_VAULT.length === 13, "Expected 13 audited skills in SKILLS_VAULT");
         assert(SKILLS_VAULT.some(s => s.name.includes("writing-craft")), "writing-craft must be registered in SKILLS_VAULT");
         assert(SKILLS_VAULT.some(s => s.role.includes("80%") && s.role.includes("15%")), "TDD pyramid 80%/15% must be registered");
+
+        const extTasks = DEFAULT_TASKS.filter(t => t.subclass === "externas");
+        assert(extTasks.length === 6, "Expected 6 external subclass tasks (EXT-01..03 + J-04..06)");
+        const ext01 = DEFAULT_TASKS.find(t => t.id === "EXT-01");
+        const ext02 = DEFAULT_TASKS.find(t => t.id === "EXT-02");
+        const ext03 = DEFAULT_TASKS.find(t => t.id === "EXT-03");
+        assert(ext01 && ext01.role === "ind" && ext01.moscow === "COULD", "EXT-01 SolidWorks must belong to Perfil B (ind)");
+        assert(ext02 && ext02.role === "meca" && ext02.moscow === "SHOULD", "EXT-02 EPLAN must belong to Perfil A (meca)");
+        assert(ext03 && ext03.role === "meca" && ext03.moscow === "COULD", "EXT-03 Proteus must belong to Perfil A (meca)");
 
         const m07 = DEFAULT_TASKS.find(t => t.id === "M-07");
         assert(m07 && m07.title.includes(".onnx") && m07.objective.includes("Colab") && m07.objective.includes(".joblib"), "M-07 must reference Colab and local ML/DL weights");
@@ -1765,7 +1813,7 @@ GET https://visualization.osdr.nasa.gov/biodata/api/v2/dataset/{accession}/?form
         setFsmState("NORMAL");
         assert(document.getElementById("svgFsmText").textContent === "NORMAL", "FSM reset mismatch");
 
-        document.getElementById("selfCheckBadge").textContent = "Checks: 13/13 PASS";
+        document.getElementById("selfCheckBadge").textContent = "Checks: 15/15 PASS";
       }
 
       // Initialize

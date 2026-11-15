@@ -18,6 +18,8 @@ COPY backend ./backend
 COPY frontend ./frontend
 COPY data ./data
 COPY artifacts/models ./artifacts/models
+COPY docs/graphs ./docs/graphs
+COPY notebooks ./notebooks
 
 RUN chown -R appuser:appuser /app
 

@@ -4,10 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>NASA + ENREDADOS · Observatorio AERO-IGNIS SI</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="shortcut icon" href="/favicon.svg" />
   <link rel="preload" href="GeistPixel-Square.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <canvas id="orbitalBackdropCanvas" class="orbital-backdrop" aria-hidden="true"></canvas>
+
   <div class="shell">
     <header class="masthead-hero">
       <div class="masthead-lockup">
@@ -33,6 +37,51 @@
       <p class="masthead-subtitle">
         Observatorio AERO-IGNIS SI · Ciencia de Combustión en Microgravedad y Seguridad en Cabinas Habitables
       </p>
+      <div class="mission-decal-strip" aria-label="Misiones y normas espaciales de referencia">
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="18" cy="18" r="15" fill="#0B3D91" />
+            <circle cx="18" cy="18" r="6" fill="none" stroke="#E0F2FE" stroke-width="2" />
+            <circle cx="18" cy="18" r="2.2" fill="#FFFFFF" />
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">ISS · RACKS MSG / CIR</span>
+            <span class="mission-decal-sub">Laboratorio 0g en órbita</span>
+          </div>
+        </div>
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <rect x="3" y="3" width="30" height="30" rx="6" fill="#0B3D91" />
+            <path d="M9 24 L18 8 L27 24 L18 19 Z" fill="#FC3D21" />
+            <ellipse cx="18" cy="19" rx="12" ry="4" transform="rotate(-18 18 19)" fill="none" stroke="#FFFFFF" stroke-width="1.5" />
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">CYGNUS · SAFFIRE</span>
+            <span class="mission-decal-sub">6 incendios a escala real</span>
+          </div>
+        </div>
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <circle cx="18" cy="18" r="15" fill="#0A1931" stroke="#0B3D91" stroke-width="1.5" />
+            <path d="M21 8 A10 10 0 1 0 27 25 A8 8 0 1 1 21 8 Z" fill="#FFFFFF" />
+            <circle cx="24" cy="14" r="1.8" fill="#FC3D21" />
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">HÁBITAT ARTEMIS</span>
+            <span class="mission-decal-sub">Aire lunar 34% O2 · 8.2 psi</span>
+          </div>
+        </div>
+        <div class="mission-decal">
+          <svg class="mission-decal-icon" viewBox="0 0 36 36" aria-hidden="true">
+            <polygon points="18,3 33,12 28,31 8,31 3,12" fill="#C82812" />
+            <text x="18" y="21" text-anchor="middle" fill="#FFFFFF" font-size="8.5" font-weight="bold" font-family="monospace">6001</text>
+          </svg>
+          <div class="mission-decal-text">
+            <span class="mission-decal-code">NASA-STD-6001</span>
+            <span class="mission-decal-sub">Seguridad desde Apollo 1</span>
+          </div>
+        </div>
+      </div>
     </header>
 
     <nav class="tablist" role="tablist" aria-label="Secciones del observatorio espacial">
@@ -59,6 +108,10 @@
       <button id="tab-blueprint" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-blueprint" data-tab="blueprint">
         <span class="tab-step">06</span>
         <span>Planos de Ingeniería</span>
+      </button>
+      <button id="tab-models" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-models" data-tab="models">
+        <span class="tab-step">07</span>
+        <span>Entrenamiento y Modelos</span>
       </button>
     </nav>
 
@@ -168,23 +221,42 @@
 
           <div class="workbench-stage">
             <div class="pane-head">
-              <h2 class="pane-title">Mapa de Similitud Científica (24 Estudios)</h2>
-              <span class="badge badge-info">4 familias experimentales</span>
+              <h2 class="pane-title">Mapa de Similitud Científica (4 Cuadrantes · 24 Estudios)</h2>
+              <span class="badge badge-info">Agrupados por escala y fenómeno</span>
             </div>
 
             <figure class="figure-frame">
-              <svg id="clustersSvg" viewBox="0 0 480 230" role="img" aria-label="Mapa bidimensional de similitud entre las veinticuatro investigaciones NASA PSI"></svg>
-              <figcaption class="prose-note" style="margin-top:6px;">
-                Cada color agrupa campañas con fenómenos parecidos; el aro exterior destaca la campaña que ocupa el puesto #1 en tu lista.
+              <svg id="clustersSvg" viewBox="0 0 540 310" role="img" aria-label="Mapa de cuatro cuadrantes que organiza las veinticuatro investigaciones NASA PSI por escala y tipo de fuego"></svg>
+              <figcaption class="prose-note">
+                <strong>¿Por qué se divide en 4 cuadrantes?</strong> La computadora analizó el texto completo de los 24 estudios y separó automáticamente qué tan grande era la prueba (<em>izquierda: cámaras pequeñas de laboratorio; derecha: incendios grandes o materiales de cabina</em>) y qué tipo de combustible ardió (<em>arriba: gotas o incendios en naves Cygnus; abajo: flamas de gas y materiales sólidos</em>). El aro rojo destaca el estudio #1 de tu tabla.
               </figcaption>
             </figure>
 
+            <div class="quadrant-legend-grid" aria-label="Explicación de las cuatro familias del mapa">
+              <div class="quadrant-pill quadrant-pill--red">
+                <strong>Cuadrante I · Gotas y Llamas Frías</strong>
+                <span><em>FLEX, FLEX-2, CFI-G:</em> explican cómo siguen ardiendo vapores invisibles a baja temperatura después de apagarse una llama normal.</span>
+              </div>
+              <div class="quadrant-pill quadrant-pill--green">
+                <strong>Cuadrante II · Incendios a Escala Real</strong>
+                <span><em>SAFFIRE I–VI:</em> pruebas reales dentro de naves de carga Cygnus para saber cuánto crece un fuego en el aire lunar de Artemis.</span>
+              </div>
+              <div class="quadrant-pill quadrant-pill--blue">
+                <strong>Cuadrante III · Gases, Hollín y Campos</strong>
+                <span><em>ACME, SLICE, SPICE, CVB:</em> miden humo ultrafino invisible (&lt;0.1 micras) y cómo controlar flamas usando aire o alto voltaje.</span>
+              </div>
+              <div class="quadrant-pill quadrant-pill--purple">
+                <strong>Cuadrante IV · Sólidos y Brasas Lentas</strong>
+                <span><em>BASS, BASS-II, NCA, MSC, BRE:</em> miden telas, plásticos y espumas sin fuego abierto para evitar incendios ocultos en cables y paneles.</span>
+              </div>
+            </div>
+
             <div class="section-block" style="margin-top:18px;">
-              <h3 class="sub-heading">Orden de Prioridad según tus Criterios</h3>
+              <h3 class="sub-heading">Orden de Prioridad e Importancia de cada Estudio</h3>
               <div class="table-scroll">
                 <table>
                   <thead>
-                    <tr><th>Orden</th><th>Código / Acrónimo</th><th>Instalación</th><th>Índice</th><th>DOI</th></tr>
+                    <tr><th>Orden</th><th>Estudio e Instalación</th><th>Por qué importa este estudio</th><th>Índice y DOI</th></tr>
                   </thead>
                   <tbody id="psiRankBody"></tbody>
                 </table>
@@ -584,7 +656,7 @@
               </div>
             </div>
             <div id="fmeaSummaryLine" class="prose-note" style="margin-bottom:8px;">--</div>
-            <div class="table-scroll" style="max-height:420px;">
+            <div class="table-scroll table-scroll--fmea">
               <table>
                 <thead>
                   <tr><th>Código</th><th>Subsistema y Modo de Fallo</th><th>Índice NPR</th><th>Barrera de Mitigación</th><th>Estudio NASA</th></tr>
@@ -728,6 +800,309 @@
             <span class="badge badge-info">Acceso Público Verificado</span>
           </div>
           <div id="officialResourcesGrid" class="resource-index"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULO 7: METODOLOGIA CLARA, ENTRENAMIENTO, MERMAID Y DESCARGAS -->
+    <section id="panel-models" class="tabpanel" role="tabpanel" aria-labelledby="tab-models">
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Cómo aprendieron nuestros 3 modelos (explicado paso a paso y con total honestidad)</h2>
+          <p>
+            Nada en este observatorio inventa respuestas ni depende de cajas negras externas. En esta página te mostramos de dónde salieron las pruebas reales de la NASA, por qué un modelo acierta el 78.49% y otro marca 100%, cómo funcionan nuestros diagramas de flujo y dónde descargar cada archivo o programa para comprobarlo por ti mismo.
+          </p>
+        </div>
+
+        <!-- Bloque A: Origen de datos y honestidad explicados en lenguaje claro -->
+        <div class="academic-honesty-band">
+          <div class="academic-col">
+            <div class="pane-head">
+              <h2 class="pane-title">1. ¿De dónde salieron los datos para entrenar?</h2>
+              <span class="badge badge-info">Datos Abiertos NASA · Licencia CC0</span>
+            </div>
+            <p class="academic-prose">
+              Para enseñar a la computadora cómo se comporta el fuego sin gravedad reunimos tres bloques de información claramente separados:
+            </p>
+            <ul class="academic-list">
+              <li>
+                <strong>24 expedientes reales de la NASA (<code>psi_combustion_24.json</code>):</strong> resumimos los 24 experimentos oficiales hechos en la Estación Espacial Internacional y en naves Cygnus (<code>DOIs 10.60555/psi-24</code> a <code>psi-154</code>): qué materiales quemaron, qué sensores instalaron y para qué sirve cada hallazgo en la Tierra.
+              </li>
+              <li>
+                <strong>566 pruebas reales de fuego en cabina (<code>bass_saffire_runs.csv</code>):</strong> construimos una tabla con <code>566</code> ensayos calibrados con las campañas <em>BASS-II</em> (<code>240</code> corridas entre <code>15%</code> y <code>23% O2</code>), <em>Saffire I–V</em> (<code>100</code> ensayos hasta <code>34% O2</code> lunar), <em>Saffire VI</em> (<code>172</code>) y <em>FLEX / CFI-G</em> (<code>54</code>). En <code>256</code> pruebas el fuego se apagó solo y en <code>310</code> avanzó de forma sostenida.
+              </li>
+              <li>
+                <strong>180 imágenes pequeñas y 600 lecturas del ducto:</strong> los videos crudos de alta velocidad de la NASA pesan <code>255.77 GB</code>, imposibles de descargar al abrir una web. Por eso creamos un simulador matemático limpio de <code>180</code> cuadros de cámara (<code>64 × 64</code> píxeles) y <code>600</code> lecturas calibradas de humo ultrafino y monóxido (<code>CO</code>) para entrenar la vigilancia rápida en cabina.
+              </li>
+            </ul>
+            <div class="callout-strip callout-strip--info">
+              <strong>Trazabilidad completa:</strong> cada gráfica de esta web distingue entre datos experimentales medidos por la NASA y ejemplos calibrados del simulador local.
+            </div>
+          </div>
+
+          <div class="academic-col academic-col--warn">
+            <div class="pane-head">
+              <h2 class="pane-title">2. Honestidad científica: ¿Qué significan los resultados?</h2>
+              <span class="badge badge-warn">Lectura Transparente de Aciertos</span>
+            </div>
+            <p class="academic-prose">
+              Decir que un sistema tiene “100% de precisión” sin explicar cómo se evaluó sería engañoso. Aquí reportamos la verdad de cada prueba:
+            </p>
+            <ul class="academic-list">
+              <li>
+                <strong>Qué significa el <code>78.49%</code> en riesgo de cabina:</strong> evaluamos el Modelo 1 con <strong>5 exámenes cruzados</strong> (entrena con <code>80%</code> de las <code>566</code> pruebas y se examina con el <code>20%</code> restante que nunca vio, cinco veces seguidas). Acertar casi <strong>8 de cada 10 veces</strong> es un techo realista porque en microgravedad existe una frontera gris donde un pequeño cambio de aire apaga o mantiene viva la llama.
+              </li>
+              <li>
+                <strong>Por qué la cámara y el ducto marcan <code>100.0%</code>:</strong> ese puntaje perfecto se logró evaluando nuestras <code>180</code> imágenes y <code>600</code> lecturas generadas con reglas ordenadas (con ligero ruido controlado <code>σ = 0.035</code>). Demuestra que la lógica del programa funciona sin errores matemáticos, <em>no</em> que nunca vaya a fallar frente a una cámara espacial sucia o con reflejos.
+              </li>
+              <li>
+                <strong>Qué hace falta antes de volar en una nave real:</strong> para usar este detector en hardware de vuelo hay que reentrenarlo en el cuaderno GPU con miles de fotos reales de NASA OSDR y certificar cada pieza bajo la norma <code>NASA-STD-6001</code>.
+              </li>
+            </ul>
+            <div class="callout-strip callout-strip--warn">
+              <strong>Conclusión honesta:</strong> <code>78.49%</code> refleja dificultad física real sobre datos mixtos; <code>100.0%</code> confirma verificación correcta sobre escenarios simulados de laboratorio.
+            </div>
+          </div>
+        </div>
+
+        <!-- Bloque B: Medios de Entrenamiento y Descargas con Estilo Uniforme -->
+        <div class="preset-band" style="border-top: 1px solid var(--border-hairline);">
+          <div class="pane-head">
+            <h2 class="pane-title">3. ¿Dónde y cómo se entrenaron? (Nube con Tarjeta Gráfica vs. Computadora Normal)</h2>
+            <span class="badge badge-ok">Semilla Fija = 42 · Peso Total: 368.9 KB</span>
+          </div>
+          <div class="training-env-grid">
+            <article class="training-env-card training-env-card--cloud">
+              <h3>Ruta A · En la Nube con Tarjeta Gráfica (Google Colab Tesla T4)</h3>
+              <p>
+                Pensada para procesar imágenes pesadas sin llenar tu computadora con <code>255.77 GB</code>. El cuaderno <code>AERO_IGNIS_Colab_Training.ipynb</code> descarga únicamente los cuadros seleccionados desde NASA OSDR, gira cada imagen <code>90°</code>, <code>180°</code> y <code>270°</code> (porque en caída libre no existe “arriba” ni “abajo”), entrena la red visual durante 45 rondas y la guarda en formato portátil <code>ONNX</code>.
+              </p>
+            </article>
+            <article class="training-env-card training-env-card--local">
+              <h3>Ruta B · En Tu Computadora en menos de 5 Segundos (CPU Local)</h3>
+              <p>
+                El programa <code>train_models.py</code> reconstruye los 5 archivos inteligentes desde cero en cualquier computadora estándar y sin conexión a internet. Fija el azar en <code>SEED = 42</code> para que obtengas exactamente los mismos resultados al repetirlo, calcula el sello digital de 256 bits contra alteraciones y habilita pruebas automáticas instantáneas.
+              </p>
+            </article>
+          </div>
+          <div class="download-toolbar" aria-label="Descargas principales de entrenamiento y verificación">
+            <a class="btn btn-cobalt" href="/api/v1/models/download/code-train-local" download>Descargar Entrenador Local (train_models.py)</a>
+            <a class="btn btn-cobalt" href="/api/v1/models/download/code-colab-notebook" download>Descargar Cuaderno GPU Colab (.ipynb)</a>
+            <a class="btn btn-cobalt" href="/api/v1/models/download/manifest-integrity" download>Descargar Sello de Integridad (.json)</a>
+          </div>
+        </div>
+
+        <!-- Bloque C: Los 3 Modelos explicados de forma clara y sus descargas -->
+        <div class="models-triptych">
+          <article class="model-card">
+            <div class="pane-head">
+              <h2 class="pane-title">Modelo 1 · ¿Se apagará sola la llama?</h2>
+              <span class="badge badge-info">5 Exámenes CV: 78.49%</span>
+            </div>
+            <p class="academic-prose">
+              <strong>Cómo piensa:</strong> funciona como un comité de <code>120</code> árboles de preguntas simples (<em>“¿Supera el 30% de oxígeno?”</em>, <em>“¿La tela es delgada?”</em>, <em>“¿El aire empuja hacia la llama?”</em>). Cada árbol vota si el fuego se apagará solo, mientras otros dos modelos calculan el tiempo de combustión y la velocidad de avance <code>Vf</code> junto con los índices <code>Da</code> y <code>Pe</code>.
+            </p>
+            <p class="academic-prose">
+              <strong>Con qué entrenó y cuánto pesa:</strong> utilizó las <code>566</code> pruebas reales y <code>7</code> datos físicos clave. Ocupa apenas <code>169.8 KB</code> (clasificador) y <code>167.2 KB</code> (velocidad/duración).
+            </p>
+            <div class="download-stack">
+              <a class="btn" href="/api/v1/models/download/flammability-rf" download><span>Modelo de Riesgo (.joblib)</span><strong>169.8 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/burntime-gbr" download><span>Modelo de Velocidad (.joblib)</span><strong>167.2 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/code-physics-ml" download><span>Código Python</span><strong>physics_ml.py</strong></a>
+              <a class="btn" href="/api/v1/models/download/data-bass-saffire" download><span>Tabla 566 Pruebas</span><strong>.csv</strong></a>
+            </div>
+          </article>
+
+          <article class="model-card">
+            <div class="pane-head">
+              <h2 class="pane-title">Modelo 2 · Vigilante de Cámara y Ducto</h2>
+              <span class="badge badge-warn">Simulador: 100.0%</span>
+            </div>
+            <p class="academic-prose">
+              <strong>Cómo piensa:</strong> une dos vigilantes en tiempo real. Primero, una red visual observa fotos de <code>64 × 64</code> píxeles buscando bordes y brillos para distinguir 4 escenas: cabina normal, llama esférica azul, llama fría invisible o fuego abierto. Luego, un árbol de reglas cruza calor (<code>dT/dt</code>), monóxido (<code>CO</code>) y partículas menores a <code>0.1 micras</code> para cerrar la compuerta.
+            </p>
+            <p class="academic-prose">
+              <strong>Con qué entrenó y velocidad:</strong> <code>180</code> cuadros ópticos y <code>600</code> lecturas de sensores de ducto. Responde en menos de <code>5 milisegundos</code> y pesa solo <code>10.5 KB</code> (visión) y <code>1.2 KB</code> (reglas).
+            </p>
+            <div class="download-stack">
+              <a class="btn" href="/api/v1/models/download/flame-cnn" download><span>Modelo Óptico Portátil (.onnx)</span><strong>10.5 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/sensor-tree" download><span>Árbol de Reglas de Ducto (.joblib)</span><strong>1.2 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/code-duct-twin" download><span>Código del Gemelo y Alarma</span><strong>duct_twin.py</strong></a>
+            </div>
+          </article>
+
+          <article class="model-card">
+            <div class="pane-head">
+              <h2 class="pane-title">Modelo 3 · Bibliotecario de 24 Estudios</h2>
+              <span class="badge badge-ok">24 Estudios · 4 Familias</span>
+            </div>
+            <p class="academic-prose">
+              <strong>Cómo piensa:</strong> lee los objetivos, materiales y sensores de los <code>24</code> estudios de la NASA, mide qué palabras clave distinguen a cada uno, los proyecta en el <strong>mapa de 4 cuadrantes</strong> de la pestaña 02 y ordena la lista según lo que más te importe a ti (hábitat lunar, modelado físico o sensores terrestres), resumiendo puntos textuales sin inventar nada.
+            </p>
+            <p class="academic-prose">
+              <strong>Con qué entrenó y garantía:</strong> utiliza el archivo completo de <code>24</code> campañas PSI conservando intactos los enlaces <code>DOI 10.60555</code>. Pesa solo <code>20.2 KB</code>.
+            </p>
+            <div class="download-stack">
+              <a class="btn" href="/api/v1/models/download/psi-clusters" download><span>Modelo de Clústeres (.joblib)</span><strong>20.2 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/code-ranking-nlp" download><span>Código de Ranking y Síntesis</span><strong>ranking_nlp.py</strong></a>
+              <a class="btn" href="/api/v1/models/download/data-psi-24" download><span>Base 24 Estudios NASA</span><strong>.json</strong></a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Bloque D: Evidencia Gráfica Balanceada y Diagramas Mermaid en Tonos Web Claros -->
+        <div class="workbench-stage" style="border-top: 1px solid var(--border-strong);">
+          <div class="pane-head">
+            <h2 class="pane-title">4. Evidencia gráfica de los datos, aciertos y diagramas Mermaid paso a paso</h2>
+            <span class="badge badge-info">Paleta Web Clara · Diagramas Auditables</span>
+          </div>
+
+          <div class="training-visual-grid">
+            <!-- Tarjeta Izquierda: De donde salen las 566 corridas -->
+            <figure class="figure-frame">
+              <div>
+                <figcaption class="visual-caption">
+                  <strong>A. ¿Cuántos experimentos aporta cada campaña NASA?</strong>
+                  <span class="badge badge-info">Total: 566 corridas</span>
+                </figcaption>
+                <svg viewBox="0 0 540 230" role="img" aria-label="Barras horizontales mostrando cuántas pruebas aporta cada campaña espacial de la NASA">
+                  <rect x="8" y="8" width="524" height="214" rx="4" fill="#FFFFFF" stroke="#C5D3E8" />
+                  <text x="24" y="34" fill="#0A1931" font-size="11.5" font-weight="bold" font-family="sans-serif">Distribución de las 566 pruebas físicas de cabina</text>
+
+                  <text x="24" y="66" fill="#1E2E4A" font-size="10.5" font-weight="600" font-family="sans-serif">BASS-II (ISS-MSG)</text>
+                  <rect x="182" y="54" width="236" height="16" rx="3" fill="#0B3D91" />
+                  <text x="426" y="66" fill="#0A1931" font-size="10.5" font-weight="bold" font-family="monospace">240 (42.4%)</text>
+
+                  <text x="24" y="98" fill="#1E2E4A" font-size="10.5" font-weight="600" font-family="sans-serif">SAFFIRE-VI (Tóxicos)</text>
+                  <rect x="182" y="86" width="170" height="16" rx="3" fill="#C82812" />
+                  <text x="360" y="98" fill="#0A1931" font-size="10.5" font-weight="bold" font-family="monospace">172 (30.4%)</text>
+
+                  <text x="24" y="130" fill="#1E2E4A" font-size="10.5" font-weight="600" font-family="sans-serif">SAFFIRE-IV / V (Lunar)</text>
+                  <rect x="182" y="118" width="66" height="16" rx="3" fill="#065F46" />
+                  <text x="256" y="130" fill="#0A1931" font-size="10.5" font-weight="bold" font-family="monospace">64 (11.3%)</text>
+
+                  <text x="24" y="162" fill="#1E2E4A" font-size="10.5" font-weight="600" font-family="sans-serif">FLEX / CFI-G (Gotas 0g)</text>
+                  <rect x="182" y="150" width="56" height="16" rx="3" fill="#78350F" />
+                  <text x="246" y="162" fill="#0A1931" font-size="10.5" font-weight="bold" font-family="monospace">54 (9.5%)</text>
+
+                  <text x="24" y="194" fill="#1E2E4A" font-size="10.5" font-weight="600" font-family="sans-serif">SAFFIRE I–III (Cygnus)</text>
+                  <rect x="182" y="182" width="38" height="16" rx="3" fill="#415678" />
+                  <text x="228" y="194" fill="#0A1931" font-size="10.5" font-weight="bold" font-family="monospace">36 (6.4%)</text>
+                </svg>
+              </div>
+              <p class="prose-note">
+                La base balancea <strong>256 pruebas que se apagaron solas</strong> frente a <strong>310 que siguieron ardiendo</strong>, evitando que el modelo se incline siempre por una sola respuesta.
+              </p>
+            </figure>
+
+            <!-- Tarjeta Derecha: Desempeno y tamanio de los 5 archivos (elimina el hueco blanco) -->
+            <figure class="figure-frame">
+              <div>
+                <figcaption class="visual-caption">
+                  <strong>B. Comparativa honesta de acierto y peso en disco</strong>
+                  <span class="badge badge-ok">5 archivos · 368.9 KB</span>
+                </figcaption>
+                <svg viewBox="0 0 540 230" role="img" aria-label="Comparativa de exactitud entre datos físicos reales y pruebas de simulador limpio">
+                  <rect x="8" y="8" width="524" height="214" rx="4" fill="#FFFFFF" stroke="#C5D3E8" />
+                  <text x="24" y="34" fill="#0A1931" font-size="11.5" font-weight="bold" font-family="sans-serif">Exactitud real (exámenes cruzados) vs. Simulador limpio</text>
+
+                  <text x="24" y="66" fill="#1E2E4A" font-size="10.5" font-weight="600" font-family="sans-serif">Modelo 1 · Riesgo de Cabina</text>
+                  <rect x="24" y="75" width="314" height="20" rx="3" fill="#0B3D91" />
+                  <rect x="338" y="75" width="86" height="20" rx="3" fill="#E8EEF7" />
+                  <text x="434" y="89" fill="#0B3D91" font-size="11" font-weight="bold" font-family="monospace">78.49% Real</text>
+
+                  <text x="24" y="122" fill="#1E2E4A" font-size="10.5" font-weight="600" font-family="sans-serif">Modelo 2 · Cámara 64×64 + Reglas Ducto</text>
+                  <rect x="24" y="131" width="400" height="20" rx="3" fill="#065F46" />
+                  <text x="434" y="145" fill="#065F46" font-size="11" font-weight="bold" font-family="monospace">100.0% Simulador</text>
+
+                  <line x1="24" y1="168" x2="516" y2="168" stroke="#DCE6F5" stroke-dasharray="4 3" />
+                  <text x="24" y="188" fill="#0A1931" font-size="10.5" font-weight="bold" font-family="sans-serif">Peso total de los 5 artefactos verificados: 368.9 KB (cabe en un disquete retro)</text>
+                  <text x="24" y="207" fill="#415678" font-size="9.8" font-family="monospace">Riesgo (169.8 KB) + Velocidad (167.2 KB) + Visión (10.5 KB) + Ducto (1.2 KB) + Mapa (20.2 KB)</text>
+                </svg>
+              </div>
+              <p class="prose-note">
+                El <strong>78.49%</strong> mide qué tan bien generaliza el clasificador sobre casos físicos reales difíciles; el <strong>100.0%</strong> comprueba la lógica sobre nuestro simulador calibrado.
+              </p>
+            </figure>
+
+            <!-- Diagrama Mermaid 1 (Ancho completo, tonos claros de la pagina) -->
+            <figure class="figure-frame training-visual-wide">
+              <figcaption class="visual-caption">
+                <strong>C. Diagrama de flujo Mermaid: ¿Cómo se entrenan y verifican los 5 archivos del sistema?</strong>
+                <a href="/assets/graphs/ml_dl_colab_pipeline.svg?v=2" target="_blank" rel="noopener noreferrer">Abrir diagrama ampliado (SVG)</a>
+              </figcaption>
+              <img class="training-graph-img" src="/assets/graphs/ml_dl_colab_pipeline.svg?v=2" alt="Diagrama Mermaid horizontal en paleta clara mostrando desde las fuentes NASA y el entrenamiento en nube o computadora hasta la página web" loading="lazy" />
+              <details class="mermaid-source-box">
+                <summary>Ver código fuente en sintaxis Mermaid (flowchart LR)</summary>
+                <pre><code class="language-mermaid">flowchart LR
+  subgraph S1["1. Datos Originales NASA"]
+    D1["24 Estudios PSI (psi_combustion_24.json)"]
+    D2["566 Pruebas BASS-II y Saffire (256 ext / 310 prop)"]
+    D3["Simulador 180 fotos 64x64 + 600 sensores"]
+  end
+  subgraph S2["2. Medios de Entrenamiento"]
+    E1["Nube GPU Colab Tesla T4 · Rota fotos 90, 180, 270 grados"]
+    E2["CPU Local (train_models.py · Semilla 42 · &lt;5 seg)"]
+  end
+  subgraph S3["3. Modelos Compilados (368.9 KB)"]
+    M1["Modelo 1 · Riesgo de Cabina (78.49% CV)"]
+    M2["Modelo 2 · Red Óptica .onnx + Árbol Ducto"]
+    M3["Modelo 3 · Mapa 4 Cuadrantes y Ranking"]
+    Sello["Sello de Integridad 256 bits (.json)"]
+  end
+  subgraph S4["4. Página Web Interactiva"]
+    G["Guardia de Seguridad &lt; 5 ms"]
+    W["7 Estaciones 100% Funcionales Offline"]
+  end
+  D1 --&gt; E2
+  D2 --&gt; E2
+  D3 --&gt; E1 &amp; E2
+  E1 --&gt; M2
+  E2 --&gt; M1 &amp; M3 &amp; Sello
+  M1 &amp; M2 &amp; M3 &amp; Sello --&gt; G --&gt; W</code></pre>
+              </details>
+            </figure>
+
+            <!-- Diagrama Mermaid 2 (Ancho completo, tonos claros de la pagina) -->
+            <figure class="figure-frame training-visual-wide">
+              <figcaption class="visual-caption">
+                <strong>D. Diagrama de flujo Mermaid: ¿Cómo se conectan las 24 investigaciones NASA con cada sección que usas?</strong>
+                <a href="/assets/graphs/psi_knowledge_graph.svg?v=2" target="_blank" rel="noopener noreferrer">Abrir diagrama ampliado (SVG)</a>
+              </figcaption>
+              <img class="training-graph-img" src="/assets/graphs/psi_knowledge_graph.svg?v=2" alt="Diagrama Mermaid horizontal en paleta clara que conecta las cuatro familias de veinticuatro estudios NASA con los modelos y secciones interactivas" loading="lazy" />
+              <details class="mermaid-source-box">
+                <summary>Ver código fuente en sintaxis Mermaid (flowchart LR)</summary>
+                <pre><code class="language-mermaid">flowchart LR
+  subgraph FAM["1. Las 4 Familias de Estudios NASA"]
+    F1["Cuadrante I · Gotas y Llamas Frías (FLEX, CFI-G)"]
+    F2["Cuadrante II · Incendios en Cygnus (SAFFIRE I-VI)"]
+    F3["Cuadrante III · Gases, Hollín y Campos (ACME, SPICE)"]
+    F4["Cuadrante IV · Sólidos y Brasas (BASS-II, MSC, NCA)"]
+  end
+  subgraph EVID["2. Evidencia Extraída"]
+    V1["Fotos 0g y Humo &lt;0.1 micras + CO"]
+    V2["Tabla 566 Corridas (% O2, presión, flujo, espesor)"]
+    V3["Lecciones Apollo 1 / 13 / Mir y 4 Spinoffs"]
+  end
+  subgraph MOD["3. Modelos Inteligentes"]
+    MOD2["Modelo 2 · Vigilante y Compuerta de Ducto"]
+    MOD1["Modelo 1 · Probabilidad de Extinción y Vf"]
+    MOD3["Modelo 3 · Mapa de Similitud y Síntesis"]
+    MOD4["Calculadora de Riesgo FMEA (-93% NPR)"]
+  end
+  subgraph WEB["4. Uso Directo en la Web"]
+    P4["04 · Gemelo del Ducto"]
+    P3["03 · Inflamabilidad en Cabina"]
+    P2["02 · Explorador 24 Estudios"]
+    P5["05 · Riesgo y Beneficio en Tierra"]
+  end
+  F1 &amp; F3 --&gt; V1 --&gt; MOD2 --&gt; P4
+  F2 &amp; F4 --&gt; V2 --&gt; MOD1 --&gt; P3
+  F1 &amp; F2 &amp; F3 &amp; F4 --&gt; V3 --&gt; MOD3 --&gt; P2
+  V3 --&gt; MOD4 --&gt; P5</code></pre>
+              </details>
+            </figure>
+          </div>
         </div>
       </div>
     </section>

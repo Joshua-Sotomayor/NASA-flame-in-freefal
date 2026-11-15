@@ -242,17 +242,26 @@ def create_app(
         }
 
     def _serve_frontend_asset(asset_name: str) -> FileResponse:
-        allowed_assets = {"index.html", "styles.css", "app.js", "GeistPixel-Square.woff2"}
+        allowed_assets = {"index.html", "styles.css", "app.js", "GeistPixel-Square.woff2", "favicon.svg"}
         if asset_name not in allowed_assets:
             raise HTTPException(status_code=404, detail="Recurso no encontrado.")
         safe_path = guard.resolve_within_root(resolved_frontend / asset_name, resolved_frontend)
         if not safe_path.is_file():
             raise HTTPException(status_code=404, detail="Archivo frontend aun no disponible.")
-        return FileResponse(path=safe_path)
+        media = "image/svg+xml" if asset_name.endswith(".svg") else None
+        return FileResponse(path=safe_path, media_type=media)
 
     @app.api_route("/", methods=["GET", "HEAD"], include_in_schema=False)
     def serve_dashboard_root() -> FileResponse:
         return _serve_frontend_asset("index.html")
+
+    @app.get("/favicon.svg", include_in_schema=False)
+    def serve_favicon_svg() -> FileResponse:
+        return _serve_frontend_asset("favicon.svg")
+
+    @app.get("/favicon.ico", include_in_schema=False)
+    def serve_favicon_ico() -> FileResponse:
+        return _serve_frontend_asset("favicon.svg")
 
     @app.get("/styles.css", include_in_schema=False)
     def serve_dashboard_css_root() -> FileResponse:
@@ -283,6 +292,51 @@ def create_app(
         if not safe_path.is_file():
             raise HTTPException(status_code=404, detail="Archivo de fotografia aun no disponible.")
         return FileResponse(path=safe_path)
+
+    @app.get("/assets/graphs/{graph_name}", include_in_schema=False)
+    def serve_training_graph(graph_name: str) -> FileResponse:
+        allowed_graphs = {
+            "ml_dl_colab_pipeline.svg",
+            "ml_dl_colab_pipeline.png",
+            "psi_knowledge_graph.svg",
+            "psi_knowledge_graph.png",
+            "tdd_sdd_architecture.svg",
+            "tdd_sdd_architecture.png",
+        }
+        if graph_name not in allowed_graphs:
+            raise HTTPException(status_code=404, detail="Diagrama tecnico no encontrado.")
+        graphs_root = DEFAULT_ROOT_DIR / "docs" / "graphs"
+        safe_path = guard.resolve_within_root(graphs_root / graph_name, graphs_root)
+        if not safe_path.is_file():
+            raise HTTPException(status_code=404, detail="Archivo de diagrama aun no disponible.")
+        return FileResponse(path=safe_path)
+
+    downloadable_artifacts: dict[str, tuple[str, str, str]] = {
+        "flammability-rf": ("artifacts/models/flammability_rf.joblib", "flammability_rf.joblib", "application/octet-stream"),
+        "burntime-gbr": ("artifacts/models/burntime_gbr.joblib", "burntime_gbr.joblib", "application/octet-stream"),
+        "flame-cnn": ("artifacts/models/flame_cnn.onnx", "flame_cnn.onnx", "application/octet-stream"),
+        "sensor-tree": ("artifacts/models/sensor_tree.joblib", "sensor_tree.joblib", "application/octet-stream"),
+        "psi-clusters": ("artifacts/models/psi_tfidf_kmeans.joblib", "psi_tfidf_kmeans.joblib", "application/octet-stream"),
+        "manifest-integrity": ("artifacts/models/manifest.sha256.json", "manifest.sha256.json", "application/json"),
+        "code-train-local": ("backend/train_models.py", "train_models.py", "text/x-python"),
+        "code-physics-ml": ("backend/physics_ml.py", "physics_ml.py", "text/x-python"),
+        "code-duct-twin": ("backend/duct_twin.py", "duct_twin.py", "text/x-python"),
+        "code-ranking-nlp": ("backend/ranking_nlp.py", "ranking_nlp.py", "text/x-python"),
+        "code-colab-notebook": ("notebooks/AERO_IGNIS_Colab_Training.ipynb", "AERO_IGNIS_Colab_Training.ipynb", "application/x-ipynb+json"),
+        "data-bass-saffire": ("data/bass_saffire_runs.csv", "bass_saffire_runs.csv", "text/csv"),
+        "data-psi-24": ("data/psi_combustion_24.json", "psi_combustion_24.json", "application/json"),
+    }
+
+    @app.get("/api/v1/models/download/{artifact_slug}")
+    def download_model_or_code(artifact_slug: str) -> FileResponse:
+        entry = downloadable_artifacts.get(artifact_slug)
+        if entry is None:
+            raise HTTPException(status_code=404, detail="Artefacto o codigo solicitado no disponible.")
+        rel_path, download_filename, media_type = entry
+        safe_path = guard.resolve_within_root(DEFAULT_ROOT_DIR / rel_path, DEFAULT_ROOT_DIR)
+        if not safe_path.is_file():
+            raise HTTPException(status_code=404, detail="Archivo no disponible en este despliegue.")
+        return FileResponse(path=safe_path, filename=download_filename, media_type=media_type)
 
     @app.get("/frontend/{asset_name}", include_in_schema=False)
     def serve_dashboard_asset(asset_name: str) -> FileResponse:
