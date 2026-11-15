@@ -12,7 +12,7 @@
     <header class="masthead-hero">
       <div class="masthead-lockup">
         <h1 class="masthead-wordmark">
-          <span>NASA</span>
+          <span class="wordmark-nasa">NASA</span>
           <svg class="nasa-emblem" viewBox="0 0 120 120" aria-hidden="true">
             <circle cx="60" cy="60" r="54" fill="#0B3D91" />
             <circle cx="38" cy="36" r="1.8" fill="#FFFFFF" />
@@ -33,41 +33,66 @@
       <p class="masthead-subtitle">
         Observatorio AERO-IGNIS SI · Ciencia de Combustión en Microgravedad y Seguridad en Cabinas Habitables
       </p>
-      <div class="masthead-status">
-        <span id="runtimeModeBadge" class="badge badge-info">Iniciando observatorio...</span>
-        <span id="shaBadge" class="badge badge-ok">Registros NASA Verificados</span>
-      </div>
     </header>
 
     <nav class="tablist" role="tablist" aria-label="Secciones del observatorio espacial">
-      <button id="tab-explorer" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-explorer" data-tab="explorer">
+      <button id="tab-museum" class="tab-btn" role="tab" aria-selected="true" aria-controls="panel-museum" data-tab="museum">
         <span class="tab-step">01</span>
+        <span>Museo y Glosario</span>
+      </button>
+      <button id="tab-explorer" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-explorer" data-tab="explorer">
+        <span class="tab-step">02</span>
         <span>Explorador de Estudios</span>
       </button>
       <button id="tab-sandbox" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-sandbox" data-tab="sandbox">
-        <span class="tab-step">02</span>
+        <span class="tab-step">03</span>
         <span>Inflamabilidad en Cabina</span>
       </button>
       <button id="tab-twin" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-twin" data-tab="twin">
-        <span class="tab-step">03</span>
+        <span class="tab-step">04</span>
         <span>Gemelo del Ducto</span>
       </button>
       <button id="tab-governance" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-governance" data-tab="governance">
-        <span class="tab-step">04</span>
+        <span class="tab-step">05</span>
         <span>Riesgo y Transferencia</span>
       </button>
       <button id="tab-blueprint" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-blueprint" data-tab="blueprint">
-        <span class="tab-step">05</span>
-        <span>Planos de Ingeniería</span>
-      </button>
-      <button id="tab-museum" class="tab-btn" role="tab" aria-selected="false" aria-controls="panel-museum" data-tab="museum">
         <span class="tab-step">06</span>
-        <span>Museo y Glosario</span>
+        <span>Planos de Ingeniería</span>
       </button>
     </nav>
 
-    <!-- MODULO 1: EXPLORADOR DE ESTUDIOS NASA PSI -->
-    <section id="panel-explorer" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-explorer">
+    <!-- MODULO 1: MINI MUSEO VIRTUAL & GLOSARIO ACCESIBLE -->
+    <section id="panel-museum" class="tabpanel is-active" role="tabpanel" aria-labelledby="tab-museum">
+      <div class="workbench-sheet">
+        <div class="section-intro">
+          <h2 class="section-intro-title">Mini museo virtual y glosario de términos científicos</h2>
+          <p>
+            Esta sala reúne fotografías reales del archivo histórico de la NASA para ilustrar cómo evolucionó nuestra comprensión del fuego en el espacio desde 1967 hasta la Estación Espacial Internacional. Debajo encontrarás un glosario con explicaciones sencillas para cualquier estudiante o visitante.
+          </p>
+        </div>
+
+        <div id="museumGallery" class="museum-gallery"></div>
+
+        <div class="glossary-band">
+          <div class="glossary-toolbar">
+            <div>
+              <h2 class="pane-title">Glosario Científico y de Seguridad Espacial</h2>
+              <p class="prose-note" style="margin-top:4px;">
+                Busca cualquier término técnico empleado en las gráficas para leer su significado en lenguaje claro.
+              </p>
+            </div>
+            <label class="field glossary-search">Filtrar término del glosario
+              <input id="glossarySearchInput" type="search" maxlength="80" placeholder="Ej. llama fría, Damköhler, PFE..." />
+            </label>
+          </div>
+          <div id="glossaryGrid" class="glossary-ledger"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODULO 2: EXPLORADOR DE ESTUDIOS NASA PSI -->
+    <section id="panel-explorer" class="tabpanel" role="tabpanel" aria-labelledby="tab-explorer">
       <div class="workbench-sheet">
         <div class="section-intro">
           <h2 class="section-intro-title">Cómo se investiga el fuego en el espacio</h2>
@@ -101,7 +126,15 @@
                 </select>
               </label>
               <label class="field">Tema, material o campaña
-                <input id="psiQueryInput" type="text" maxlength="120" placeholder="Ej. SIBAL 34% O2 extinción" />
+                <select id="psiQueryInput">
+                  <option value="">Todos los temas (24 estudios)</option>
+                  <option value="SIBAL 34% O2">Tejidos SIBAL y hábitat lunar (34% O2)</option>
+                  <option value="PMMA BASS">Acrílico PMMA y flujo en cabina (BASS)</option>
+                  <option value="FLEX llama fria">Llamas frías silenciosas (FLEX / CIR)</option>
+                  <option value="SPICE MSC aerosol">Humo ultrafino, CO y detección temprana</option>
+                  <option value="ACME campo electrico">Supresión con campo eléctrico (ACME)</option>
+                  <option value="extincion radiacion">Extinción por radiación en microgravedad</option>
+                </select>
               </label>
               <label class="field">
                 <span class="field-head"><span>Relevancia Hábitat Lunar</span><span><strong id="wHabVal">40</strong>%</span></span>
@@ -126,6 +159,9 @@
                 <h3 id="synthesisPersonaBadge" class="sub-heading" style="margin:0;">Síntesis de Evidencia · Investigador</h3>
                 <span id="citedDoisLine" class="inline-readout">--</span>
               </div>
+              <p id="synthesisExplainer" class="synthesis-explainer">
+                Estos tres puntos resumen la campaña que quedó en puesto #1 en la tabla y sus dos estudios más cercanos según los pesos que ajustaste arriba.
+              </p>
               <ul id="synthesisBullets" class="bullet-list"></ul>
             </div>
           </div>
@@ -138,6 +174,9 @@
 
             <figure class="figure-frame">
               <svg id="clustersSvg" viewBox="0 0 480 230" role="img" aria-label="Mapa bidimensional de similitud entre las veinticuatro investigaciones NASA PSI"></svg>
+              <figcaption class="prose-note" style="margin-top:6px;">
+                Cada color agrupa campañas con fenómenos parecidos; el aro exterior destaca la campaña que ocupa el puesto #1 en tu lista.
+              </figcaption>
             </figure>
 
             <div class="section-block" style="margin-top:18px;">
@@ -264,6 +303,9 @@
 
             <div class="section-block" style="margin-top:14px;">
               <h3 class="sub-heading">Factores de Mayor Influencia en Cabina</h3>
+              <p class="prose-note" style="margin-bottom:10px;">
+                Peso instantáneo de cada variable bajo tus ajustes actuales: al variar presión, oxígeno o espesor cambia qué factor domina el riesgo.
+              </p>
               <div id="featureImportanceBox"></div>
             </div>
           </div>
@@ -277,7 +319,7 @@
               <svg id="flammabilityContourSvg" viewBox="0 0 480 280" role="img" aria-label="Curva de contorno de inflamabilidad en microgravedad"></svg>
             </figure>
             <p class="prose-note">
-              El punto marca la condición actual (% de oxígeno frente a velocidad de ventilación). Por debajo de 2 cm/s en microgravedad la llama pierde calor por radiación y se apaga; por encima de 40 cm/s a oxígeno moderado el aire excesivo desprende la llama; con más de 30% de oxígeno el riesgo crece rápidamente.
+              El punto marca la condición actual (% de oxígeno frente a ventilación) y la frontera roja se recalcula en tiempo real con la presión, el espesor, la gravedad y el material elegidos. Más espesor requiere mayor oxígeno para sostener la llama; mayor presión amplía la zona de riesgo.
             </p>
           </div>
         </div>
@@ -524,7 +566,24 @@
                 Aplicar Mitigación de Diseño
               </label>
             </div>
-            <div id="fmeaSummaryLine" class="inline-readout" style="color:var(--accent-emerald); font-weight:600; margin-bottom:8px;">--</div>
+            <p class="prose-note" style="margin-bottom:10px;">
+              Actividad: marca o desmarca la casilla superior para comprobar cómo bajan los índices de riesgo (NPR) cuando el ducto incorpora detección temprana y compuerta cortafuego automática.
+            </p>
+            <div id="fmeaCompareBanner" class="fmea-compare-banner tabular" aria-live="polite">
+              <div class="fmea-compare-cell">
+                <span class="fmea-compare-label">Riesgo sin barreras</span>
+                <span id="fmeaBaseOut" class="fmea-compare-val">1,901 NPR</span>
+              </div>
+              <div class="fmea-compare-cell">
+                <span class="fmea-compare-label">Riesgo actual</span>
+                <span id="fmeaActiveOut" class="fmea-compare-val">--</span>
+              </div>
+              <div class="fmea-compare-cell">
+                <span class="fmea-compare-label">Reducción lograda</span>
+                <span id="fmeaDropOut" class="fmea-compare-val">--</span>
+              </div>
+            </div>
+            <div id="fmeaSummaryLine" class="prose-note" style="margin-bottom:8px;">--</div>
             <div class="table-scroll" style="max-height:420px;">
               <table>
                 <thead>
@@ -572,7 +631,20 @@
                   <option value="habitable_general">Incendio de sólido en cabina habitable</option>
                 </select>
               </label>
-              <p id="suppOutputBox" class="prose-note" style="color:var(--accent-cobalt); font-weight:600;"></p>
+              <div class="supp-verdict-grid" aria-live="polite">
+                <div class="supp-verdict-cell">
+                  <span class="metric-label">Agente Recomendado</span>
+                  <span id="suppAgentOut" class="supp-verdict-text">--</span>
+                </div>
+                <div class="supp-verdict-cell">
+                  <span class="metric-label">Ventilación</span>
+                  <span id="suppCabinOut" class="supp-verdict-text">--</span>
+                </div>
+                <div class="supp-verdict-cell">
+                  <span class="metric-label">Criterio Técnico</span>
+                  <span id="suppWhyOut" class="supp-verdict-text">--</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -656,35 +728,6 @@
             <span class="badge badge-info">Acceso Público Verificado</span>
           </div>
           <div id="officialResourcesGrid" class="resource-index"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- MODULO 6: MINI MUSEO VIRTUAL & GLOSARIO ACCESIBLE -->
-    <section id="panel-museum" class="tabpanel" role="tabpanel" aria-labelledby="tab-museum">
-      <div class="workbench-sheet">
-        <div class="section-intro">
-          <h2 class="section-intro-title">Mini museo virtual y glosario de términos científicos</h2>
-          <p>
-            Esta sala reúne fotografías reales del archivo histórico de la NASA para ilustrar cómo evolucionó nuestra comprensión del fuego en el espacio desde 1967 hasta la Estación Espacial Internacional. Debajo encontrarás un glosario con explicaciones sencillas para cualquier estudiante o visitante.
-          </p>
-        </div>
-
-        <div id="museumGallery" class="museum-gallery"></div>
-
-        <div class="glossary-band">
-          <div class="glossary-toolbar">
-            <div>
-              <h2 class="pane-title">Glosario Científico y de Seguridad Espacial</h2>
-              <p class="prose-note" style="margin-top:4px;">
-                Busca cualquier término técnico empleado en las gráficas para leer su significado en lenguaje claro.
-              </p>
-            </div>
-            <label class="field glossary-search">Filtrar término del glosario
-              <input id="glossarySearchInput" type="search" maxlength="80" placeholder="Ej. llama fría, Damköhler, PFE..." />
-            </label>
-          </div>
-          <div id="glossaryGrid" class="glossary-ledger"></div>
         </div>
       </div>
     </section>
