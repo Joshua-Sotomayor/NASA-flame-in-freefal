@@ -4,6 +4,8 @@ from pathlib import Path
 import re
 import time
 
+import pytest
+
 from backend.domain import PsiRepository
 from backend.governance import GovernanceAndSpinoffService
 from backend.ranking_nlp import ExtractiveNlpEngine, TopsisMultiCriteriaRanker
@@ -107,3 +109,70 @@ def test_governance_fmea_and_dual_use_formulas() -> None:
     # Supresion auto-oxidante tipo Mir -> PFE obligatorio (cortar HVAC no apaga LiClO4)
     proto = gov.select_suppression_protocol(fire_type="auto_oxidizing", habitable_crew=True, auto_oxidizing=True)
     assert proto.recommended_agent == "PFE"
+
+
+def test_topsis_scale_invariance_and_edge_cases() -> None:
+    repo = PsiRepository(PSI_JSON)
+    investigations = repo.all_investigations()
+    ranker = TopsisMultiCriteriaRanker()
+
+    # Lista vacia devuelve vacio de forma segura
+    assert ranker.rank([], weights={"habitat": 1.0}) == []
+
+    # Pesos nulos o negativos deben rechazarse
+    with pytest.raises(ValueError):
+        ranker.rank(investigations, weights={"habitat": 0.0, "modeling": 0.0, "sensors": 0.0, "spinoff": 0.0})
+    with pytest.raises(ValueError):
+        ranker.rank(investigations, weights={"habitat": -1.0, "modeling": 0.0})
+
+    # Invariancia ante escalado positivo de pesos (por ejemplo w vs 100*w)
+    w_unit = {"habitat": 0.5462, "modeling": 0.2323, "sensors": 0.1377, "spinoff": 0.0838}
+    w_scaled = {k: v * 100.0 for k, v in w_unit.items()}
+    res_unit = ranker.rank(investigations, weights=w_unit)
+    res_scaled = ranker.rank(investigations, weights=w_scaled)
+
+    assert [r.psi_id for r in res_unit] == [r.psi_id for r in res_scaled]
+    for a, b in zip(res_unit, res_scaled):
+        assert abs(a.topsis_score - b.topsis_score) < 1e-9
+        assert 0.0 <= a.topsis_score <= 1.0
+
+    # Orden monotono no creciente
+    scores = [r.topsis_score for r in res_unit]
+    assert scores == sorted(scores, reverse=True)
+
+
+def test_topsis_ahp_profiles_sensitivity_and_consistency() -> None:
+    repo = PsiRepository(PSI_JSON)
+    investigations = repo.all_investigations()
+    ranker = TopsisMultiCriteriaRanker()
+
+    # 1. Seguridad en Habitats (CR=0.0189 < 0.10): SAFFIRE-V (#1)
+    r_hab = ranker.rank(
+        investigations,
+        weights={"habitat": 0.5462, "modeling": 0.2323, "sensors": 0.1377, "spinoff": 0.0838},
+    )
+    assert r_hab[0].psi_id == "PSI-104"
+
+    # 2. Modelado Fisico y Simulacion (CR=0.0189 < 0.10): BASS-II (#1)
+    r_mod = ranker.rank(
+        investigations,
+        weights={"habitat": 0.2323, "modeling": 0.5462, "sensors": 0.1377, "spinoff": 0.0838},
+    )
+    assert r_mod[0].psi_id == "PSI-25"
+
+    # 3. Deteccion Temprana e Instrumentacion (CR=0.0170 < 0.10): MSC (#1), SPICE (#2)
+    r_sen = ranker.rank(
+        investigations,
+        weights={"habitat": 0.2257, "modeling": 0.1235, "sensors": 0.5166, "spinoff": 0.1341},
+    )
+    assert r_sen[0].psi_id == "PSI-110"
+    assert r_sen[1].psi_id == "PSI-129"
+
+    # 4. Transferencia Dual-Use Spinoffs (CR=0.0076 < 0.10): SPICE (#1), MSC (#2)
+    r_spi = ranker.rank(
+        investigations,
+        weights={"habitat": 0.1894, "modeling": 0.1054, "sensors": 0.1894, "spinoff": 0.5158},
+    )
+    assert r_spi[0].psi_id == "PSI-129"
+    assert r_spi[1].psi_id == "PSI-110"
+
