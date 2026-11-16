@@ -90,15 +90,20 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert 'role="tab"' in r_root.text
     assert 'role="tabpanel"' in r_root.text
 
-    # M-06 / M-09 / M-10 / Mini Museo & Glosario
+    # M-06 / M-09 / M-10 / Mini Museo & Glosario + Prototipo Hardware Abierto
     assert 'id="ductDigitalTwinSvg"' in r_root.text
     assert 'id="flammabilityContourSvg"' in r_root.text
     assert 'id="panel-museum"' in r_root.text
     assert 'id="museumGallery"' in r_root.text
     assert 'id="glossaryGrid"' in r_root.text
     assert "/assets/museum/flame_0g.jpg" in r_root.text
-    for tech in ("SolidWorks", "EPLAN", "Proteus"):
-        assert tech in r_root.text
+    assert "SolidWorks" in r_root.text
+    assert "EPLAN" not in r_root.text
+    assert "Proteus" not in r_root.text
+    assert 'id="blueprintLightbox"' in r_root.text
+    assert 'id="protoEmulatorBand"' in r_root.text
+    assert 'id="pcb3dCanvas"' in r_root.text
+    assert "/assets/hardware/pcb_3d.png" in r_root.text
 
     # M-13 / M-14: Tema claro permanente (sin #themeBtn), sin badges tecnicos de encabezado y Museo primero
     assert 'id="themeBtn"' not in r_root.text
@@ -146,11 +151,30 @@ def test_frontend_served_and_structural_requirements() -> None:
         ("flammability-rf", "flammability_rf.joblib"),
         ("flame-cnn", "flame_cnn.onnx"),
         ("code-train-local", "train_models.py"),
+        ("hw-pcb-step", "aero_ignis_pcb_3d.step"),
+        ("hw-pcb-3d-png", "aero_ignis_pcb_3d.png"),
+        ("hw-pcb-layout-png", "aero_ignis_pcb_layout.png"),
+        ("hw-pcb-layout-pdf", "aero_ignis_pcb_layout.pdf"),
+        ("hw-esquema-png", "aero_ignis_esquema_control.png"),
+        ("hw-esquema-pdf", "aero_ignis_esquema_control.pdf"),
+        ("hw-ducto-solidworks", "aero_ignis_ducto_solidworks.svg"),
     ):
         r_dl = client.get(f"/api/v1/models/download/{slug}")
         assert r_dl.status_code == 200
         assert expected_file in r_dl.headers.get("content-disposition", "")
 
+    for hw_asset, magic in (
+        ("pcb_3d.png", b"\x89PNG"),
+        ("pcb_layout.png", b"\x89PNG"),
+        ("esquema_control.png", b"\x89PNG"),
+        ("plano_ducto_solidworks.svg", b"<"),
+        ("pcb_3d_preview.stl", b"AERO-IGNIS"),
+    ):
+        r_hw = client.get(f"/assets/hardware/{hw_asset}")
+        assert r_hw.status_code == 200
+        assert magic in r_hw.content[:64]
+
+    assert client.get("/assets/hardware/nonexistent.png").status_code == 404
     assert client.get("/api/v1/models/download/nonexistent-slug").status_code == 404
 
     # Cero jerga interna de programacion o LLM en textos visibles de HTML
@@ -177,6 +201,10 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert r_js.status_code == 200
     assert "escapeHtml" in r_js.text
     assert "toggleTheme" not in r_js.text
+    assert "EPLAN" not in r_js.text
+    assert "Proteus" not in r_js.text
+    assert "BLUEPRINT_SLIDES" in r_js.text
+    assert "PROTO_EMULATOR_MODES" in r_js.text
     assert "data-label=" in r_js.text
     assert "initOrbitalBackdrop" in r_js.text
     assert "PSI_PLAIN_GUIDE" in r_js.text
