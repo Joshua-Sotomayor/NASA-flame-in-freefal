@@ -39,6 +39,7 @@ Thumbs.db
 graphify-out/
 .engram/
 Proteus/
+video_pitch/
 
 # Local agent skill junctions (Hub)
 skills/
