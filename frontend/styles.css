@@ -1363,6 +1363,12 @@ a.btn {
   transition: transform 240ms var(--ease-out);
 }
 
+.damper-blade-rot {
+  transform-box: fill-box;
+  transform-origin: center center;
+  transition: transform 360ms var(--ease-out);
+}
+
 @media (max-width: 1120px) {
   .tablist {
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1961,6 +1967,7 @@ a.btn {
     animation-iteration-count: 1 !important;
   }
   .damper-gate,
+  .damper-blade-rot,
   .bar-fill,
   .btn,
   .tab-btn {
