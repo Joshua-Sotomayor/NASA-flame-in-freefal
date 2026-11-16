@@ -38,4 +38,10 @@ Thumbs.db
 .vscode/settings.json
 graphify-out/
 .engram/
+Proteus/
+
+# Local agent skill junctions (Hub)
+skills/
+.claude/
+.agents/skills/
 

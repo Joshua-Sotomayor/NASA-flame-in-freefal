@@ -1608,6 +1608,348 @@ a.btn {
   }
 }
 
+/* Galeria PCB clickable, Emulador Hardware y Visor Lightbox */
+.btn-sm {
+  min-height: 32px;
+  padding: 5px 10px;
+  font-size: 0.78rem;
+}
+
+.blueprint-preview-btn {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  cursor: pointer;
+  overflow: hidden;
+  transition: border-color 180ms var(--ease-out), box-shadow 180ms var(--ease-out);
+}
+
+.blueprint-preview-btn:hover,
+.blueprint-preview-btn:focus-visible {
+  border-color: var(--accent-cobalt);
+  box-shadow: 0 6px 18px rgba(11, 61, 145, 0.14);
+}
+
+.blueprint-thumb {
+  display: block;
+  width: 100%;
+  height: 195px;
+  object-fit: contain;
+  background: #F4F7FB;
+  border-radius: var(--radius-sm);
+}
+
+.blueprint-thumb--cad {
+  background: #FFFFFF;
+}
+
+.blueprint-preview-tag {
+  display: inline-block;
+  margin-top: 7px;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-cobalt-tint);
+  color: var(--accent-cobalt);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.blueprint-slide-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.proto-flow-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.proto-node {
+  padding: 12px 13px;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.proto-step {
+  font-family: var(--font-pixel);
+  font-size: 0.7rem;
+  color: var(--accent-cobalt);
+  text-transform: uppercase;
+}
+
+.proto-node h3 {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-primary);
+}
+
+.proto-node p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--ink-secondary);
+}
+
+.proto-node small {
+  font-size: 0.76rem;
+  line-height: 1.38;
+  color: var(--ink-muted);
+}
+
+.proto-io-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 5px;
+  font-size: 0.77rem;
+}
+
+.proto-io-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.proto-leds-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.proto-led {
+  padding: 4px 6px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-hairline);
+  background: var(--bg-plot);
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-align: center;
+  opacity: 0.52;
+}
+
+.proto-led.is-on {
+  opacity: 1;
+}
+
+.proto-led[data-led="green"].is-on {
+  background: var(--bg-emerald-tint);
+  border-color: var(--accent-emerald);
+  color: var(--accent-emerald);
+}
+
+.proto-led[data-led="yellow"].is-on {
+  background: var(--bg-amber-tint);
+  border-color: var(--accent-amber);
+  color: var(--accent-amber);
+}
+
+.proto-led[data-led="white"].is-on {
+  background: #FFFFFF;
+  border-color: var(--accent-cobalt);
+  color: var(--accent-cobalt);
+}
+
+.proto-led[data-led="red"].is-on {
+  background: var(--bg-crimson-tint);
+  border-color: var(--accent-crimson);
+  color: var(--accent-crimson);
+}
+
+.proto-sim-btn.is-selected {
+  outline: 2px solid var(--accent-cobalt);
+  outline-offset: 2px;
+}
+
+/* Lightbox Modal */
+.lightbox-backdrop[hidden],
+.lightbox-img[hidden],
+.lightbox-3d-wrap[hidden] {
+  display: none !important;
+}
+
+.lightbox-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.lightbox-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(10, 25, 49, 0.78);
+}
+
+.lightbox-shell {
+  width: min(1140px, 100%);
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: 0 22px 60px rgba(10, 25, 49, 0.4);
+  overflow: hidden;
+}
+
+.lightbox-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--bg-band);
+  border-bottom: 1px solid var(--border-hairline);
+}
+
+.lightbox-title {
+  margin: 4px 0 0;
+  font-size: 1rem;
+  color: var(--ink-primary);
+}
+
+.lightbox-head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lightbox-stage {
+  position: relative;
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: 8px;
+  padding: 14px;
+  background: #EDF2FA;
+  min-height: 360px;
+}
+
+.lightbox-nav {
+  height: 54px;
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  color: var(--accent-cobalt);
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lightbox-nav:hover,
+.lightbox-nav:focus-visible {
+  background: var(--accent-cobalt);
+  color: #FFFFFF;
+}
+
+.lightbox-media-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-height: 60vh;
+  overflow: auto;
+  background: #FFFFFF;
+  border: 1px solid var(--border-hairline);
+  border-radius: var(--radius-sm);
+  padding: 8px;
+}
+
+.lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 57vh;
+  object-fit: contain;
+}
+
+.lightbox-3d-wrap {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+#pcb3dCanvas {
+  width: 100%;
+  max-width: 860px;
+  height: auto;
+  max-height: 54vh;
+  cursor: grab;
+  border-radius: var(--radius-sm);
+  touch-action: none;
+}
+
+#pcb3dCanvas:active {
+  cursor: grabbing;
+}
+
+.lightbox-3d-hint {
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+}
+
+.lightbox-foot {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-hairline);
+  background: var(--bg-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lightbox-thumbs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lightbox-thumb-btn.is-active {
+  background: var(--accent-cobalt);
+  border-color: var(--accent-cobalt);
+  color: #FFFFFF;
+}
+
+@media (max-width: 1040px) {
+  .proto-flow-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .proto-flow-grid {
+    grid-template-columns: 1fr;
+  }
+  .lightbox-stage {
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
+    padding: 8px;
+  }
+  .lightbox-nav {
+    height: 42px;
+    font-size: 0.95rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .orbital-backdrop {
     opacity: 0.45;
