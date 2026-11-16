@@ -723,75 +723,131 @@
       </div>
     </section>
 
-    <!-- MODULO 5: PLANOS DE INGENIERIA Y ARCHIVO NASA -->
+    <!-- MODULO 5: PLANOS DE INGENIERIA, PROTOTIPO ABIERTO Y ARCHIVO NASA -->
     <section id="panel-blueprint" class="tabpanel" role="tabpanel" aria-labelledby="tab-blueprint">
       <div class="workbench-sheet">
         <div class="section-intro">
-          <h2 class="section-intro-title">Arquitectura física del prototipo y fuentes primarias de la NASA</h2>
+          <h2 class="section-intro-title">Prototipo físico abierto: SolidWorks, PCB de control 3D y emulador lógico</h2>
           <p>
-            Un sistema seguro en órbita no depende solo de cálculos numéricos; exige respaldo mecánico y eléctrico independiente. Aquí se detallan los planos conceptuales de ducto, el enclavamiento cableado de falla segura, la adquisición en microcontrolador y el índice directo de los diez documentos oficiales de la NASA utilizados.
+            Esta sección presenta el prototipo físico como un sistema abierto y reproducible: puedes abrir y recorrer cada plano, descargar los archivos listos para fabricación o CAD (`.step`, `.pdf`, `.png`, `.svg`) y emular paso a paso cómo responden sus componentes electrónicos familiares ante una alerta en cabina.
           </p>
         </div>
 
         <div class="blueprint-triptych">
           <article class="blueprint-col">
             <div class="pane-head">
-              <h2 class="pane-title">CAD SolidWorks · Ducto y Compuerta</h2>
+              <h2 class="pane-title">Tarjeta de Control · Vista 3D PCB</h2>
+              <span class="badge badge-ok">ESP32 + 24 VDC</span>
+            </div>
+            <button type="button" class="blueprint-preview-btn" data-lightbox-index="0" aria-label="Ampliar modelo 3D de la PCB y recorrer planos">
+              <img class="blueprint-thumb" src="/assets/hardware/pcb_3d.png" alt="Modelo 3D de la tarjeta PCB de control con borneras, optoacopladores y etapa de potencia" loading="lazy" />
+              <span class="blueprint-preview-tag">Clic para abrir visor ◀ / ▶</span>
+            </button>
+            <div class="blueprint-slide-pills" role="group" aria-label="Acceso rápido a planos de la tarjeta">
+              <button type="button" class="btn btn-sm" data-lightbox-index="0">Vista 3D PCB</button>
+              <button type="button" class="btn btn-sm" data-lightbox-index="1">Visor 3D (.STEP)</button>
+              <button type="button" class="btn btn-sm" data-lightbox-index="2">Layout PCB</button>
+              <button type="button" class="btn btn-sm" data-lightbox-index="3">Esquema Eléctrico</button>
+            </div>
+            <p class="prose-note">
+              Placa de control basada en <code>ESP32</code> con reductor <code>XL4015 (24 V → 5.1 V / 5 A)</code>, protección crowbar <code>1N5339B + BT151</code>, 4 divisores de sensores (<code>330 Ω / 470 Ω</code>), etapa <code>LMV358M</code> (<code>3.3 V → 5 V</code>), luces <code>2N7000</code> y 4 salidas aisladas <code>PC817 + IRLZ44N</code>.
+            </p>
+          </article>
+
+          <article class="blueprint-col">
+            <div class="pane-head">
+              <h2 class="pane-title">CAD SolidWorks · Ducto 250 × 250 mm</h2>
               <span class="badge badge-info">Mecánica 0g</span>
             </div>
-            <figure class="figure-frame">
-              <svg viewBox="0 0 280 120" role="img" aria-label="Esquema CAD SolidWorks de ducto de ventilación">
-                <rect x="20" y="25" width="240" height="70" rx="4" fill="#FFFFFF" stroke="#0B3B66" stroke-width="1.6" />
-                <line x1="185" y1="25" x2="185" y2="95" stroke="#991B1B" stroke-width="3" />
-                <circle cx="115" cy="60" r="14" fill="none" stroke="#B43E18" stroke-dasharray="3 2" stroke-width="1.5" />
-                <text x="140" y="112" text-anchor="middle" fill="#3F3F46" font-size="9" font-family="monospace">Sección 250x250mm · Brida Compuerta</text>
-              </svg>
-            </figure>
+            <button type="button" class="blueprint-preview-btn" data-lightbox-index="4" aria-label="Ampliar plano mecánico de SolidWorks del ducto">
+              <img class="blueprint-thumb blueprint-thumb--cad" src="/assets/hardware/plano_ducto_solidworks.svg" alt="Plano técnico SolidWorks en corte longitudinal del ducto de prueba de 250 por 250 milímetros" loading="lazy" />
+              <span class="blueprint-preview-tag">Ver plano acotado ◀ / ▶</span>
+            </button>
+            <div class="blueprint-slide-pills">
+              <button type="button" class="btn btn-sm" data-lightbox-index="4">Ampliar Plano Ducto</button>
+            </div>
             <p class="prose-note">
-              Diseño paramétrico basado en dimensiones de los módulos experimentales de la Estación Espacial: sello hermético en la compuerta cortafuego, mirilla superior para cámara óptica y boquilla inclinada a 30 grados para dispersar niebla fina PFE.
+              Diseño paramétrico en aluminio <code>6061-T6</code> (<code>250 × 250 × 600 mm</code>): ventilador de entrada con panal enderezador, mirilla de cuarzo <code>Ø 60 mm</code> para la cámara óptica, compuerta cortafuego <em>spring-return</em> y boquilla <code>PFE</code> inclinada a <code>30°</code>.
             </p>
           </article>
 
           <article class="blueprint-col">
             <div class="pane-head">
-              <h2 class="pane-title">Esquema EPLAN · Enclavamiento 24 VDC</h2>
-              <span class="badge badge-danger">FALLA SEGURA</span>
+              <h2 class="pane-title">Descargas del Prototipo</h2>
+              <span class="badge badge-cool">Planos + 3D .STEP</span>
             </div>
-            <figure class="figure-frame">
-              <svg viewBox="0 0 280 120" role="img" aria-label="Diagrama unifilar EPLAN de enclavamiento cableado">
-                <line x1="25" y1="30" x2="255" y2="30" stroke="#78350F" stroke-width="1.6" />
-                <line x1="25" y1="90" x2="255" y2="90" stroke="#52525B" stroke-width="1.6" />
-                <rect x="75" y="42" width="46" height="32" fill="#FEE2E2" stroke="#991B1B" stroke-width="1.4" />
-                <text x="98" y="62" text-anchor="middle" fill="#991B1B" font-size="9" font-weight="bold" font-family="monospace">K1-WD</text>
-                <rect x="165" y="42" width="54" height="32" fill="#E6F6F0" stroke="#065F46" stroke-width="1.4" />
-                <text x="192" y="62" text-anchor="middle" fill="#065F46" font-size="9" font-weight="bold" font-family="monospace">SOL-PFE</text>
-                <text x="140" y="112" text-anchor="middle" fill="#3F3F46" font-size="9" font-family="monospace">Contacto NC abre ventilación ante pérdida de enlace</text>
-              </svg>
-            </figure>
-            <p class="prose-note">
-              Relevador de seguridad cableado en serie con el ventilador y el solenoide de la compuerta. Garantiza el aislamiento físico del ducto ante cualquier interrupción eléctrica o pérdida de comunicación del módulo controlador.
+            <p class="prose-note" style="margin-bottom:10px;">
+              Descarga directa de los esquemáticos, trazado de pistas centrado, capturas 3D y archivo sólido intercambiable para abrir en SolidWorks o FreeCAD.
             </p>
+            <div class="download-stack">
+              <a class="btn btn-primary" href="/api/v1/models/download/hw-pcb-step" download><span>Modelo 3D CAD PCB (.step)</span><strong>13.4 MB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-esquema-pdf" download><span>Esquema Electrónico (.pdf)</span><strong>210 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-esquema-png" download><span>Esquema Electrónico (.png)</span><strong>761 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-pcb-layout-pdf" download><span>Layout PCB (.pdf)</span><strong>51 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-pcb-layout-png" download><span>Layout PCB Centrado (.png)</span><strong>543 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-pcb-3d-png" download><span>Render 3D PCB (.png)</span><strong>167 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-ducto-solidworks" download><span>Plano Ducto SolidWorks (.svg)</span><strong>327 KB</strong></a>
+            </div>
           </article>
+        </div>
 
-          <article class="blueprint-col">
-            <div class="pane-head">
-              <h2 class="pane-title">Proteus · Adquisición y Verificación Serial</h2>
-              <span class="badge badge-ok">Muestreo 100 ms</span>
-            </div>
-            <figure class="figure-frame">
-              <svg viewBox="0 0 280 120" role="img" aria-label="Esquema Proteus de microcontrolador de sensores">
-                <rect x="95" y="24" width="90" height="66" rx="3" fill="#FFFFFF" stroke="#0B3B66" stroke-width="1.5" />
-                <text x="140" y="55" text-anchor="middle" fill="#18181B" font-size="9.5" font-weight="bold" font-family="monospace">MCU ADC + WD</text>
-                <text x="140" y="70" text-anchor="middle" fill="#0B3B66" font-size="8.5" font-family="monospace">CRC-8 115200bps</text>
-                <line x1="30" y1="45" x2="95" y2="45" stroke="#065F46" stroke-width="1.5" />
-                <line x1="185" y1="60" x2="255" y2="60" stroke="#B43E18" stroke-width="1.5" />
-                <text x="140" y="112" text-anchor="middle" fill="#3F3F46" font-size="9" font-family="monospace">Lectura CO / &lt;0.1um / dT/dt cada 100 ms</text>
-              </svg>
-            </figure>
-            <p class="prose-note">
-              Programa embebido con filtrado digital de termopares, sensor de monóxido de carbono y detector de partículas ultrafinas. Incluye temporizador de vigilancia y suma de comprobación CRC-8 antes de accionar los actuadores.
-            </p>
-          </article>
+        <!-- Emulador didactico de logica del prototipo con componentes familiares -->
+        <div id="protoEmulatorBand" class="workbench-stage" style="border-top: 1px solid var(--border-hairline);">
+          <div class="pane-head">
+            <h2 class="pane-title">Emulador Interactivo de Lógica Hardware (Componentes Familiares)</h2>
+            <span id="protoStageBadge" class="badge badge-ok">Estado: NORMAL</span>
+          </div>
+          <p class="prose-note" style="margin-bottom:12px;">
+            Selecciona un escenario operativo para emular cómo fluyen las señales por la PCB real: desde la protección de entrada y los divisores de sensores hasta los optoacopladores de <code>24 VDC</code> y las luces del chasis.
+          </p>
+          <div class="preset-row" style="margin-bottom:14px;">
+            <button type="button" class="btn btn-primary proto-sim-btn" data-proto-mode="normal">1. Operación Normal</button>
+            <button type="button" class="btn proto-sim-btn" data-proto-mode="prealert">2. Pre-Alerta (Humo &lt;0.1 um / CO)</button>
+            <button type="button" class="btn btn-danger proto-sim-btn" data-proto-mode="containment">3. Contención + Disparo PFE</button>
+            <button type="button" class="btn proto-sim-btn" data-proto-mode="failsafe">4. Falla / Pérdida de Enlace</button>
+          </div>
+
+          <div class="proto-flow-grid" aria-live="polite">
+            <article class="proto-node">
+              <span class="proto-step">Etapa 1 · Potencia</span>
+              <h3>Reductor XL4015 + Crowbar</h3>
+              <p id="protoPowerOut" class="mono">24.0 V → 5.10 V (FU1 2A / FU2 5A OK)</p>
+              <small>Diodo MBR1045G + Zener 1N5339B y tiristor BT151 protegen el riel lógico.</small>
+            </article>
+            <article class="proto-node">
+              <span class="proto-step">Etapa 2 · Entradas J4..J7</span>
+              <h3>Divisores 330 Ω / 470 Ω</h3>
+              <p id="protoSensorOut" class="mono">SP0..SP3: 0.4 V – 0.9 V → ESP32 (ADC1)</p>
+              <small>Escalan sensores de 5 V al rango seguro 0–2.94 V en GPIO 32, 33, 34 y 35.</small>
+            </article>
+            <article class="proto-node">
+              <span class="proto-step">Etapa 3 · Ventilador</span>
+              <h3>Amplificador LMV358M</h3>
+              <p id="protoFanPwmOut" class="mono">GPIO 22 (3.3 V PWM) → 5.0 V · Flujo 20 cm/s</p>
+              <small>Filtro RC (10 kΩ / 1 µF) y ganancia para regular velocidad laminar.</small>
+            </article>
+            <article class="proto-node">
+              <span class="proto-step">Etapa 4 · PC817 + IRLZ44N</span>
+              <h3>Salidas Aisladas 24 VDC</h3>
+              <ul id="protoOutputsList" class="proto-io-list">
+                <li><strong>J12 Ventilador:</strong> <span class="badge badge-ok">ACTIVO</span></li>
+                <li><strong>J13 Compuerta:</strong> <span class="badge badge-info">ABIERTA (24V)</span></li>
+                <li><strong>J14 Niebla PFE:</strong> <span class="badge badge-cool">ESPERA</span></li>
+                <li><strong>J15 Reserva:</strong> <span class="badge badge-cool">LIBRE</span></li>
+              </ul>
+            </article>
+            <article class="proto-node">
+              <span class="proto-step">Etapa 5 · Chasis 2N7000</span>
+              <h3>Luces Indicadoras (J8..J11)</h3>
+              <div id="protoLedsRow" class="proto-leds-row">
+                <span class="proto-led is-on" data-led="green">GREEN (D17)</span>
+                <span class="proto-led" data-led="yellow">YELLOW (D4)</span>
+                <span class="proto-led is-on" data-led="white">WHITE (D16)</span>
+                <span class="proto-led" data-led="red">RED (D18)</span>
+              </div>
+              <small id="protoSummaryText">Flujo nominal estable; monitoreo de sensores y enlace activos.</small>
+            </article>
+          </div>
         </div>
 
         <div class="workbench-stage" style="border-top: 1px solid var(--border-hairline);">
@@ -800,6 +856,42 @@
             <span class="badge badge-info">Acceso Público Verificado</span>
           </div>
           <div id="officialResourcesGrid" class="resource-index"></div>
+        </div>
+      </div>
+
+      <!-- Visor Lightbox con flechas izquierda/derecha y rotador 3D interactivo -->
+      <div id="blueprintLightbox" class="lightbox-backdrop" role="dialog" aria-modal="true" aria-labelledby="lightboxTitle" hidden>
+        <div class="lightbox-shell">
+          <div class="lightbox-head">
+            <div>
+              <div class="lightbox-badges">
+                <span id="lightboxCounter" class="badge badge-info">1 / 5</span>
+                <span id="lightboxCategoryBadge" class="badge badge-ok">Electrónica · PCB</span>
+              </div>
+              <h3 id="lightboxTitle" class="lightbox-title">Vista 3D de la Tarjeta PCB</h3>
+            </div>
+            <div class="lightbox-head-actions">
+              <a id="lightboxDownloadLink" class="btn btn-sm btn-primary" href="/api/v1/models/download/hw-pcb-3d-png" download>Descargar archivo</a>
+              <button id="lightboxCloseBtn" type="button" class="btn btn-sm" aria-label="Cerrar visor de planos">✕ Cerrar</button>
+            </div>
+          </div>
+
+          <div class="lightbox-stage">
+            <button id="lightboxPrevBtn" type="button" class="lightbox-nav lightbox-nav--prev" aria-label="Plano anterior">◀</button>
+            <div class="lightbox-media-wrap">
+              <img id="lightboxImg" class="lightbox-img" src="/assets/hardware/pcb_3d.png" alt="Plano técnico ampliado" />
+              <div id="lightbox3dWrap" class="lightbox-3d-wrap" hidden>
+                <canvas id="pcb3dCanvas" width="900" height="520" aria-label="Visor 3D interactivo de la tarjeta PCB"></canvas>
+                <div class="lightbox-3d-hint">Arrastra con el ratón o dedo para girar 360° · Rueda para zoom</div>
+              </div>
+            </div>
+            <button id="lightboxNextBtn" type="button" class="lightbox-nav lightbox-nav--next" aria-label="Siguiente plano">▶</button>
+          </div>
+
+          <div class="lightbox-foot">
+            <p id="lightboxCaption" class="prose-note"></p>
+            <div id="lightboxThumbs" class="lightbox-thumbs" role="group" aria-label="Miniaturas de planos disponibles"></div>
+          </div>
         </div>
       </div>
     </section>

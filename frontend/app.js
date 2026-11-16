@@ -726,7 +726,7 @@
     { mode_id: "FM-03", subsystem: "Vapores orgánicos (FLEX / CFI-G)", failure_mode: "Llama fría NTC invisible (500–800 K)", baseline_npr: 405, active_npr: 28, mitigation: "Modelo de visión óptica en clase NTC y bloqueo de rearme automático", linked_psi: "PSI-24" },
     { mode_id: "FM-04", subsystem: "Espuma porosa en rack avio-electrónico", failure_mode: "Combustión latente sin llama visible", baseline_npr: 432, active_npr: 28, mitigation: "Reglas de decisión por CO, tasa térmica y aerosol submicrónico", linked_psi: "PSI-110" },
     { mode_id: "FM-05", subsystem: "Generador sólido de oxígeno (LiClO4)", failure_mode: "Reacción auto-oxidante tipo soplete", baseline_npr: 210, active_npr: 16, mitigation: "Supresión directa por niebla fina PFE + máscara de tripulación", linked_psi: "PSI-105" },
-    { mode_id: "FM-06", subsystem: "Enlace serial estación <-> controlador", failure_mode: "Pérdida de comunicación UART / watchdog", baseline_npr: 216, active_npr: 6, mitigation: "Enclavamiento cableado EPLAN llevando el ducto a falla segura", linked_psi: "PSI-98" }
+    { mode_id: "FM-06", subsystem: "Enlace serial estación <-> controlador", failure_mode: "Pérdida de comunicación UART / watchdog", baseline_npr: 216, active_npr: 6, mitigation: "Enclavamiento cableado de seguridad llevando el ducto a falla segura", linked_psi: "PSI-98" }
   ];
 
   function renderFmeaRows(rows, mitigated) {
@@ -932,12 +932,475 @@
       glossaryInput.addEventListener("input", () => renderGlossary(glossaryInput.value));
     }
 
+    initPrototypeHardwareAndLightbox();
+
     document.addEventListener("keydown", (e) => {
+      const lightbox = document.getElementById("blueprintLightbox");
+      if (lightbox && !lightbox.hidden) {
+        if (e.key === "Escape") { closeLightbox(); return; }
+        if (e.key === "ArrowLeft") { stepLightbox(-1); return; }
+        if (e.key === "ArrowRight") { stepLightbox(1); return; }
+      }
       const tag = document.activeElement && document.activeElement.tagName;
       if (tag === "INPUT" || tag === "SELECT") return;
       const map = { "1": "museum", "2": "explorer", "3": "sandbox", "4": "twin", "5": "governance", "6": "blueprint", "7": "models" };
       if (map[e.key]) switchTab(map[e.key]);
     });
+  }
+
+  // --- MODULO 6: VISOR LIGHTBOX DE PLANOS, ROTADOR 3D Y EMULADOR DE LOGICA HARDWARE ---
+  const BLUEPRINT_SLIDES = [
+    {
+      category: "Electrónica · Vista 3D",
+      categoryClass: "badge badge-ok",
+      title: "Modelo 3D de la Tarjeta PCB de Control",
+      src: "/assets/hardware/pcb_3d.png",
+      downloadHref: "/api/v1/models/download/hw-pcb-3d-png",
+      downloadLabel: "Descargar Render 3D (.png)",
+      caption: "Vista tridimensional de la placa ensamblada: borneras de sensores (5V/SIG/GND), cuatro salidas de potencia 24 VDC con optoacopladores PC817 y MOSFETs IRLZ44N, reductor XL4015 con inductor toroidal y cabezales para ESP32.",
+      is3d: false
+    },
+    {
+      category: "Electrónica · Modelo .STEP",
+      categoryClass: "badge badge-cool",
+      title: "Visor 3D Interactivo del Archivo .STEP (PCB)",
+      src: "",
+      downloadHref: "/api/v1/models/download/hw-pcb-step",
+      downloadLabel: "Descargar Modelo 3D (.step)",
+      caption: "Sección independiente del modelo sólido tridimensional de la tarjeta electrónica de control. Arrastra para rotar 360° o usa la rueda del ratón para acercar los componentes y borneras.",
+      is3d: true
+    },
+    {
+      category: "Electrónica · Layout 2D",
+      categoryClass: "badge badge-ok",
+      title: "Layout de Pistas PCB (Centrado y Escala Real)",
+      src: "/assets/hardware/pcb_layout.png",
+      downloadHref: "/api/v1/models/download/hw-pcb-layout-png",
+      downloadLabel: "Descargar Layout (.png)",
+      caption: "Distribución de cobre, serigrafía y separación física entre la zona lógica de 5V/3.3V (izquierda), el regulador XL4015 con fusibles FU1/FU2 (arriba) y los cuatro canales aislados de potencia 24 VDC (derecha).",
+      is3d: false
+    },
+    {
+      category: "Electrónica · Esquemático",
+      categoryClass: "badge badge-ok",
+      title: "Esquema Electrónico Completo (ESP32 + XL4015 + PC817)",
+      src: "/assets/hardware/esquema_control.png",
+      downloadHref: "/api/v1/models/download/hw-esquema-pdf",
+      downloadLabel: "Descargar Esquema (.pdf)",
+      caption: "Circuito completo: fuente reductora 24V→5.1V/5A con protección crowbar 1N5339B+BT151, divisores 330 Ω/470 Ω en SP0..SP3, amplificador LMV358M para ventilador, 4 indicadores 2N7000 y 4 optoacopladores PC817 con diodos volante 1N5822.",
+      is3d: false
+    },
+    {
+      category: "Mecánica · SolidWorks",
+      categoryClass: "badge badge-info",
+      title: "Plano Mecánico SolidWorks · Ducto 250 × 250 × 600 mm",
+      src: "/assets/hardware/plano_ducto_solidworks.svg",
+      downloadHref: "/api/v1/models/download/hw-ducto-solidworks",
+      downloadLabel: "Descargar Plano CAD (.svg)",
+      caption: "Sección longitudinal acotada del ducto en aluminio 6061-T6: ventilador con panal laminar, mirilla de cuarzo Ø 60 mm para cámara superior, puerto de sensores, compuerta spring-return y boquilla atomizadora PFE a 30°.",
+      is3d: false
+    }
+  ];
+
+  const PROTO_EMULATOR_MODES = {
+    normal: {
+      badgeText: "Estado: NORMAL",
+      badgeClass: "badge badge-ok",
+      power: "24.0 V → 5.10 V (FU1 2A / FU2 5A OK)",
+      sensor: "SP0..SP3: 0.35 V – 0.92 V → ESP32 ADC1 (Nominal)",
+      fanPwm: "GPIO 22 (3.3 V · 40% PWM) → LMV358M 5.0 V · Flujo 20 cm/s",
+      outputs: [
+        { name: "J12 Ventilador", state: "ACTIVO", cls: "badge badge-ok" },
+        { name: "J13 Compuerta", state: "ABIERTA (24V)", cls: "badge badge-info" },
+        { name: "J14 Niebla PFE", state: "ESPERA", cls: "badge badge-cool" },
+        { name: "J15 Reserva", state: "LIBRE", cls: "badge badge-cool" }
+      ],
+      leds: { green: true, yellow: false, white: true, red: false },
+      summary: "Flujo laminar estable; el ESP32 lee los 4 divisores 330 Ω / 470 Ω cada 100 ms y mantiene el LED verde y blanco activos."
+    },
+    prealert: {
+      badgeText: "Estado: PRE_ALERTA",
+      badgeClass: "badge badge-warn",
+      power: "24.0 V → 5.10 V (Consumo estable < 1.2 A)",
+      sensor: "SP1 (CO) / SP2 (<0.1 um): 1.65 V – 2.15 V → Umbral preventivo",
+      fanPwm: "GPIO 22 (3.3 V · 55% PWM) → LMV358M 5.0 V · Vigilancia activa",
+      outputs: [
+        { name: "J12 Ventilador", state: "VIGILANCIA", cls: "badge badge-warn" },
+        { name: "J13 Compuerta", state: "ABIERTA (24V)", cls: "badge badge-info" },
+        { name: "J14 Niebla PFE", state: "PRE-ARMADO", cls: "badge badge-warn" },
+        { name: "J15 Reserva", state: "LIBRE", cls: "badge badge-cool" }
+      ],
+      leds: { green: false, yellow: true, white: true, red: false },
+      summary: "Detección temprana de pirólisis o humo submicrónico (<0.1 um): el transistor Q1 (2N7000) enciende el piloto ámbar sin detener aún el ducto."
+    },
+    containment: {
+      badgeText: "Estado: CONTENCION (PFE ACTIVO)",
+      badgeClass: "badge badge-danger",
+      power: "24.0 V → 5.10 V (Diodos 1N5822 absorben retorno inductivo)",
+      sensor: "SP0 (dT/dt) / SP1 (CO): 2.40 V – 2.88 V → Disparo confirmado",
+      fanPwm: "GPIO 22 (0% PWM · 0.0 V) → Ventilador detenido",
+      outputs: [
+        { name: "J12 Ventilador", state: "CORTE (0V)", cls: "badge badge-danger" },
+        { name: "J13 Compuerta", state: "CERRADA (RESORTE)", cls: "badge badge-danger" },
+        { name: "J14 Niebla PFE", state: "DISPARO ON (24V)", cls: "badge badge-ok" },
+        { name: "J15 Reserva", state: "BALIZA AUX", cls: "badge badge-warn" }
+      ],
+      leds: { green: false, yellow: false, white: true, red: true },
+      summary: "Canal 0 (Q2) corta ventilador, Canal 1 (Q6) desenergiza compuerta para cierre por resorte y Canal 2 (Q7) dispara la niebla fina PFE con LED rojo activo."
+    },
+    failsafe: {
+      badgeText: "Estado: FALLA_SEGURA / PROTECCION",
+      badgeClass: "badge badge-danger",
+      power: "Crowbar 1N5339B + BT151 vigila sobretensión >5.6 V; FU1/FU2 listos",
+      sensor: "Enlace perdido o lectura fuera de rango (<0.1 V / >2.94 V)",
+      fanPwm: "GPIO 22 bloqueado a 0 V · Sin excitación de flujo",
+      outputs: [
+        { name: "J12 Ventilador", state: "BLOQUEADO OFF", cls: "badge badge-danger" },
+        { name: "J13 Compuerta", state: "CERRADA SEGURA", cls: "badge badge-danger" },
+        { name: "J14 Niebla PFE", state: "INHIBIDO", cls: "badge badge-cool" },
+        { name: "J15 Reserva", state: "ALARMA FALLA", cls: "badge badge-danger" }
+      ],
+      leds: { green: false, yellow: true, white: false, red: true },
+      summary: "Ante pérdida de comunicación o falla eléctrica, el módulo desenergiza ventilador y compuerta manteniendo el ducto físicamente aislado sin disparar agente innecesario."
+    }
+  };
+
+  let activeLightboxIdx = 0;
+  let pcb3dController = null;
+
+  function renderLightboxSlide(idx) {
+    const safeIdx = ((idx % BLUEPRINT_SLIDES.length) + BLUEPRINT_SLIDES.length) % BLUEPRINT_SLIDES.length;
+    activeLightboxIdx = safeIdx;
+    const slide = BLUEPRINT_SLIDES[safeIdx];
+
+    const imgEl = document.getElementById("lightboxImg");
+    const titleEl = document.getElementById("lightboxTitle");
+    const counterEl = document.getElementById("lightboxCounter");
+    const catBadgeEl = document.getElementById("lightboxCategoryBadge");
+    const captionEl = document.getElementById("lightboxCaption");
+    const dlEl = document.getElementById("lightboxDownloadLink");
+    const wrap3d = document.getElementById("lightbox3dWrap");
+
+    if (!imgEl || !titleEl) return;
+    titleEl.textContent = slide.title;
+    counterEl.textContent = `${safeIdx + 1} / ${BLUEPRINT_SLIDES.length}`;
+    if (catBadgeEl) {
+      catBadgeEl.textContent = slide.category;
+      catBadgeEl.className = slide.categoryClass;
+    }
+    captionEl.textContent = slide.caption;
+    dlEl.href = slide.downloadHref;
+    dlEl.textContent = slide.downloadLabel;
+
+    if (slide.is3d) {
+      imgEl.hidden = true;
+      imgEl.removeAttribute("src");
+      wrap3d.hidden = false;
+      if (pcb3dController) pcb3dController.activate();
+    } else {
+      wrap3d.hidden = true;
+      if (pcb3dController) pcb3dController.deactivate();
+      imgEl.src = slide.src;
+      imgEl.alt = slide.title;
+      imgEl.hidden = false;
+    }
+
+    document.querySelectorAll(".lightbox-thumb-btn").forEach((btn, i) => {
+      btn.classList.toggle("is-active", i === safeIdx);
+    });
+  }
+
+  function openLightbox(idx) {
+    const modal = document.getElementById("blueprintLightbox");
+    if (!modal) return;
+    renderLightboxSlide(idx);
+    modal.hidden = false;
+    document.body.style.overflow = "hidden";
+    const closeBtn = document.getElementById("lightboxCloseBtn");
+    if (closeBtn) closeBtn.focus();
+  }
+
+  function closeLightbox() {
+    const modal = document.getElementById("blueprintLightbox");
+    if (!modal) return;
+    modal.hidden = true;
+    document.body.style.overflow = "";
+    if (pcb3dController) pcb3dController.deactivate();
+  }
+
+  function stepLightbox(delta) {
+    renderLightboxSlide(activeLightboxIdx + delta);
+  }
+
+  function initPcb3dViewer() {
+    const canvas = document.getElementById("pcb3dCanvas");
+    if (!canvas || !canvas.getContext) return null;
+    const ctx = canvas.getContext("2d");
+
+    let yaw = -0.58;
+    let pitch = 0.56;
+    let zoom = 1.0;
+    let dragging = false;
+    let lastX = 0;
+    let lastY = 0;
+    let stlTriangles = null;
+    let stlLoading = false;
+    let isActive = false;
+
+    // Modelo parametrico fiel a la PCB real (usado al instante y mientras/si carga malla STL)
+    function buildPcbParts() {
+      const parts = [];
+      const addBox = (cx, cy, cz, sx, sy, sz, color) => {
+        const hx = sx / 2, hy = sy / 2, hz = sz / 2;
+        const v = [
+          [cx - hx, cy - hy, cz - hz], [cx + hx, cy - hy, cz - hz],
+          [cx + hx, cy + hy, cz - hz], [cx - hx, cy + hy, cz - hz],
+          [cx - hx, cy - hy, cz + hz], [cx + hx, cy - hy, cz + hz],
+          [cx + hx, cy + hy, cz + hz], [cx - hx, cy + hy, cz + hz]
+        ];
+        const faces = [
+          [4, 5, 6, 7], [0, 3, 2, 1], [0, 1, 5, 4], [2, 3, 7, 6], [1, 2, 6, 5], [0, 4, 7, 3]
+        ];
+        faces.forEach((f) => parts.push({ pts: f.map((i) => v[i]), color }));
+      };
+      // Placa FR4 verde principal (140 x 110 x 2.2 mm escalado)
+      addBox(0, 0, 0, 120, 96, 2.5, "#2E6F24");
+      // Headers ESP32 (J2/J3) y bloque reserva izquierda
+      addBox(-36, 22, 5.5, 4, 34, 8.5, "#1E293B");
+      addBox(-18, 22, 5.5, 4, 34, 8.5, "#1E293B");
+      addBox(-52, 18, 4.2, 4, 30, 5.5, "#0F172A");
+      // Borneras de sensores (izquierda + abajo-izq)
+      for (let i = 0; i < 3; i++) addBox(-52, -16 - i * 11, 5.8, 9, 9.5, 9, "#15803D");
+      addBox(-40, -42, 5.8, 13, 9.5, 9, "#15803D");
+      addBox(-24, -42, 5.8, 13, 9.5, 9, "#15803D");
+      // 4 borneras indicadoras de estado (abajo centro) + 2N7000
+      for (let i = 0; i < 4; i++) {
+        addBox(-8 + i * 11, -42, 5.8, 9.5, 9.5, 9, "#15803D");
+        addBox(-8 + i * 11, -31, 4.5, 4.5, 4, 6, "#1E293B");
+      }
+      // 4 etapas de potencia PC817 + IRLZ44N + borneras J12..J15 (derecha)
+      for (let i = 0; i < 4; i++) {
+        const y = 20 - i * 17;
+        addBox(24, y, 3.6, 6.5, 6.5, 4.5, "#1E293B");
+        addBox(36, y, 7.5, 5, 9.5, 12, "#334155");
+        addBox(52, y, 5.8, 9.5, 9.5, 9, "#15803D");
+      }
+      // Etapa reductor XL4015 + toroide + portafusibles (arriba)
+      addBox(8, 38, 8.0, 14, 6, 13, "#22C55E");
+      addBox(-8, 37, 6.5, 16, 8, 10, "#1E293B");
+      addBox(28, 37, 6.5, 16, 8, 10, "#1E293B");
+      addBox(-16, 42, 5.8, 9, 8.5, 9, "#15803D");
+      addBox(44, 42, 5.8, 9, 8.5, 9, "#15803D");
+      // LMV358M etapa ventilador
+      addBox(-34, -14, 3.0, 6, 6, 3.2, "#1E293B");
+      return parts;
+    }
+    const fallbackFaces = buildPcbParts();
+
+    function parseBinaryStl(buffer) {
+      if (!buffer || buffer.byteLength < 84) return null;
+      const view = new DataView(buffer);
+      const count = view.getUint32(80, true);
+      if (count === 0 || 84 + count * 50 > buffer.byteLength) return null;
+      const step = Math.max(1, Math.floor(count / 8500));
+      const tris = [];
+      let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, minZ = Infinity, maxZ = -Infinity;
+      for (let i = 0; i < count; i += step) {
+        const off = 84 + i * 50;
+        const p = [];
+        for (let k = 0; k < 3; k++) {
+          const x = view.getFloat32(off + 12 + k * 12, true);
+          const y = view.getFloat32(off + 16 + k * 12, true);
+          const z = view.getFloat32(off + 20 + k * 12, true);
+          if (x < minX) minX = x; if (x > maxX) maxX = x;
+          if (y < minY) minY = y; if (y > maxY) maxY = y;
+          if (z < minZ) minZ = z; if (z > maxZ) maxZ = z;
+          p.push([x, y, z]);
+        }
+        const attr = view.getUint16(off + 48, true);
+        let color = "#2E6F24";
+        if (attr & 0x8000) {
+          const r = Math.round(((attr >> 10) & 0x1F) * 255 / 31);
+          const g = Math.round(((attr >> 5) & 0x1F) * 255 / 31);
+          const b = Math.round((attr & 0x1F) * 255 / 31);
+          color = "#" + [r, g, b].map((v) => v.toString(16).padStart(2, "0")).join("");
+        }
+        tris.push({ p, color });
+      }
+      const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2, cz = (minZ + maxZ) / 2;
+      const span = Math.max(maxX - minX, maxY - minY, maxZ - minZ, 1e-3);
+      const scale = 120 / span;
+      return tris.map((t) => ({
+        pts: t.p.map((v) => [(v[0] - cx) * scale, (v[1] - cy) * scale, (v[2] - cz) * scale]),
+        color: t.color
+      }));
+    }
+
+    function maybeLoadStl() {
+      if (stlTriangles || stlLoading) return;
+      stlLoading = true;
+      fetch("/assets/hardware/pcb_3d_preview.stl")
+        .then((res) => (res.ok ? res.arrayBuffer() : null))
+        .then((buf) => {
+          if (buf) {
+            const parsed = parseBinaryStl(buf);
+            if (parsed && parsed.length) stlTriangles = parsed;
+          }
+          render();
+        })
+        .catch(() => {});
+    }
+
+    function shadeColor(hex, factor) {
+      const r = parseInt(hex.slice(1, 3), 16);
+      const g = parseInt(hex.slice(3, 5), 16);
+      const b = parseInt(hex.slice(5, 7), 16);
+      const f = Math.max(0.35, Math.min(1.18, factor));
+      return `rgb(${Math.min(255, Math.round(r * f))}, ${Math.min(255, Math.round(g * f))}, ${Math.min(255, Math.round(b * f))})`;
+    }
+
+    function render() {
+      if (!isActive) return;
+      const w = canvas.width, h = canvas.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "#EDF2FA";
+      ctx.fillRect(0, 0, w, h);
+
+      const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
+      const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
+      const faces = stlTriangles || fallbackFaces;
+      const projected = [];
+
+      for (let i = 0; i < faces.length; i++) {
+        const f = faces[i];
+        const tPts = f.pts.map(([x, y, z]) => {
+          const x1 = x * cosY - y * sinY;
+          const y1 = x * sinY + y * cosY;
+          const y2 = y1 * cosP - z * sinP;
+          const z2 = y1 * sinP + z * cosP;
+          return [x1, y2, z2];
+        });
+        const ax = tPts[1][0] - tPts[0][0], ay = tPts[1][1] - tPts[0][1], az = tPts[1][2] - tPts[0][2];
+        const bx = tPts[2][0] - tPts[0][0], by = tPts[2][1] - tPts[0][1], bz = tPts[2][2] - tPts[0][2];
+        const nx = ay * bz - az * by, ny = az * bx - ax * bz, nz = ax * by - ay * bx;
+        const nLen = Math.hypot(nx, ny, nz) || 1;
+        const light = 0.52 + 0.55 * Math.abs((nx * 0.3 + ny * 0.4 + nz * 0.86) / nLen);
+        const depth = tPts.reduce((acc, p) => acc + p[2], 0) / tPts.length;
+        const persp = 4.2 * zoom;
+        const screen = tPts.map(([px, py, pz]) => {
+          const k = persp / (1 + (420 - pz) * 0.0012);
+          return [w / 2 + px * k, h / 2 - py * k * 0.92];
+        });
+        projected.push({ screen, depth, fill: shadeColor(f.color, light) });
+      }
+
+      projected.sort((a, b) => a.depth - b.depth);
+      for (let i = 0; i < projected.length; i++) {
+        const item = projected[i];
+        ctx.beginPath();
+        ctx.moveTo(item.screen[0][0], item.screen[0][1]);
+        for (let k = 1; k < item.screen.length; k++) ctx.lineTo(item.screen[k][0], item.screen[k][1]);
+        ctx.closePath();
+        ctx.fillStyle = item.fill;
+        ctx.fill();
+        ctx.strokeStyle = stlTriangles ? item.fill : "rgba(10, 25, 49, 0.16)";
+        ctx.lineWidth = stlTriangles ? 0.55 : 0.7;
+        ctx.stroke();
+      }
+    }
+
+    canvas.addEventListener("pointerdown", (e) => {
+      dragging = true;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      canvas.setPointerCapture(e.pointerId);
+    });
+    canvas.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      yaw += (e.clientX - lastX) * 0.012;
+      pitch = Math.max(-1.35, Math.min(1.35, pitch + (e.clientY - lastY) * 0.012));
+      lastX = e.clientX;
+      lastY = e.clientY;
+      render();
+    });
+    canvas.addEventListener("pointerup", () => { dragging = false; });
+    canvas.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      zoom = Math.max(0.55, Math.min(2.1, zoom + (e.deltaY < 0 ? 0.1 : -0.1)));
+      render();
+    }, { passive: false });
+
+    return {
+      activate() {
+        isActive = true;
+        maybeLoadStl();
+        render();
+      },
+      deactivate() { isActive = false; }
+    };
+  }
+
+  function setProtoMode(modeKey) {
+    const cfg = PROTO_EMULATOR_MODES[modeKey] || PROTO_EMULATOR_MODES.normal;
+    const badge = document.getElementById("protoStageBadge");
+    if (!badge) return;
+    badge.textContent = cfg.badgeText;
+    badge.className = cfg.badgeClass;
+    document.getElementById("protoPowerOut").textContent = cfg.power;
+    document.getElementById("protoSensorOut").textContent = cfg.sensor;
+    document.getElementById("protoFanPwmOut").textContent = cfg.fanPwm;
+    document.getElementById("protoSummaryText").textContent = cfg.summary;
+
+    document.getElementById("protoOutputsList").innerHTML = cfg.outputs.map((o) =>
+      `<li><strong>${escapeHtml(o.name)}:</strong> <span class="${escapeHtml(o.cls)}">${escapeHtml(o.state)}</span></li>`
+    ).join("");
+
+    document.querySelectorAll("#protoLedsRow .proto-led").forEach((el) => {
+      const key = el.dataset.led;
+      el.classList.toggle("is-on", Boolean(cfg.leds[key]));
+    });
+    document.querySelectorAll(".proto-sim-btn").forEach((btn) => {
+      btn.classList.toggle("is-selected", btn.dataset.protoMode === modeKey);
+    });
+  }
+
+  function initPrototypeHardwareAndLightbox() {
+    pcb3dController = initPcb3dViewer();
+
+    const thumbsEl = document.getElementById("lightboxThumbs");
+    if (thumbsEl) {
+      thumbsEl.innerHTML = BLUEPRINT_SLIDES.map((s, i) => `
+        <button type="button" class="btn btn-sm lightbox-thumb-btn" data-thumb-idx="${i}">${escapeHtml(s.category.split("·")[1].trim())}</button>
+      `).join("");
+      thumbsEl.querySelectorAll("[data-thumb-idx]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          renderLightboxSlide(Number(btn.dataset.thumbIdx));
+        });
+      });
+    }
+
+    document.querySelectorAll("[data-lightbox-index]").forEach((el) => {
+      el.addEventListener("click", () => openLightbox(Number(el.dataset.lightboxIndex)));
+    });
+
+    const closeBtn = document.getElementById("lightboxCloseBtn");
+    const prevBtn = document.getElementById("lightboxPrevBtn");
+    const nextBtn = document.getElementById("lightboxNextBtn");
+    const backdrop = document.getElementById("blueprintLightbox");
+
+    if (closeBtn) closeBtn.addEventListener("click", closeLightbox);
+    if (prevBtn) prevBtn.addEventListener("click", () => stepLightbox(-1));
+    if (nextBtn) nextBtn.addEventListener("click", () => stepLightbox(1));
+    if (backdrop) {
+      backdrop.addEventListener("click", (e) => {
+        if (e.target === backdrop) closeLightbox();
+      });
+    }
+
+    document.querySelectorAll(".proto-sim-btn").forEach((btn) => {
+      btn.addEventListener("click", () => setProtoMode(btn.dataset.protoMode));
+    });
+    setProtoMode("normal");
   }
 
   // --- FONDO ORBITAL MULTI-TRAYECTORIA EN BUCLE SOBRE TEMA CLARO ---

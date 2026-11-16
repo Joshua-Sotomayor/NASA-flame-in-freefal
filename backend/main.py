@@ -311,6 +311,24 @@ def create_app(
             raise HTTPException(status_code=404, detail="Archivo de diagrama aun no disponible.")
         return FileResponse(path=safe_path)
 
+    @app.get("/assets/hardware/{asset_name}", include_in_schema=False)
+    def serve_hardware_asset(asset_name: str) -> FileResponse:
+        allowed_hardware = {
+            "pcb_3d.png": "image/png",
+            "pcb_layout.png": "image/png",
+            "esquema_control.png": "image/png",
+            "plano_ducto_solidworks.svg": "image/svg+xml",
+            "pcb_3d_preview.stl": "application/octet-stream",
+        }
+        media_type = allowed_hardware.get(asset_name)
+        if media_type is None:
+            raise HTTPException(status_code=404, detail="Plano o recurso hardware no encontrado.")
+        hw_root = resolved_frontend / "assets" / "hardware"
+        safe_path = guard.resolve_within_root(hw_root / asset_name, hw_root)
+        if not safe_path.is_file():
+            raise HTTPException(status_code=404, detail="Archivo hardware aun no disponible.")
+        return FileResponse(path=safe_path, media_type=media_type)
+
     downloadable_artifacts: dict[str, tuple[str, str, str]] = {
         "flammability-rf": ("artifacts/models/flammability_rf.joblib", "flammability_rf.joblib", "application/octet-stream"),
         "burntime-gbr": ("artifacts/models/burntime_gbr.joblib", "burntime_gbr.joblib", "application/octet-stream"),
@@ -325,6 +343,13 @@ def create_app(
         "code-colab-notebook": ("notebooks/AERO_IGNIS_Colab_Training.ipynb", "AERO_IGNIS_Colab_Training.ipynb", "application/x-ipynb+json"),
         "data-bass-saffire": ("data/bass_saffire_runs.csv", "bass_saffire_runs.csv", "text/csv"),
         "data-psi-24": ("data/psi_combustion_24.json", "psi_combustion_24.json", "application/json"),
+        "hw-pcb-3d-png": ("frontend/assets/hardware/pcb_3d.png", "aero_ignis_pcb_3d.png", "image/png"),
+        "hw-pcb-layout-png": ("frontend/assets/hardware/pcb_layout.png", "aero_ignis_pcb_layout.png", "image/png"),
+        "hw-pcb-layout-pdf": ("frontend/assets/hardware/pcb_layout.pdf", "aero_ignis_pcb_layout.pdf", "application/pdf"),
+        "hw-esquema-png": ("frontend/assets/hardware/esquema_control.png", "aero_ignis_esquema_control.png", "image/png"),
+        "hw-esquema-pdf": ("frontend/assets/hardware/esquema_control.pdf", "aero_ignis_esquema_control.pdf", "application/pdf"),
+        "hw-pcb-step": ("frontend/assets/hardware/aero_ignis_pcb_3d.step", "aero_ignis_pcb_3d.step", "application/octet-stream"),
+        "hw-ducto-solidworks": ("frontend/assets/hardware/plano_ducto_solidworks.svg", "aero_ignis_ducto_solidworks.svg", "image/svg+xml"),
     }
 
     @app.get("/api/v1/models/download/{artifact_slug}")
