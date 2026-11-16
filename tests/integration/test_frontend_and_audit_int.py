@@ -166,7 +166,9 @@ def test_frontend_served_and_structural_requirements() -> None:
         ("hw-pcb-layout-pdf", "aero_ignis_pcb_layout.pdf"),
         ("hw-esquema-png", "aero_ignis_esquema_control.png"),
         ("hw-esquema-pdf", "aero_ignis_esquema_control.pdf"),
+        ("hw-ducto-isometrico", "aero_ignis_ducto_isometrico.jpeg"),
         ("hw-ducto-solidworks", "aero_ignis_ducto_solidworks.svg"),
+        ("hw-ducto-step", "aero_ignis_ducto_3d.step"),
     ):
         r_dl = client.get(f"/api/v1/models/download/{slug}")
         assert r_dl.status_code == 200
@@ -176,8 +178,10 @@ def test_frontend_served_and_structural_requirements() -> None:
         ("pcb_3d.png", b"\x89PNG"),
         ("pcb_layout.png", b"\x89PNG"),
         ("esquema_control.png", b"\x89PNG"),
+        ("ducto_isometrico.jpeg", b"\xff\xd8\xff"),
         ("plano_ducto_solidworks.svg", b"<"),
         ("pcb_3d_preview.stl", b"AERO-IGNIS"),
+        ("ducto_3d_preview.stl", b"AERO-IGNIS"),
     ):
         r_hw = client.get(f"/assets/hardware/{hw_asset}")
         assert r_hw.status_code == 200

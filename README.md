@@ -74,7 +74,9 @@ Creemos que la seguridad crítica debe poder auditarse cable por cable y brida p
 - **Tarjeta Electrónica de Control Abierta (`ESP32 + 24 VDC`):** Construida con componentes estándar fáciles de conseguir: regulador reductor `XL4015` (`24 VDC → 5.1 VDC / 5A`), etapa de aislamiento óptico `PC817` + MOSFET `IRLZ44N` para ventilador, compuerta y solenoide de neblina fina, amplificación `LMV358M` (`3.3 V → 5 V`) y señalización visual mediante `2N7000`. Incluye emulador lógico interactivo en la web para probar fallas y estados en tiempo real sin necesidad de tener la placa física conectada.
 
 <p align="center">
-  <img src="frontend/assets/hardware/plano_ducto_solidworks.svg" alt="Plano mecánico SolidWorks del ducto liso 250x250x600 mm" width="94%" />
+  <img src="frontend/assets/hardware/ducto_isometrico.jpeg" alt="Vista isométrica SolidWorks del ducto 250x250x600 mm con ventilador, cámara y actuador" width="38%" />
+  &nbsp;&nbsp;
+  <img src="frontend/assets/hardware/plano_ducto_solidworks.svg" alt="Plano mecánico SolidWorks del ducto liso 250x250x600 mm" width="58%" />
 </p>
 
 <p align="center">
