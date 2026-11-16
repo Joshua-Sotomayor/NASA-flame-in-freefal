@@ -977,15 +977,17 @@
               <h2 class="pane-title">CAD SolidWorks · Ducto 250 × 250 mm</h2>
               <span class="badge badge-info">Mecánica 0g</span>
             </div>
-            <button type="button" class="blueprint-preview-btn" data-lightbox-index="4" aria-label="Ampliar plano mecánico de SolidWorks del ducto">
-              <img class="blueprint-thumb blueprint-thumb--cad" src="/assets/hardware/plano_ducto_solidworks.svg" alt="Plano técnico SolidWorks en corte longitudinal del ducto de prueba de 250 por 250 milímetros" loading="lazy" />
-              <span class="blueprint-preview-tag">Ver plano acotado ◀ / ▶</span>
+            <button type="button" class="blueprint-preview-btn" data-lightbox-index="4" aria-label="Ampliar vista isométrica SolidWorks, plano acotado y visor 3D .STEP del ducto">
+              <img class="blueprint-thumb" src="/assets/hardware/ducto_isometrico.jpeg" alt="Vista isométrica del ensamble SolidWorks del ducto 250 por 250 milímetros con ventilador axial, mirilla óptica, boquilla PFE y actuador" loading="lazy" />
+              <span class="blueprint-preview-tag">Clic para abrir visor ◀ / ▶</span>
             </button>
-            <div class="blueprint-slide-pills">
-              <button type="button" class="btn btn-sm" data-lightbox-index="4">Ampliar Plano Ducto</button>
+            <div class="blueprint-slide-pills" role="group" aria-label="Acceso rápido a vistas mecánicas SolidWorks del ducto">
+              <button type="button" class="btn btn-sm" data-lightbox-index="4">Isométrico 3D</button>
+              <button type="button" class="btn btn-sm" data-lightbox-index="5">Plano Ducto</button>
+              <button type="button" class="btn btn-sm" data-lightbox-index="6">Visor 3D (.STEP)</button>
             </div>
             <p class="prose-note">
-              Diseño paramétrico en aluminio <code>6061-T6</code> (<code>250 × 250 × 600 mm</code>): ventilador de entrada con panal enderezador, mirilla de cuarzo <code>Ø 60 mm</code> para la cámara óptica, compuerta cortafuego <em>spring-return</em> y boquilla <code>PFE</code> inclinada a <code>30°</code>.
+              Ensamble en aluminio <code>6061-T6</code> (<code>250 × 250 × 600 mm</code>): ventilador axial de entrada con panal laminar, mirilla de cuarzo superior <code>Ø 60 mm</code>, puerto de boquilla <code>PFE</code> a <code>30°</code> y caja de actuador <em>spring-return</em> lateral.
             </p>
           </article>
 
@@ -995,16 +997,18 @@
               <span class="badge badge-cool">Planos + 3D .STEP</span>
             </div>
             <p class="prose-note" style="margin-bottom:10px;">
-              Descarga directa de los esquemáticos, trazado de pistas centrado, capturas 3D y archivo sólido intercambiable para abrir en SolidWorks o FreeCAD.
+              Descarga directa de los esquemáticos, trazado de pistas centrado, isométrico SolidWorks y modelos sólidos intercambiables (<code>.step</code>) para abrir en CAD.
             </p>
             <div class="download-stack">
               <a class="btn btn-primary" href="/api/v1/models/download/hw-pcb-step" download><span>Modelo 3D CAD PCB (.step)</span><strong>13.4 MB</strong></a>
+              <a class="btn btn-primary" href="/api/v1/models/download/hw-ducto-step" download><span>Modelo 3D CAD Ducto (.step)</span><strong>3.5 MB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-ducto-isometrico" download><span>Isométrico Ducto SolidWorks (.jpeg)</span><strong>49 KB</strong></a>
+              <a class="btn" href="/api/v1/models/download/hw-ducto-solidworks" download><span>Plano Ducto SolidWorks (.svg)</span><strong>327 KB</strong></a>
               <a class="btn" href="/api/v1/models/download/hw-esquema-pdf" download><span>Esquema Electrónico (.pdf)</span><strong>210 KB</strong></a>
               <a class="btn" href="/api/v1/models/download/hw-esquema-png" download><span>Esquema Electrónico (.png)</span><strong>761 KB</strong></a>
               <a class="btn" href="/api/v1/models/download/hw-pcb-layout-pdf" download><span>Layout PCB (.pdf)</span><strong>51 KB</strong></a>
               <a class="btn" href="/api/v1/models/download/hw-pcb-layout-png" download><span>Layout PCB Centrado (.png)</span><strong>543 KB</strong></a>
               <a class="btn" href="/api/v1/models/download/hw-pcb-3d-png" download><span>Render 3D PCB (.png)</span><strong>167 KB</strong></a>
-              <a class="btn" href="/api/v1/models/download/hw-ducto-solidworks" download><span>Plano Ducto SolidWorks (.svg)</span><strong>327 KB</strong></a>
             </div>
           </article>
         </div>
@@ -1083,7 +1087,7 @@
           <div class="lightbox-head">
             <div>
               <div class="lightbox-badges">
-                <span id="lightboxCounter" class="badge badge-info">1 / 5</span>
+                <span id="lightboxCounter" class="badge badge-info">1 / 7</span>
                 <span id="lightboxCategoryBadge" class="badge badge-ok">Electrónica · PCB</span>
               </div>
               <h3 id="lightboxTitle" class="lightbox-title">Vista 3D de la Tarjeta PCB</h3>
@@ -1099,7 +1103,7 @@
             <div class="lightbox-media-wrap">
               <img id="lightboxImg" class="lightbox-img" src="/assets/hardware/pcb_3d.png" alt="Plano técnico ampliado" />
               <div id="lightbox3dWrap" class="lightbox-3d-wrap" hidden>
-                <canvas id="pcb3dCanvas" width="900" height="520" aria-label="Visor 3D interactivo de la tarjeta PCB"></canvas>
+                <canvas id="pcb3dCanvas" width="900" height="520" aria-label="Visor 3D interactivo de modelos CAD .STEP"></canvas>
                 <div class="lightbox-3d-hint">Arrastra con el ratón o dedo para girar 360° · Rueda para zoom</div>
               </div>
             </div>

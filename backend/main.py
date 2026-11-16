@@ -317,8 +317,10 @@ def create_app(
             "pcb_3d.png": "image/png",
             "pcb_layout.png": "image/png",
             "esquema_control.png": "image/png",
+            "ducto_isometrico.jpeg": "image/jpeg",
             "plano_ducto_solidworks.svg": "image/svg+xml",
             "pcb_3d_preview.stl": "application/octet-stream",
+            "ducto_3d_preview.stl": "application/octet-stream",
         }
         media_type = allowed_hardware.get(asset_name)
         if media_type is None:
@@ -349,7 +351,9 @@ def create_app(
         "hw-esquema-png": ("frontend/assets/hardware/esquema_control.png", "aero_ignis_esquema_control.png", "image/png"),
         "hw-esquema-pdf": ("frontend/assets/hardware/esquema_control.pdf", "aero_ignis_esquema_control.pdf", "application/pdf"),
         "hw-pcb-step": ("frontend/assets/hardware/aero_ignis_pcb_3d.step", "aero_ignis_pcb_3d.step", "application/octet-stream"),
+        "hw-ducto-isometrico": ("frontend/assets/hardware/ducto_isometrico.jpeg", "aero_ignis_ducto_isometrico.jpeg", "image/jpeg"),
         "hw-ducto-solidworks": ("frontend/assets/hardware/plano_ducto_solidworks.svg", "aero_ignis_ducto_solidworks.svg", "image/svg+xml"),
+        "hw-ducto-step": ("frontend/assets/hardware/aero_ignis_ducto_3d.step", "aero_ignis_ducto_3d.step", "application/octet-stream"),
     }
 
     @app.get("/api/v1/models/download/{artifact_slug}")

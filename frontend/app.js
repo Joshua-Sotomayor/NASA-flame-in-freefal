@@ -974,14 +974,15 @@
       is3d: false
     },
     {
-      category: "Electrónica · Modelo .STEP",
+      category: "Electrónica · PCB .STEP",
       categoryClass: "badge badge-cool",
       title: "Visor 3D Interactivo del Archivo .STEP (PCB)",
       src: "",
       downloadHref: "/api/v1/models/download/hw-pcb-step",
       downloadLabel: "Descargar Modelo 3D (.step)",
       caption: "Sección independiente del modelo sólido tridimensional de la tarjeta electrónica de control. Arrastra para rotar 360° o usa la rueda del ratón para acercar los componentes y borneras.",
-      is3d: true
+      is3d: true,
+      modelKey: "pcb"
     },
     {
       category: "Electrónica · Layout 2D",
@@ -1004,7 +1005,17 @@
       is3d: false
     },
     {
-      category: "Mecánica · SolidWorks",
+      category: "Mecánica · Isométrico",
+      categoryClass: "badge badge-info",
+      title: "Isométrico del Ensamble SolidWorks · Ducto 250 × 250 × 600 mm",
+      src: "/assets/hardware/ducto_isometrico.jpeg",
+      downloadHref: "/api/v1/models/download/hw-ducto-isometrico",
+      downloadLabel: "Descargar Isométrico (.jpeg)",
+      caption: "Vista isométrica completa del ensamble mecánico: carcasa en aluminio 6061-T6 con bridas de montaje, ventilador axial de entrada, soporte elevado con mirilla de cuarzo y cámara óptica superior, puerto atomizador PFE y caja externa del actuador.",
+      is3d: false
+    },
+    {
+      category: "Mecánica · Plano Acotado",
       categoryClass: "badge badge-info",
       title: "Plano Mecánico SolidWorks · Ducto 250 × 250 × 600 mm",
       src: "/assets/hardware/plano_ducto_solidworks.svg",
@@ -1012,6 +1023,17 @@
       downloadLabel: "Descargar Plano CAD (.svg)",
       caption: "Sección longitudinal acotada del ducto en aluminio 6061-T6: ventilador con panal laminar, mirilla de cuarzo Ø 60 mm para cámara superior, puerto de sensores, compuerta spring-return y boquilla atomizadora PFE a 30°.",
       is3d: false
+    },
+    {
+      category: "Mecánica · Ducto .STEP",
+      categoryClass: "badge badge-cool",
+      title: "Visor 3D Interactivo del Archivo .STEP (Ducto SolidWorks)",
+      src: "",
+      downloadHref: "/api/v1/models/download/hw-ducto-step",
+      downloadLabel: "Descargar Ensamble 3D (.step)",
+      caption: "Visor tridimensional del ensamble completo NASA_ASSEM.STEP (26 instancias): arrastra con el ratón o dedo para rotar 360° e inspeccionar la cámara superior, ventilador axial, sondas, atomizador y caja del actuador.",
+      is3d: true,
+      modelKey: "duct"
     }
   ];
 
@@ -1109,7 +1131,7 @@
       imgEl.hidden = true;
       imgEl.removeAttribute("src");
       wrap3d.hidden = false;
-      if (pcb3dController) pcb3dController.activate();
+      if (pcb3dController) pcb3dController.activate(slide.modelKey || "pcb");
     } else {
       wrap3d.hidden = true;
       if (pcb3dController) pcb3dController.deactivate();
@@ -1156,66 +1178,96 @@
     let dragging = false;
     let lastX = 0;
     let lastY = 0;
-    let stlTriangles = null;
-    let stlLoading = false;
+    let activeKey = "pcb";
     let isActive = false;
 
-    // Modelo parametrico fiel a la PCB real (usado al instante y mientras/si carga malla STL)
+    const addBox = (parts, cx, cy, cz, sx, sy, sz, color) => {
+      const hx = sx / 2, hy = sy / 2, hz = sz / 2;
+      const v = [
+        [cx - hx, cy - hy, cz - hz], [cx + hx, cy - hy, cz - hz],
+        [cx + hx, cy + hy, cz - hz], [cx - hx, cy + hy, cz - hz],
+        [cx - hx, cy - hy, cz + hz], [cx + hx, cy - hy, cz + hz],
+        [cx + hx, cy + hy, cz + hz], [cx - hx, cy + hy, cz + hz]
+      ];
+      const faces = [
+        [4, 5, 6, 7], [0, 3, 2, 1], [0, 1, 5, 4], [2, 3, 7, 6], [1, 2, 6, 5], [0, 4, 7, 3]
+      ];
+      faces.forEach((f) => parts.push({ pts: f.map((i) => v[i]), color }));
+    };
+
+    // Modelo parametrico fiel a la PCB real (usado al instante mientras carga malla STL)
     function buildPcbParts() {
       const parts = [];
-      const addBox = (cx, cy, cz, sx, sy, sz, color) => {
-        const hx = sx / 2, hy = sy / 2, hz = sz / 2;
-        const v = [
-          [cx - hx, cy - hy, cz - hz], [cx + hx, cy - hy, cz - hz],
-          [cx + hx, cy + hy, cz - hz], [cx - hx, cy + hy, cz - hz],
-          [cx - hx, cy - hy, cz + hz], [cx + hx, cy - hy, cz + hz],
-          [cx + hx, cy + hy, cz + hz], [cx - hx, cy + hy, cz + hz]
-        ];
-        const faces = [
-          [4, 5, 6, 7], [0, 3, 2, 1], [0, 1, 5, 4], [2, 3, 7, 6], [1, 2, 6, 5], [0, 4, 7, 3]
-        ];
-        faces.forEach((f) => parts.push({ pts: f.map((i) => v[i]), color }));
-      };
-      // Placa FR4 verde principal (140 x 110 x 2.2 mm escalado)
-      addBox(0, 0, 0, 120, 96, 2.5, "#2E6F24");
-      // Headers ESP32 (J2/J3) y bloque reserva izquierda
-      addBox(-36, 22, 5.5, 4, 34, 8.5, "#1E293B");
-      addBox(-18, 22, 5.5, 4, 34, 8.5, "#1E293B");
-      addBox(-52, 18, 4.2, 4, 30, 5.5, "#0F172A");
-      // Borneras de sensores (izquierda + abajo-izq)
-      for (let i = 0; i < 3; i++) addBox(-52, -16 - i * 11, 5.8, 9, 9.5, 9, "#15803D");
-      addBox(-40, -42, 5.8, 13, 9.5, 9, "#15803D");
-      addBox(-24, -42, 5.8, 13, 9.5, 9, "#15803D");
-      // 4 borneras indicadoras de estado (abajo centro) + 2N7000
+      addBox(parts, 0, 0, 0, 120, 96, 2.5, "#2E6F24");
+      addBox(parts, -36, 22, 5.5, 4, 34, 8.5, "#1E293B");
+      addBox(parts, -18, 22, 5.5, 4, 34, 8.5, "#1E293B");
+      addBox(parts, -52, 18, 4.2, 4, 30, 5.5, "#0F172A");
+      for (let i = 0; i < 3; i++) addBox(parts, -52, -16 - i * 11, 5.8, 9, 9.5, 9, "#15803D");
+      addBox(parts, -40, -42, 5.8, 13, 9.5, 9, "#15803D");
+      addBox(parts, -24, -42, 5.8, 13, 9.5, 9, "#15803D");
       for (let i = 0; i < 4; i++) {
-        addBox(-8 + i * 11, -42, 5.8, 9.5, 9.5, 9, "#15803D");
-        addBox(-8 + i * 11, -31, 4.5, 4.5, 4, 6, "#1E293B");
+        addBox(parts, -8 + i * 11, -42, 5.8, 9.5, 9.5, 9, "#15803D");
+        addBox(parts, -8 + i * 11, -31, 4.5, 4.5, 4, 6, "#1E293B");
       }
-      // 4 etapas de potencia PC817 + IRLZ44N + borneras J12..J15 (derecha)
       for (let i = 0; i < 4; i++) {
         const y = 20 - i * 17;
-        addBox(24, y, 3.6, 6.5, 6.5, 4.5, "#1E293B");
-        addBox(36, y, 7.5, 5, 9.5, 12, "#334155");
-        addBox(52, y, 5.8, 9.5, 9.5, 9, "#15803D");
+        addBox(parts, 24, y, 3.6, 6.5, 6.5, 4.5, "#1E293B");
+        addBox(parts, 36, y, 7.5, 5, 9.5, 12, "#334155");
+        addBox(parts, 52, y, 5.8, 9.5, 9.5, 9, "#15803D");
       }
-      // Etapa reductor XL4015 + toroide + portafusibles (arriba)
-      addBox(8, 38, 8.0, 14, 6, 13, "#22C55E");
-      addBox(-8, 37, 6.5, 16, 8, 10, "#1E293B");
-      addBox(28, 37, 6.5, 16, 8, 10, "#1E293B");
-      addBox(-16, 42, 5.8, 9, 8.5, 9, "#15803D");
-      addBox(44, 42, 5.8, 9, 8.5, 9, "#15803D");
-      // LMV358M etapa ventilador
-      addBox(-34, -14, 3.0, 6, 6, 3.2, "#1E293B");
+      addBox(parts, 8, 38, 8.0, 14, 6, 13, "#22C55E");
+      addBox(parts, -8, 37, 6.5, 16, 8, 10, "#1E293B");
+      addBox(parts, 28, 37, 6.5, 16, 8, 10, "#1E293B");
+      addBox(parts, -16, 42, 5.8, 9, 8.5, 9, "#15803D");
+      addBox(parts, 44, 42, 5.8, 9, 8.5, 9, "#15803D");
+      addBox(parts, -34, -14, 3.0, 6, 6, 3.2, "#1E293B");
       return parts;
     }
-    const fallbackFaces = buildPcbParts();
 
-    function parseBinaryStl(buffer) {
+    // Modelo parametrico del ducto SolidWorks (usado al instante mientras carga malla STL)
+    function buildDuctParts() {
+      const parts = [];
+      // Cuerpo del ducto 600 x 250 x 250 mm escalado (120 x 50 x 50) + bridas
+      addBox(parts, 0, 0, -24, 120, 50, 2, "#94A3B8");
+      addBox(parts, 0, 0, 24, 120, 50, 2, "#CBD5E1");
+      addBox(parts, 0, -24, 0, 120, 2, 50, "#94A3B8");
+      addBox(parts, 0, 24, 0, 120, 2, 50, "#CBD5E1");
+      addBox(parts, -60, 0, 0, 3, 60, 60, "#64748B");
+      addBox(parts, 60, 0, 0, 3, 60, 60, "#64748B");
+      // Modulo camara superior + soporte de cuarzo y boquilla
+      addBox(parts, -4, 0, 28, 16, 16, 4, "#94A3B8");
+      addBox(parts, -4, 0, 35, 12, 12, 8, "#1E293B");
+      addBox(parts, 22, 0, 28, 6, 6, 6, "#475569");
+      // Caja lateral actuador spring-return
+      addBox(parts, 36, 30, 0, 18, 12, 18, "#64748B");
+      return parts;
+    }
+
+    const MODEL_CONFIGS = {
+      pcb: {
+        stlUrl: "/assets/hardware/pcb_3d_preview.stl",
+        defaultColor: "#2E6F24",
+        defaultCam: { yaw: -0.58, pitch: 0.56, zoom: 1.0 },
+        fallback: buildPcbParts(),
+        mesh: null,
+        loading: false
+      },
+      duct: {
+        stlUrl: "/assets/hardware/ducto_3d_preview.stl",
+        defaultColor: "#B8C0CE",
+        defaultCam: { yaw: -2.28, pitch: -0.50, zoom: 1.05 },
+        fallback: buildDuctParts(),
+        mesh: null,
+        loading: false
+      }
+    };
+
+    function parseBinaryStl(buffer, defaultColor) {
       if (!buffer || buffer.byteLength < 84) return null;
       const view = new DataView(buffer);
       const count = view.getUint32(80, true);
       if (count === 0 || 84 + count * 50 > buffer.byteLength) return null;
-      const step = Math.max(1, Math.floor(count / 8500));
+      const step = Math.max(1, Math.floor(count / 24000));
       const tris = [];
       let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity, minZ = Infinity, maxZ = -Infinity;
       for (let i = 0; i < count; i += step) {
@@ -1231,7 +1283,7 @@
           p.push([x, y, z]);
         }
         const attr = view.getUint16(off + 48, true);
-        let color = "#2E6F24";
+        let color = defaultColor;
         if (attr & 0x8000) {
           const r = Math.round(((attr >> 10) & 0x1F) * 255 / 31);
           const g = Math.round(((attr >> 5) & 0x1F) * 255 / 31);
@@ -1249,15 +1301,16 @@
       }));
     }
 
-    function maybeLoadStl() {
-      if (stlTriangles || stlLoading) return;
-      stlLoading = true;
-      fetch("/assets/hardware/pcb_3d_preview.stl")
+    function maybeLoadStl(key) {
+      const cfg = MODEL_CONFIGS[key] || MODEL_CONFIGS.pcb;
+      if (cfg.mesh || cfg.loading) return;
+      cfg.loading = true;
+      fetch(cfg.stlUrl)
         .then((res) => (res.ok ? res.arrayBuffer() : null))
         .then((buf) => {
           if (buf) {
-            const parsed = parseBinaryStl(buf);
-            if (parsed && parsed.length) stlTriangles = parsed;
+            const parsed = parseBinaryStl(buf, cfg.defaultColor);
+            if (parsed && parsed.length) cfg.mesh = parsed;
           }
           render();
         })
@@ -1274,6 +1327,7 @@
 
     function render() {
       if (!isActive) return;
+      const cfg = MODEL_CONFIGS[activeKey] || MODEL_CONFIGS.pcb;
       const w = canvas.width, h = canvas.height;
       ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = "#EDF2FA";
@@ -1281,7 +1335,7 @@
 
       const cosY = Math.cos(yaw), sinY = Math.sin(yaw);
       const cosP = Math.cos(pitch), sinP = Math.sin(pitch);
-      const faces = stlTriangles || fallbackFaces;
+      const faces = cfg.mesh || cfg.fallback;
       const projected = [];
 
       for (let i = 0; i < faces.length; i++) {
@@ -1316,8 +1370,8 @@
         ctx.closePath();
         ctx.fillStyle = item.fill;
         ctx.fill();
-        ctx.strokeStyle = stlTriangles ? item.fill : "rgba(10, 25, 49, 0.16)";
-        ctx.lineWidth = stlTriangles ? 0.55 : 0.7;
+        ctx.strokeStyle = cfg.mesh ? item.fill : "rgba(10, 25, 49, 0.16)";
+        ctx.lineWidth = cfg.mesh ? 0.55 : 0.7;
         ctx.stroke();
       }
     }
@@ -1344,9 +1398,17 @@
     }, { passive: false });
 
     return {
-      activate() {
+      activate(modelKey) {
+        const nextKey = MODEL_CONFIGS[modelKey] ? modelKey : "pcb";
+        if (nextKey !== activeKey || !isActive) {
+          activeKey = nextKey;
+          const cam = MODEL_CONFIGS[activeKey].defaultCam;
+          yaw = cam.yaw;
+          pitch = cam.pitch;
+          zoom = cam.zoom;
+        }
         isActive = true;
-        maybeLoadStl();
+        maybeLoadStl(activeKey);
         render();
       },
       deactivate() { isActive = false; }
