@@ -90,8 +90,17 @@ def test_frontend_served_and_structural_requirements() -> None:
     assert 'role="tab"' in r_root.text
     assert 'role="tabpanel"' in r_root.text
 
-    # M-06 / M-09 / M-10 / Mini Museo & Glosario + Prototipo Hardware Abierto
+    # M-06 / M-09 / M-10 / Mini Museo & Glosario + Prototipo Hardware Abierto + Skeletal Anatomy Ducto
     assert 'id="ductDigitalTwinSvg"' in r_root.text
+    for part_id in (
+        "twinHoneycombGrid",
+        "twinQuartzViewport",
+        "twinSensorManifold",
+        "twinPfeNozzle30",
+        "twinDamperBlade",
+        "twinLimitSwitchSq",
+    ):
+        assert f'id="{part_id}"' in r_root.text
     assert 'id="flammabilityContourSvg"' in r_root.text
     assert 'id="panel-museum"' in r_root.text
     assert 'id="museumGallery"' in r_root.text

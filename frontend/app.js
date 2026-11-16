@@ -669,7 +669,20 @@
 
     document.getElementById("twinFanRotor").setAttribute("class", snap.fan_on ? "fan-active" : "fan-stopped");
     document.getElementById("twinFlowGroup").setAttribute("class", snap.fan_on ? "flow-active" : "flow-stopped");
+    const flowDown = document.getElementById("twinFlowDownstream");
+    if (flowDown) flowDown.style.opacity = (snap.fan_on && !snap.damper_closed) ? "1" : "0.08";
+
     document.getElementById("twinDamperRect").style.transform = snap.damper_closed ? "scaleY(1)" : "scaleY(0.14)";
+    const damperBlade = document.getElementById("twinDamperBlade");
+    if (damperBlade) damperBlade.style.transform = snap.damper_closed ? "rotate(90deg)" : "rotate(0deg)";
+
+    const sqDot = document.getElementById("twinSqStatusDot");
+    if (sqDot) sqDot.setAttribute("fill", snap.damper_closed ? "#065F46" : "#64748B");
+    const sqLbl = document.getElementById("twinSqLabel");
+    if (sqLbl) sqLbl.textContent = snap.damper_closed ? "SQ-DMP: 1 (CERR)" : "SQ-DMP: 0 (ABRT)";
+    const angleLbl = document.getElementById("twinBladeAngleLabel");
+    if (angleLbl) angleLbl.textContent = snap.damper_closed ? "MARIPOSA: 90°" : "MARIPOSA: 0°";
+
     document.getElementById("twinMistGroup").style.display = snap.pfe_active ? "block" : "none";
 
     document.getElementById("twinFlame0g").style.display = preset === "spherical_0g" ? "block" : "none";
